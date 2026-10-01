@@ -1,0 +1,9 @@
+name = "periodicity"
+defaultTargets = ["Periodicity"]
+
+[[require]]
+name = "theorem1"
+path = "../theorem1"
+
+[[lean_lib]]
+name = "Periodicity"

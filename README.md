@@ -37,6 +37,7 @@ The site is at <https://lyndondrake.github.io/ice-mixing-notes/>.
 | path | contents |
 |---|---|
 | `notes/` | the contribution notes, Markdown and PDF, with `refs.json`, the bibliography (CSL JSON) |
+| `formal/` | Lean 4 formalisations, each a standalone Lake project in core Lean with the toolchain pinned: `theorem1/` (the smallest cell is frozen) and `periodicity/` (the model on a general cell, Lemma 21, Lemma A, Lemma L, Lemma C, the flux balance and the derivation of periodicity from Theorems H and P; U, Theorem 1 and P stated with proofs open). Build with `lake build`; `lake env lean Axioms.lean` prints every theorem's axioms. A claim's `formal` field names its declaration |
 | `manifests/<note>.yaml` | the claims manifest of a note; `manifests/_drafts/` holds drafts not yet reviewed and not published on the site; `manifests/_test/` is a test fixture |
 | `schema/manifest.schema.json` | the JSON Schema (2020-12) every manifest conforms to |
 | `reports/` | the checker and agent reports the notes and manifests cite, as they were written |

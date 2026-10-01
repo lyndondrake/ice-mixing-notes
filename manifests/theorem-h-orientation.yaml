@@ -98,6 +98,11 @@ claims:
       cells: open on cells with no coprime pair of extents and more than two chains in every pair of planes, beyond those certified
       hypotheses: frozen, odd
     depends_on: []
+    formal:
+      system: lean4
+      declaration: Periodicity.theoremU
+      status: stated
+      project: formal/periodicity
     provenance:
       written_by: ["Claude (Fable), main loop (statement, 2026-09-22)"]
       checked_by: []
@@ -127,6 +132,11 @@ claims:
       - theorem-h-orientation/parametrisation-c
       - theorem-h-orientation/lemma-21
     supersedes: theorem-h-orientation/thm-1-first-form
+    formal:
+      system: lean4
+      declaration: Periodicity.theorem1
+      status: stated
+      project: formal/periodicity
     provenance:
       written_by: ["Claude Fable 5.1 (agent zeroflux)"]
       checked_by: ["Claude Opus 5 (agent check10), own programs"]
@@ -215,14 +225,24 @@ claims:
       cells: every cell
     depends_on:
       - theorem-h-orientation/model
+    formal:
+      system: lean4
+      declaration: Periodicity.lemma21
+      status: proved
+      axioms: [propext, Quot.sound]
+      project: formal/periodicity
     provenance:
       written_by: ["Claude (Fable), main loop"]
       checked_by: ["Claude Opus 5 (agent pacheck)"]
+      cross_checks: ["Lean 4 kernel (formal/periodicity, agent leanstart, 2026-10-01): proved for any pair of cells whose extents divide, with the descent of Theorem H (Periodicity.theoremH_of_repeat)"]
       human_read: false
       date: "2026-10-01"
     artefacts:
       - kind: report
         path: reports/2026-10-01-opus-pacheck.md
+      - kind: lean
+        path: formal/periodicity/Periodicity/Lift.lean
+        regenerate: "cd formal/periodicity && lake build && lake env lean Axioms.lean"
       - kind: script
         path: "private:experiments/08_frozen_structure/scratch_h/h736_lift.py"
 
@@ -745,9 +765,16 @@ claims:
       - curl-reduction/thm-p
       - curl-reduction/lemma-a
       - curl-reduction/lemma-l
+    formal:
+      system: lean4
+      declaration: Periodicity.periodic_of_H_P
+      status: proved
+      axioms: [propext, Quot.sound]
+      project: formal/periodicity
     provenance:
       written_by: ["Claude (Fable), main loop"]
       checked_by: ["Claude Opus 5 (agents pacheck, p1check)"]
+      cross_checks: ["Lean 4 kernel (formal/periodicity, 2026-10-01): the derivation from Theorem H, Theorem P, Lemma A and the flux balance is proved for every cell with all extents at least two, with H and P as hypotheses; Lemma A, Lemma L, Lemma C and the flux balance are themselves proved there; H, P and U are stated with their proofs open"]
       human_read: false
       date: "2026-10-01"
     artefacts:
@@ -766,6 +793,12 @@ claims:
       cells: the six thin cells named; (1,1,1) excluded
     depends_on:
       - theorem-h-orientation/model
+    formal:
+      system: lean4
+      declaration: Periodicity.not_periodic_122
+      status: proved
+      axioms: [propext, Quot.sound]
+      project: formal/periodicity
     provenance:
       written_by: ["Claude Opus 5 (agent pacheck)"]
       checked_by: []
