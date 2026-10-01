@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A sign-gauge obstruction to negative association in pyrochlore ice</title>
+<meta name="description" content="no sign gauge makes the bond correlations negatively associated: the three-bond certificate">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "ScholarlyArticle",
+ "@id": "https://lyndondrake.github.io/ice-mixing-notes/notes/sign-gauge-obstruction.html",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/notes/sign-gauge-obstruction.html",
+ "headline": "A sign-gauge obstruction to negative association in pyrochlore ice",
+ "name": "A sign-gauge obstruction to negative association in pyrochlore ice",
+ "datePublished": "2026-09-06",
+ "version": "2026-09-06",
+ "author": [
+  {
+   "@type": "Person",
+   "name": "Lyndon Drake"
+  }
+ ],
+ "creditText": "Lyndon Drake, with Claude Code (Anthropic Claude 5 models)",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "inLanguage": "en-GB",
+ "encoding": [
+  {
+   "@type": "MediaObject",
+   "contentUrl": "https://lyndondrake.github.io/ice-mixing-notes/notes/sign-gauge-obstruction.pdf",
+   "encodingFormat": "application/pdf"
+  }
+ ]
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div class="doc-links" style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0"><p class="small"><a href="sign-gauge-obstruction.pdf">PDF</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/notes/sign-gauge-obstruction.md">Markdown source</a></p><p class="small"><strong>Certification, as the notes index states it:</strong> an explicit finite obstruction, hand-checkable and reproduced by three decision procedures</p><section class="panel small"><p>This note has no published claims manifest yet; its standing is as the note itself and the <a href="index.html">notes index</a> state it.</p></section></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">A sign-gauge obstruction to negative association in pyrochlore ice</h1>
+
+<p class="author">Lyndon Drake, with Claude Code (Anthropic Claude 5 models)</p>
+<p class="date">2026-09-06</p>
+</header>
+<section class="abstract"><h2>Abstract</h2>
+<p>A rapid-mixing proof for the single-hexagon-flip chain on pyrochlore ice would plausibly begin by showing its bond indicators negatively associated, and so import the strongly Rayleigh and Lorentzian machinery that bounds down-up walks. It cannot begin. The polarity of a bond indicator is a convention, so the property has to hold in one of the <span class="math inline">\(2^{m}\)</span> sign gauges, and none works. On the sixteen-spin cell, whose ninety ice states are the 2-factors of <span class="math inline">\(K_{4,4}\)</span>, the unnormalised covariance of two bond indicators is <span class="math inline">\(-675\)</span> when the bonds meet at a diamond site and <span class="math inline">\(+225\)</span> when they do not, so one bond with a neighbour at each of its ends forces a sign to be both equal to and different from another. The certificate is three bonds long, is checkable by hand, and is reproduced by the repository code by three independent decision procedures, one an exhaustive scan of all <span class="math inline">\(2^{15}\)</span> gauges. It recurs at four cells and eleven cell-measure combinations. What this closes is the entry to a mixing bound through negative association. The log-concavity of the flux-sector counts, and every route not passing through pairwise negative correlation, is untouched.</p>
+</section>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#the-model" id="toc-the-model">The model</a></li>
+<li><a href="#the-route-and-the-sign-gauge" id="toc-the-route-and-the-sign-gauge">The route, and the sign gauge</a></li>
+<li><a href="#the-obstruction" id="toc-the-obstruction">The obstruction</a></li>
+<li><a href="#proof-of-proposition-1" id="toc-proof-of-proposition-1">Proof of Proposition 1</a></li>
+<li><a href="#the-computation-and-how-far-it-reaches" id="toc-the-computation-and-how-far-it-reaches">The computation, and how far it reaches</a></li>
+<li><a href="#what-is-closed-and-what-is-not" id="toc-what-is-closed-and-what-is-not">What is closed, and what is not</a></li>
+<li><a href="#related-work" id="toc-related-work">Related work</a></li>
+<li><a href="#artefacts" id="toc-artefacts">Artefacts</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+</ul>
+</details></nav>
+<h1 id="the-model">The model</h1>
+<p>Pyrochlore spin ice puts an Ising spin on every bond of the diamond lattice, the diamond sites being the centres of the corner-sharing tetrahedra and each spin an arrow along its bond <span class="citation" data-cites="bramwell-gingras-2001-spin-ice-state">(<a href="#ref-bramwell-gingras-2001-spin-ice-state" role="doc-biblioref">Bramwell and Gingras 2001</a>)</span>. A conventional cubic cell of diamond holds eight sites and sixteen bonds, so an <span class="math inline">\((a,b,c)\)</span> block of such cells with periodic boundaries holds <span class="math inline">\(8abc\)</span> sites and <span class="math inline">\(m = 16abc\)</span> spins. The lattice is bipartite. Writing A and B for its sublattices, set <span class="math inline">\(x_e = 1\)</span> when the arrow on bond <span class="math inline">\(e\)</span> runs from its A end to its B end and <span class="math inline">\(x_e = 0\)</span> otherwise. The ice rule asks that exactly two arrows point into every site, which at an A site means <span class="math inline">\(x = 0\)</span> and at a B site <span class="math inline">\(x =
+1\)</span>, so the rule takes one form everywhere: exactly two of the four bonds at a site carry <span class="math inline">\(x = 1\)</span>. Two consequences are used below. Summing over the <span class="math inline">\(4abc\)</span> A sites, every ice state has exactly <span class="math inline">\(8abc\)</span> indicators set, so the generating polynomial <span class="math inline">\(f(z) = \sum_{\text{states}} \prod_{e\,:\,x_e = 1}
+z_e\)</span> is multi-affine and homogeneous of degree <span class="math inline">\(8abc\)</span>; and at each site the six products <span class="math inline">\(x_i x_j\)</span> over pairs of incident bonds sum to one in every state.</p>
+<p>The chain picks a hexagonal plaquette uniformly at random and, if its six arrows already run head to tail around the ring, reverses them all with probability one half. Every flip preserves the net flux <span class="math inline">\(\mathbf{W}\)</span> through the three cut planes of the cell, so the chain decomposes into flux sectors and is reversible with the uniform stationary measure on each. Frozen ice states, those with no flippable hexagon, exist at every size, so a mixing statement attaches to the giant component of a sector rather than to the sector. Three measures are therefore tested: the uniform measure on the full ice manifold (A), on the zero-flux sector (B), and on the giant flip component of the zero-flux sector (C).</p>
+<h1 id="the-route-and-the-sign-gauge">The route, and the sign gauge</h1>
+<p>A measure <span class="math inline">\(\mu\)</span> on <span class="math inline">\(\{0,1\}^{m}\)</span> is <em>negatively associated</em> when <span class="math inline">\(\mathbb{E}[FG] \le \mathbb{E}[F]\,\mathbb{E}[G]\)</span> for increasing <span class="math inline">\(F\)</span> and <span class="math inline">\(G\)</span> depending on disjoint sets of coordinates. Taking <span class="math inline">\(F = x_i\)</span> and <span class="math inline">\(G = x_j\)</span> gives non-positive covariance for every pair, the weakest consequence of the property and the one tested here. It is <em>strongly Rayleigh</em> when its multi-affine generating polynomial is real stable, having no zero with every coordinate in the open upper half-plane. Borcea, Brändén and Liggett showed that strongly Rayleigh measures are negatively associated, that the class is closed under conditioning on the value of a coordinate and under external fields, and that it contains the determinantal measures <span class="citation" data-cites="borcea-et-al-2009-negative-dependence-polynomial-geometry">(<a href="#ref-borcea-et-al-2009-negative-dependence-polynomial-geometry" role="doc-biblioref">Borcea, Brändén, and Liggett 2009</a>)</span>. A homogeneous stable polynomial with non-negative coefficients is Lorentzian <span class="citation" data-cites="branden-huh-2020-lorentzian-polynomials">(<a href="#ref-branden-huh-2020-lorentzian-polynomials" role="doc-biblioref">Brändén and Huh 2020</a>, Prop. 2.2)</span>, and Lorentzian generating polynomials are the input to the Anari, Liu, Oveis Gharan and Vinzant bound on the down-up walk over the bases of a matroid <span class="citation" data-cites="anari-et-al-2021-log-concave-polynomials-entropy-matroids anari-et-al-2024-log-concave-polynomials-high-dimensional-walks">(<a href="#ref-anari-et-al-2021-log-concave-polynomials-entropy-matroids" role="doc-biblioref">Anari, Oveis Gharan, and Vinzant 2021</a>; <a href="#ref-anari-et-al-2024-log-concave-polynomials-high-dimensional-walks" role="doc-biblioref">Anari et al. 2024</a>)</span>.</p>
+<p>That machinery does not attach directly. Choosing at each A site which two of its four bonds carry <span class="math inline">\(x = 1\)</span> is a partition matroid of rank <span class="math inline">\(4abc\)</span>, the same choice at the B sites is a second one, and the ice states are the common bases of the two. That is a matroid intersection rather than a matroid, and the down-up walk theorem does not cover it <span class="citation" data-cites="anari-et-al-2024-log-concave-polynomials-high-dimensional-walks">(<a href="#ref-anari-et-al-2024-log-concave-polynomials-high-dimensional-walks" role="doc-biblioref">Anari et al. 2024</a>)</span>. A favourable answer would in any case have bounded a walk through states violating the ice rule, needing a comparison step <span class="citation" data-cites="randall-tetali-2000-glauber-dynamics-markov-chain-comparison">(<a href="#ref-randall-tetali-2000-glauber-dynamics-markov-chain-comparison" role="doc-biblioref">Randall and Tetali 2000</a>)</span> to reach the hexagon chain, and would have yielded polynomial mixing rather than the <span class="math inline">\(\Delta \gtrsim L^{-2}\)</span> the project wants. It was worth testing because it was the only analytic tool in hand that speaks to a mixing proof at all, and its cheapest necessary condition is exactly computable.</p>
+<p>One step is forced first. The definition of <span class="math inline">\(x_e\)</span> made the A-to-B direction positive, and that choice has no physical content: the opposite reference on a bond replaces <span class="math inline">\(x_e\)</span> by <span class="math inline">\(1 - x_e\)</span>, and covariances transform as <span class="math inline">\(\operatorname{Cov}(y_i,y_j) = s_i s_j \operatorname{Cov}(x_i,x_j)\)</span> with <span class="math inline">\(s_e = \pm 1\)</span> according to whether the bond was left alone or complemented. Call <span class="math inline">\(s \in \{\pm1\}^{m}\)</span> a <em>sign gauge</em>. Negative association is not invariant under the relabelling, so the question that settles the route is whether any gauge at all makes every pairwise covariance non-positive, and the falsifier was registered in that form.</p>
+<h1 id="the-obstruction">The obstruction</h1>
+<p>Write <span class="math inline">\(N\)</span> for the number of states carrying the measure, <span class="math inline">\(n_i\)</span> for the number with <span class="math inline">\(x_i = 1\)</span>, and <span class="math inline">\(n_{ij}\)</span> for the number with <span class="math inline">\(x_i = x_j = 1\)</span>, and work with the integer</p>
+<p><span class="math display">\[C_{ij} \;=\; N n_{ij} - n_i n_j \;=\; N^{2}\operatorname{Cov}(x_i, x_j),\]</span></p>
+<p>which carries the sign of the covariance and needs no division. In the gauge <span class="math inline">\(s\)</span> the pair covariance is <span class="math inline">\(s_i s_j C_{ij}\)</span>, so a gauge works exactly when the constraints <span class="math inline">\(s_i s_j = -\operatorname{sign} C_{ij}\)</span>, one for each pair with <span class="math inline">\(C_{ij} \ne 0\)</span>, are consistent. That is a balanced-signed-graph question: satisfiable if and only if no cycle of the constraint graph carries an odd number of ‘must differ’ edges.</p>
+<p><strong>Proposition 1.</strong> <em>Under the uniform measure on the <span class="math inline">\(N = 90\)</span> ice states of the <span class="math inline">\((1,1,1)\)</span> cell, <span class="math inline">\(n_i = 45\)</span> for each of the sixteen bonds, and for <span class="math inline">\(i \ne
+j\)</span></em></p>
+<p><span class="math display">\[C_{ij} = \begin{cases} -675 &amp; \text{if bonds } i,\, j \text{ share a
+diamond site},\\[2pt] +225 &amp; \text{otherwise,}\end{cases}\]</span></p>
+<p><em>so that the correlation coefficient is <span class="math inline">\(-\tfrac13\)</span> on the 48 site-sharing pairs and <span class="math inline">\(+\tfrac19\)</span> on the remaining 72.</em></p>
+<p><strong>Theorem 2.</strong> <em>No <span class="math inline">\(s \in \{\pm1\}^{16}\)</span> makes <span class="math inline">\(s_i s_j C_{ij} \le 0\)</span> for every pair, and three bonds show it. Bonds 0 and 1 meet at the A site at the origin, bonds 0 and 15 meet at the B site at <span class="math inline">\((1,1,1)\)</span> in units of a quarter of the cubic edge, and bonds 1 and 15 meet nowhere. The first two pairs have <span class="math inline">\(C = -675\)</span> and force <span class="math inline">\(s_0 = s_1\)</span> and <span class="math inline">\(s_0 = s_{15}\)</span>. The third has <span class="math inline">\(C = +225\)</span> and forces <span class="math inline">\(s_1 \ne s_{15}\)</span>.</em></p>
+<p>The three bonds are a path of length two in the pyrochlore lattice together with the pair closing it, the smallest configuration in which the two signs of covariance can meet. Nothing in the argument needs the cell to be the smallest one:</p>
+<p><strong>Lemma 3.</strong> <em>In any cell, under any measure for which every pair of bonds meeting at a diamond site has <span class="math inline">\(C_{ij} &lt; 0\)</span> while some pair has <span class="math inline">\(C_{ij} &gt; 0\)</span>, no sign gauge exists.</em></p>
+<p><em>Proof.</em> The site-sharing pairs are the edges of the pyrochlore lattice, whose vertices are the bonds, and that lattice is connected. Each such pair imposes <span class="math inline">\(s_i = s_j\)</span>, so all <span class="math inline">\(m\)</span> signs coincide, and any pair with <span class="math inline">\(C_{ij} &gt;
+0\)</span> then has <span class="math inline">\(s_i s_j C_{ij} &gt; 0\)</span>.</p>
+<h1 id="proof-of-proposition-1">Proof of Proposition 1</h1>
+<p>At <span class="math inline">\((1,1,1)\)</span> the eight sites split into four A and four B sites and each of the sixteen bonds joins a distinct A–B pair, so the quotient graph is <span class="math inline">\(K_{4,4}\)</span>. An ice state sets exactly two of the four bonds at every site, hence <span class="math inline">\(\{e : x_e = 1\}\)</span> is a 2-factor of <span class="math inline">\(K_{4,4}\)</span>. Indexing A sites by rows and B sites by columns, ice states correspond to <span class="math inline">\(4 \times 4\)</span> matrices of zeros and ones with every row sum and every column sum equal to <span class="math inline">\(2\)</span>. There are 90 of them, the external anchor this project uses to validate its enumerators, and two bonds share a diamond site exactly when the corresponding entries share a row or a column.</p>
+<p>The measure is invariant under permuting rows and permuting columns. Each row carries two ones among four entries, so an entry is <span class="math inline">\(1\)</span> with probability <span class="math inline">\(\tfrac12\)</span> and <span class="math inline">\(n_i = 45\)</span>. The support of a fixed row is a 2-subset of the columns whose distribution is invariant under the symmetric group on the columns, hence uniform on the six 2-subsets, so two entries of a row are both <span class="math inline">\(1\)</span> with probability <span class="math inline">\(\tfrac16\)</span>: <span class="math inline">\(n_{ij} = 15\)</span> and <span class="math inline">\(C_{ij} = 90 \cdot
+15 - 45^{2} = -675\)</span>. Transposing gives the same for a column. Each bond meets six others at a site, three at each end, so there are <span class="math inline">\(16 \cdot 6/2 =
+48\)</span> such pairs.</p>
+<p>For the rest, every state has exactly eight entries equal to <span class="math inline">\(1\)</span>, so for fixed <span class="math inline">\(i\)</span></p>
+<p><span class="math display">\[\sum_{j \ne i} n_{ij} \;=\; \sum_{\text{states with } x_i = 1}\ \sum_{j
+\ne i} x_j \;=\; 45 \cdot (8-1) \;=\; 315 .\]</span></p>
+<p>Six of the fifteen other entries share a row or column with <span class="math inline">\(i\)</span> and contribute <span class="math inline">\(6 \cdot 15 = 90\)</span>. The nine remaining lie in the other three rows and other three columns and are permuted transitively by the subgroup fixing <span class="math inline">\(i\)</span>, so each has a common value <span class="math inline">\(t\)</span> with <span class="math inline">\(90 + 9t = 315\)</span>, giving <span class="math inline">\(t = 25\)</span> and <span class="math inline">\(C_{ij} = 90 \cdot 25 - 45^{2} = +225\)</span>.</p>
+<p>One value follows without enumeration at all. The six pair products at a site sum to one in every state, so the six covariances there sum to <span class="math inline">\(N^{2} -
+6(N/2)^{2} = -N^{2}/2\)</span>, and at <span class="math inline">\((1,1,1)\)</span> symmetry makes them equal: <span class="math inline">\(-8100/12 = -675\)</span>.</p>
+<h1 id="the-computation-and-how-far-it-reaches">The computation, and how far it reaches</h1>
+<p>Every count below was produced twice by routes sharing no arithmetic, a chunked <span class="math inline">\(X^{\top}X\)</span> over the dense state matrix and a packed bitset per bond with <span class="math inline">\(n_{ij} = \operatorname{popcount}(b_i \wedge b_j)\)</span>, and required to agree bit for bit. Signability was decided three ways: union–find with parity, an odd-cycle certificate from an independently built spanning forest, and, at the smallest cell, an exhaustive scan of all <span class="math inline">\(2^{15}\)</span> gauges. All three agree.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>spins</th>
+<th>measure</th>
+<th><span class="math inline">\(N\)</span></th>
+<th>pairs</th>
+<th><span class="math inline">\(C&gt;0\)</span></th>
+<th><span class="math inline">\(C&lt;0\)</span></th>
+<th><span class="math inline">\(C=0\)</span></th>
+<th>certificate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,1,1)</td>
+<td>16</td>
+<td>A</td>
+<td>90</td>
+<td>120</td>
+<td>72</td>
+<td>48</td>
+<td>0</td>
+<td>15, 0, 1</td>
+</tr>
+<tr>
+<td>(1,1,1)</td>
+<td>16</td>
+<td>B</td>
+<td>12</td>
+<td>120</td>
+<td>48</td>
+<td>72</td>
+<td>0</td>
+<td>15, 0, 1</td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>32</td>
+<td>A</td>
+<td>3,618</td>
+<td>496</td>
+<td>272</td>
+<td>224</td>
+<td>0</td>
+<td>31, 0, 1</td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>32</td>
+<td>B</td>
+<td>388</td>
+<td>496</td>
+<td>176</td>
+<td>192</td>
+<td>128</td>
+<td>31, 0, 3</td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>32</td>
+<td>C</td>
+<td>160</td>
+<td>496</td>
+<td>224</td>
+<td>256</td>
+<td>16</td>
+<td>31, 0, 1</td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td>48</td>
+<td>A</td>
+<td>181,122</td>
+<td>1,128</td>
+<td>600</td>
+<td>528</td>
+<td>0</td>
+<td>47, 0, 1</td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td>48</td>
+<td>B</td>
+<td>15,024</td>
+<td>1,128</td>
+<td>360</td>
+<td>384</td>
+<td>384</td>
+<td>47, 0, 3</td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td>48</td>
+<td>C</td>
+<td>3,360</td>
+<td>1,128</td>
+<td>528</td>
+<td>600</td>
+<td>0</td>
+<td>47, 0, 1</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>64</td>
+<td>A</td>
+<td>2,891,562</td>
+<td>2,016</td>
+<td>992</td>
+<td>1,024</td>
+<td>0</td>
+<td>63, 0, 1</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>64</td>
+<td>B</td>
+<td>221,628</td>
+<td>2,016</td>
+<td>832</td>
+<td>1,184</td>
+<td>0</td>
+<td>63, 0, 1</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>64</td>
+<td>C</td>
+<td>221,424</td>
+<td>2,016</td>
+<td>832</td>
+<td>1,184</td>
+<td>0</td>
+<td>63, 0, 1</td>
+</tr>
+</tbody>
+</table>
+<p>No cell or measure is signable, and every certificate returned is a triangle rather than a longer cycle. Measure C is undefined at <span class="math inline">\((1,1,1)\)</span>, where all twelve zero-flux states are frozen, so the eleven rows are the whole test. Between 49 and 60 per cent of all pairs are strictly positive in the plain gauge, and over all <span class="math inline">\(2^{15}\)</span> gauges at <span class="math inline">\((1,1,1)\)</span> the smallest achievable number of violated pairs is 40 out of 120, so the failure is not marginal. From <span class="math inline">\((1,1,2)\)</span> upwards the triangle has one site-sharing negative edge and two pairs sharing no site, one negative and one positive. The dichotomy of Proposition 1 belongs to the smallest cell, where every pair of bonds is either adjacent or not.</p>
+<p>The hypothesis of Lemma 3 holds at every cell in measures A and B and at <span class="math inline">\((1,1,3)\)</span> and <span class="math inline">\((1,2,2)\)</span> in measure C, with all 48, 96, 144 and 192 site pairs strictly negative. It fails once, and the exception corrects a natural assumption. On the 160-state giant component at <span class="math inline">\((1,1,2)\)</span>, 64 site pairs are negative and 32 strictly positive with <span class="math inline">\(C = +320\)</span> each: the two-of-four rule forces the six covariances at a site to sum to <span class="math inline">\(-N^{2}/2\)</span> rather than each to be negative, and here four pairs with <span class="math inline">\(n_{ij} = 19\)</span> and two with <span class="math inline">\(n_{ij}
+= 42\)</span> realise that sum, since <span class="math inline">\(4 \cdot 19 + 2 \cdot 42 = 160 = N\)</span>. That row rests on its own triangle instead.</p>
+<p>The result is therefore established at four cells and eleven measures rather than for all <span class="math inline">\(L\)</span>, and Lemma 3 says what a repair at larger <span class="math inline">\(L\)</span> would require: that some pair of bonds meeting at a site cease to be negatively correlated, which is the opposite of what the local constraint does under the symmetric measures.</p>
+<h1 id="what-is-closed-and-what-is-not">What is closed, and what is not</h1>
+<p>Any argument that begins by asserting the bond indicators pairwise negatively correlated, whether to reach negative association, the strongly Rayleigh property, or a Lorentzian generating polynomial, fails at the sixteen-spin cell and at every larger cell and measure tested, and fails for all <span class="math inline">\(2^{m}\)</span> conventions available for the sign of a bond variable. The registered follow-up, a strong Rayleigh necessary condition under conditioning on other bonds, was never run because its trigger was a favourable answer here.</p>
+<p>Four things survive. The exact joint winding histogram <span class="math inline">\(N(W_x,W_y,W_z)\)</span> is log-concave along every axis and diagonal of its support lattice at all six cells the frontier dynamic program reaches, a reading about the flux grading rather than about bond variables. Only the <span class="math inline">\(2^{m}\)</span> diagonal gauges are ruled out, so a different set of variables, or a non-diagonal change of them, is untouched. A bound obtained for another chain and transferred by comparison <span class="citation" data-cites="randall-tetali-2000-glauber-dynamics-markov-chain-comparison">(<a href="#ref-randall-tetali-2000-glauber-dynamics-markov-chain-comparison" role="doc-biblioref">Randall and Tetali 2000</a>)</span> needs no negative correlation at all. And the combinatorial routes, canonical paths and coupling, and the connectivity question about the giant component that any statement of the problem must settle first <span class="citation" data-cites="gioan-2007-enumerating-degree-sequences-digraphs">(<a href="#ref-gioan-2007-enumerating-degree-sequences-digraphs" role="doc-biblioref">Gioan 2007</a>)</span>, are neither helped nor harmed.</p>
+<h1 id="related-work">Related work</h1>
+<p>Borcea, Brändén and Liggett introduced strongly Rayleigh measures through the stability of their generating polynomials and proved they satisfy the negative-dependence properties sought for such a class, resolving conjectures of Liggett, Pemantle and Wagner <span class="citation" data-cites="borcea-et-al-2009-negative-dependence-polynomial-geometry">(<a href="#ref-borcea-et-al-2009-negative-dependence-polynomial-geometry" role="doc-biblioref">Borcea, Brändén, and Liggett 2009</a>)</span>. Pemantle’s earlier survey had set out why no analogue of the FKG theorem was available on the negative side <span class="citation" data-cites="pemantle-2000-theory-of-negative-dependence">(<a href="#ref-pemantle-2000-theory-of-negative-dependence" role="doc-biblioref">Pemantle 2000</a>)</span>. Brändén and Huh place the homogeneous stable polynomials inside the larger Lorentzian class, characterised by a Hodge–Riemann condition on the Hessian and tied to matroids <span class="citation" data-cites="branden-huh-2020-lorentzian-polynomials">(<a href="#ref-branden-huh-2020-lorentzian-polynomials" role="doc-biblioref">Brändén and Huh 2020</a>)</span>, and Anari, Oveis Gharan and Vinzant, then with Liu, turned the log-concavity of a matroid’s basis generating polynomial into approximate counting and into rapid mixing of the down-up walk over bases <span class="citation" data-cites="anari-et-al-2021-log-concave-polynomials-entropy-matroids anari-et-al-2024-log-concave-polynomials-high-dimensional-walks">(<a href="#ref-anari-et-al-2021-log-concave-polynomials-entropy-matroids" role="doc-biblioref">Anari, Oveis Gharan, and Vinzant 2021</a>; <a href="#ref-anari-et-al-2024-log-concave-polynomials-high-dimensional-walks" role="doc-biblioref">Anari et al. 2024</a>)</span>.</p>
+<p>That negative correlation of element indicators should control a basis-exchange walk is older: Feder and Mihail called a matroid balanced when every minor has the property that conditioning on one element present makes any other less likely, and proved that the basis-exchange graph of a balanced matroid expands <span class="citation" data-cites="feder-mihail-1992-balanced-matroids">(<a href="#ref-feder-mihail-1992-balanced-matroids" role="doc-biblioref">Feder and Mihail 1992</a>)</span>. Their hypothesis is the conditioned form of the test performed here. The closest methodological precedent is Grimmett and Winkler on uniform forests, where negative association was conjectured, resisted proof, and was settled computationally only for graphs of at most eight vertices, or nine vertices and eighteen edges <span class="citation" data-cites="grimmett-winkler-2004-negative-association-uniform-forests">(<a href="#ref-grimmett-winkler-2004-negative-association-uniform-forests" role="doc-biblioref">Grimmett and Winkler 2004</a>)</span>.</p>
+<p>Two dimensions are more favourable in a way that sharpens what fails here. The dimer model on a planar bipartite graph has determinantal edge statistics from the Kasteleyn matrix <span class="citation" data-cites="kenyon-1997-local-statistics-lattice-dimers">(<a href="#ref-kenyon-1997-local-statistics-lattice-dimers" role="doc-biblioref">Kenyon 1997</a>)</span>, and determinantal measures sit inside the strongly Rayleigh class <span class="citation" data-cites="borcea-et-al-2009-negative-dependence-polynomial-geometry">(<a href="#ref-borcea-et-al-2009-negative-dependence-polynomial-geometry" role="doc-biblioref">Borcea, Brändén, and Liggett 2009</a>)</span>, so a negative-dependence route to mixing is available in principle for the models the hexagon-flip chain is usually compared with. Pyrochlore ice is not among them. Its states are the Eulerian orientations of the diamond lattice <span class="citation" data-cites="mihail-winkler-1996-eulerian-orientations-count">(<a href="#ref-mihail-winkler-1996-eulerian-orientations-count" role="doc-biblioref">Mihail and Winkler 1996</a>)</span>, the Glauber dynamics of the related six-vertex model mix slowly in the ordered phases <span class="citation" data-cites="fahrbach-randall-2019-slow-mixing-glauber-dynamics-six-vertex-model">(<a href="#ref-fahrbach-randall-2019-slow-mixing-glauber-dynamics-six-vertex-model" role="doc-biblioref">Fahrbach and Randall 2019</a>)</span>, and the dynamical exponent <span class="math inline">\(z
+\approx 2\)</span> measured for this chain <span class="citation" data-cites="henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points">(<a href="#ref-henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points" role="doc-biblioref">Henley 2004</a>)</span> still has no matching lower bound.</p>
+<h1 id="artefacts">Artefacts</h1>
+<p>Paths are relative to the project root. <code>icemix/signgauge.py</code> holds the pair statistics by two routes, the balanced-signing test, the odd-cycle certificate, the exhaustive scan, the site-pair check and the conditioned check; <code>icemix/lattice.py</code> holds the cell construction, where the <span class="math inline">\((1,1,1)\)</span> quotient graph being <span class="math inline">\(K_{4,4}\)</span> is documented and tested; <code>experiments/04_lorentzian_giant/run_stage4abc.py</code> produced the table, with every count quoted stored in <code>results/results.json</code> under <code>items.4b.cells.&lt;cell&gt;.measures.&lt;M&gt;</code>; §3.3 of <a href="../reports/2026-09-04-stage4abc.html"><code>docs/reports/2026-09-04-stage4abc.md</code></a> gives the <span class="math inline">\((1,1,1)\)</span> certificate with its counts; the tests are in <code>tests/test_stage4abc.py</code>. Run <code>run_stage4abc.py --items 4b</code> and then <code>make_summary.py</code> to reproduce the item.</p>
+<p>The covariance values <span class="math inline">\(-675\)</span> and <span class="math inline">\(+225\)</span>, the counts <span class="math inline">\(n_{ij} = 15\)</span> and <span class="math inline">\(25\)</span>, and the classification of each certificate edge as site-sharing or disjoint were recomputed from the repository code while this note was written, and agree with the run report. One number is in no stored artefact and was computed for this note alone with <code>icemix.signgauge</code>: the minimum of 40 violated pairs out of 120 at <span class="math inline">\((1,1,1)\)</span> under measure A.</p>
+<h1 class="unnumbered" id="references">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-anari-et-al-2024-log-concave-polynomials-high-dimensional-walks" class="csl-entry" role="listitem">
+Anari, Nima, et al. (2024), <span>‘Log-Concave Polynomials II: High-Dimensional Walks and an FPRAS for Counting Bases of a Matroid’</span>, <em>Annals of Mathematics</em>, 199/1: 259–99, <a href="https://doi.org/10.4007/annals.2024.199.1.4">https://doi.org/10.4007/annals.2024.199.1.4</a>.
+</div>
+<div id="ref-anari-et-al-2021-log-concave-polynomials-entropy-matroids" class="csl-entry" role="listitem">
+Anari, Nima, Shayan Oveis Gharan, and Cynthia Vinzant (2021), <span>‘Log-Concave Polynomials I: Entropy and a Deterministic Approximation Algorithm for Counting Bases of Matroids’</span>, <em>Duke Mathematical Journal</em>, 170/16, <a href="https://doi.org/10.1215/00127094-2020-0091">https://doi.org/10.1215/00127094-2020-0091</a>.
+</div>
+<div id="ref-borcea-et-al-2009-negative-dependence-polynomial-geometry" class="csl-entry" role="listitem">
+Borcea, Julius, Petter Brändén, and Thomas M. Liggett (2009), <span>‘Negative Dependence and the Geometry of Polynomials’</span>, <em>Journal of the American Mathematical Society</em>, 22/2: 521–67, <a href="https://doi.org/10.1090/S0894-0347-08-00618-8">https://doi.org/10.1090/S0894-0347-08-00618-8</a>.
+</div>
+<div id="ref-bramwell-gingras-2001-spin-ice-state" class="csl-entry" role="listitem">
+Bramwell, Steven T., and Michel J. P. Gingras (2001), <span>‘Spin Ice State in Frustrated Magnetic Pyrochlore Materials’</span>, <em>Science</em>, 294: 1495–501.
+</div>
+<div id="ref-branden-huh-2020-lorentzian-polynomials" class="csl-entry" role="listitem">
+Brändén, Petter, and June Huh (2020), <span>‘Lorentzian Polynomials’</span>, <em>Annals of Mathematics</em>, 192/3: 821–91, <a href="https://doi.org/10.4007/annals.2020.192.3.4">https://doi.org/10.4007/annals.2020.192.3.4</a>.
+</div>
+<div id="ref-fahrbach-randall-2019-slow-mixing-glauber-dynamics-six-vertex-model" class="csl-entry" role="listitem">
+Fahrbach, Matthew, and Dana Randall (2019), <span>‘Slow Mixing of Glauber Dynamics for the Six-Vertex Model in the Ordered Phases’</span>, <em>Approximation, Randomization, and Combinatorial Optimization. Algorithms and Techniques (APPROX/RANDOM 2019)</em>.
+</div>
+<div id="ref-feder-mihail-1992-balanced-matroids" class="csl-entry" role="listitem">
+Feder, Tomás, and Milena Mihail (1992), <span>‘Balanced Matroids’</span>, <em>Proceedings of the Twenty-Fourth Annual ACM Symposium on Theory of Computing (STOC ’92)</em> 26–38, <a href="https://doi.org/10.1145/129712.129716">https://doi.org/10.1145/129712.129716</a>.
+</div>
+<div id="ref-gioan-2007-enumerating-degree-sequences-digraphs" class="csl-entry" role="listitem">
+Gioan, Emeric (2007), <span>‘Enumerating Degree Sequences in Digraphs and a Cycle–Cocycle Reversing System’</span>, <em>European Journal of Combinatorics</em>, 28/4: 1351–66, <a href="https://doi.org/10.1016/j.ejc.2005.11.006">https://doi.org/10.1016/j.ejc.2005.11.006</a>.
+</div>
+<div id="ref-grimmett-winkler-2004-negative-association-uniform-forests" class="csl-entry" role="listitem">
+Grimmett, Geoffrey R., and Svante N. Winkler (2004), <span>‘Negative Association in Uniform Forests and Connected Graphs’</span>, <em>Random Structures &amp; Algorithms</em>, 24/4: 444–60, <a href="https://doi.org/10.1002/rsa.20012">https://doi.org/10.1002/rsa.20012</a>.
+</div>
+<div id="ref-henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points" class="csl-entry" role="listitem">
+Henley, Christopher L. (2004), <span>‘From Classical to Quantum Dynamics at Rokhsar–Kivelson Points’</span>, <em>Journal of Physics: Condensed Matter</em>, 16: S891–8.
+</div>
+<div id="ref-kenyon-1997-local-statistics-lattice-dimers" class="csl-entry" role="listitem">
+Kenyon, Richard (1997), <span>‘Local Statistics of Lattice Dimers’</span>, <em>Annales de l’Institut Henri Poincaré (B) Probabilités Et Statistiques</em>, 33/5: 591–618.
+</div>
+<div id="ref-mihail-winkler-1996-eulerian-orientations-count" class="csl-entry" role="listitem">
+Mihail, Milena, and Peter Winkler (1996), <span>‘On the Number of Eulerian Orientations of a Graph’</span>, <em>Algorithmica</em>, 16: 402–14.
+</div>
+<div id="ref-pemantle-2000-theory-of-negative-dependence" class="csl-entry" role="listitem">
+Pemantle, Robin (2000), <span>‘Towards a Theory of Negative Dependence’</span>, <em>Journal of Mathematical Physics</em>, 41/3: 1371–90, <a href="https://doi.org/10.1063/1.533200">https://doi.org/10.1063/1.533200</a>.
+</div>
+<div id="ref-randall-tetali-2000-glauber-dynamics-markov-chain-comparison" class="csl-entry" role="listitem">
+Randall, Dana, and Prasad Tetali (2000), <span>‘Analyzing Glauber Dynamics by Comparison of Markov Chains’</span>, <em>Journal of Mathematical Physics</em>, 41/3: 1598–615, <a href="https://doi.org/10.1063/1.533199">https://doi.org/10.1063/1.533199</a>.
+</div>
+</div>
+</main>
+</body>
+</html>

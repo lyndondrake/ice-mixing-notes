@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Attack proposal of 28 September: Theorem H is proved by hand on every cell in which two of the three extents are coprime, by a lemma on the types of o</title>
+<meta name="description" content="Attack proposal of 28 September: Theorem H is proved by hand on every cell in which two of the three extents are coprime, by a lemma on the types of one sublattice; what is left is the cells in which every two extents share a factor, where odd states with all three types exist an">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Attack proposal of 28 September: Theorem H is proved by hand on every cell in which two of the three extents are coprime, by a lemma on the types of one sublattice; what is left is the cells in which every two extents share a factor, where odd states with all three types exist and the signs are needed; a proposal for that case",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-28-attack-proposal.html",
+ "datePublished": "2026-09-28",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Fable 5.1), main loop, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-28-attack-proposal.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/thm-14.html">thm-14</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Attack proposal of 28 September: Theorem H is proved by hand on every cell in which two of the three extents are coprime, by a lemma on the types of one sublattice; what is left is the cells in which every two extents share a factor, where odd states with all three types exist and the signs are needed; a proposal for that case</h1>
+
+<p class="author">Claude (Fable 5.1), main loop, for Lyndon Drake</p>
+<p class="date">2026-09-28</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#corrections-after-the-independent-check-added-the-same-day" id="toc-corrections-after-the-independent-check-added-the-same-day">Corrections after the independent check (added the same day)</a></li>
+<li><a href="#summary" id="toc-summary">Summary</a></li>
+<li><a href="#where-the-problem-stood" id="toc-where-the-problem-stood">Where the problem stood</a></li>
+<li><a href="#theorem-s-and-theorem-h-on-cells-with-a-coprime-pair" id="toc-theorem-s-and-theorem-h-on-cells-with-a-coprime-pair">Theorem S and Theorem H on cells with a coprime pair</a></li>
+<li><a href="#what-is-left" id="toc-what-is-left">What is left</a></li>
+<li><a href="#why-this-was-not-found-before" id="toc-why-this-was-not-found-before">Why this was not found before</a></li>
+<li><a href="#proposal" id="toc-proposal">Proposal</a></li>
+<li><a href="#caveats" id="toc-caveats">Caveats</a></li>
+<li><a href="#computations-run" id="toc-computations-run">Computations run</a></li>
+</ul>
+</details></nav>
+<p>Status tags as in the note: <strong>proved</strong> (argument written out here), <strong>computed</strong> (exact, no solver), <strong>solver</strong> (SAT verdict through <code>h32_cap</code>), <strong>conjecture</strong>. New scripts <code>scratch_h/h420_family.py</code> to <code>h423_signed_modes.py</code>. All compute on the primary Mac, one process at a time. The longest solve was 40 s, and three queries stopped at their cap of 100 or 120 s without a verdict. Lyndon asked for the best way to attack the overall problem analytically, from the docs. While reading for that I found a proof, which changes what the proposal has to cover. It has had no independent check yet. An Opus checker is to be dispatched on it before anything else is built on it.</p>
+<h2 id="corrections-after-the-independent-check-added-the-same-day">Corrections after the independent check (added the same day)</h2>
+<p>Agent check7 (Opus; <code>2026-09-28-opus-check7.md</code>, scripts <code>h430</code>–<code>h432</code>, its own implementation and none of the scripts below) read the proofs for a gap and found none. It confirmed the sheet lemma, Lemma T′, the failure of Lemma T, Lemma J, Theorem S, Theorem S2, the repair of Theorem R1 and the law of line fractions as written, and Corollary H with one correction. The main loop read its scripts, checked that its symmetry reduction is sound, and re-ran <code>h430_geom.py</code>, <code>h431_sl.py 4,3,3 pair</code> and one sampling run of <code>h432_sample.py</code>, with the same verdicts. The text below is left as written. Read it with these.</p>
+<ol type="1">
+<li><strong>‘No certificate’ is wrong (Summary, item 2).</strong> Corollary H uses Theorem <span class="math inline">\(M&#39;\)</span>, and the proof of Theorem <span class="math inline">\(M&#39;\)</span> rests on finite lemmas on four hexagons that carry DRAT certificates. They are window lemmas and hold on every torus, so they do not limit the scope, but the corollary is not free of certificates. The second proof, through Theorem S2, is free of Theorem <span class="math inline">\(M&#39;\)</span> and of certificates, and it needs <span class="math inline">\(\gcd(a, b) = \gcd(a, c) = 1\)</span>.</li>
+<li><strong>Where the hypothesis enters.</strong> The two lines of Case 2 meet whenever <span class="math inline">\(\gcd(a, b, c) = 1\)</span> (enumerated on twelve cells: no pair fails to meet on (4,3,3), (5,3,3), (3,4,4), and pairs fail on every cell with <span class="math inline">\(\gcd(a, b, c) &gt; 1\)</span> tried). The last step of Lemma J needs the same and no more. So <span class="math inline">\(\gcd(b, c) = 1\)</span> is used only through (S1), and on the cells that are left it is (S1) that fails.</li>
+<li><strong>Smaller counterexamples to Lemma T.</strong> On <span class="math inline">\(\mathbb{Z}_2 \times \mathbb{Z}_2\)</span> every function with values 0 and 1 has the form of the lemma. The patterns that are not functions of one of <span class="math inline">\(i\)</span>, <span class="math inline">\(j\)</span>, <span class="math inline">\(i + j\)</span> number 8, 36 and 96 on the square tori of side 2, 3 and 4.</li>
+<li><strong>More cells decided.</strong> With a reduction by the translations and the half-turns to nine cases, ‘A has all three types’ is UNSAT on (5,4,4) (in the plain form, 198 s), (6,2,9) and (7,3,6), which the table below has as no verdict or does not have. (10,4,5) gave no verdict. On 258 sampled solutions of seven cells with a coprime pair the case of Theorem S, the planes of case (i), the lines of Case 2 and the forms of Theorem S2 had no exception, and the jumps of <span class="math inline">\(\Phi_S\)</span> were integers in 920 of 920 cases.</li>
+<li><strong>Thin cells</strong> (caveat 4 below) cause no trouble in any step the checker read, and the law of line fractions holds exactly on 495 sampled solutions of ten cells that are not cubic, three of them with no coprime pair.</li>
+</ol>
+<p>Not checked by check7: completeness, Theorem <span class="math inline">\(M&#39;\)</span>, Lemma A and Theorem P, which are from the record; the corpus statistics; package B.</p>
+<h2 id="summary">Summary</h2>
+<ol type="1">
+<li><strong>Theorem S (proved here).</strong> On a cell in which two of the three extents are coprime, no sublattice of a frozen state carries all three types. The statement is about the type model alone, with no signs and no oddness.</li>
+<li><strong>Theorem H follows on every such cell (proved here, given Theorem <span class="math inline">\(M&#39;\)</span>).</strong> An odd state has a corner, the sublattice of the corner has the two types of its rods and so lacks the third, and Theorem <span class="math inline">\(M&#39;\)</span> makes the other sublattice lack it too. So every odd state of such a cell has an empty axis. This needs no <span class="math inline">\(K_u\)</span>, no Theorem U, no Theorem R1 and no certificate. On the cells <span class="math inline">\((L, L, L+1)\)</span> it holds for every <span class="math inline">\(L\)</span>.</li>
+<li><strong>One lemma of the record is false as stated.</strong> Lemma T of 18 September (a function <span class="math inline">\(\alpha(i) + \beta(j) + \gamma(i+j)\)</span> with values 0 and 1 on a torus depends on one of <span class="math inline">\(i\)</span>, <span class="math inline">\(j\)</span>, <span class="math inline">\(i+j\)</span>) fails on the torus <span class="math inline">\(\mathbb{Z}_3 \times \mathbb{Z}_3\)</span>. It holds when the jumps of <span class="math inline">\(\gamma\)</span> are integers, and in the two places where the project uses it they are, by an argument given below. Theorem R1 stands, with that repair to its proof.</li>
+<li><strong>What is left</strong> is the cells in which every two extents have a common factor. The cubic cells are among them. There Theorem S is false, and odd states with all three types exist on every such cell tried, down to <span class="math inline">\((2,2,2)\)</span>. In the corpus of 1,357 odd states of the cubic cells of side three and four, 1,001 have all three types on both sublattices, and every one of these has a one-way axis that is not empty. So on these cells no statement about types alone proves H, and the proof has to reach the signs.</li>
+<li><strong>The proposal</strong> for that case is in the last section but one. Its first step is a fact computed here on the cubic cells of side three and four: the solutions of one cage law <span class="math inline">\(P^k\)</span> are exactly the sums over chains of the two other axes, so in a state with every hole oriented the six direction indicators have the same linear form as the three type indicators. The method that proved Theorem S can then be applied to directions.</li>
+</ol>
+<h2 id="where-the-problem-stood">Where the problem stood</h2>
+<p>From the handover of 27 September. The periodicity conjecture follows from Theorem H, Theorem P and Lemma A, and the last two are proved. Theorem H followed from <span class="math inline">\(K_u\)</span> and Theorem U (Theorem 1 of the note, valid on every cell). On a cubic cell both had an open statement: (V) for Theorem U, and the first step of <span class="math inline">\(K_u\)</span> on the whole slab. Each was certified on small cubic cells and each has a reach that grows with the greatest common divisor of the two extents transverse to an axis. H was proved with no open statement on cells whose extents are pairwise coprime (no odd state, Theorem R1), and, given the certificates of <span class="math inline">\(K_u\)</span>, on cells with one pair of extents of greatest common divisor two and the other pairs coprime.</p>
+<h2 id="theorem-s-and-theorem-h-on-cells-with-a-coprime-pair">Theorem S and Theorem H on cells with a coprime pair</h2>
+<h3 id="statements">Statements</h3>
+<p>Cell <span class="math inline">\((a, b, c)\)</span>, coordinates modulo <span class="math inline">\((4a, 4b, 4c)\)</span>. <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span>, <span class="math inline">\(Z\)</span> are the indicators of the types <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>, <span class="math inline">\(z\)</span>. A solution of the type model is an assignment of types satisfying (T2) on every hexagon. A frozen state gives one.</p>
+<p><strong>Theorem S.</strong> Let <span class="math inline">\(\gcd(b, c) = 1\)</span>. In every solution of the type model, each sublattice <span class="math inline">\(S\)</span> satisfies one of the following.</p>
+<ol type="i">
+<li><p><span class="math inline">\(S\)</span> has no vertex of type <span class="math inline">\(x\)</span>, and every plane $x = $ const of <span class="math inline">\(S\)</span> is entirely of type <span class="math inline">\(y\)</span> or entirely of type <span class="math inline">\(z\)</span>.</p></li>
+<li><p><span class="math inline">\(S\)</span> has no vertex of type <span class="math inline">\(y\)</span>.</p></li>
+<li><p><span class="math inline">\(S\)</span> has no vertex of type <span class="math inline">\(z\)</span>.</p></li>
+</ol>
+<p>By the permutations of the axes the same holds, with the axes renamed, whenever some pair of extents is coprime.</p>
+<p><strong>Theorem S2.</strong> Let <span class="math inline">\(\gcd(a, b) = \gcd(a, c) = 1\)</span>. Then each sublattice <span class="math inline">\(S\)</span> has one of three forms.</p>
+<p>(<span class="math inline">\(P_z\)</span>) <span class="math inline">\(S\)</span> has types <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> only, and the vertices of type <span class="math inline">\(x\)</span> are the vertices of <span class="math inline">\(S\)</span> on a set of planes $z = $ const.</p>
+<p>(<span class="math inline">\(P_y\)</span>) <span class="math inline">\(S\)</span> has types <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> only, and the vertices of type <span class="math inline">\(x\)</span> are those on a set of planes $y = $ const.</p>
+<p>(<span class="math inline">\(Q\)</span>) <span class="math inline">\(S\)</span> has no vertex of type <span class="math inline">\(x\)</span>, and on each plane $x = $ const of <span class="math inline">\(S\)</span> the type is constant along the chains of axis <span class="math inline">\(x\)</span> of one of the two families.</p>
+<p><strong>Corollary H.</strong> On a cell with a coprime pair of extents every odd frozen state lacks one of the three types. So Theorem H holds on the cell, and with Lemma A and Theorem P every frozen zero-flux state of the cell is invariant under a nonzero translation. When <span class="math inline">\(\gcd(a, b) = \gcd(a, c) = 1\)</span> the type that is absent is <span class="math inline">\(x\)</span>.</p>
+<p>The last sentence is statement (F) of the handover, which had no proof, for every value of <span class="math inline">\(\gcd(b, c)\)</span>.</p>
+<h3 id="ingredients">Ingredients</h3>
+<ol start="3" type="A">
+<li>Completeness (report of 17 September, confirmed for every cell by check4). Every real solution of one-hot and (T2) has <span class="math display">\[Y(v) = F_x(v) - F_z(v) + \sigma_v \alpha, \qquad Z(v) = F_y(v) - F_x(v) + \sigma_v \beta,\]</span> where <span class="math inline">\(F_E(v)\)</span> is the sum of the real weights of the two chains of axis <span class="math inline">\(E\)</span> through <span class="math inline">\(v\)</span> and <span class="math inline">\(\sigma_v = \pm 1\)</span> on A and B. Hence <span class="math inline">\(X = 1 - Y - Z = 1 + F_z - F_y - \sigma_v(\alpha + \beta)\)</span>.</li>
+</ol>
+<p>(S1) A pair of neighbouring planes $x = $ const holds <span class="math inline">\(\gcd(b, c)\)</span> chains of axis <span class="math inline">\(x\)</span> of its family (check4). When <span class="math inline">\(\gcd(b, c) = 1\)</span> it holds one, and <span class="math inline">\(F_x(v) = \Phi(x_v)\)</span>.</p>
+<p><strong>Sheet lemma.</strong> Let <span class="math inline">\(\varepsilon(i, j) = \alpha(i) + \beta(j)\)</span> take the values 0 and 1 on a product <span class="math inline">\(I \times J\)</span>. Then <span class="math inline">\(\alpha\)</span> or <span class="math inline">\(\beta\)</span> is constant. <em>Proof.</em> If <span class="math inline">\(\alpha(i_1) \neq \alpha(i_2)\)</span> their difference is <span class="math inline">\(\pm 1\)</span>, so for every <span class="math inline">\(j\)</span> the two values <span class="math inline">\(\varepsilon(i_1, j)\)</span>, <span class="math inline">\(\varepsilon(i_2, j)\)</span> are 0 and 1 in an order that does not depend on <span class="math inline">\(j\)</span>, and <span class="math inline">\(\beta(j)\)</span> is determined. <span class="math inline">\(\square\)</span></p>
+<p><strong>Grids as products.</strong> Let <span class="math inline">\(G\)</span> be a plane <span class="math inline">\(z = z_0\)</span> of <span class="math inline">\(S\)</span>. Its vertices are <span class="math inline">\(v_0 + m(2,2,0) + n(2,-2,0)\)</span>. The chains of axis <span class="math inline">\(z\)</span> through such a vertex are the one of the family <span class="math inline">\(\{0,3\}\)</span>, whose vertices of <span class="math inline">\(S\)</span> are <span class="math inline">\(v + t(2,2,0)\)</span>, and the one of the family <span class="math inline">\(\{1,2\}\)</span>, with vertices <span class="math inline">\(v + t(2,-2,0)\)</span>. So on <span class="math inline">\(G\)</span> <span class="math display">\[F_z = P(n) + Q(m), \qquad x = x_0 + 2(m + n),\]</span> with <span class="math inline">\(P\)</span> and <span class="math inline">\(Q\)</span> periodic of period <span class="math inline">\(g_z = \gcd(a, b)\)</span>, the number of chains of each family in a pair of planes. The translations of <span class="math inline">\(G\)</span> act transitively on its vertices, the step <span class="math inline">\((2,2,0)\)</span> fixes the class of <span class="math inline">\(n\)</span> and moves the class of <span class="math inline">\(m\)</span> by one, and the step <span class="math inline">\((2,-2,0)\)</span> does the reverse. So every pair of classes occurs at some vertex of <span class="math inline">\(G\)</span>. The same holds on a plane <span class="math inline">\(y = y_0\)</span> with the steps <span class="math inline">\((2,0,2)\)</span> and <span class="math inline">\((2,0,-2)\)</span> and period <span class="math inline">\(g_y = \gcd(a, c)\)</span>, and on a plane <span class="math inline">\(x = x_0\)</span> with <span class="math inline">\((0,2,2)\)</span> and <span class="math inline">\((0,2,-2)\)</span>.</p>
+<h3 id="the-corrected-lemma-on-three-families">The corrected lemma on three families</h3>
+<p><strong>Lemma T′.</strong> Let <span class="math inline">\(\varepsilon(m, n) = \gamma(m + n) + \alpha(n) + \beta(m)\)</span> take the values 0 and 1 on <span class="math inline">\(\mathbb{Z}^2\)</span>, with <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span>, <span class="math inline">\(\gamma\)</span> real and periodic, and suppose the jumps <span class="math inline">\(\gamma(k+1) - \gamma(k)\)</span> are integers. Then either <span class="math inline">\(\gamma\)</span> is constant and <span class="math inline">\(\varepsilon\)</span> is a function of <span class="math inline">\(m\)</span> alone or of <span class="math inline">\(n\)</span> alone, or <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are constant and <span class="math inline">\(\varepsilon\)</span> is a function of <span class="math inline">\(m + n\)</span>.</p>
+<p><em>Proof.</em> Put <span class="math inline">\(p(n) = \alpha(n+1) - \alpha(n)\)</span>, <span class="math inline">\(q(m) = \beta(m+1) - \beta(m)\)</span>, <span class="math inline">\(c(k) = \gamma(k+1) - \gamma(k)\)</span>. Then <span class="math inline">\(\varepsilon(m+1, n) - \varepsilon(m, n) = q(m) + c(m+n)\)</span>, so <span class="math inline">\(q\)</span> is integer valued, and in the same way <span class="math inline">\(p\)</span> is. Also <span class="math inline">\(\varepsilon(m, n+1) - \varepsilon(m+1, n) = p(n) - q(m) \in \{-1, 0, 1\}\)</span>. A periodic function has jumps of sum zero over a period, so if <span class="math inline">\(p \neq 0\)</span> it has a value <span class="math inline">\(\geq 1\)</span> and a value <span class="math inline">\(\leq -1\)</span>, and then <span class="math inline">\(0 \leq q(m) \leq 0\)</span> for every <span class="math inline">\(m\)</span>. So <span class="math inline">\(\alpha\)</span> or <span class="math inline">\(\beta\)</span> is constant. If <span class="math inline">\(\beta\)</span> is, $= (k) + (n) + $ const as a function of <span class="math inline">\((k, n) = (m + n, n)\)</span>, which runs over <span class="math inline">\(\mathbb{Z}^2\)</span>, and the sheet lemma makes <span class="math inline">\(\gamma\)</span> or <span class="math inline">\(\alpha\)</span> constant. <span class="math inline">\(\square\)</span></p>
+<p><strong>The lemma fails without the hypothesis on the jumps.</strong> On <span class="math inline">\(\mathbb{Z}_3 \times \mathbb{Z}_3\)</span> take <span class="math inline">\(\alpha = \beta = (\tfrac23, \tfrac13, 0)\)</span> and <span class="math inline">\(\gamma = (-\tfrac13, 0, -\tfrac23)\)</span>. Then <span class="math inline">\(\alpha(i) + \beta(j) + \gamma(i + j)\)</span> is 1 at <span class="math inline">\((0,0)\)</span>, <span class="math inline">\((0,1)\)</span>, <span class="math inline">\((1,0)\)</span> and 0 at the six other points. The proof of Lemma T in the report of 18 September says that a function <span class="math inline">\(a\)</span> with sum zero and <span class="math inline">\(a(i) - b(j) \in \{-1, 0, 1\}\)</span> is zero or takes a value <span class="math inline">\(\geq 1\)</span> and a value <span class="math inline">\(\leq -1\)</span>. That is true of integer-valued <span class="math inline">\(a\)</span> only. In the general case the jumps take two values <span class="math inline">\(\theta - 1\)</span> and <span class="math inline">\(\theta\)</span> with <span class="math inline">\(0 &lt; \theta &lt; 1\)</span>.</p>
+<p><strong>Lemma J (the jumps are integers).</strong> Let <span class="math inline">\(\gcd(b, c) = 1\)</span> and let <span class="math inline">\(\Phi_S\)</span> be the restriction of <span class="math inline">\(\Phi\)</span> to the planes $x = $ const of <span class="math inline">\(S\)</span>. In a solution of the type model the jumps <span class="math inline">\(\Phi_S(x + 2) - \Phi_S(x)\)</span> are integers.</p>
+<p><em>Proof.</em> On a plane <span class="math inline">\(z = z_0\)</span> of <span class="math inline">\(S\)</span>, $Y = (m + n) - P(n) - Q(m) + $ const with <span class="math inline">\(\gamma(k) = \Phi_S(x_0 + 2k)\)</span>. Let <span class="math inline">\(c\)</span> and <span class="math inline">\(q\)</span> be the jumps of <span class="math inline">\(\gamma\)</span> and of <span class="math inline">\(Q\)</span>. Then <span class="math inline">\(Y(m+1, n) - Y(m, n) = c(m + n) - q(m) \in \{-1, 0, 1\}\)</span> for all <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span>. Suppose some <span class="math inline">\(c(k_0)\)</span> is not an integer and let <span class="math inline">\(\theta \in (0, 1)\)</span> be its fractional part. Every <span class="math inline">\(q(m)\)</span> is congruent to <span class="math inline">\(\theta\)</span> modulo 1, and then so is every <span class="math inline">\(c(k)\)</span>. Both have sum zero over a period and no value zero, so each has a value <span class="math inline">\(\geq \theta\)</span> and a value <span class="math inline">\(\leq \theta - 1\)</span>. Since <span class="math inline">\(\max c - \min q \leq 1\)</span> and <span class="math inline">\(\min c - \max q \geq -1\)</span>, both take the two values <span class="math inline">\(\theta - 1\)</span> and <span class="math inline">\(\theta\)</span> only. If <span class="math inline">\(j\)</span> of the <span class="math inline">\(g_z\)</span> values of <span class="math inline">\(q\)</span> in a period equal <span class="math inline">\(\theta\)</span>, then <span class="math inline">\(j\theta + (g_z - j)(\theta - 1) = 0\)</span>, so <span class="math inline">\(g_z \theta\)</span> is an integer. On a plane <span class="math inline">\(y = y_0\)</span> of <span class="math inline">\(S\)</span>, $Z = P’(n’) + Q’(m’) - (m’ + n’) + $ const, and the same argument gives that <span class="math inline">\(g_y \theta\)</span> is an integer. But <span class="math inline">\(g_z\)</span> divides <span class="math inline">\(b\)</span> and <span class="math inline">\(g_y\)</span> divides <span class="math inline">\(c\)</span>, so they are coprime, and <span class="math inline">\(\theta\)</span> is an integer. <span class="math inline">\(\square\)</span></p>
+<p>This is the repair that the proof of Theorem R1 needs, since it applies Lemma T in the same two places.</p>
+<h3 id="proof-of-theorem-s">Proof of Theorem S</h3>
+<p>Absorb the constants of (C) on <span class="math inline">\(S\)</span> into the heights, so that on <span class="math inline">\(S\)</span> <span class="math display">\[Y = \Phi_S(x) - F_z, \qquad Z = F_y - \Phi_S(x), \qquad X = 1 - Y - Z.\]</span></p>
+<p><em>Case 1: <span class="math inline">\(\Phi_S\)</span> is not constant.</em> On a plane <span class="math inline">\(z = z_0\)</span> of <span class="math inline">\(S\)</span> Lemma T′ applies, by Lemma J, and <span class="math inline">\(\gamma\)</span> is not constant. So <span class="math inline">\(P\)</span> and <span class="math inline">\(Q\)</span> are constant on that plane and <span class="math inline">\(Y = \Phi_S(x) - \kappa(z_0)\)</span>. Hence <span class="math inline">\(Y(v) = \Phi_S(x_v) - \kappa(z_v)\)</span> on <span class="math inline">\(S\)</span>. Every pair <span class="math inline">\((x, z)\)</span> of the parity of <span class="math inline">\(S\)</span> belongs to a vertex of <span class="math inline">\(S\)</span>, so the sheet lemma applies, and <span class="math inline">\(\kappa\)</span> is constant. In the same way <span class="math inline">\(Z(v) = \kappa&#39; - \Phi_S(x_v)\)</span> with <span class="math inline">\(\kappa&#39;\)</span> constant. <span class="math inline">\(\Phi_S\)</span> takes two values, <span class="math inline">\(\kappa\)</span> and <span class="math inline">\(\kappa + 1\)</span> from <span class="math inline">\(Y\)</span> and <span class="math inline">\(\kappa&#39; - 1\)</span> and <span class="math inline">\(\kappa&#39;\)</span> from <span class="math inline">\(Z\)</span>, so <span class="math inline">\(\kappa&#39; = \kappa + 1\)</span> and <span class="math inline">\(Y + Z = 1\)</span>. This is (i).</p>
+<p><em>Case 2: <span class="math inline">\(\Phi_S\)</span> is constant.</em> On a plane <span class="math inline">\(z = z_0\)</span> of <span class="math inline">\(S\)</span>, $Y = $ const $ - P(n) - Q(m)$, and by the sheet lemma it is a function of <span class="math inline">\(n\)</span> alone or of <span class="math inline">\(m\)</span> alone. So every vertex of type <span class="math inline">\(y\)</span> of <span class="math inline">\(S\)</span> lies on a line <span class="math inline">\(\{q + t u\}\)</span>, <span class="math inline">\(u = (2, 2\epsilon, 0)\)</span>, <span class="math inline">\(\epsilon = \pm 1\)</span>, all of whose vertices are of type <span class="math inline">\(y\)</span>. In the same way every vertex of type <span class="math inline">\(z\)</span> of <span class="math inline">\(S\)</span> lies on a line <span class="math inline">\(\{r + s w\}\)</span>, <span class="math inline">\(w = (2, 0, 2\epsilon&#39;)\)</span>, all of type <span class="math inline">\(z\)</span>. Two such lines meet. Write <span class="math inline">\(q - r = (d_x, d_y, d_z)\)</span>, with all entries even and sum divisible by 4. A common point needs <span class="math inline">\(t \equiv -\epsilon d_y / 2 \pmod{2b}\)</span>, <span class="math inline">\(s \equiv \epsilon&#39; d_z / 2 \pmod{2c}\)</span> and <span class="math inline">\(t - s \equiv -d_x / 2 \pmod{2a}\)</span>. The first two fix <span class="math inline">\(t\)</span> and <span class="math inline">\(s\)</span> up to multiples of <span class="math inline">\(2b\)</span> and <span class="math inline">\(2c\)</span>, so <span class="math inline">\(t - s\)</span> up to multiples of <span class="math inline">\(2\gcd(b, c) = 2\)</span>, and its parity is that of <span class="math inline">\((d_x + d_y + d_z)/2\)</span>, which is even. So <span class="math inline">\(t - s\)</span> can be given any value of the right parity. A common point would have two types, so <span class="math inline">\(S\)</span> lacks type <span class="math inline">\(y\)</span> or type <span class="math inline">\(z\)</span>. <span class="math inline">\(\square\)</span></p>
+<h3 id="proof-of-corollary-h">Proof of Corollary H</h3>
+<p>Let the state be odd. By Lemma 1 of the note some hole <span class="math inline">\(O\)</span> is a corner. Its two rods are vertices of the sublattice <span class="math inline">\(S\)</span> of <span class="math inline">\(O\)</span>, of two different types <span class="math inline">\(j\)</span> and <span class="math inline">\(k\)</span>. By Theorem S, <span class="math inline">\(S\)</span> has no vertex of the third type <span class="math inline">\(i\)</span>. If the other sublattice had one, Theorem <span class="math inline">\(M&#39;\)</span> (proved for every cell, and confirmed by check6) would give even curl. So no vertex has type <span class="math inline">\(i\)</span> and the axis <span class="math inline">\(i\)</span> is empty. <span class="math inline">\(\square\)</span></p>
+<h3 id="proof-of-theorem-s2-and-of-its-corollary-without-theorem-m">Proof of Theorem S2, and of its corollary without Theorem <span class="math inline">\(M&#39;\)</span></h3>
+<p>Now <span class="math inline">\(F_y = \Upsilon(y)\)</span> and <span class="math inline">\(F_z = \mathrm{Z}(z)\)</span> by (S1). On <span class="math inline">\(S\)</span>, <span class="math inline">\(X(v) = \zeta(z_v) - \upsilon(y_v)\)</span> with the constants absorbed. Every pair <span class="math inline">\((y, z)\)</span> of the parity of <span class="math inline">\(S\)</span> belongs to a vertex of <span class="math inline">\(S\)</span>, so by the sheet lemma <span class="math inline">\(X\)</span> is a function of <span class="math inline">\(z\)</span> alone or of <span class="math inline">\(y\)</span> alone on <span class="math inline">\(S\)</span>.</p>
+<p>Suppose <span class="math inline">\(X\)</span> is a function of <span class="math inline">\(z\)</span> alone and is not zero, so that <span class="math inline">\(\upsilon\)</span> is constant and some plane <span class="math inline">\(z = z_1\)</span> of <span class="math inline">\(S\)</span> is all of type <span class="math inline">\(x\)</span>. Then $Z = - F_x + $ const takes the values 0 and 1, and on each plane <span class="math inline">\(x = x_0\)</span> of <span class="math inline">\(S\)</span> it is a sum of a function of the chain of one family and a function of the chain of the other. By the sheet lemma it is constant along the chains of one family. The line <span class="math inline">\(z = z_1\)</span> of that plane meets every chain of each family, because its points are <span class="math inline">\(4\)</span> apart in <span class="math inline">\(y\)</span> and the classes of the chains are those of <span class="math inline">\(y \mp z\)</span> modulo <span class="math inline">\(4\gcd(b, c)\)</span>, which divides <span class="math inline">\(4b\)</span>. On that line <span class="math inline">\(Z = 0\)</span>. So <span class="math inline">\(Z = 0\)</span> on the plane, and on <span class="math inline">\(S\)</span>. This is (<span class="math inline">\(P_z\)</span>). The other case gives (<span class="math inline">\(P_y\)</span>), and <span class="math inline">\(X = 0\)</span> on <span class="math inline">\(S\)</span> gives (<span class="math inline">\(Q\)</span>) by the same use of the sheet lemma.</p>
+<p><em>The corollary.</em> A corner of <span class="math inline">\(S\)</span> cannot have a rod of type <span class="math inline">\(x\)</span>. If <span class="math inline">\(S\)</span> is of the form (<span class="math inline">\(P_z\)</span>) the rod of type <span class="math inline">\(x\)</span> and the other rod, which is of type <span class="math inline">\(y\)</span> and lies on the axis <span class="math inline">\(y\)</span> through the hole, have the same coordinate <span class="math inline">\(z\)</span>, and the whole plane is of type <span class="math inline">\(x\)</span>. The form (<span class="math inline">\(P_y\)</span>) is the same with <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span> exchanged. So a corner has rods of types <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span> and its sublattice has the form (<span class="math inline">\(Q\)</span>). Let <span class="math inline">\((O, \sigma)\)</span> be the odd hexagon at the corner <span class="math inline">\(O\)</span>, with <span class="math inline">\(O&#39; = O + \sigma\)</span> in the other sublattice <span class="math inline">\(S&#39;\)</span>. By (T2) none of the three vertices <span class="math inline">\(b_k = O&#39; - 2\sigma_k e_k\)</span> has type <span class="math inline">\(k\)</span>. If <span class="math inline">\(S&#39;\)</span> had the form (<span class="math inline">\(P_z\)</span>), <span class="math inline">\(b_y\)</span> would be of type <span class="math inline">\(x\)</span>, the plane <span class="math inline">\(z = z_{O&#39;}\)</span> of <span class="math inline">\(S&#39;\)</span> would be all of type <span class="math inline">\(x\)</span>, and <span class="math inline">\(b_x\)</span>, which lies in it, would have type <span class="math inline">\(x\)</span>. The form (<span class="math inline">\(P_y\)</span>) is excluded by <span class="math inline">\(b_z\)</span> and <span class="math inline">\(b_x\)</span> in the same way. So <span class="math inline">\(S&#39;\)</span> has the form (<span class="math inline">\(Q\)</span>) and no vertex has type <span class="math inline">\(x\)</span>. <span class="math inline">\(\square\)</span></p>
+<h3 id="solver-support">Solver support</h3>
+<p>Type model, no signs. SL: ‘A has a vertex of each type’ (one of them fixed at the origin). PL: ‘the origin is of type <span class="math inline">\(x\)</span> and neither plane of A through it, <span class="math inline">\(z = 0\)</span> or <span class="math inline">\(y = 0\)</span>, is all of type <span class="math inline">\(x\)</span>’. V4: ‘the four bridgeheads of an A-hole are of types <span class="math inline">\(y\)</span>, <span class="math inline">\(y\)</span> below and <span class="math inline">\(z\)</span>, <span class="math inline">\(z\)</span> above, and B has a vertex of type <span class="math inline">\(x\)</span>’. Every query has controls, which are satisfiable. Script <code>h420_family.py</code>.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>coprime pairs</th>
+<th><span class="math inline">\(\gcd(b,c)\)</span></th>
+<th>SL</th>
+<th>PL</th>
+<th>V4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(2,3,3)</td>
+<td>two</td>
+<td>3</td>
+<td>UNSAT 0.6 s</td>
+<td>UNSAT 0.3 s</td>
+<td>UNSAT 0.2 s</td>
+</tr>
+<tr>
+<td>(4,3,3)</td>
+<td>two</td>
+<td>3</td>
+<td>UNSAT 4.7 s</td>
+<td>UNSAT 6.2 s</td>
+<td>UNSAT 1.6 s</td>
+</tr>
+<tr>
+<td>(5,3,3)</td>
+<td>two</td>
+<td>3</td>
+<td>UNSAT 10.8 s</td>
+<td>UNSAT 9.8 s</td>
+<td>UNSAT 5.6 s</td>
+</tr>
+<tr>
+<td>(3,4,4)</td>
+<td>two</td>
+<td>4</td>
+<td>UNSAT 8.3 s</td>
+<td>UNSAT 6.2 s</td>
+<td>UNSAT 3.0 s</td>
+</tr>
+<tr>
+<td>(5,2,4)</td>
+<td>two</td>
+<td>2</td>
+<td>UNSAT 6.3 s</td>
+<td>UNSAT 6.1 s</td>
+<td>UNSAT 1.6 s</td>
+</tr>
+<tr>
+<td>(5,4,4)</td>
+<td>two</td>
+<td>4</td>
+<td>no verdict, 120 s</td>
+<td>no verdict, 120 s</td>
+<td>UNSAT 36 s</td>
+</tr>
+<tr>
+<td>(6,2,3)</td>
+<td>one</td>
+<td>1</td>
+<td>UNSAT 2.0 s</td>
+<td>SAT</td>
+<td>UNSAT 0.7 s</td>
+</tr>
+<tr>
+<td>(6,3,4)</td>
+<td>one</td>
+<td>1</td>
+<td>UNSAT 40 s</td>
+<td>SAT</td>
+<td>UNSAT 2.6 s</td>
+</tr>
+<tr>
+<td>(6,2,9)</td>
+<td>one</td>
+<td>1</td>
+<td>no verdict, 100 s</td>
+<td>SAT</td>
+<td>UNSAT 6.6 s</td>
+</tr>
+<tr>
+<td>(3,3,3)</td>
+<td>none</td>
+<td>3</td>
+<td>SAT</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>(4,4,6)</td>
+<td>none</td>
+<td>2</td>
+<td>SAT</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+</tbody>
+</table>
+<p>PL is the plane statement of Theorem S2 and is claimed only with two coprime pairs. ‘Some hexagon odd and all three types present’ (<code>h333_oddtypes.py</code>) is UNSAT on (6,2,3) in 13.5 s and on (4,3,3) in 31 s, and SAT on (3,3,3), (2,2,2), (2,2,4), (2,4,6) and (4,4,6). These are tests of the proof and not part of it.</p>
+<h3 id="what-this-does-to-the-record">What this does to the record</h3>
+<ol type="1">
+<li>Theorem U holds on every cell with a coprime pair, in one line: the unoriented cage has bridgeheads of types <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span> on one sublattice, which therefore has no vertex of type <span class="math inline">\(x\)</span>, and Theorem <span class="math inline">\(M&#39;\)</span> gives even curl. Theorem 10 is the case in which the coprime pair is transverse to the rods. Theorem 11 is not covered: it holds on cells such as (15,6,10), which have no coprime pair.</li>
+<li>V4 shows that on these cells the rods are not needed in the hypothesis of (V). On a cubic cell they are (V4 is SAT on (3,3,3)).</li>
+<li>H no longer depends on the certificates of <span class="math inline">\(K_u\)</span> on any cell with a coprime pair.</li>
+<li>The linear programme of (V) is positive on cells such as (5,3,3) and (5,4,4), so no weighted sum of laws proves it there. The proof above uses that the types are integers twice, each time through the sheet lemma, applied to a function on a product of two sets of chains or of two sets of planes. It uses the torus through (S1) and through the meeting of two lines. It is not a window statement and has no case split on vertices.</li>
+</ol>
+<h2 id="what-is-left">What is left</h2>
+<p><strong>The cells with no coprime pair.</strong> Every two extents share a factor. The cubic cell of side <span class="math inline">\(L \geq 2\)</span> is one, and so are (2,2,4), (4,4,6), (6,10,15). On such a cell every pair of planes holds at least two chains of each family, and no height is a function of one coordinate.</p>
+<p><strong>Odd states with three types exist there (solver).</strong> On (2,2,2), (2,2,4), (2,4,6), (3,3,3) and (4,4,6), with the sign field. So the line between the cells that Theorem S settles and the rest is sharp on every cell tried.</p>
+<p><strong>The corpus (computed, <code>h421_corpus_sl.py</code>).</strong> 637 odd states at side three and 720 at side four.</p>
+<table>
+<thead>
+<tr>
+<th>types on A, on B</th>
+<th>axis pattern</th>
+<th>side 3</th>
+<th>side 4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2, 2</td>
+<td>one axis empty</td>
+<td>173</td>
+<td>183</td>
+</tr>
+<tr>
+<td>3, 3</td>
+<td>no axis empty, at least one one-way</td>
+<td>464</td>
+<td>537</td>
+</tr>
+</tbody>
+</table>
+<p>Every state has corners on both sublattices. No state has two types on one sublattice and three on the other. In the states with three types each axis has the same pattern of signs on A and on B. For the 356 states of the first row H follows from Theorem <span class="math inline">\(M&#39;\)</span> by the argument of Corollary H. For the 1,001 of the second row H holds through an axis that is one-way and not empty, which is a statement about signs. In the zero-flux sector a one-way axis is empty, so for the periodicity conjecture the statement needed on these cells is that a frozen zero-flux state with all three types has even curl (Corollary Z of 22 September).</p>
+<p><strong>A law for all cells (proved; computed with no exception on the corpus, <code>h422_shadow.py</code>).</strong> Average (C) along the line <span class="math inline">\(\{v + 4n e_k\}\)</span>. The labels of the chains of the two other axes run over all their values and leave the averages over pairs of planes. So with <span class="math inline">\(h_k(v)\)</span> the number of vertices of type <span class="math inline">\(k\)</span> on the <span class="math inline">\(k\)</span>-line through <span class="math inline">\(v\)</span>, and <span class="math inline">\(\ell_k\)</span> the number of vertices of that line, <span class="math display">\[\frac{h_y}{\ell_y} = P(x) - R(z), \qquad \frac{h_z}{\ell_z} = Q(y) - P(x), \qquad \frac{h_x}{\ell_x} = 1 + R(z) - Q(y),\]</span> on each sublattice, for three functions of one coordinate, and the three fractions at any vertex add to one. The separability is Theorem 5 of the note. The common profiles and the sum are not in the record that I have read. A state has even curl exactly when every fraction is 0 or 1. This is the part of a state that a slab sum would have, and an odd state is one in which it is fractional.</p>
+<h2 id="why-this-was-not-found-before">Why this was not found before</h2>
+<p>Four tools have produced every hand proof of a statement of this class in the project (Theorem R1, Theorem <span class="math inline">\(M&#39;\)</span>, Theorems 10 and 11, Theorem S): completeness; a sum or a restriction that leaves a function of two sets of labels; the fact that such a function with values in a small set is rigid; and the meeting of two complete lines on the torus. The attempts on (V) from 22 to 27 September looked for something else: a window, a weighted sum of laws, a thin family of integral indicators, a case split on vertices, a lift of degree two. The integrality that the proofs use is always the sheet lemma, and it is applied to a quantity on the whole torus that the geometry makes separable. The proposal below is to look for those quantities on the cells that are left, and not for certificates.</p>
+<h2 id="proposal">Proposal</h2>
+<p>Five packages. A and B are first and do not depend on each other. Agents are Opus, compute is on the Mac, and each agent has its own range of script numbers, as on 27 September.</p>
+<p><strong>A. Check and record Theorem S.</strong> An independent checker with its own implementation: read the proofs above for a gap; test SL with a symmetry-broken encoding on (5,4,4), (6,2,9), (7,3,6) and (10,4,5); confirm the counterexample to Lemma T and the repair; read the proof of Theorem R1 with Lemma T′ in place of Lemma T. Then the note gets Theorem S and Corollary H as theorems, and its statement of what is open changes.</p>
+<p><strong>B. Signed completeness.</strong> Computed here (<code>h423_signed_modes.py</code>) on the cubic cells of side three and four: the solutions of the law <span class="math inline">\(P^k\)</span> alone form a space of dimension 62 and 114, and it is the span of the indicators of the chains of the two other axes and the two sublattice constants. By Lemma 3 of the note the signed component <span class="math inline">\(n_k\)</span> obeys <span class="math inline">\(P^k\)</span> at every oriented hole, and in all 34 corpus states sampled <span class="math inline">\(n_k\)</span> lies in that span for each <span class="math inline">\(k\)</span>. So in a state with every hole oriented, each of the six indicators of a direction is a difference of chain sums, as each type indicator is. The package: prove the statement about the kernel for every cell by the stratified Fourier method of 17 September, which applies to any system of laws invariant under the translations; find which weights the six fields share; and state the result as a theorem about odd states given Theorem U. This is the step that lets the method reach the signs.</p>
+<p><strong>C. The sublattice theorem for directions, on cells with a coprime pair.</strong> On those cells H is proved, so this is a test of the method and not a new case. The target is <span class="math inline">\(K_u\)</span> by hand there, for every greatest common divisor: a chain of one moment forces a direction to be absent. The first step of <span class="math inline">\(K_u\)</span> on the whole slab is the second open statement on cubic cells, and it has no proof on any cell with greatest common divisor three or more. A proof on the cells <span class="math inline">\((a, L, L)\)</span> with <span class="math inline">\(a\)</span> coprime to <span class="math inline">\(L\)</span> would show what carries it across the <span class="math inline">\(L\)</span> chains of a slab.</p>
+<p><strong>D. The first cells with no coprime pair: two chains in every pair of planes.</strong> The cells <span class="math inline">\((2a&#39;, 2b&#39;, 2c&#39;)\)</span> with <span class="math inline">\(a&#39;\)</span>, <span class="math inline">\(b&#39;\)</span>, <span class="math inline">\(c&#39;\)</span> pairwise coprime, among them (2,2,2), (2,2,6), (2,6,10) and (6,10,14). All three greatest common divisors are 2. On these cells <span class="math inline">\(K_u\)</span> is certified (its first step covers the slab when the greatest common divisor is at most 2) and Theorem 1′ reduces H to (V) with two chains per slab and even length, which is the case that gtwo and oddtwo left open. With two chains the weight of a chain is the mean of its pair of planes plus or minus one number, and on A <span class="math display">\[F_x = \tilde\Phi(x) + \pi(v)\bigl[\delta_x (-1)^{z/2} + \delta&#39;_x\bigr], \qquad \pi(v) = (-1)^{(x+y+z)/4},\]</span> with the same form for <span class="math inline">\(F_y\)</span> and <span class="math inline">\(F_z\)</span>. The state is then given by nine functions of one coordinate on each sublattice. The fractions of the law above are <span class="math inline">\(0\)</span>, <span class="math inline">\(\tfrac12\)</span> or <span class="math inline">\(1\)</span>, and a line with fraction <span class="math inline">\(\tfrac12\)</span> alternates. (V) becomes a statement about profiles, of the kind the profile lemma of the curl-reduction note settled by a finite case analysis. The alternating mode that made the linear programme positive is one of the nine profiles. The deliverable is H, by hand apart from the certificates of <span class="math inline">\(K_u\)</span>, on an infinite family of cells with no coprime pair, which includes the cubic cell of side two.</p>
+<p><strong>E. The cubic cell of side <span class="math inline">\(L\)</span> as the first member of its family.</strong> The cells <span class="math inline">\((La&#39;, Lb&#39;, Lc&#39;)\)</span> with <span class="math inline">\(a&#39;\)</span>, <span class="math inline">\(b&#39;\)</span>, <span class="math inline">\(c&#39;\)</span> pairwise coprime have <span class="math inline">\(L\)</span> chains in every pair of planes, and the cubic cell is the smallest. Package D is <span class="math inline">\(L = 2\)</span>. For general <span class="math inline">\(L\)</span> the weights of the chains of a pair of planes are a function on <span class="math inline">\(\mathbb{Z}_L\)</span>, and its components in the characters of <span class="math inline">\(\mathbb{Z}_L\)</span> are profiles of one coordinate: the trivial character gives the fractions of the law above, and package D is the sign character. For prime <span class="math inline">\(L\)</span> the types are integers, so the components in the <span class="math inline">\(L - 1\)</span> other characters are conjugate under the Galois group and carry one profile between them. The package is to write (V) and the first step of <span class="math inline">\(K_u\)</span> in these profiles at <span class="math inline">\(L = 3\)</span>, where the solver decides every finite question in seconds, and to see whether the argument of package D goes over. This is the step at which the proposal could fail. If the case analysis at <span class="math inline">\(L = 3\)</span> does not resemble the one at <span class="math inline">\(L = 2\)</span>, the project has H on every cell with a coprime pair and on the family of package D, and the cubic cells of side three and more stay with their certificates.</p>
+<p>Order: A and B at once. C and D when B has landed, since both use it (D needs it only if it goes for H without <span class="math inline">\(K_u\)</span>). E last.</p>
+<p><strong>Not proposed.</strong> Further windows, slabs, linear programmes or case splits for (V); certificates at side seven to ten; Theorem U by itself on cells with a coprime pair, which is now a corollary; any solver run of ‘odd and three types’ beyond those above, which are tests of Theorem S.</p>
+<h2 id="caveats">Caveats</h2>
+<ol type="1">
+<li>Theorem S and its corollary were found and proved in one session by the main loop and have had no second reader. The record’s one experience of a statement left without one is the gap in <span class="math inline">\(K_u\)</span>.</li>
+<li>Corollary H rests on Theorem <span class="math inline">\(M&#39;\)</span>, which is from the record, with two proofs and one second reader. Theorem S2 gives the corollary without it, for cells with two coprime pairs that share an extent.</li>
+<li>Completeness (C) is taken from the record. It was proved by a symbolic computation over strata and confirmed by check4 by rank computations on cells.</li>
+<li>The cells of extent one and two are covered by the proofs as written, but (T2) on them is Lemma L of the curl-reduction note applied to hexagons that may wind, and I have not checked the definitions on those cells. The solver runs include (2,3,3), (5,2,4), (6,2,3).</li>
+<li>Package B’s statement about the kernel is computed on two cells. The sample of corpus states for the membership of <span class="math inline">\(n_k\)</span> is every fortieth state.</li>
+</ol>
+<h2 id="computations-run">Computations run</h2>
+<p>From <code>scratch_h</code>, project <code>.venv</code>, <code>PYTHONPATH=&lt;repo&gt;:&lt;repo&gt;/experiments/08_frozen_structure</code>, <code>TMPDIR=&lt;repo&gt;/.tmp</code>.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>command</th>
+<th>what</th>
+<th>verdict</th>
+<th>wall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h420_family.py 4,3,3</code></td>
+<td>pre-flight</td>
+<td>as in the table</td>
+<td>13 s</td>
+</tr>
+<tr>
+<td><code>h420_family.py 5,3,3 3,3,3 2,3,3</code></td>
+<td>SL, PL, V4 with controls</td>
+<td>as in the table</td>
+<td>30 s</td>
+</tr>
+<tr>
+<td><code>h420_family.py 3,4,4 5,2,4</code></td>
+<td>the same</td>
+<td>as in the table</td>
+<td>35 s</td>
+</tr>
+<tr>
+<td><code>h420_family.py 6,3,4 4,4,6 5,4,4</code></td>
+<td>the same</td>
+<td>as in the table; two queries capped at 120 s</td>
+<td>5 min</td>
+</tr>
+<tr>
+<td><code>h420_family.py 6,2,3 6,2,9</code></td>
+<td>the same</td>
+<td>as in the table; one query capped at 100 s</td>
+<td>2 min</td>
+</tr>
+<tr>
+<td><code>h333_oddtypes.py CELL</code>, (6,2,3), (4,3,3), (3,3,3)</td>
+<td>odd and three types</td>
+<td>UNSAT, UNSAT, SAT</td>
+<td>14 s, 32 s, 0 s</td>
+</tr>
+<tr>
+<td><code>h333_oddtypes.py CELL --sign</code>, (2,2,2), (2,2,4), (2,4,6), (4,4,6)</td>
+<td>the same with the sign field</td>
+<td>SAT on all four</td>
+<td>under 5 s each</td>
+</tr>
+<tr>
+<td><code>h421_corpus_sl.py</code></td>
+<td>types by sublattice and axis patterns on the corpus</td>
+<td>the table of ‘What is left’</td>
+<td>10 s</td>
+</tr>
+<tr>
+<td><code>h422_shadow.py</code></td>
+<td>the law of line fractions on the corpus</td>
+<td>0 violations in 1,357 states</td>
+<td>15 s</td>
+</tr>
+<tr>
+<td><code>h423_signed_modes.py 3</code>, <code>4</code></td>
+<td>kernel of <span class="math inline">\(P^k\)</span> and the signed fields</td>
+<td>ranks 62 and 114, equal to the span; 16 of 16 and 18 of 18 in the span</td>
+<td>1.5 s, 4 s</td>
+</tr>
+</tbody>
+</table>
+</main>
+</body>
+</html>

@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Independent check of the signed moments (Lemmas 11 and 12, Theorems 16 to 19 of the note) and of package dfour (Theorem H on the family (2a', 2b', 2c'</title>
+<meta name="description" content="Independent check of the signed moments (Lemmas 11 and 12, Theorems 16 to 19 of the note) and of package dfour (Theorem H on the family (2a', 2b', 2c') without K_u)">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Independent check of the signed moments (Lemmas 11 and 12, Theorems 16 to 19 of the note) and of package dfour (Theorem H on the family (2a', 2b', 2c') without K_u)",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-28-opus-check9.html",
+ "datePublished": "2026-09-28",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus), agent check9, independent checker, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-28-opus-check9.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/thm-23.html">thm-23</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Independent check of the signed moments (Lemmas 11 and 12, Theorems 16 to 19 of the note) and of package dfour (Theorem H on the family (2a’, 2b’, 2c’) without K_u)</h1>
+
+<p class="author">Claude (Opus), agent check9, independent checker, for Lyndon Drake</p>
+<p class="date">2026-09-28</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#verdicts" id="toc-verdicts">Verdicts</a></li>
+<li><a href="#part-i-read-by-hand-t1" id="toc-part-i-read-by-hand-t1">1. Part I, read by hand (T1)</a></li>
+<li><a href="#part-ii-read-by-hand-t2" id="toc-part-ii-read-by-hand-t2">2. Part II, read by hand (T2)</a></li>
+<li><a href="#computations-t3" id="toc-computations-t3">3. Computations (T3)</a></li>
+<li><a href="#corrections-and-gaps" id="toc-corrections-and-gaps">4. Corrections and gaps</a></li>
+<li><a href="#what-i-could-not-check" id="toc-what-i-could-not-check">5. What I could not check</a></li>
+<li><a href="#rules" id="toc-rules">6. Rules</a></li>
+</ul>
+</details></nav>
+<h2 id="verdicts">Verdicts</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>item</th>
+<th>verdict</th>
+<th>one sentence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lemma 11</td>
+<td><strong>CONFIRMED</strong></td>
+<td>The families supported at a character are the pairs in the blocks of the partition of <span class="math inline">\(\{0,1,2,3\}\)</span> by <span class="math inline">\(\lambda\)</span>, and the five partition types give exactly the five listed cases.</td>
+</tr>
+<tr>
+<td>Lemma 12</td>
+<td><strong>CONFIRMED</strong></td>
+<td>Redone by hand for all four families of <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span> at an A-hole; the inversion and the coordinate permutations carry it to B-holes and the other axes; law × generator <span class="math inline">\(= 0\)</span> holds over <span class="math inline">\(\mathbb Z\)</span> on 16 cells.</td>
+</tr>
+<tr>
+<td>Theorem 16</td>
+<td><strong>CONFIRMED</strong></td>
+<td>The symbol, determinant, factorisations, the condition <span class="math inline">\(M=0\)</span>, the case analysis and the inclusion–exclusion count were all redone; exact ranks agree with the formula on 16 cells × 3 axes, and a per-character evaluation of the law reproduces the symbol on four cells.</td>
+</tr>
+<tr>
+<td>Theorem 17</td>
+<td><strong>CONFIRMED WITH CORRECTIONS</strong></td>
+<td>All five cases and the dimension count are right, and exact ranks agree on 16 cells; the remark ‘no constant on a sublattice occurs’ is right only in the sense that no <span class="math inline">\(\sigma_v\)</span>-type constant occurs, since a constant field on all vertices is a sum of currents (correction 5).</td>
+</tr>
+<tr>
+<td>Theorem 18</td>
+<td><strong>CONFIRMED</strong></td>
+<td>The pairs of directions and the weights <span class="math inline">\(\tfrac12(f\pm g)\)</span> reproduce the chain’s contributions to the types and to <span class="math inline">\(n\)</span> for <span class="math inline">\(\{0,1\}\)</span> and <span class="math inline">\(\{2,3\}\)</span>, and the other families are the same by permutation.</td>
+</tr>
+<tr>
+<td>Theorem 19</td>
+<td><strong>CONFIRMED WITH CORRECTIONS</strong></td>
+<td>The averaging argument and the six shifts on B are right, and the theorem holds exactly, with the constants, on 837 odd states of 9 cells, 2 of them not members, with negative controls; the sum on A needs no added constant (correction 6).</td>
+</tr>
+<tr>
+<td>L0</td>
+<td><strong>CONFIRMED</strong></td>
+<td>The list of six slack vectors is complete and the labels are right; on sampled states every sublattice with three types had one of the six vectors (1,148 sublattice cases).</td>
+</tr>
+<tr>
+<td>L1</td>
+<td><strong>CONFIRMED</strong></td>
+<td>The translation by <span class="math inline">\(8e_k\)</span> fixes every chain of the other two axes on every member, thin ones included, because each pair of extents has gcd 2; the full-line case correctly uses Theorem U at the straight holes.</td>
+</tr>
+<tr>
+<td>L2</td>
+<td><strong>CONFIRMED</strong></td>
+<td>(B) re-derived from Theorem 19, and its gauge invariance checked term by term for all three gauge constants; exact on 784 member states.</td>
+</tr>
+<tr>
+<td>L3</td>
+<td><strong>CONFIRMED</strong></td>
+<td>Lemma 4 applies as used: non-negative, separable on a full product, product zero by L1, neither identically zero when the axis is two-way; its conclusion is that both functions depend on the same single coordinate.</td>
+</tr>
+<tr>
+<td>L4</td>
+<td><strong>CONFIRMED</strong></td>
+<td>The means agree because <span class="math inline">\(y\mp1\)</span> runs over all even residues as <span class="math inline">\(y\)</span> runs over the odd ones; exact on every state.</td>
+</tr>
+<tr>
+<td>L5</td>
+<td><strong>CONFIRMED WITH CORRECTIONS</strong></td>
+<td>All four formulas were re-derived for both signs, the induction round the circle is right, and the case ‘B is not (ii)<span class="math inline">\(_y\)</span>’ was written out in full and holds; the constancy of the <span class="math inline">\(y\)</span>-part of <span class="math inline">\(\sigma^B_x\)</span> is not needed (correction 3).</td>
+</tr>
+<tr>
+<td>L6</td>
+<td><strong>CONFIRMED</strong></td>
+<td>The circle argument makes <span class="math inline">\(F_-\)</span> and <span class="math inline">\(U_-\)</span> constant, and then (B) gives <span class="math inline">\(\sigma^B_z = \sigma^A_z\)</span> directly, so the inversion is not even needed.</td>
+</tr>
+<tr>
+<td>L7</td>
+<td><strong>CONFIRMED WITH CORRECTIONS</strong></td>
+<td>I derived all four rows of the class table, not just the two in the report, and the facts, <span class="math inline">\((\star)\)</span> and the final contradiction for both residues of <span class="math inline">\(z_0\)</span> mod 4; the permutation reduction is right; the remark that the planes <span class="math inline">\(z_0\pm2\)</span> ‘may coincide’ is false but unused (correction 1).</td>
+</tr>
+<tr>
+<td>Assembly §2.10</td>
+<td><strong>CONFIRMED</strong></td>
+<td>Every pair (label of A, label of B) is covered: a (i) on A by L5b, a (i) on B by the inversion, equal (ii) by L6, mixed (ii) by L7.</td>
+</tr>
+<tr>
+<td>Periodicity §2.11</td>
+<td><strong>CONFIRMED</strong> (conditional on the record)</td>
+<td>The logic holds given Theorem H, Lemma A and the curl note’s Theorem P; the flux identity can be replaced by the definition of zero flux (correction 4).</td>
+</tr>
+<tr>
+<td>Thin members §3</td>
+<td><strong>CONFIRMED</strong></td>
+<td>Every step holds at extent 2. Theorem M′ at extent 2 is still a solver fact, not a proof: I reproduced it as UNSAT on four thin members, with controls.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>No gap was found in Part I or Part II.</strong> Six corrections are listed in §4; none of them affects a conclusion.</p>
+<h2 id="part-i-read-by-hand-t1">1. Part I, read by hand (T1)</h2>
+<h3 id="the-symbol-of-px">The symbol of <span class="math inline">\(P^x\)</span></h3>
+<ul>
+<li><strong>The law at an A-hole.</strong> At <span class="math inline">\(O = a + 2e_x\)</span> the bridgeheads with <span class="math inline">\(s_x = -1\)</span> need <span class="math inline">\(s_ys_z = +1\)</span>, which gives <span class="math inline">\(a + d_0\)</span> and <span class="math inline">\(a + d_1\)</span>. Those with <span class="math inline">\(s_x = +1\)</span> need <span class="math inline">\(s_ys_z = -1\)</span>, which gives <span class="math inline">\(a + 4e_x + d_2\)</span> and <span class="math inline">\(a + 4e_x + d_3\)</span>. This is the note’s form of the law.</li>
+<li><strong>The A-hole row.</strong> Put <span class="math inline">\(K = \alpha\chi\)</span> on A and <span class="math inline">\(\beta\chi\)</span> on B, and divide by <span class="math inline">\(\chi(O)\)</span>. Since <span class="math inline">\(\chi(d_2) + \chi(d_3) = \xi^{-1}p\)</span> and <span class="math inline">\(\chi(d_0) + \chi(d_1) = \xi q\)</span>, the row is <span class="math inline">\(\Delta\alpha - (\xi p - \xi^{-1}q)\beta\)</span>.</li>
+<li><strong>The B-hole row.</strong> At <span class="math inline">\(O = b + 2e_x\)</span> the bridgeheads are <span class="math inline">\(b - d_3\)</span> and <span class="math inline">\(b - d_2\)</span> (with <span class="math inline">\(s_x = -1\)</span>), and <span class="math inline">\(b + 4e_x - d_1\)</span> and <span class="math inline">\(b + 4e_x - d_0\)</span> (with <span class="math inline">\(s_x = +1\)</span>). The row is <span class="math inline">\(-(\xi q - \xi^{-1}p)\alpha + \Delta\beta\)</span>. So <span class="math inline">\(M\)</span> is as stated.</li>
+<li><strong>The determinant.</strong> <span class="math inline">\(\Delta^2 = X_\xi^2 - 4\)</span> and <span class="math inline">\(\Theta\Theta&#39; = X_\xi\,pq - (p^2+q^2)\)</span>. With <span class="math inline">\(pq = X_\eta + X_\zeta\)</span> and <span class="math inline">\(p^2+q^2 = 4 + X_\eta X_\zeta\)</span> this gives <span class="math inline">\(\det M = (X_\xi - X_\eta)(X_\xi - X_\zeta)\)</span>.</li>
+<li><strong>The factorisations.</strong> <span class="math inline">\(X_\xi - X_\zeta = \xi^{-2}(\xi^2\zeta^2 - 1)(\xi^2\zeta^{-2} - 1)\)</span>, which is <span class="math inline">\(\xi^{-2}(\chi(u_{02}) - 1)(\chi(u_{13}) - 1)\)</span>. Likewise <span class="math inline">\(X_\xi - X_\eta\)</span> factors through <span class="math inline">\(u_{03}\)</span> and <span class="math inline">\(u_{12}\)</span>. <strong>CONFIRMED.</strong></li>
+<li><strong>When <span class="math inline">\(M = 0\)</span>.</strong> Take <span class="math inline">\(\xi^2 = \varsigma\)</span>, so that <span class="math inline">\(\xi^{-1} = \varsigma\xi\)</span>. Then <span class="math inline">\(\xi\eta\zeta\,\Theta = \varsigma\eta^2 + \varsigma\zeta^2 - \eta^2\zeta^2 - 1 = -(\eta^2-\varsigma)(\zeta^2-\varsigma)\)</span>, and <span class="math inline">\(\xi\eta\zeta\,\Theta&#39; = \varsigma(\eta^2-\varsigma)(\zeta^2-\varsigma)\)</span>.</li>
+<li>So <span class="math inline">\(M = 0\)</span> if and only if <span class="math inline">\(\xi^2 = \eta^2 = \pm1\)</span> (both families of <span class="math inline">\(z\)</span>) or <span class="math inline">\(\xi^2 = \zeta^2 = \pm1\)</span> (both families of <span class="math inline">\(y\)</span>).</li>
+<li>The converse also holds: <span class="math inline">\(\chi(u_{03}) = \chi(u_{12}) = 1\)</span> forces <span class="math inline">\(\xi^4 = 1\)</span> and <span class="math inline">\(\xi^2 = \eta^2\)</span>. <strong>CONFIRMED</strong>, and checked with sympy (h532).</li>
+</ul>
+<h3 id="lemma-11">Lemma 11</h3>
+<p>The complementary pairs are exactly the two families of one axis, and a triple <span class="math inline">\(\{0,1,2,3\}\setminus\{\ell\}\)</span> contains one family of each axis. Equality of all four <span class="math inline">\(\lambda\)</span> makes <span class="math inline">\(\chi\)</span> trivial on <span class="math inline">\(\Lambda\)</span>, which is generated by the <span class="math inline">\(d_i - d_j\)</span>. <strong>CONFIRMED.</strong></p>
+<h3 id="lemma-12">Lemma 12</h3>
+<p>At the A-hole, each family leaves two terms that must be the same chain (four families; each pair lies on one chain):</p>
+<table>
+<thead>
+<tr>
+<th>family</th>
+<th>first term</th>
+<th>second term</th>
+<th>difference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(\{0,2\}\)</span></td>
+<td><span class="math inline">\(a+(0,-2,-2)\)</span></td>
+<td><span class="math inline">\(a+(4,-2,2)\)</span></td>
+<td><span class="math inline">\(2u_{02}\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\{1,3\}\)</span></td>
+<td><span class="math inline">\(a+(0,2,2)\)</span></td>
+<td><span class="math inline">\(a+(2,2,0)\)</span></td>
+<td><span class="math inline">\(u_{13}\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\{0,3\}\)</span></td>
+<td><span class="math inline">\(a+(0,-2,-2)\)</span></td>
+<td><span class="math inline">\(a+(4,2,-2)\)</span></td>
+<td><span class="math inline">\(2u_{03}\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\{1,2\}\)</span></td>
+<td><span class="math inline">\(a+(0,2,2)\)</span></td>
+<td><span class="math inline">\(a+(2,0,2)\)</span></td>
+<td><span class="math inline">\(u_{12}\)</span></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><span class="math inline">\(\mathbf 1_A\)</span> and <span class="math inline">\(\mathbf 1_B\)</span> satisfy the law.</li>
+<li>The inversion maps <span class="math inline">\(\mathcal H_A\)</span> to <span class="math inline">\(\mathcal H_B\)</span> (using <span class="math inline">\((4,0,0) = u_{02} + u_{13} \in \Lambda\)</span>), maps <span class="math inline">\(s\)</span> to <span class="math inline">\(-s\)</span>, exchanges the methylenes, and maps law to law with the same sign. It fixes each family, since the bond <span class="math inline">\((a, a+d)\)</span> goes to a bond of direction <span class="math inline">\(d\)</span>.</li>
+<li>The permutations of the coordinates permute <span class="math inline">\(\{d_1, d_2, d_3\}\)</span> and fix <span class="math inline">\(d_0\)</span>.</li>
+</ul>
+<p><strong>CONFIRMED.</strong></p>
+<h3 id="theorem-16">Theorem 16</h3>
+<ul>
+<li><strong>The case analysis.</strong> For each character:
+<ul>
+<li><span class="math inline">\(\det \ne 0\)</span>: the kernel is 0, and no family is supported.</li>
+<li><span class="math inline">\(\det = 0\)</span> and <span class="math inline">\(M \ne 0\)</span>: the kernel is a line, spanned by any supported chain, whose vector is <span class="math inline">\((1, 1/\lambda_i) \neq 0\)</span>.</li>
+<li><span class="math inline">\(M = 0\)</span>: the two vectors of the two families of one axis are independent unless all <span class="math inline">\(\lambda\)</span> are equal, and at the trivial character <span class="math inline">\(\mathbf 1_A\)</span> and <span class="math inline">\(\mathbf 1_B\)</span> span. The note writes this only for <span class="math inline">\(y\)</span>; <span class="math inline">\(z\)</span> is identical.</li>
+</ul></li>
+<li><strong>The span decomposes.</strong> The span of the generators is <span class="math inline">\(\Lambda\)</span>-invariant, so it is the sum of its projections, and those are spanned by the projections of the generators.</li>
+<li><strong>Real from complex.</strong> The real statement follows because the coefficients are integers and the generators are real: <span class="math inline">\(\ker_{\mathbb R}\otimes\mathbb C = \ker_{\mathbb C}\)</span>, and likewise for the span.</li>
+<li><strong>The count.</strong> I redid the inclusion–exclusion:
+<ul>
+<li>one condition: <span class="math inline">\(2b\gcd(a,c)\)</span> and <span class="math inline">\(2c\gcd(a,b)\)</span> characters;</li>
+<li><span class="math inline">\(\alpha\beta\)</span>: <span class="math inline">\(2b\)</span>, and <span class="math inline">\(\gamma\delta\)</span>: <span class="math inline">\(2c\)</span>;</li>
+<li>cross pairs: <span class="math inline">\(\gcd(a,b,c)\)</span> each, via <span class="math inline">\(v\mapsto v\cdot d_\ell/4\)</span> onto <span class="math inline">\(\mathbb Z\)</span> with the periods going to <span class="math inline">\(\pm a, \pm b, \pm c\)</span>. The four cross pairs are <span class="math inline">\(\perp d_1, d_3, d_2, d_0\)</span>.</li>
+<li>Any three conditions give the fourth, for example <span class="math inline">\(u_{12} = u_{02} + u_{13} - u_{03}\)</span>. The four steps generate <span class="math inline">\(\Lambda\)</span>, since the graph on <span class="math inline">\(\{0,1,2,3\}\)</span> with edges 02, 13, 03, 12 is connected.</li>
+</ul>
+This gives <span class="math inline">\(\#\{\det=0\} = 4bg_{ac} + 4cg_{ab} - 2b - 2c - 4g_3 + 3\)</span> and <span class="math inline">\(\#\{M=0\} = 2b + 2c - 1\)</span>, which sum to the formula.</li>
+</ul>
+<p><strong>CONFIRMED.</strong></p>
+<h3 id="theorem-17">Theorem 17</h3>
+<ul>
+<li><strong>The currents are solutions.</strong> <span class="math inline">\(d_r\cdot u_f = 0\)</span> for <span class="math inline">\(r\notin f\)</span>. For <span class="math inline">\(r \in f\)</span>, a bond of direction <span class="math inline">\(d_r\)</span> at a vertex of <span class="math inline">\(C\)</span> is the chain’s own bond at that vertex, so both ends are on <span class="math inline">\(C\)</span>.</li>
+<li><strong>The five cases.</strong>
+<ul>
+<li>One family <span class="math inline">\(f\)</span> of axis <span class="math inline">\(m\)</span>: law <span class="math inline">\(m\)</span> has no supported family, so <span class="math inline">\(n_m = 0\)</span>. The other two laws give <span class="math inline">\(n_B = n_A/\lambda_i\)</span>. The two bonds <span class="math inline">\(r\notin f\)</span> give <span class="math inline">\(n_A \parallel u_f\)</span>.</li>
+<li>Two families (axis <span class="math inline">\(m\)</span>, values <span class="math inline">\(\mu \ne \nu\)</span>): law <span class="math inline">\(m\)</span> is non-degenerate and the other two symbols vanish. The bond rule reduces to <span class="math inline">\((n_{Ay} + n_{Az}) = \mu(n_{By} + n_{Bz})\)</span> and <span class="math inline">\((n_{Ay} - n_{Az}) = \nu(n_{By} - n_{Bz})\)</span> (for <span class="math inline">\(m = x\)</span>). That is a plane, and <span class="math inline">\((u_{01}, u_{01}/\mu)\)</span> and <span class="math inline">\((u_{23}, u_{23}/\nu)\)</span> are independent vectors of it.</li>
+<li>Three families: every law has two supported families on different axes, so <span class="math inline">\(M^k \ne 0\)</span>, <span class="math inline">\(\det = 0\)</span> and <span class="math inline">\(n_B = n_A/\mu\)</span>. The bond rule on <span class="math inline">\(d_\ell\)</span> gives the plane <span class="math inline">\(\perp d_\ell\)</span>.</li>
+<li>Trivial character: <span class="math inline">\(n_A = \lambda n_B\)</span>, three dimensions.</li>
+</ul></li>
+<li><strong>The dimension.</strong> It is #chains − #relations, with relations <span class="math inline">\(0, 0, 1, 3\)</span> in the four non-empty cases, which gives the formula. <strong>CONFIRMED.</strong></li>
+<li><strong>Pressed points.</strong>
+<ul>
+<li><em>Does Theorem 17 need orientation?</em> Theorem 17 is a statement about a linear system and has no hypothesis on holes. Orientation enters only in applying it to a state: by Lemma 3, <span class="math inline">\(n\)</span> obeys all three laws at <span class="math inline">\(O\)</span> if and only if <span class="math inline">\(c(O) = 0\)</span>, since one charged hole breaks all three laws by the same amount. So, for a frozen state, <span class="math inline">\(n\)</span> is a sum of currents if and only if every hole is oriented. The note’s sentence ‘the moments of a state with every hole oriented are a sum of such currents’ is exactly right.</li>
+<li><em>‘No constant on a sublattice occurs.’</em> See correction 5. <span class="math inline">\(c\,\mathbf 1_A\)</span> and <span class="math inline">\(c(\mathbf 1_A - \mathbf 1_B)\)</span> are not solutions (checked for <span class="math inline">\(e_x\mathbf 1_A\)</span> on all 16 cells). But the constant <span class="math inline">\(e_x\)</span> on all vertices is <span class="math inline">\(\tfrac12\sum_{C\in\{0,2\}}\tfrac12u_{02}\mathbf 1_C + \tfrac12\sum_{C\in\{1,3\}}\tfrac12u_{13}\mathbf 1_C\)</span>.</li>
+<li><em>Real from complex:</em> as for Theorem 16.</li>
+<li><em>‘Neither system implies the other.’</em> Confirmed by hand: the bond rule alone has kernel dimension 2 at a character with non-equal <span class="math inline">\(\lambda\)</span> and 3 at the trivial one. On 16 cells the kernel of the laws alone (exact, the sum of the three kernels of Theorem 16) always exceeds the joint kernel, so the laws never imply the bond rule. The kernel of the bond rule alone, computed modulo <span class="math inline">\(p\)</span>, equals <span class="math inline">\(N+1\)</span> on every cell, as the hand count predicts; it equals the joint kernel on <span class="math inline">\((1,1,1)\)</span> only, which is exact there and a mod-<span class="math inline">\(p\)</span> statement elsewhere.</li>
+</ul></li>
+</ul>
+<h3 id="theorem-18">Theorem 18</h3>
+<p>Take the family <span class="math inline">\(\{0,1\}\)</span>, with (C) contributions <span class="math inline">\(f\)</span> to <span class="math inline">\(Y\)</span> and <span class="math inline">\(-f\)</span> to <span class="math inline">\(Z\)</span>, and <span class="math inline">\(n\)</span> contribution <span class="math inline">\(g(0,1,1)\)</span>. Then <span class="math inline">\(D_{\pm y} = \tfrac12(f\pm g)\)</span> and <span class="math inline">\(D_{\pm z} = \tfrac12(-f\pm g)\)</span>.</p>
+<ul>
+<li>The pair <span class="math inline">\(\{+e_y,-e_z\}\)</span> has difference <span class="math inline">\((0,1,1) = \tfrac12u_{01}\)</span> and weight <span class="math inline">\(\tfrac12(f+g)\)</span>.</li>
+<li>The pair <span class="math inline">\(\{+e_z,-e_y\}\)</span> has weight <span class="math inline">\(\tfrac12(g-f)\)</span>.</li>
+<li>For <span class="math inline">\(\{2,3\}\)</span> the pairs are <span class="math inline">\(\{+e_y,+e_z\}\)</span> and <span class="math inline">\(\{-e_y,-e_z\}\)</span>, with weights <span class="math inline">\(\tfrac12(f+g)\)</span> and <span class="math inline">\(\tfrac12(f-g)\)</span>.</li>
+<li>The constants <span class="math inline">\(\tfrac12(\kappa_k + \sigma_v\gamma_k)\)</span> come from (C) only.</li>
+</ul>
+<p><strong>CONFIRMED.</strong></p>
+<h3 id="theorem-19">Theorem 19</h3>
+<ul>
+<li><strong>The components.</strong> <span class="math inline">\(\tfrac12u_f\)</span> gives <span class="math inline">\(n_x = G_{02}+G_{13}+G_{03}+G_{12}\)</span>, <span class="math inline">\(n_y = G_{01}+G_{23}+G_{03}-G_{12}\)</span> and <span class="math inline">\(n_z = G_{01}-G_{23}+G_{02}-G_{13}\)</span>. All three are correct.</li>
+<li><strong>Where each family sits.</strong> On an <span class="math inline">\(x\)</span>-line the chain of <span class="math inline">\(\{0,2\}\)</span> through each vertex lies in the pair of <span class="math inline">\(y\)</span>-planes of the vertex. Its chains in that pair are the classes of <span class="math inline">\(x - z\)</span> modulo <span class="math inline">\(4\gcd(a,c)\)</span>, and the line moves <span class="math inline">\(x - z\)</span> by 4 at each step through <span class="math inline">\(a\)</span> vertices, a multiple of <span class="math inline">\(\gcd(a,c)\)</span>. So the average is the mean weight over the pair. This holds on every cell.</li>
+<li><strong>The shifts on B.</strong> A chain of <span class="math inline">\(\{i,j\}\)</span> has its B vertices at its A vertices <span class="math inline">\(+\,d_i\)</span>. So at <span class="math inline">\(w\in\)</span> B its A-plane along axis <span class="math inline">\(m\)</span> is <span class="math inline">\(w_m - (d_i)_m\)</span>:
+<ul>
+<li><span class="math inline">\(x\)</span>: <span class="math inline">\(d_0, d_1\)</span> have <span class="math inline">\(+1\)</span> and <span class="math inline">\(d_2, d_3\)</span> have <span class="math inline">\(-1\)</span>, so <span class="math inline">\(F_{01}(x-1)\)</span> and <span class="math inline">\(F_{23}(x+1)\)</span>;</li>
+<li><span class="math inline">\(y\)</span>: <span class="math inline">\(d_0, d_2\)</span> have <span class="math inline">\(+1\)</span> and <span class="math inline">\(d_1, d_3\)</span> have <span class="math inline">\(-1\)</span>, so <span class="math inline">\(U_{02}(y-1)\)</span> and <span class="math inline">\(U_{13}(y+1)\)</span>;</li>
+<li><span class="math inline">\(z\)</span>: <span class="math inline">\(d_0, d_3\)</span> have <span class="math inline">\(+1\)</span> and <span class="math inline">\(d_1, d_2\)</span> have <span class="math inline">\(-1\)</span>, so <span class="math inline">\(W_{03}(z-1)\)</span> and <span class="math inline">\(W_{12}(z+1)\)</span>.</li>
+</ul>
+These are the stated shifts, in the stated order. <strong>CONFIRMED.</strong></li>
+<li><strong>The sum.</strong> The sum on A is exactly <span class="math inline">\(2F_{01}+2U_{02}+2W_{03}\)</span> (correction 6).</li>
+</ul>
+<h2 id="part-ii-read-by-hand-t2">2. Part II, read by hand (T2)</h2>
+<ul>
+<li><strong>(a) L0.</strong> The three types occur if and only if the three arcs <span class="math inline">\(\{R,g_{rp},P\}\)</span>, <span class="math inline">\(\{P,g_{pq},Q\}\)</span> and <span class="math inline">\(\{Q,g_{qr},R\}\)</span> each carry a unit. I checked <span class="math inline">\(\max p - \min r = R + g_{rp} + P\)</span> and <span class="math inline">\(2 + \max r - \min q = R + Q + g_{qr}\)</span>. The two units can be on two distinct spreads (3 vectors) or on a spread and its opposite gap (3 vectors); two gaps, or both units on one slot, cover at most two arcs. The labels are right:
+<ul>
+<li><span class="math inline">\((0,0,1,0,0,1)\)</span> has <span class="math inline">\(q = r+1\)</span>, both constant, so <span class="math inline">\(a_x \equiv \tfrac12\)</span>: this is (ii)<span class="math inline">\(_x\)</span>;</li>
+<li><span class="math inline">\((0,1,0,0,1,0)\)</span> is (ii)<span class="math inline">\(_y\)</span>;</li>
+<li><span class="math inline">\((1,0,0,1,0,0)\)</span> is (ii)<span class="math inline">\(_z\)</span>;</li>
+<li>(i)<span class="math inline">\(_k\)</span> means the profile of <span class="math inline">\(k\)</span> is constant.</li>
+</ul>
+The readings of (i)<span class="math inline">\(_x\)</span> and (ii)<span class="math inline">\(_z\)</span> are right. <strong>CONFIRMED.</strong></li>
+<li><strong>(b) L1.</strong>
+<ul>
+<li><strong>The translation fixes the chains.</strong> <span class="math inline">\((8,0,0) \equiv t(2,0,\pm2)\)</span> needs <span class="math inline">\(t\equiv4 \bmod 2a\)</span> and <span class="math inline">\(t\equiv0\bmod 2c\)</span>, which is solvable because <span class="math inline">\(\gcd(2a,2c) = 4\)</span> on a member. It is the same for <span class="math inline">\(\{0,3\},\{1,2\}\)</span> with <span class="math inline">\(\gcd(2a,2b) = 4\)</span>. At <span class="math inline">\(a = 2\)</span> it is trivial, since <span class="math inline">\(8e_x\equiv0\)</span>. B vertices follow A vertices by <span class="math inline">\(+d_i\)</span>.</li>
+<li><strong>One sign per line.</strong> A full line: each <span class="math inline">\(v, v+4e_k\)</span> are the two rods of the straight hole <span class="math inline">\(v+2e_k\)</span> (Law C), which is oriented, so they have the same sign. At extent 2 the two holes <span class="math inline">\(v\pm2e_k\)</span> share the same two rods. A half line: the vertices of type <span class="math inline">\(k\)</span> are <span class="math inline">\(v + 8m e_k\)</span>, all with the same <span class="math inline">\(n_k\)</span>.</li>
+</ul>
+<strong>CONFIRMED.</strong></li>
+<li><strong>(c) L2.</strong>
+<ul>
+<li>All three lines of (B) were re-derived from Theorem 19 with <span class="math inline">\(U_{02,13} = \tfrac12(U_+\pm U_-)\)</span> and so on.</li>
+<li>The gauges are <span class="math inline">\(c_1\)</span> (<span class="math inline">\(U_+ + c_1\)</span>, <span class="math inline">\(W_+ - c_1\)</span>), <span class="math inline">\(c_2\)</span> (<span class="math inline">\(F_+ + c_2\)</span>, <span class="math inline">\(W_- - c_2\)</span>) and <span class="math inline">\(c_3\)</span> (<span class="math inline">\(F_- + c_3\)</span>, <span class="math inline">\(U_- - c_3\)</span>). Each enters each line of (B) either through a sum, where it cancels against its partner, or through a difference, where it cancels itself.</li>
+</ul>
+So the B fractions are determined by the A fractions. <strong>CONFIRMED.</strong></li>
+<li><strong>(d) L3.</strong> <span class="math inline">\(\rho_\pm = (a_k \pm \sigma_k)/2 \ge 0\)</span> because <span class="math inline">\(|n_k| \le K_k\)</span>. <span class="math inline">\(a_k\)</span> is separable (P2) and <span class="math inline">\(\sigma_k\)</span> is separable (Theorem 19), both on the full product of transverse residues. <span class="math inline">\(\rho_+\rho_- = 0\)</span> by L1. When the axis is two-way, a positive vertex on a line <span class="math inline">\(\ell\)</span> gives <span class="math inline">\(\rho_+(\ell) = a_k(\ell) &gt; 0\)</span>, and likewise for <span class="math inline">\(\rho_-\)</span>. Lemma 4 concludes that both depend on the same single coordinate, so <span class="math inline">\(a_k = \rho_+ + \rho_-\)</span> does too. <strong>CONFIRMED.</strong></li>
+<li><strong>(e) L5.</strong>
+<ul>
+<li><p><strong>(a).</strong> In (i)<span class="math inline">\(_x\)</span>, <span class="math inline">\(a_x = 1 - a_y(z) - a_z(y)\)</span> with both parts non-constant, so it depends on both coordinates, which contradicts L3. Axis <span class="math inline">\(x\)</span> occurs, since <span class="math inline">\(\max a_x = 1\)</span>.</p></li>
+<li><p><strong>(b).</strong> <span class="math inline">\(U_+ = -s\,a_z + c_1\)</span> and <span class="math inline">\(W_+ = -s\,a_y + s - c_1\)</span>. <span class="math inline">\(F_\pm\)</span> are constant (from the planes where <span class="math inline">\(a_y\)</span>, <span class="math inline">\(a_z\)</span> vanish). <span class="math inline">\(p_B\)</span> is constant, so B is (i)<span class="math inline">\(_x\)</span>, (ii)<span class="math inline">\(_y\)</span> or (ii)<span class="math inline">\(_z\)</span>.</p></li>
+<li><p><strong>The four formulas.</strong> Substituting <span class="math inline">\(U_+ = -s(\rho_++\rho_-) + c_1\)</span> and <span class="math inline">\(U_- = \rho_+ - \rho_- - f_-\)</span>:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th><span class="math inline">\(s\)</span></th>
+<th><span class="math inline">\(y\)</span>-part of <span class="math inline">\(\sigma^B_x\)</span></th>
+<th><span class="math inline">\(\sigma^B_z\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(+1\)</span></td>
+<td><span class="math inline">\(c_1 - \rho_-(y-1) - \rho_+(y+1)\)</span></td>
+<td><span class="math inline">\(\rho_+(y+1) - \rho_-(y-1)\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(-1\)</span></td>
+<td><span class="math inline">\(c_1 + \rho_+(y-1) + \rho_-(y+1)\)</span></td>
+<td><span class="math inline">\(\rho_+(y-1) - \rho_-(y+1)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>In <span class="math inline">\(\sigma^B_z\)</span> the <span class="math inline">\(x\)</span>-part <span class="math inline">\(f_-\)</span> cancels against the <span class="math inline">\(-f_-\)</span> inside <span class="math inline">\(U_-\)</span>. All four match the report.</p></li>
+<li><p><strong>The induction.</strong> For <span class="math inline">\(s=+1\)</span>: <span class="math inline">\(|\rho_+(y+1) - \rho_-(y-1)| = \tfrac12\)</span> with values in <span class="math inline">\(\{0,\tfrac12\}\)</span> means exactly one of them is <span class="math inline">\(\tfrac12\)</span>. From <span class="math inline">\(\rho_\pm(y_0) = 0\)</span> we get <span class="math inline">\(\rho_+(y_0+2) = \tfrac12\)</span>, hence <span class="math inline">\(\rho_-(y_0+2) = 0\)</span>, and so on round the <span class="math inline">\(2b\)</span> even residues back to <span class="math inline">\(y_0\)</span>: contradiction. For <span class="math inline">\(s=-1\)</span> the induction runs on <span class="math inline">\(\rho_-\)</span>.</p>
+<p><strong>Only <span class="math inline">\(|\sigma^B_z| = \tfrac12\)</span> is used.</strong> The constancy of the <span class="math inline">\(y\)</span>-part of <span class="math inline">\(\sigma^B_x\)</span> (the constant <span class="math inline">\(K\)</span>) plays no role (correction 3).</p></li>
+<li><p><strong>‘B is not (ii)<span class="math inline">\(_y\)</span>’, written out.</strong></p>
+<ul>
+<li>Set-up: B in (ii)<span class="math inline">\(_y\)</span> has <span class="math inline">\(a^B_y \equiv \tfrac12\)</span>, so <span class="math inline">\(|\sigma^B_y| = \tfrac12\)</span> on every B <span class="math inline">\(y\)</span>-line. On A, <span class="math inline">\(\sigma^A_y = f_+ + W_-(z) =: \tau&#39;(z)\)</span> with <span class="math inline">\(|\tau&#39;| = a^A_y(z)\)</span>, since <span class="math inline">\(F_+ \equiv f_+\)</span>.</li>
+<li>Put <span class="math inline">\(\rho&#39;_\pm = (a^A_y \pm \tau&#39;)/2 \in \{0,\tfrac12\}\)</span>, with <span class="math inline">\(\rho&#39;_+\rho&#39;_- = 0\)</span>. Then <span class="math inline">\(W_- = \rho&#39;_+ - \rho&#39;_- - f_+\)</span> and <span class="math inline">\(W_+ = -s(\rho&#39;_+ + \rho&#39;_-) + c_2\)</span>.</li>
+<li>By (B), <span class="math inline">\(\sigma^B_y = f_+ + \tfrac12[W_+(z-1) - W_+(z+1)] + \tfrac12[W_-(z-1) + W_-(z+1)]\)</span>. The <span class="math inline">\(x\)</span>-part is <span class="math inline">\(f_+\)</span>, because <span class="math inline">\(F_\pm\)</span> are constant. This reduces to <span class="math inline">\(\rho&#39;_+(z+1) - \rho&#39;_-(z-1)\)</span> for <span class="math inline">\(s=+1\)</span> and to <span class="math inline">\(\rho&#39;_+(z-1) - \rho&#39;_-(z+1)\)</span> for <span class="math inline">\(s=-1\)</span>: the same shape as <span class="math inline">\(\sigma^B_z\)</span> above.</li>
+<li>Since <span class="math inline">\(a^A_y(z_0) = 0\)</span> for some even <span class="math inline">\(z_0\)</span> in (i)<span class="math inline">\(_x\)</span>, the same induction round the <span class="math inline">\(2c\)</span> even residues gives a contradiction.</li>
+</ul>
+<p>The report’s ‘the same argument with <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span> exchanged’ is correct. It does not need its own remark about the <span class="math inline">\(z\)</span>-part of <span class="math inline">\(\sigma^B_x\)</span> either.</p></li>
+</ul>
+<strong>CONFIRMED.</strong></li>
+<li><strong>(f) L6.</strong>
+<ul>
+<li>On A, <span class="math inline">\(F_+\)</span> and <span class="math inline">\(U_+\)</span> are constant.</li>
+<li>On B, the <span class="math inline">\(x\)</span>-part of <span class="math inline">\(\sigma^B_y\)</span> is <span class="math inline">\(f_+ + \tfrac12[F_-(x-1)-F_-(x+1)]\)</span>, which is constant. Summed round the odd residues it gives <span class="math inline">\(\kappa = 0\)</span>, so <span class="math inline">\(F_-\)</span> is constant on the even residues. Likewise <span class="math inline">\(U_-\)</span>.</li>
+<li>So <span class="math inline">\(\sigma^A_z\)</span> is a constant of modulus <span class="math inline">\(\tfrac12\)</span>.</li>
+<li>The inversion step is correct: <span class="math inline">\(n&#39;(\iota v) = n(v)\)</span> satisfies the bond rule, because the bond <span class="math inline">\((a, a+d)\)</span> goes to the bond <span class="math inline">\((\iota(a+d), \iota a)\)</span> of direction <span class="math inline">\(d\)</span>. I also checked on 504 sampled states that the inverted state satisfies (T2), oddness and the bond rule.</li>
+<li>The inversion is <strong>not needed</strong>: with <span class="math inline">\(F_\pm\)</span> and <span class="math inline">\(U_\pm\)</span> constant, (B) gives <span class="math inline">\(\sigma^B_z = f_- + u_- = \sigma^A_z\)</span> directly. That is one-way on A and B with the same sign, and it makes L4 unnecessary in this case. It holds exactly in all 112 case-(ii) states.</li>
+</ul>
+<strong>CONFIRMED.</strong></li>
+<li><strong>(g) L7.</strong>
+<ul>
+<li><strong>The class table.</strong> I derived the table for all four B classes (h539):
+<ul>
+<li><span class="math inline">\(c_0&#39;\)</span>: <span class="math inline">\(+b^{c_0}(y&#39;{-}1,z&#39;{-}1) - b^{c_1}(y&#39;{+}1,z&#39;{+}1) - b^{c_2}(y&#39;{-}1,z&#39;{+}1) - b^{c_3}(y&#39;{+}1,z&#39;{-}1)\)</span>;</li>
+<li><span class="math inline">\(c_1&#39;\)</span>: <span class="math inline">\(-b^{c_0}(y&#39;{+}1,z&#39;{+}1) + b^{c_1}(y&#39;{-}1,z&#39;{-}1) - b^{c_2}(y&#39;{+}1,z&#39;{-}1) - b^{c_3}(y&#39;{-}1,z&#39;{+}1)\)</span>;</li>
+<li><span class="math inline">\(c_2&#39;\)</span>: <span class="math inline">\(-b^{c_0}(y&#39;{-}1,z&#39;{+}1) - b^{c_1}(y&#39;{+}1,z&#39;{-}1) + b^{c_2}(y&#39;{-}1,z&#39;{-}1) - b^{c_3}(y&#39;{+}1,z&#39;{+}1)\)</span>;</li>
+<li><span class="math inline">\(c_3&#39;\)</span>: <span class="math inline">\(-b^{c_0}(y&#39;{+}1,z&#39;{-}1) - b^{c_1}(y&#39;{-}1,z&#39;{+}1) - b^{c_2}(y&#39;{+}1,z&#39;{+}1) + b^{c_3}(y&#39;{-}1,z&#39;{-}1)\)</span>.</li>
+</ul>
+The rows for <span class="math inline">\((+,+,+)\)</span> and <span class="math inline">\((-,+,-)\)</span> agree with the report. The other two rows matter because <span class="math inline">\((\star)\)</span> needs every term at every B vertex to sit on <span class="math inline">\(z&#39;\pm1\)</span>, and they do.</li>
+<li><strong>The classes of the A values.</strong> <span class="math inline">\(E_x(0,+), E_y(0,+), E_z(0,+) \in c_0\)</span>; <span class="math inline">\(E_x(0,-), E_y(2,+), E_z(2,-) \in c_1\)</span>; <span class="math inline">\(E_x(2,-), E_y(0,-), E_z(2,+) \in c_2\)</span>; <span class="math inline">\(E_x(2,+), E_y(2,-), E_z(0,-) \in c_3\)</span>.</li>
+<li><strong>The facts.</strong> <span class="math inline">\(|b^c_x| = \tfrac12[z\in Z_x]\)</span>. On <span class="math inline">\(Z_x\cap Z_c\)</span>, <span class="math inline">\(a_y = 0\)</span> gives <span class="math inline">\(e^c_x \equiv e^c_z(z)\)</span>. <span class="math inline">\(|b^B_x| = \tfrac12\)</span>. <span class="math inline">\((\star)\)</span> holds.</li>
+<li><strong>The conclusion, for both residues of <span class="math inline">\(z_0\)</span>:</strong>
+<ul>
+<li><span class="math inline">\(z_0\equiv0\)</span>: the classes are <span class="math inline">\(\{c_1,c_2\}\)</span>. The <span class="math inline">\(c_0&#39;\)</span> vertex at <span class="math inline">\(z&#39; = z_0+1\)</span> gives <span class="math inline">\(2b = -t - \tilde t\)</span>, and the <span class="math inline">\(c_2&#39;\)</span> vertex at <span class="math inline">\(z&#39; = z_0-1\)</span> gives <span class="math inline">\(2b = -t + \tilde t\)</span>.</li>
+<li><span class="math inline">\(z_0\equiv2\)</span>: the classes are <span class="math inline">\(\{c_0,c_3\}\)</span>. <span class="math inline">\(c_0&#39;\)</span> at <span class="math inline">\(z_0-1\)</span> gives <span class="math inline">\(t - \tilde t\)</span>, and <span class="math inline">\(c_2&#39;\)</span> at <span class="math inline">\(z_0+1\)</span> gives <span class="math inline">\(-t - \tilde t\)</span>.</li>
+</ul>
+In both cases <span class="math inline">\(|t\pm\tilde t| = 1\)</span> is impossible with <span class="math inline">\(t, \tilde t\in\{\pm\tfrac12\}\)</span>. Both vertices exist with the same <span class="math inline">\(y&#39; \equiv 1\)</span>.</li>
+<li><strong>The reduction.</strong> <span class="math inline">\(S_3\)</span> acts freely and transitively on the six ordered pairs of distinct axes. A permutation maps a member to a member (its extents permuted), preserves A and B (parity and coordinate sum), permutes <span class="math inline">\(d_1, d_2, d_3\)</span> with <span class="math inline">\(d_0\)</span> fixed, permutes the types, preserves (T2), and maps the label (ii)<span class="math inline">\(_k\)</span> to (ii)<span class="math inline">\(_{\pi k}\)</span>.</li>
+<li><strong>Thin members.</strong> On a member the planes <span class="math inline">\(z_0\pm2\)</span> are distinct, since <span class="math inline">\(4c \ge 8\)</span> and they differ by 4 (correction 1).</li>
+</ul>
+<strong>CONFIRMED.</strong></li>
+<li><strong>(h) The assembly.</strong>
+<ul>
+<li>Label of A in (i): covered by L5b.</li>
+<li>Label of B in (i): covered by the inversion, which is a symmetry of odd frozen states on the same cell (checked on states).</li>
+<li>Both in (ii), equal: covered by L6. Mixed: impossible by L7.</li>
+<li>L4 then gives one sign for A and B together, using that both carry type <span class="math inline">\(k\)</span> (§2.1, M′).</li>
+</ul>
+No case is missing. <strong>CONFIRMED.</strong></li>
+<li><strong>(i) Thin members.</strong> At extent 2:
+<ul>
+<li>L1 was checked above.</li>
+<li>Lemma 3 and the holes: the methylenes are distinct modulo 8.</li>
+<li>Theorem 19: a line of 2 vertices meets each of the 2 chains of a family once.</li>
+<li>L5 and L6: circles of <span class="math inline">\(2b \ge 4\)</span> even residues.</li>
+<li>L7: all B classes exist, and the planes are distinct.</li>
+<li>Theorem P on thin members: confirmed by check8.</li>
+</ul>
+The only item not proved at extent 2 is <strong>M′</strong>, which is tested by solver (my h538: 6 of 6 UNSAT on each of (2,2,2), (2,4,6), (4,2,6), (2,6,10), with 12 SAT controls each). <strong>CONFIRMED</strong>, with that caveat.</li>
+<li><strong>Periodicity §2.11.</strong>
+<ul>
+<li><span class="math inline">\(c(0,2,2) \equiv c(0,2,-2)\)</span> modulo <span class="math inline">\((0,0,4c)\)</span>, so <span class="math inline">\((0,2c,2c)\in\Lambda_x\)</span> is nonzero.</li>
+<li>Zero flux by definition (curl note, after Lemma A) means equal numbers of <span class="math inline">\(\pm\)</span> moments on each axis of each sublattice, so a one-way axis with a vertex is excluded directly.</li>
+</ul>
+<strong>CONFIRMED</strong> (conditional on Lemma A and on Theorem P of the curl note).</li>
+</ul>
+<h2 id="computations-t3">3. Computations (T3)</h2>
+<p>My own scripts are h530 to h539 in <code>scratch_h</code>.</p>
+<ul>
+<li><strong>h530</strong> is the library: geometry, chains by my own walk, holes, the bond-rule sign recovery, the line data, the profiles, the slack and the labels.</li>
+<li><strong>Imports.</strong> They import only <code>icemix.lattice.build</code>, <code>a4_typemodel.TypeModel</code> (for the hexagon axes, the encoding of (T2), the sign field and the odd selectors) and <code>h32_cap</code>. Nothing from h440–h448 or h480–h485 was read, imported or run.</li>
+<li><strong>Environment.</strong> Every command ran from <code>scratch_h</code> with the stated <code>PYTHONPATH</code> and <code>TMPDIR</code> and the project <code>.venv</code> Python.</li>
+<li><strong>Exactness.</strong> Every claim below is exact:
+<ul>
+<li>integers and <code>Fraction</code>s;</li>
+<li>ranks modulo <span class="math inline">\(p = 2^{31}-1\)</span> with the sandwich argument: law × generator <span class="math inline">\(= 0\)</span> is checked over <span class="math inline">\(\mathbb Z\)</span>, and rank<span class="math inline">\(_p \le\)</span> rank<span class="math inline">\(_\mathbb Q\)</span>, so equality of <span class="math inline">\(N - \mathrm{rank}_p(\text{law})\)</span> and <span class="math inline">\(\mathrm{rank}_p(\text{generators})\)</span> proves kernel = span over <span class="math inline">\(\mathbb Q\)</span>;</li>
+<li>the exception is h532’s per-character check, which is in floating point with a tolerance of <span class="math inline">\(10^{-9}\)</span> and is a consistency test only.</li>
+</ul></li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>command</th>
+<th>what it tested</th>
+<th>verdict</th>
+<th>wall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h531_ranks.py 1,1,1 1,1,2 2,2,2</code></td>
+<td>Th 16 (3 axes), Th 17, laws/bond implications, <span class="math inline">\(e_x\mathbf1_A\)</span></td>
+<td>all OK; bond ⇒ laws only on (1,1,1)</td>
+<td>0.8 s</td>
+</tr>
+<tr>
+<td><code>h531_ranks.py 1,2,3 2,3,3 3,3,3 2,2,4</code></td>
+<td>same</td>
+<td>all OK</td>
+<td>1.1 s</td>
+</tr>
+<tr>
+<td><code>h531_ranks.py 2,4,6 4,3,3 6,2,3 5,2,4 4,4,4</code></td>
+<td>same</td>
+<td>all OK</td>
+<td>5.8 s</td>
+</tr>
+<tr>
+<td><code>h531_ranks.py 1,1,5 2,2,6 4,4,6 2,6,10</code></td>
+<td>same</td>
+<td>all OK</td>
+<td>20.9 s</td>
+</tr>
+<tr>
+<td><code>h532_symbol.py 1,2,3 2,2,2 3,3,3 2,4,6</code></td>
+<td>sympy identities; law applied to <span class="math inline">\(\chi\mathbf1_A\)</span>, <span class="math inline">\(\chi\mathbf1_B\)</span> for every extension <span class="math inline">\(\chi\)</span> = the symbol; <span class="math inline">\(M=0\)</span> / <span class="math inline">\(\det=0\)</span> ⇔ support conditions; <span class="math inline">\(\sum\dim\ker/16\)</span> = formula</td>
+<td>ALL OK (0 mismatches in 5,696 extensions)</td>
+<td>2.5 s</td>
+</tr>
+<tr>
+<td><code>h533_states.py 2,2,2</code> (h451, h471 odd) <code>--sym</code></td>
+<td>full battery (U, joint system, L1, Th 19 with 2 negative controls, (B), L4, profiles, L0, L3, labels, S, L5/L6 facts, symmetry images)</td>
+<td>78 states: all pass; S 63/63; NEG all-shifts fails 77/78, NEG <span class="math inline">\(y\)</span>-shifts fails 43/78</td>
+<td>1.1 s</td>
+</tr>
+<tr>
+<td><code>h533_states.py 2,4,6</code> (h451, h471) <code>--sym</code></td>
+<td>same</td>
+<td>88 states all pass; S 71/71; NEG 87/88, 62/88</td>
+<td>1.6 s</td>
+</tr>
+<tr>
+<td><code>h533_states.py 2,6,10</code> (h482)</td>
+<td>same</td>
+<td>118 all pass; S 90/90; NEG 118/118</td>
+<td>3.1 s</td>
+</tr>
+<tr>
+<td><code>h533_states.py 2,2,6</code> (h482) <code>--sym</code>; <code>2,2,4</code> (h451) <code>--sym</code>; <code>4,6,10</code> (h451, h471, h482); constrained (h482c) on 2,2,2 / 2,4,6; exit code 1 at the end because a named file h482c…2_2_6_s1 did not exist</td>
+<td>same</td>
+<td>145, 56, 41 (13 inputs without sign field skipped), 51, 66 states all pass; S 111/111, 42/42, 11/11, 30/30, 38/38</td>
+<td>&lt; 2 s each</td>
+</tr>
+<tr>
+<td><code>h533_states.py 2,2,6</code> (h482c s2)</td>
+<td>same, case (ii)<span class="math inline">\(_z\)</span></td>
+<td>54 pass; S 41/41; L6 facts 41/41</td>
+<td>0.3 s</td>
+</tr>
+<tr>
+<td><code>h534_sample.py 4,2,6 3 60 900</code></td>
+<td>pre-flight, own odd samples</td>
+<td>3 SAT</td>
+<td>1.1 s</td>
+</tr>
+<tr>
+<td><code>h534_sample.py 4,2,6 120 280 901</code></td>
+<td>own odd samples (T2 + sign + odd, random type assumptions)</td>
+<td>84 SAT, 36 UNSAT, 0 TIMEOUT</td>
+<td>9.7 s</td>
+</tr>
+<tr>
+<td><code>h533_states.py 4,2,6</code> (own) <code>--sym</code></td>
+<td>full battery on own states</td>
+<td>87 states all pass; S 77/77; NEG 87/87, 42/87</td>
+<td>&lt; 2 s</td>
+</tr>
+<tr>
+<td><code>h534_sample.py 3,3,3 3 60 902</code>; <code>3,3,3 40 200 903</code></td>
+<td>non-member samples for Th 19</td>
+<td>3; 39 SAT</td>
+<td>1.1 s; 2.1 s</td>
+</tr>
+<tr>
+<td><code>h534_sample.py 4,3,3 3 60 904</code> (6 assumptions); <code>4,3,3 30 200 905 2</code></td>
+<td>non-member samples</td>
+<td>0 SAT (3 UNSAT); 14 SAT, 16 UNSAT, 11 distinct</td>
+<td>1.7 s; 51.9 s</td>
+</tr>
+<tr>
+<td><code>h533_states.py 3,3,3</code> (own; first run crashed on an unlabelled slack, script fixed)</td>
+<td>Th 19, U, joint system on a cubic cell</td>
+<td>42 states: U, joint system, Th 19, L4 all pass; NEG 42/42</td>
+<td>0.3 s</td>
+</tr>
+<tr>
+<td><code>h533_states.py 4,3,3</code> (own)</td>
+<td>Th 19 on a cell with a coprime pair</td>
+<td>11 states all pass; NEG 11/11</td>
+<td>0.1 s</td>
+</tr>
+<tr>
+<td><code>h535_l7.py 2,2,2 120</code></td>
+<td>L7: 6 ordered mixed pairs, 6 controls without the third type, 3 equal-pair controls</td>
+<td>6 UNSAT, 9 SAT, models re-checked</td>
+<td>1.2 s</td>
+</tr>
+<tr>
+<td><code>h535_l7.py C 280</code>, C = 2,4,6 / 4,2,6 / 2,6,10</td>
+<td>same</td>
+<td>0 deviations each</td>
+<td>1.3, 1.3, 2.4 s</td>
+</tr>
+<tr>
+<td><code>h535_l7.py 4,6,10 280</code></td>
+<td>same, thick member</td>
+<td>0 deviations</td>
+<td>8.0 s</td>
+</tr>
+<tr>
+<td><code>h536_breakS.py 2,2,2 120</code> (three runs while the controls were designed)</td>
+<td>Statement S: odd + sign + three types on A and B + ‘sets of constant profiles differ’</td>
+<td>Q UNSAT; C1, C3 (×3), C5 SAT with exact labels matching the encoding</td>
+<td>0.6 s each</td>
+</tr>
+<tr>
+<td><code>h536_breakS.py C 280</code>, C = 2,4,6 / 4,2,6 / 2,2,6 (one loop)</td>
+<td>same</td>
+<td>Q <strong>UNSAT</strong> on all three (37.2, 41.8, 1.9 s); all controls SAT; C2 and C4 UNSAT (no expectation)</td>
+<td>57.3, 68.2, 6.6 s</td>
+</tr>
+<tr>
+<td><code>h537_constsets.py</code> on saved states of 4 cells</td>
+<td>encoding control: are there states whose sets of constant profiles differ?</td>
+<td>yes, only in states with two types per sublattice</td>
+<td>2 s</td>
+</tr>
+<tr>
+<td><code>h538_mprime.py 2,2,2 120</code></td>
+<td>M′ at extent 2 (type model), 6 queries + 12 controls</td>
+<td>6 UNSAT, 12 SAT</td>
+<td>0.9 s</td>
+</tr>
+<tr>
+<td><code>h538_mprime.py C 250</code>, C = 2,4,6 / 4,2,6 / 2,6,10 (one loop)</td>
+<td>same</td>
+<td>0 deviations each</td>
+<td>10.0, 10.0, 62.0 s</td>
+</tr>
+<tr>
+<td><code>h539_classtable.py</code></td>
+<td>the L7 class table for all four B classes</td>
+<td>every group is <span class="math inline">\(\pm b^c_x\)</span></td>
+<td>&lt; 1 s</td>
+</tr>
+</tbody>
+</table>
+<h3 id="totals">Totals</h3>
+<ul>
+<li><strong>Part I.</strong> Theorem 16 was checked on 16 cells × 3 axes and Theorem 17 on 16 cells, all equal to the formulas: (1,1,1), (1,1,2), (1,1,5), (1,2,3), (2,2,2), (2,2,4), (2,2,6), (2,3,3), (3,3,3), (2,4,6), (4,3,3), (6,2,3), (5,2,4), (4,4,4), (4,4,6) and (2,6,10). These include thin cells, cells with a coprime pair, cubic cells and members.</li>
+<li><strong>Theorem 19.</strong> It holds exactly, with its constants, on 837 odd states: 784 on seven members and 53 on (3,3,3) and (4,3,3). Reversing all six shifts makes it fail on 773 of the 837; reversing only the <span class="math inline">\(y\)</span>-shifts makes it fail on 379 (it cannot fail where the <span class="math inline">\(U\)</span>-functions are constant, as in every constrained case-(ii) state).</li>
+<li><strong>Part II.</strong> On 784 odd states of seven members, 87 of them sampled by me on (4,2,6):
+<ul>
+<li>Theorem U, the joint system, L1 (one sign per line, and <span class="math inline">\(n_k\)</span> 8-periodic), L2 and L4 have 0 failures;</li>
+<li>574 states have three types, with labels equal on A and B and axis <span class="math inline">\(k\)</span> one-way in all 574 (Statement S);</li>
+<li>L0 holds in 1,148 of 1,148 sublattice cases, and L3 in 1,140 of 1,140 two-way cases;</li>
+<li>the L5 facts (<span class="math inline">\(F_\pm\)</span>, <span class="math inline">\(U_\pm\)</span> or <span class="math inline">\(W_\pm\)</span> constant as appropriate) hold in 462 of 462 case-(i) states, and the L6 facts (<span class="math inline">\(\sigma_k\)</span> constant and equal on A and B) in 112 of 112 case-(ii) states.</li>
+</ul></li>
+<li><strong>Solver.</strong> L7 is UNSAT for all six ordered pairs on five members, with controls SAT. The search for a counterexample to Statement S is UNSAT on four members, and the encoding controls are SAT. No query hit its cap; no result is ‘no verdict’.</li>
+</ul>
+<h3 id="observations">Observations</h3>
+<p>These are not needed for the verdicts.</p>
+<ul>
+<li><strong>C4.</strong> ‘The sets of constant profiles differ, three types on A and on B’, without requiring oddness, is UNSAT on (2,2,2), (2,4,6), (4,2,6) and (2,2,6), with the sign field in the model. So case equality does not use oddness beyond M′.</li>
+<li><strong>C2.</strong> ‘The sets differ’ with oddness but with no condition on types is also UNSAT on all four cells. So on these cells even an odd state with an empty axis has the same set of constant profiles on A and B. Different slack vectors can still occur, as twochain reported.</li>
+<li><strong>Cubic cells.</strong> On (3,3,3), all 38 sampled odd states with three types had the same slack vector on A and B.</li>
+</ul>
+<h2 id="corrections-and-gaps">4. Corrections and gaps</h2>
+<ol type="1">
+<li><strong>(dfour §2.10, ‘Which members’).</strong> ‘In L7 the planes <span class="math inline">\(z_0\pm2\)</span> may coincide (extent 2 along <span class="math inline">\(z\)</span>, 8 planes)’ is false. On every member <span class="math inline">\(4c \ge 8\)</span>, and <span class="math inline">\(z_0 + 2 \not\equiv z_0 - 2\)</span>. The statement is not used.</li>
+<li><strong>(dfour §2.4, the remark).</strong> ‘<span class="math inline">\(\sigma_k^S = 0\)</span> on that plane (L1)’: L1 is not needed, since <span class="math inline">\(|\sigma_k| \le a_k\)</span> always.</li>
+<li><strong>(dfour L5b).</strong> The constancy of the <span class="math inline">\(y\)</span>-part of <span class="math inline">\(\sigma^B_x\)</span> (in (ii)<span class="math inline">\(_z\)</span>), and of the <span class="math inline">\(z\)</span>-part (in (ii)<span class="math inline">\(_y\)</span>), is derived but not used. The contradiction follows from <span class="math inline">\(|\sigma^B_z| = \tfrac12\)</span> (respectively <span class="math inline">\(|\sigma^B_y| = \tfrac12\)</span>) alone. This is a simplification, not an error.</li>
+<li><strong>(dfour §2.11).</strong> The flux identity is not needed. The curl note defines zero flux as equal numbers of <span class="math inline">\(+\)</span> and <span class="math inline">\(-\)</span> moments on each axis of each sublattice, which excludes a one-way axis with a vertex at once.</li>
+<li><strong>(note, after Theorem 17).</strong> ‘No constant on a sublattice occurs’ should say that no constant <em>on one sublattice alone</em> (no <span class="math inline">\(\sigma_v\)</span> term, unlike (C)) occurs. A constant vector field on all vertices is a solution and a sum of currents, for example <span class="math inline">\(e_x = \tfrac12\sum_{C\in\{0,2\}\cup\{1,3\}}\tfrac12u_C\mathbf 1_C\)</span>.</li>
+<li><strong>(note, after Theorem 19).</strong> ‘Their sum on A is <span class="math inline">\(2F_{01}(x)+2U_{02}(y)+2W_{03}(z)\)</span> up to a constant’: the identity is exact, with no constant.</li>
+<li><strong>(note, Theorem 16 proof; wording).</strong> The case <span class="math inline">\(M=0\)</span> is written for both families of <span class="math inline">\(y\)</span>. The case of both families of <span class="math inline">\(z\)</span> (<span class="math inline">\(\lambda_0 = \lambda_3\)</span>, <span class="math inline">\(\lambda_1 = \lambda_2\)</span>) is the same and should be named.</li>
+<li><strong>(dfour L6, simplification).</strong> The inversion is not needed in L6: with <span class="math inline">\(F_\pm\)</span> and <span class="math inline">\(U_\pm\)</span> constant, (B) gives <span class="math inline">\(\sigma^B_z = \sigma^A_z\)</span>.</li>
+</ol>
+<p><strong>No gap.</strong></p>
+<h2 id="what-i-could-not-check">5. What I could not check</h2>
+<ul>
+<li><strong>Dependencies taken from the record.</strong> Theorem U on the family and Theorem P were taken as given (check8). Theorem M′ was taken from the record: at extent 2 I tested it by solver only (h538), I did not prove it, and the note’s own caveat stands. (C), Lemma A, Theorem P of the curl note, the flux identity, and Lemma 4 were read but not re-proved; Lemma 4’s proof is short and was read line by line.</li>
+<li><strong>The corpus figures in the note.</strong> The 1,357 corpus states and the ‘86 of 1,357’ figure were not recomputed.</li>
+<li><strong>Real states in the special case of Theorem 21.</strong> None exist (check8, C3); not relevant here.</li>
+</ul>
+<h2 id="rules">6. Rules</h2>
+<ol type="1">
+<li><strong>Wrong Python, once.</strong> I once used the system <code>python3</code> (not the <code>.venv</code>) for a text substitution in my own new script h536. No computation was run with it.</li>
+<li><strong>Worst-case run length.</strong> Two shell loops ran three solver batches in sequence, with caps summing to more than ten minutes: h536 (3 × 280 s) and h538 (3 × 250 s). They actually took 132 s and 82 s. The pre-flight for h536 was on (2,2,2) only (0.6 s), which under-predicted (2,4,6) by a factor of about 100. Each batch was a single solver process, one at a time.</li>
+<li><strong>Edits to my own new scripts.</strong> I edited h536 with <code>sed -i</code> and the Edit tool. No existing file was modified or deleted. Git was not touched.</li>
+<li><strong>Other rules.</strong>
+<ul>
+<li>One attempt to run <code>ps</code> was refused by the sandbox (harmless).</li>
+<li>No heredocs, no <code>python -</code>, and nothing written to /tmp; states and this report are in <code>&lt;repo&gt;/.tmp</code>.</li>
+<li>cubethree’s scripts and report were not read, run or touched.</li>
+<li>No query of the form ‘odd and all six directions’, or equivalent to Theorem H, was run. The Statement S search asks for different sets of constant profiles on A and B, which is a condition on types.</li>
+</ul></li>
+</ol>
+</main>
+</body>
+</html>

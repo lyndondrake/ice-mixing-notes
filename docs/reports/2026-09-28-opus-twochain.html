@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Package D (agent twochain): on every cell (2a', 2b', 2c') with a', b', c' pairwise coprime, (V) is proved by hand — in a type-model solution containin</title>
+<meta name="description" content="Package D (agent twochain): on every cell (2a', 2b', 2c') with a', b', c' pairwise coprime, (V) is proved by hand — in a type-model solution containing the unoriented cage, sublattice B has no vertex of type x and the two planes of bridgeheads are entirely of types y and z. The p">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Package D (agent twochain): on every cell (2a', 2b', 2c') with a', b', c' pairwise coprime, (V) is proved by hand — in a type-model solution containing the unoriented cage, sublattice B has no vertex of type x and the two planes of bridgeheads are entirely of types y and z. The proof is the profile description (nine functions of one coordinate on each sublattice, the B data a shift of the A data), one linear identity from the four bridgeheads, and a finite parity case analysis. With Theorem M′ this is Theorem U on the whole family, and with Theorem 1′ and K_u it gives Theorem H on the members with every extent at least 4; the thin members are not covered by the recorded scope of K_u",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-28-opus-twochain.html",
+ "datePublished": "2026-09-28",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus), agent twochain, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-28-opus-twochain.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/thm-22.html">thm-22</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Package D (agent twochain): on every cell (2a’, 2b’, 2c’) with a’, b’, c’ pairwise coprime, (V) is proved by hand — in a type-model solution containing the unoriented cage, sublattice B has no vertex of type x and the two planes of bridgeheads are entirely of types y and z. The proof is the profile description (nine functions of one coordinate on each sublattice, the B data a shift of the A data), one linear identity from the four bridgeheads, and a finite parity case analysis. With Theorem M′ this is Theorem U on the whole family, and with Theorem 1′ and K_u it gives Theorem H on the members with every extent at least 4; the thin members are not covered by the recorded scope of K_u</h1>
+
+<p class="author">Claude (Opus), agent twochain, for Lyndon Drake</p>
+<p class="date">2026-09-28</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#status-table" id="toc-status-table">Status table</a></li>
+<li><a href="#setting" id="toc-setting">0. Setting</a></li>
+<li><a href="#d1-the-profile-description" id="toc-d1-the-profile-description">1. D1: the profile description</a></li>
+<li><a href="#d2-theorem-v-by-hand" id="toc-d2-theorem-v-by-hand">2. D2: Theorem V by hand</a></li>
+<li><a href="#d3-theorems-u-and-h-on-the-family" id="toc-d3-theorems-u-and-h-on-the-family">3. D3: Theorems U and H on the family</a></li>
+<li><a href="#d4-odd-states-of-the-family" id="toc-d4-odd-states-of-the-family">4. D4: odd states of the family</a></li>
+<li><a href="#d5-cells-with-gcdbc-2-and-other-gcds-larger" id="toc-d5-cells-with-gcdbc-2-and-other-gcds-larger">5. D5: cells with gcd(b,c) = 2 and other gcds larger</a></li>
+<li><a href="#computations" id="toc-computations">6. Computations</a></li>
+<li><a href="#what-failed-and-why" id="toc-what-failed-and-why">7. What failed, and why</a></li>
+<li><a href="#rules" id="toc-rules">8. Rules</a></li>
+<li><a href="#the-main-loops-starting-point" id="toc-the-main-loops-starting-point">9. The main loop’s starting point</a></li>
+</ul>
+</details></nav>
+<p>Status tags: <strong>proved</strong> (argument written out here in full), <strong>computed</strong> (exact, reproducible, no solver), <strong>solver</strong> (SAT verdict through <code>h32_cap</code>), <strong>conjecture</strong>. New scripts <code>experiments/08_frozen_structure/scratch_h/h450_lib.py</code> to <code>h460_weak.py</code>. No existing file was modified; nothing was committed. All computation ran on this Mac.</p>
+<h2 id="status-table">Status table</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>statement</th>
+<th>tag</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Theorem P (profile description, D1).</strong> On every member of the family each type indicator on each sublattice has the form <span class="math inline">\(a(\text{transverse}) + \pi(v)\,b(\text{transverse})\)</span>; on each <span class="math inline">\(k\)</span>-line <span class="math inline">\(K_k\)</span> is constant 0, constant 1, or alternates (<span class="math inline">\(a = \tfrac12\)</span>, <span class="math inline">\(b = \pm\tfrac12\)</span>); the line fractions are <span class="math inline">\(a_y = (p(x)-r(z))/2\)</span>, <span class="math inline">\(a_z = (q(y)-p(x))/2\)</span>, <span class="math inline">\(a_x = (2+r(z)-q(y))/2\)</span> with integer profiles; the <span class="math inline">\(b\)</span> parts are differences of six functions <span class="math inline">\(E_k(\cdot,\pm)\)</span> of one coordinate, and the E-data of B are a shift of those of A: <span class="math inline">\(E^B_k(n&#39;,\sigma) = \tfrac12(\sigma D^A_k(n&#39;-1) - S^A_k(n&#39;+1))\)</span></td>
+<td><strong>proved</strong> (§1); formulas <strong>computed</strong> exactly on 7 pattern states of (2,2,2), (2,4,6) and on 169+ odd states of (2,2,2), (2,2,4), (2,4,6) and the (4,6,10) samples</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Chain inequality: <span class="math inline">\(\max r \le \min p\)</span>, <span class="math inline">\(\max p \le \min q\)</span>, <span class="math inline">\(\max q \le \min r + 2\)</span> on each sublattice; the six slacks sum to 2</td>
+<td><strong>proved</strong> (§1)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Parity rule: at every vertex <span class="math inline">\(|E_x - E_z| = \tfrac12[p(x)-r(z)\text{ odd}]\)</span> and cyclically; with the chain inequality this is exactly one-hot + (T2) + <span class="math inline">\(t \in \{0,1\}\)</span></td>
+<td><strong>proved</strong> (§1)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>The a-profiles of A and of B are independent; the E-data are fixed by the state up to one additive constant per vertex class of A (four)</td>
+<td><strong>proved</strong> (§1)</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Identity (★)</strong>: <span class="math inline">\(p_B(1) - p_B(3) = 2 + b(0,z_0) - b(4,z_0) - b(0,0) - b(4,0)\)</span> (<span class="math inline">\(z_0 \equiv 2\)</span>), a linear identity on {one-hot, (T2), pattern}</td>
+<td><strong>proved</strong> (§2); <strong>computed</strong> exactly (row-space test, (C) by modular rank) on (2,2,2), (2,2,4), (2,2,6), (2,4,6), (2,6,10), (4,6,10), 8–12 choices of <span class="math inline">\((z&#39;, z_0)\)</span> each, with controls</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Theorem V (D2).</strong> On every member, a type-model solution containing the unoriented cage in standard position has: <span class="math inline">\(p_A\)</span> constant; B no vertex of type <span class="math inline">\(x\)</span>; the B-plane <span class="math inline">\(x=1\)</span> all of type <span class="math inline">\(y\)</span>; the B-plane <span class="math inline">\(x=3\)</span> all of type <span class="math inline">\(z\)</span>. Only the literals <span class="math inline">\(X(v)=X(v&#39;)=1\)</span>, <span class="math inline">\(Y(\beta)=Y(\beta&#39;)=1\)</span>, <span class="math inline">\(Y(\gamma)=Y(\gamma&#39;)=0\)</span> are used</td>
+<td><strong>proved</strong> (§2)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>The special case of step 5 of the proof is realisable (so the case analysis is not vacuous), and its lemma holds, on (2,2,2), (2,2,6), (2,4,6), (4,6,10); facts A1–A6 hold exactly on 31 sampled special-case states</td>
+<td><strong>solver</strong> + <strong>computed</strong> (h455)</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Algebra of steps 3 and 5 re-done symbolically</td>
+<td><strong>computed</strong> (sympy, h456)</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Solver consistency of Theorem V: pattern + B has <span class="math inline">\(x\)</span> UNSAT on (2,2,2), (2,4,6); also ‘A fractional line’, ‘B fractional line’, ‘odd’, ‘G1 not all <span class="math inline">\(y\)</span>’, ‘G3 not all <span class="math inline">\(z\)</span>’ UNSAT; bridgeheads alone + B has <span class="math inline">\(x\)</span> SAT (the rods are needed); with <span class="math inline">\(\gamma,\gamma&#39;\)</span> only ‘not <span class="math inline">\(y\)</span>’ (what the proof uses), B has <span class="math inline">\(x\)</span> and <span class="math inline">\(\gamma\)</span> of type <span class="math inline">\(x\)</span> are UNSAT on (2,4,6), (4,6,10)</td>
+<td><strong>solver</strong> (tests only)</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>Theorem U on the family</strong>: in a frozen state of a member every hole of an odd state is oriented</td>
+<td><strong>proved</strong>, given Theorem V, (C), (S1), the cage enumeration of Lemma 3, Lemma 2 and Theorem <span class="math inline">\(M&#39;\)</span> (record)</td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>Theorem H on the members with <span class="math inline">\(a&#39;, b&#39;, c&#39; \ge 2\)</span></strong> (every extent <span class="math inline">\(\ge 4\)</span>), e.g. (4,6,10), (4,6,14), (4,10,14), (6,8,10), (6,10,14)</td>
+<td><strong>proved given the record</strong>: Theorem U here + Theorem 1′ (noncubic audit, check6) + <span class="math inline">\(K_u\)</span> for chains of all three axes (certificates; P1 covers the slab since every gcd is 2)</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Thin members (some extent 2: (2,2,2), (2,2,4), (2,2,6), (2,4,6), (2,6,10), …): Theorem U proved; Theorem H <strong>not covered</strong> by the recorded scope of <span class="math inline">\(K_u\)</span> (extents 3, 4, 4 in the chain’s frame); check6’s remark C2 would cover them if accepted, but it has not been checked on a thin cell</td>
+<td>open for H</td>
+</tr>
+<tr>
+<td>13</td>
+<td>D4: in 127 sampled odd states with three types on both sublattices (three cells), A and B have the same slack vector; in 125 of them exactly one of <span class="math inline">\(p,q,r\)</span> is constant, the same on A and B; the axis of the constant profile is one-way in all of them; its E-functions are 4-periodic on both sublattices. No sampled state has all three axes two-way</td>
+<td><strong>computed</strong> on solver samples (description, not proof)</td>
+</tr>
+<tr>
+<td>14</td>
+<td><strong>Conjecture D4.</strong> In an odd state of a member with three types, the axis whose profile is constant on both sublattices is one-way. This would give H on the family without <span class="math inline">\(K_u\)</span></td>
+<td><strong>conjecture</strong></td>
+</tr>
+<tr>
+<td>15</td>
+<td>D5: the proof does not extend to (4,4,6) or (8,4,6): it uses the two-chain form for all three axes; on (4,4,6) <span class="math inline">\(y\)</span>-lines of A are not 8-periodic (SAT). (V′) itself is UNSAT on both cells</td>
+<td><strong>proved</strong> (reading) + <strong>solver</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="setting">0. Setting</h2>
+<p>Family: <span class="math inline">\((a,b,c) = (2a&#39;,2b&#39;,2c&#39;)\)</span>, <span class="math inline">\(a&#39;,b&#39;,c&#39;\)</span> pairwise coprime; members (2,2,2), (2,2,4), (2,2,6), (2,4,6), (2,6,10), (4,6,10), (6,10,14), … (all permutations). Every pair of extents has gcd 2, so by (S1) every pair of neighbouring planes holds exactly two chains of each family (check4; oddtwo Lemma A).</p>
+<p>Signs at a vertex <span class="math inline">\(v = (x,y,z)\)</span>. On A: <span class="math inline">\(\xi = (-1)^{x/2}\)</span>, <span class="math inline">\(\eta = (-1)^{y/2}\)</span>, <span class="math inline">\(\zeta = (-1)^{z/2}\)</span>, <span class="math inline">\(\pi = (-1)^{(x+y+z)/4}\)</span>. On B: <span class="math inline">\(\xi = (-1)^{(x-1)/2}\)</span>, <span class="math inline">\(\eta = (-1)^{(y-1)/2}\)</span>, <span class="math inline">\(\zeta = (-1)^{(z-1)/2}\)</span>, <span class="math inline">\(\pi = (-1)^{(x+y+z-3)/4}\)</span>. The periods are <span class="math inline">\(8a&#39;, 8b&#39;, 8c&#39;\)</span>, so all are well defined on the cell, and <span class="math inline">\(\xi\eta\zeta = 1\)</span> at every vertex (from <span class="math inline">\(x+y+z \equiv 0\)</span>, resp. <span class="math inline">\(3 \pmod 4\)</span>). The four <strong>vertex classes</strong> of a sublattice are the four sign triples. A vertex and its translate by <span class="math inline">\(4e_k\)</span> have the same <span class="math inline">\(\xi,\eta,\zeta\)</span> and opposite <span class="math inline">\(\pi\)</span>.</p>
+<p>Chain signs. The two chains of a family in a pair of planes are the two classes of a residue mod 8 (oddtwo Lemma A), told apart by a sign constant along the chain, evaluated at any A vertex of it: <span class="math inline">\(\{0,1\}\)</span>: <span class="math inline">\((-1)^{(x+y-z)/4}\)</span>; <span class="math inline">\(\{0,2\}\)</span>: <span class="math inline">\((-1)^{(y+z-x)/4}\)</span>; <span class="math inline">\(\{0,3\}\)</span>: <span class="math inline">\((-1)^{(z+x-y)/4}\)</span>; <span class="math inline">\(\{2,3\}\)</span>, <span class="math inline">\(\{1,3\}\)</span>, <span class="math inline">\(\{1,2\}\)</span>: <span class="math inline">\(\pi\)</span>. (Each exponent is unchanged by the step of its chain and changes by 1 under <span class="math inline">\(y - z \mapsto y - z + 4\)</span> etc.) Write the weight of the chain of family <span class="math inline">\(f\)</span> with A-plane <span class="math inline">\(n\)</span> and sign <span class="math inline">\(s\)</span> as <span class="math inline">\(m_f(n) + s\,e_f(n)\)</span>.</p>
+<p>Standard cage: <span class="math inline">\(O=(2,0,0)\)</span>, rods <span class="math inline">\(v=(0,0,0)\)</span>, <span class="math inline">\(v&#39;=(4,0,0)\)</span> of type <span class="math inline">\(x\)</span>; <span class="math inline">\(\beta=(1,1,1)\)</span>, <span class="math inline">\(\beta&#39;=(1,-1,-1)\)</span> of type <span class="math inline">\(y\)</span>; <span class="math inline">\(\gamma=(3,1,-1)\)</span>, <span class="math inline">\(\gamma&#39;=(3,-1,1)\)</span> of type <span class="math inline">\(z\)</span>.</p>
+<h2 id="d1-the-profile-description">1. D1: the profile description</h2>
+<p><strong>Theorem P.</strong> Put, for A-planes <span class="math inline">\(n\)</span> and <span class="math inline">\(\sigma = \pm 1\)</span>, <span class="math display">\[E^A_x(n,\sigma) = \sigma e_{01}(n) + e_{23}(n),\quad E^A_y(n,\sigma) = \sigma e_{02}(n) + e_{13}(n),\quad E^A_z(n,\sigma) = \sigma e_{03}(n) + e_{12}(n),\]</span> and for B-planes <span class="math inline">\(n&#39;\)</span> <span class="math display">\[E^B_x(n&#39;,\sigma) = \sigma e_{01}(n&#39;-1) - e_{23}(n&#39;+1),\]</span> and cyclically (<span class="math inline">\(e_{02}, e_{13}\)</span> with <span class="math inline">\(y\)</span>; <span class="math inline">\(e_{03}, e_{12}\)</span> with <span class="math inline">\(z\)</span>). Put <span class="math inline">\(\Phi^A_x(n) = m_{01}(n) + m_{23}(n)\)</span>, <span class="math inline">\(\Phi^B_x(n&#39;) = m_{01}(n&#39;-1) + m_{23}(n&#39;+1)\)</span>, and cyclically. Then on sublattice <span class="math inline">\(S\)</span>, with <span class="math inline">\(\sigma_S = \pm1\)</span>, <span class="math display">\[F_x = \Phi^S_x(x) + \pi E^S_x(x,\zeta),\qquad F_y = \Phi^S_y(y) + \pi E^S_y(y,\xi),\qquad F_z = \Phi^S_z(z) + \pi E^S_z(z,\eta),\]</span> and every real solution of one-hot and (T2) is <span class="math display">\[Y = a_y + \pi(E_x - E_z),\quad Z = a_z + \pi(E_y - E_x),\quad X = a_x + \pi(E_z - E_y),\]</span> <span class="math inline">\(a_y = \Phi_x(x) - \Phi_z(z) + \sigma_S\alpha\)</span>, <span class="math inline">\(a_z = \Phi_y(y) - \Phi_x(x) + \sigma_S\beta\)</span>, <span class="math inline">\(a_x = 1 - a_y - a_z\)</span>, where at the vertex <span class="math inline">\(E_x = E^S_x(x,\zeta)\)</span>, <span class="math inline">\(E_y = E^S_y(y,\xi)\)</span>, <span class="math inline">\(E_z = E^S_z(z,\eta)\)</span>.</p>
+<p><em>Proof.</em> By (C), <span class="math inline">\(Y = F_x - F_z + \sigma\alpha\)</span>, <span class="math inline">\(Z = F_y - F_x + \sigma\beta\)</span>. At an A vertex the chain of <span class="math inline">\(\{0,1\}\)</span> through <span class="math inline">\(v\)</span> has A-plane <span class="math inline">\(x\)</span> and sign <span class="math inline">\((-1)^{(x+y-z)/4} = \pi\cdot(-1)^{-z/2} = \pi\zeta\)</span>, and the chain of <span class="math inline">\(\{2,3\}\)</span> has A-plane <span class="math inline">\(x\)</span> and sign <span class="math inline">\(\pi\)</span>; so <span class="math inline">\(F_x = m_{01}(x) + m_{23}(x) + \pi(\zeta e_{01}(x) + e_{23}(x))\)</span>. In the same way the signs of <span class="math inline">\(\{0,2\}\)</span> and <span class="math inline">\(\{0,3\}\)</span> are <span class="math inline">\(\pi\xi\)</span> and <span class="math inline">\(\pi\eta\)</span> (the exponents differ from that of <span class="math inline">\(\pi\)</span> by <span class="math inline">\(x/2\)</span> and <span class="math inline">\(y/2\)</span>). At a B vertex <span class="math inline">\(w\)</span> the chain of <span class="math inline">\(\{0,1\}\)</span> contains <span class="math inline">\(w - d_0 = (x-1,y-1,z-1)\)</span>, A-plane <span class="math inline">\(x-1\)</span>, sign <span class="math inline">\((-1)^{(x+y-z-1)/4} = \pi\zeta\)</span> (exponents differ by <span class="math inline">\((z-1)/2\)</span>); the chain of <span class="math inline">\(\{2,3\}\)</span> contains <span class="math inline">\(w - d_2 = (x+1,y-1,z+1)\)</span>, A-plane <span class="math inline">\(x+1\)</span>, sign <span class="math inline">\((-1)^{(x+y+z+1)/4} = -\pi\)</span>. Likewise <span class="math inline">\(\{0,2\}\)</span> through <span class="math inline">\(w-d_0\)</span> (A-plane <span class="math inline">\(y-1\)</span>, sign <span class="math inline">\(\pi\xi\)</span>), <span class="math inline">\(\{1,3\}\)</span> through <span class="math inline">\(w-d_1 = (x-1,y+1,z+1)\)</span> (A-plane <span class="math inline">\(y+1\)</span>, sign <span class="math inline">\(-\pi\)</span>), <span class="math inline">\(\{0,3\}\)</span> through <span class="math inline">\(w-d_0\)</span> (plane <span class="math inline">\(z-1\)</span>, sign <span class="math inline">\(\pi\eta\)</span>), <span class="math inline">\(\{1,2\}\)</span> through <span class="math inline">\(w-d_1\)</span> (plane <span class="math inline">\(z+1\)</span>, sign <span class="math inline">\(-\pi\)</span>). Substituting gives the formulas. <span class="math inline">\(\square\)</span></p>
+<p>Since <span class="math inline">\(\eta = \xi\zeta\)</span>, the <span class="math inline">\(b\)</span> part of <span class="math inline">\(Y\)</span>, <span class="math inline">\(E_x(x,\zeta) - E_z(z,\xi\zeta)\)</span>, is a function of <span class="math inline">\((x,z)\)</span> alone; likewise for <span class="math inline">\(Z\)</span> of <span class="math inline">\((x,y)\)</span> and for <span class="math inline">\(X\)</span> of <span class="math inline">\((y,z)\)</span>.</p>
+<p><strong>Corollary P1 (lines; proved).</strong> On a <span class="math inline">\(k\)</span>-line <span class="math inline">\(\{v + 4ne_k\}\)</span> the transverse coordinates, hence <span class="math inline">\(a_k\)</span> and <span class="math inline">\(b_k\)</span>, are fixed and <span class="math inline">\(\pi\)</span> alternates. So <span class="math inline">\(K_k(v) + K_k(v+4e_k) = 2a_k\)</span> and <span class="math inline">\(K_k(v) - K_k(v+4e_k) = 2\pi b_k\)</span>. With <span class="math inline">\(K_k \in \{0,1\}\)</span>: <span class="math inline">\((a_k,b_k) \in \{(0,0),(1,0),(\tfrac12,\pm\tfrac12)\}\)</span>. The line has <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> or <span class="math inline">\(c\)</span> vertices, an even number, so the alternation closes. <span class="math inline">\(a_k\)</span> is the line fraction of the law of line fractions; <span class="math inline">\(K_k\)</span> has period 8 along <span class="math inline">\(k\)</span>.</p>
+<p><strong>Corollary P2 (profiles; proved).</strong> Put <span class="math inline">\(p = 2\Phi_x + c_p\)</span>, <span class="math inline">\(q = 2\Phi_y + c_q\)</span>, <span class="math inline">\(r = 2\Phi_z + c_r\)</span> with <span class="math inline">\(c_p - c_r = 2\sigma_S\alpha\)</span>, <span class="math inline">\(c_q - c_p = 2\sigma_S\beta\)</span>. Then <span class="math inline">\(2a_y = p(x) - r(z)\)</span>, <span class="math inline">\(2a_z = q(y) - p(x)\)</span>, <span class="math inline">\(2a_x = 2 + r(z) - q(y)\)</span>. Every pair of values of two coordinates occurs at a vertex of <span class="math inline">\(S\)</span>, so the differences are integers (P1), and after a common shift <span class="math inline">\(p,q,r\)</span> are integer valued. From <span class="math inline">\(a \ge 0\)</span> on all pairs: <span class="math inline">\(\max r \le \min p\)</span>, <span class="math inline">\(\max p \le \min q\)</span>, <span class="math inline">\(\max q \le \min r + 2\)</span> (the <strong>chain inequality</strong>). The six slacks <span class="math inline">\(s = (\text{spread } r,\ \min p - \max r,\ \text{spread } p,\ \min q - \max p,\ \text{spread } q,\ \min r + 2 - \max q)\)</span> are non-negative integers with sum 2. In particular <strong>the three spreads add to at most 2</strong>, and a profile taking both parities has spread <span class="math inline">\(\ge 1\)</span>.</p>
+<p><strong>Corollary P3 (parity rule; proved).</strong> <span class="math inline">\(|b_y| = \tfrac12\)</span> iff <span class="math inline">\(a_y = \tfrac12\)</span> iff <span class="math inline">\(p(x) - r(z)\)</span> is odd. So at every vertex <span class="math inline">\(|E_x - E_z| = \tfrac12[p - r \text{ odd}]\)</span>, <span class="math inline">\(|E_y - E_x| = \tfrac12[q - p\text{ odd}]\)</span>, <span class="math inline">\(|E_z - E_y| = \tfrac12[r - q\text{ odd}]\)</span>. Conversely, integer profiles with the chain inequality and E-data obeying the parity rule give <span class="math inline">\(X,Y,Z \in \{0,1\}\)</span> with sum 1 at every vertex. One-hot is automatic (<span class="math inline">\(a\)</span>’s sum to 1, <span class="math inline">\(b\)</span>’s to 0 identically). So the type model is exactly: {profiles with the chain inequality on A, on B; E-data of A} subject to the parity rule on both sublattices, B’s E-data given by the coupling below. Non-negativity alone (the LP) only gives <span class="math inline">\(|b| \le \min(a, 1-a)\)</span> on each line.</p>
+<p><strong>Coupling (proved, by the definitions).</strong> With <span class="math inline">\(D^S_k(n) = E^S_k(n,+) - E^S_k(n,-)\)</span> and <span class="math inline">\(S^S_k(n) = E^S_k(n,+) + E^S_k(n,-)\)</span>: <span class="math inline">\(D^B_k(n&#39;) = D^A_k(n&#39;-1)\)</span> and <span class="math inline">\(S^B_k(n&#39;) = -S^A_k(n&#39;+1)\)</span>, i.e. <span class="math inline">\(E^B_k(n&#39;,\sigma) = \tfrac12(\sigma D^A_k(n&#39;-1) - S^A_k(n&#39;+1))\)</span>.</p>
+<p><strong>Freedom (proved).</strong> (i) The a-profiles of A and of B are independent: given integer triples on both with the chain inequality, choose <span class="math inline">\(\Phi^A\)</span>, <span class="math inline">\(\Phi^B\)</span>; <span class="math inline">\(m_{01}, m_{23}\)</span> with <span class="math inline">\(m_{01}(n)+m_{23}(n) = \Phi^A_x(n)\)</span> and <span class="math inline">\(m_{01}(n)+m_{23}(n+2) = \Phi^B_x(n+1)\)</span> exist iff <span class="math inline">\(\sum\Phi^A_x = \sum\Phi^B_x\)</span> over the circle of <span class="math inline">\(2a\)</span> A-planes, which the free additive constants arrange; <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> are then fixed by the constants of A and B (two linear equations with a solution). (ii) Within one vertex class the E-values are linked by the given differences on a complete tripartite graph, so the state fixes the E-data of A up to one constant per class. Shifting class <span class="math inline">\((+++)\)</span> of A by <span class="math inline">\(c\)</span> shifts every E-value of every B class by <span class="math inline">\(\pm c/2\)</span> uniformly within the class (checked for all four B classes), so no type changes. Hence exactly four constants of gauge on the E-data, and a common shift of <span class="math inline">\((p,q,r)\)</span> on each sublattice.</p>
+<p>This agrees with the main loop’s form (see the last section): nine functions of one coordinate per sublattice (<span class="math inline">\(p,q,r\)</span> and <span class="math inline">\(E_k(\cdot,\pm)\)</span>).</p>
+<p><strong>Checks (computed).</strong> <code>h452_check.py</code> (pattern states) and <code>h457_odd.py</code> (odd states) fit (C) exactly (Fraction elimination), rebuild <span class="math inline">\(Y, Z\)</span> at every vertex from the formulas of Theorem P, check alternation and <span class="math inline">\((a,b)\)</span> values on every line, separability with common <span class="math inline">\(p,q,r\)</span>, and the chain inequality: 7/7 pattern states on (2,2,2), (2,4,6), 54/54, 56/56, 59/59 odd states on (2,2,2), (2,2,4), (2,4,6), and the (4,6,10) samples of §4: all pass.</p>
+<h2 id="d2-theorem-v-by-hand">2. D2: Theorem V by hand</h2>
+<p><strong>Theorem V.</strong> Let <span class="math inline">\((a,b,c)\)</span> be a member, and take a solution of the type model with <span class="math inline">\(X(v) = X(v&#39;) = 1\)</span>, <span class="math inline">\(Y(\beta) = Y(\beta&#39;) = 1\)</span>, <span class="math inline">\(Y(\gamma) = Y(\gamma&#39;) = 0\)</span>. Then <span class="math inline">\(p_A\)</span> is constant, <span class="math inline">\(p_B(1) - p_B(3) = 2\)</span>, and consequently B has no vertex of type <span class="math inline">\(x\)</span>, the B-plane <span class="math inline">\(x=1\)</span> is entirely of type <span class="math inline">\(y\)</span> and the B-plane <span class="math inline">\(x = 3\)</span> entirely of type <span class="math inline">\(z\)</span>. In particular (V′) holds.</p>
+<p><em>Step 1 (the rod line).</em> <span class="math inline">\(v\)</span> and <span class="math inline">\(v&#39;\)</span> lie on one A <span class="math inline">\(x\)</span>-line with opposite <span class="math inline">\(\pi\)</span>, and both have <span class="math inline">\(X = 1\)</span>, so <span class="math inline">\(a^A_x(0,0) = 1\)</span> (P1), i.e. <span class="math inline">\(q_A(0) = r_A(0)\)</span>. The chain inequality gives <span class="math inline">\(r_A(0) \le \min p_A \le \max p_A \le q_A(0) = r_A(0)\)</span>: <strong><span class="math inline">\(p_A \equiv c\)</span> is constant</strong>, and <span class="math inline">\(a^A_y\)</span> depends on <span class="math inline">\(z\)</span> only, <span class="math inline">\(a^A_z\)</span> on <span class="math inline">\(y\)</span> only, with <span class="math inline">\(a^A_y(0) = a^A_z(0) = 0\)</span>.</p>
+<p><em>Step 2 (integral lines through the origin).</em> Since <span class="math inline">\(a^A_y(x,0) = 0\)</span> for all <span class="math inline">\(x\)</span>, <span class="math inline">\(b^A_y(x,0) = 0\)</span>: at the A vertices <span class="math inline">\((x,y,0)\)</span>, <span class="math inline">\(E^A_x(x,+) = E^A_z(0,\xi(x))\)</span>. So <strong><span class="math inline">\(E^A_x(n,+) = E^A_z(0,+) =: \kappa\)</span> for <span class="math inline">\(n \equiv 0\)</span></strong> and <span class="math inline">\(E^A_x(n,+) = E^A_z(0,-) =: \lambda\)</span> for <span class="math inline">\(n \equiv 2 \pmod 4\)</span>. From <span class="math inline">\(a^A_z(x,0) = 0\)</span> at the vertices <span class="math inline">\((x,0,z)\)</span>: <span class="math inline">\(E^A_y(0,\xi(x)) = E^A_x(x,\xi(x))\)</span>, so <strong><span class="math inline">\(E^A_x(n,-) = E^A_y(0,-) =: \mu\)</span> for <span class="math inline">\(n \equiv 2\)</span></strong>.</p>
+<p><em>Step 3 (identity ★).</em> With the classes of the four bridgeheads — <span class="math inline">\(\beta\)</span>: <span class="math inline">\((+,+,+)\)</span>, <span class="math inline">\(\pi=+\)</span>; <span class="math inline">\(\beta&#39;\)</span>: <span class="math inline">\(\xi=+,\eta=\zeta=-\)</span>, <span class="math inline">\(\pi=-\)</span>; <span class="math inline">\(\gamma\)</span>: <span class="math inline">\(\xi=-,\eta=+,\zeta=-\)</span>, <span class="math inline">\(\pi=+\)</span>; <span class="math inline">\(\gamma&#39;\)</span>: <span class="math inline">\(\xi=\eta=-,\zeta=+\)</span>, <span class="math inline">\(\pi=+\)</span> — <span class="math display">\[Y(\beta)+Y(\beta&#39;)-Y(\gamma)-Y(\gamma&#39;) = [p_B(1)-p_B(3)] + [D^B_x(1) - S^B_x(3)] + [S^B_z(-1) - D^B_z(1)],\]</span> the <span class="math inline">\(a\)</span> terms giving <span class="math inline">\(\tfrac12(p(1)-r(1)) + \tfrac12(p(1)-r(-1)) - \tfrac12(p(3)-r(-1)) - \tfrac12(p(3)-r(1))\)</span>. By the coupling the brackets are <span class="math inline">\(D^A_x(0) + S^A_x(4)\)</span> and <span class="math inline">\(-S^A_z(0) - D^A_z(0) = -2E^A_z(0,+)\)</span>. The left side is 2, so <span class="math display">\[p_B(1) - p_B(3) = 2 - E^A_x(0,+) + E^A_x(0,-) - E^A_x(4,+) - E^A_x(4,-) + 2E^A_z(0,+) = 2 + E^A_x(0,-) - E^A_x(4,-)\qquad(\star)\]</span> by Step 2. (In type form, with <span class="math inline">\(b(x,z) = \tfrac12\pi(v)(Y(v) - Y(v+4e_y))\)</span>: <span class="math inline">\(2a^B_y(1,z&#39;) - 2a^B_y(3,z&#39;) = 2 + b(0,z_0) - b(4,z_0) - b(0,0) - b(4,0)\)</span> for any odd <span class="math inline">\(z&#39;\)</span> and <span class="math inline">\(z_0 \equiv 2\)</span>; this is linear and was verified as an identity on the solution space, §6.)</p>
+<p>Since <span class="math inline">\(p_B\)</span> has spread at most 2, (★) gives <span class="math inline">\(E^A_x(4,-) \ge E^A_x(0,-)\)</span>, and <strong>(V) follows as soon as <span class="math inline">\(E^A_x(0,-) = E^A_x(4,-)\)</span></strong>: then <span class="math inline">\(p_B(1) = p_B(3) + 2\)</span>, the chain inequality on B forces <span class="math inline">\(r_B \equiv p_B(3)\)</span> and <span class="math inline">\(q_B \equiv p_B(1) = r_B + 2\)</span>, so <span class="math inline">\(a^B_x = (2 + r - q)/2 \equiv 0\)</span>, <span class="math inline">\(a^B_y(1,\cdot) = 1\)</span> and <span class="math inline">\(a^B_z(3,\cdot) = (q - p(3))/2 = 1\)</span>.</p>
+<p><em>Step 4 (the generic case).</em> If some <span class="math inline">\(z_0 \equiv 2 \pmod 4\)</span> has <span class="math inline">\(a^A_y(z_0) \in \{0,1\}\)</span>, then at the vertices <span class="math inline">\((n,y,z_0)\)</span>, <span class="math inline">\(n \equiv 0\)</span> (class <span class="math inline">\((+,-,-)\)</span>), <span class="math inline">\(b_y = E^A_x(n,-) - E^A_z(z_0,-) = 0\)</span>, so <span class="math inline">\(E^A_x(\cdot,-)\)</span> is constant on <span class="math inline">\(n \equiv 0\)</span> and we are done. The same if some <span class="math inline">\(y_0 \equiv 2\)</span> has <span class="math inline">\(a^A_z(y_0) \in \{0,1\}\)</span> (vertices <span class="math inline">\((n,y_0,z)\)</span>: <span class="math inline">\(b_z = E^A_y(y_0,+) - E^A_x(n,-) = 0\)</span>).</p>
+<p><em>Step 5 (the special case).</em> Otherwise <span class="math inline">\(a^A_y(z) = \tfrac12\)</span> for every <span class="math inline">\(z \equiv 2\)</span> and <span class="math inline">\(a^A_z(y) = \tfrac12\)</span> for every <span class="math inline">\(y \equiv 2 \pmod 4\)</span>. On A this gives (each from the parity rule in one class):</p>
+<ul>
+<li>(A3) class <span class="math inline">\((+,-,-)\)</span>: <span class="math inline">\(a_x = 0\)</span>, so <span class="math inline">\(E^A_z(z,-) = E^A_y(y,+) =: \tau\)</span> for all <span class="math inline">\(y, z \equiv 2\)</span>;</li>
+<li>(A4) class <span class="math inline">\((+,-,-)\)</span>: <span class="math inline">\(E^A_x(n,-) = \tau \pm \tfrac12\)</span> for <span class="math inline">\(n \equiv 0\)</span>;</li>
+<li>(A5) class <span class="math inline">\((-,+,-)\)</span> (<span class="math inline">\(x\equiv 2\)</span>, <span class="math inline">\(y \equiv 0\)</span>, <span class="math inline">\(z \equiv 2\)</span>): <span class="math inline">\(E^A_z(z,+) = \mu + \tfrac12\psi(z)\)</span>, <span class="math inline">\(\psi = \pm1\)</span>, for <span class="math inline">\(z \equiv 2\)</span>;</li>
+<li>(A6) class <span class="math inline">\((-,-,+)\)</span>: <span class="math inline">\(E^A_y(y,-) = \lambda + \tfrac12\varphi(y)\)</span>, <span class="math inline">\(\varphi = \pm1\)</span>, for <span class="math inline">\(y \equiv 2\)</span>;</li>
+<li>(A7) for <span class="math inline">\(n \equiv 0\)</span>: <span class="math inline">\(E^A_z(n,+) - \kappa\)</span> and <span class="math inline">\(E^A_z(n,-) - \lambda\)</span> (classes <span class="math inline">\((+++)\)</span> and <span class="math inline">\((-,-,+)\)</span>) are both 0 or both <span class="math inline">\(\pm\tfrac12\)</span> (their size is <span class="math inline">\(\tfrac12[a^A_y(n) = \tfrac12]\)</span>); likewise <span class="math inline">\(E^A_y(n,+) - \kappa\)</span> and <span class="math inline">\(E^A_y(n,-) - \mu\)</span>.</li>
+</ul>
+<p>By (A4), <span class="math inline">\(E^A_x(0,-) - E^A_x(4,-) \in \{-1,0,1\}\)</span>. The value 1 would give <span class="math inline">\(p_B(1) - p_B(3) = 3\)</span> in (★), impossible; the value 0 finishes by Step 3. Suppose it is <span class="math inline">\(-1\)</span>: <span class="math inline">\(E^A_x(0,-) = \tau - \tfrac12\)</span>, <span class="math inline">\(E^A_x(4,-) = \tau + \tfrac12\)</span>, and <span class="math inline">\(p_B(1) - p_B(3) = 1\)</span>. We show that each of <span class="math inline">\(p_B\)</span>, <span class="math inline">\(q_B\)</span>, <span class="math inline">\(r_B\)</span> takes both parities; their spreads then add to at least 3, against P2.</p>
+<p>(F1) From the coupling and Step 2: <span class="math inline">\(E^B_x(1,\sigma) - E^B_x(5,\sigma) = \tfrac\sigma2(D^A_x(0) - D^A_x(4)) - \tfrac12(S^A_x(2) - S^A_x(6)) = \tfrac\sigma2\)</span> and <span class="math inline">\(E^B_x(3,\sigma) - E^B_x(-1,\sigma) = \tfrac\sigma2(D^A_x(2) - D^A_x(-2)) - \tfrac12(S^A_x(4) - S^A_x(0)) = -\tfrac12\)</span>, for both <span class="math inline">\(\sigma\)</span>.</p>
+<p>(Pinning.) Take a B-plane <span class="math inline">\(z&#39;\)</span> and a class of B containing it with <span class="math inline">\(\xi = +\)</span>. The B vertices <span class="math inline">\((1,y,z&#39;)\)</span> and <span class="math inline">\((5,y&#39;,z&#39;)\)</span> are in that class and have <span class="math inline">\(b_y\)</span> values <span class="math inline">\(E^B_x(1,\zeta) - h\)</span> and <span class="math inline">\(E^B_x(5,\zeta) - h\)</span>, <span class="math inline">\(h = E^B_z(z&#39;,\xi\zeta)\)</span>, which differ by <span class="math inline">\(\pm\tfrac12\)</span> by (F1) and both lie in <span class="math inline">\(\{0,\pm\tfrac12\}\)</span>; so <span class="math inline">\(h \in \{E^B_x(1,\zeta), E^B_x(5,\zeta)\}\)</span>. The same with the planes <span class="math inline">\(3, -1\)</span> for classes with <span class="math inline">\(\xi = -\)</span>, and with <span class="math inline">\(E^B_y\)</span> in place of <span class="math inline">\(E^B_z\)</span> (via <span class="math inline">\(b_z\)</span>). For <span class="math inline">\(z&#39; \equiv 1\)</span> (classes <span class="math inline">\((+++)\)</span> and <span class="math inline">\((-,-,+)\)</span>) this gives <span class="math inline">\(E^B_z(z&#39;,+) \in E^B_x(1,+) + \{0,-\tfrac12\}\)</span> and <span class="math inline">\(E^B_z(z&#39;,-) \in E^B_x(-1,+) + \{0,-\tfrac12\}\)</span>; since <span class="math inline">\(E^B_x(1,+) - E^B_x(-1,+) = \kappa - \lambda\)</span> (coupling), <span class="math display">\[D^A_z(z&#39;-1) = D^B_z(z&#39;) \in \kappa - \lambda + \{-\tfrac12, 0, \tfrac12\}.\]</span> By (A7), <span class="math inline">\(D^A_z(n) - (\kappa - \lambda) \in \{0,\pm1\}\)</span> for <span class="math inline">\(n \equiv 0\)</span>, so it is 0. For <span class="math inline">\(z&#39;&#39; \equiv 3\)</span> (classes <span class="math inline">\((+,-,-)\)</span>, <span class="math inline">\((-,+,-)\)</span>), <span class="math inline">\(E^B_z(z&#39;&#39;,-) \in E^B_x(1,-) + \{0,\tfrac12\}\)</span>, <span class="math inline">\(E^B_z(z&#39;&#39;,+) \in E^B_x(-1,-) + \{0,-\tfrac12\}\)</span>, <span class="math inline">\(E^B_x(1,-) + E^B_x(-1,-) = -\kappa - \lambda\)</span>, so <span class="math inline">\(-S^A_z(z&#39;&#39;+1) = S^B_z(z&#39;&#39;) \in -\kappa - \lambda + \{-\tfrac12,0,\tfrac12\}\)</span>, and by (A7) <span class="math inline">\(S^A_z(n) = \kappa + \lambda\)</span>. Together: <strong><span class="math inline">\(E^A_z(n,+) = \kappa\)</span>, <span class="math inline">\(E^A_z(n,-) = \lambda\)</span> for every <span class="math inline">\(n \equiv 0\)</span></strong>. The same argument with <span class="math inline">\(E^B_y\)</span> (classes <span class="math inline">\((+++)\)</span>, <span class="math inline">\((-,+,-)\)</span> for <span class="math inline">\(y&#39; \equiv 1\)</span>; <span class="math inline">\((+,-,-)\)</span>, <span class="math inline">\((-,-,+)\)</span> for <span class="math inline">\(y&#39;&#39; \equiv 3\)</span>; <span class="math inline">\(E^B_x(1,+) - E^B_x(-1,-) = \kappa - \mu\)</span>, <span class="math inline">\(E^B_x(1,-) + E^B_x(-1,+) = -\kappa - \mu\)</span>) gives <span class="math inline">\(E^A_y(n,+) = \kappa\)</span>, <span class="math inline">\(E^A_y(n,-) = \mu\)</span> for every <span class="math inline">\(n \equiv 0\)</span>.</p>
+<p>(Parities.) Let <span class="math inline">\(z&#39; \equiv 1\)</span> and <span class="math inline">\(n = z&#39;+1 \equiv 2\)</span>. At <span class="math inline">\(x&#39; = 1\)</span> the vertex <span class="math inline">\((1,\cdot,z&#39;)\)</span> is in class <span class="math inline">\((+++)\)</span> and <span class="math inline">\((1,\cdot,z&#39;+2)\)</span> in class <span class="math inline">\((+,-,-)\)</span>. By the coupling, (A3), (A5) and the previous paragraph, <span class="math display">\[E^B_x(1,+) - E^B_z(z&#39;,+) = \tfrac14(1+\psi(n)),\qquad E^B_x(1,-) - E^B_z(z&#39;+2,-) = \tfrac14(\psi(n) - 1).\]</span> Exactly one of them is <span class="math inline">\(\pm\tfrac12\)</span>, so by the parity rule exactly one of <span class="math inline">\(r_B(z&#39;)\)</span>, <span class="math inline">\(r_B(z&#39;+2)\)</span> has the parity of <span class="math inline">\(p_B(1)\)</span>: <strong><span class="math inline">\(r_B\)</span> takes both parities.</strong> Likewise, with <span class="math inline">\(y&#39; \equiv 1\)</span>, <span class="math inline">\(n = y&#39;+1\)</span>: <span class="math inline">\(E^B_y(y&#39;,+) - E^B_x(1,+) = -\tfrac14(1 + \varphi(n))\)</span> and <span class="math inline">\(E^B_y(y&#39;+2,+) - E^B_x(1,-) = \tfrac14(1 - \varphi(n))\)</span>, so <strong><span class="math inline">\(q_B\)</span> takes both parities</strong>. And <span class="math inline">\(p_B(1) - p_B(3) = 1\)</span>: <strong><span class="math inline">\(p_B\)</span> takes both parities</strong>. The spreads add to at least 3. Contradiction. <span class="math inline">\(\square\)</span></p>
+<p><strong>What the proof uses.</strong> (C) and (S1) (two chains per pair of planes for all three axes); integrality once, through P1 (values <span class="math inline">\(\{0,\tfrac12,1\}\)</span> and the parity rule); non-negativity through the chain inequality; the torus only through the existence of the vertex classes on planes <span class="math inline">\(1, 5, 3, -1\)</span> (so <span class="math inline">\(4a \ge 8\)</span>) and through the profiles being defined on whole circles. It does not use Lemma 6, Theorem <span class="math inline">\(M&#39;\)</span>, any certificate or any solver verdict. Of the pattern it uses <span class="math inline">\(X(v) = X(v&#39;) = 1\)</span>, <span class="math inline">\(Y(\beta) = Y(\beta&#39;) = 1\)</span>, <span class="math inline">\(Y(\gamma) = Y(\gamma&#39;) = 0\)</span> only (the types <span class="math inline">\(z\)</span> of <span class="math inline">\(\gamma,\gamma&#39;\)</span> are a conclusion). The case analysis is on the values of profiles: generic (a <span class="math inline">\(z\equiv2\)</span> plane with integral <span class="math inline">\(y\)</span>-fraction, or a <span class="math inline">\(y \equiv 2\)</span> plane with integral <span class="math inline">\(z\)</span>-fraction) against special, and in the special case on the sign of <span class="math inline">\(E^A_x(0,-)-E^A_x(4,-)\)</span>.</p>
+<p><strong>Other positions and axes.</strong> Theorem V is for the A-hole with <span class="math inline">\(y\)</span>-bridgeheads below. The inversion <span class="math inline">\(w \mapsto (1,1,1) - w\)</span> (B-holes), the reflection <span class="math inline">\(x \mapsto 4 - x\)</span> (sides exchanged) and the exchange <span class="math inline">\(y \leftrightarrow z\)</span> (cell <span class="math inline">\((a,c,b)\)</span>, a member) map every other position to this one on a member, and a permutation of the coordinates maps rods along <span class="math inline">\(y\)</span> or <span class="math inline">\(z\)</span> to rods along <span class="math inline">\(x\)</span> on a member. So (V′) holds for every unoriented cage of every member.</p>
+<h2 id="d3-theorems-u-and-h-on-the-family">3. D3: Theorems U and H on the family</h2>
+<p><strong>Theorem U on the family (proved, given the record).</strong> Let a frozen state of a member have an unoriented hole. Its type field is a solution of the type model containing an unoriented cage, which after a symmetry is the standard one on a member. By Theorem V the other sublattice has no vertex of the rod type, and the rods’ sublattice has one, so Theorem <span class="math inline">\(M&#39;\)</span> gives even curl. Hence in an odd state every straight hole is oriented, and corners are oriented by Lemma 2: every hole is oriented, which is Theorem U (unoriented = charged by the cage enumeration of Lemma 3). Dependencies: (C) (record; re-checked by modular rank on six members, §6); (S1) (check4, oddtwo Lemma A); Lemma 3’s enumeration and Lemma 2 (note); Theorem <span class="math inline">\(M&#39;\)</span> (record; confirmed on every cell by check6; its proof has DRAT-certified window lemmas, check7’s correction 1).</p>
+<p><strong>Theorem H (proved given the record, for <span class="math inline">\(a&#39;, b&#39;, c&#39; \ge 2\)</span>).</strong> Theorem 1′ (noncubic audit; confirmed as a conditional by check6 §2): on a cell where <span class="math inline">\(K_u\)</span> holds for uniform chains of all three axes, Theorem U implies H. <span class="math inline">\(K_u\)</span>’s first step (P1) covers the slab for chains of an axis when the gcd of the two transverse extents is at most 2 (check6 §3.2), which is every axis of every member. The recorded scope of the window lemmas is extents 3, 4, 4 in the chain’s frame (note, ‘The statement’; check6 §3.1 table), with 3 the extent along the chain; on a member all extents are even, so this is: every extent at least 4, i.e. <span class="math inline">\(a&#39;,b&#39;,c&#39; \ge 2\)</span>. So H holds on (4,6,10), (4,6,14), (4,10,14), (6,8,10), (6,10,14), (4,10,18), … and all permutations. Dependencies: Theorem U above; Theorem 1′; <span class="math inline">\(K_u\)</span>’s certificates, automata and hand steps (not re-run by me).</p>
+<p><strong>Thin members.</strong> (2,2,2), (2,2,4), (2,2,6), (2,4,6), (2,6,10), (2,10,14), … have an extent 2. Theorem U holds on them (the proof above has no size condition beyond <span class="math inline">\(4a \ge 8\)</span>, and (C) was re-checked by rank on five of them). Theorem H is <strong>not covered</strong>: the record states <span class="math inline">\(K_u\)</span> for extents at least 3, 4, 4, and nothing in the record checks it on a cell with an extent 2. check6’s remark C2 (a window CNF of the infinite lattice pulls back to every torus, so the extent bounds are conservative) would cover them, together with a reading of Theorem 1′’s steps on a cell with 8 planes along one axis; I did not do that reading, and the attack proposal’s caveat 4 flags the definitions on cells of extent 2.</p>
+<h2 id="d4-odd-states-of-the-family">4. D4: odd states of the family</h2>
+<p>Samples: <code>h451_sample.py CELL odd</code> (type model + sign field + ‘some hexagon odd’, random assumptions, no condition on types or directions). Analysis <code>h457_odd.py</code>, <code>h459_d4stats.py</code> (exact).</p>
+<p>(4,6,10): sampling is slow there (random assumption literals; one batch of 30 queries hit its 290 s cap with 27 queries unanswered, which are no verdict), so only 8 distinct odd states: 4 with three types (all with exactly one constant profile, the same on A and B, that axis one-way and its E 4-periodic; slack 100010 twice, 001010 twice), 4 with an empty axis. D1 checks pass on all 8. The three cells with at least 20 states each are (2,2,2), (2,2,4), (2,4,6).</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>states</th>
+<th>three types on A and on B</th>
+<th>an axis empty</th>
+<th>A and B same slack (3 types)</th>
+<th>exactly one constant profile, same on A and B</th>
+<th>that axis one-way</th>
+<th>its E 4-periodic on A and B</th>
+<th>all three axes two-way</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(2,2,2)</td>
+<td>54</td>
+<td>40</td>
+<td>14</td>
+<td>40/40</td>
+<td>39/40 (one with two constant, ‘pr’)</td>
+<td>39/39</td>
+<td>39/39</td>
+<td>0</td>
+</tr>
+<tr>
+<td>(2,2,4)</td>
+<td>56</td>
+<td>42</td>
+<td>14</td>
+<td>42/42</td>
+<td>41/42 (one ‘pq’)</td>
+<td>41/41</td>
+<td>41/41</td>
+<td>0</td>
+</tr>
+<tr>
+<td>(2,4,6)</td>
+<td>59</td>
+<td>45</td>
+<td>14</td>
+<td>45/45</td>
+<td>45/45</td>
+<td>45/45</td>
+<td>45/45</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>What distinguishes the odd states with three types, in profile terms (<strong>computed</strong> on these samples; the classification of slack vectors is <strong>proved</strong> in §1, the frequencies are data):</p>
+<ul>
+<li><strong>Slack.</strong> Always two units: the three-type slack vectors are <span class="math inline">\((1,0,1,0,0,0)\)</span> (<span class="math inline">\(r\)</span> and <span class="math inline">\(p\)</span> spread 1, <span class="math inline">\(q\)</span> constant), <span class="math inline">\((1,0,0,0,1,0)\)</span> (<span class="math inline">\(p\)</span> constant), <span class="math inline">\((0,0,1,0,1,0)\)</span> (<span class="math inline">\(r\)</span> constant), and twice a gap version (<span class="math inline">\((0,1,0,0,1,0)\)</span>, <span class="math inline">\((1,0,0,1,0,0)\)</span>, two constant profiles). A and B have the same slack vector in every three-type sample. So in a three-type odd state exactly one coordinate (typically) has a constant profile on both sublattices, and the other two have spread 1: their line fractions are <span class="math inline">\(\tfrac12\)</span> on the planes where the profile takes its odd value.</li>
+<li><strong>Axes.</strong> The axis <span class="math inline">\(k\)</span> whose coordinate profile is constant is one-way (never two-way, never empty) in every such sample; the other two axes are each one-way or two-way in all combinations (OOO, OOT, OTO, TOO, TOT, TTO, OTT occur). Its E-functions <span class="math inline">\(E_k(\cdot,\pm)\)</span> are 4-periodic on both sublattices (gauge invariant: constant on each residue class of planes mod 4).</li>
+<li><strong>States with an empty axis</strong> have two types on each sublattice, a single slack of 2 or two units with a gap, and sometimes different slack vectors on A and B (e.g. <span class="math inline">\((0,0,0,0,2,0)\)</span> against <span class="math inline">\((0,0,0,0,1,1)\)</span>).</li>
+<li>No sampled state has all three axes two-way (a sample, not a test of H).</li>
+</ul>
+<p><strong>What Theorem V used, for package E.</strong> A constant profile along the rod axis (<span class="math inline">\(p_A\)</span>, from the complete rod line); the integrality of the lines <span class="math inline">\(z=0\)</span> and <span class="math inline">\(y=0\)</span> through the rods; the four bridgeheads through one linear identity; and a parity count on B that needs each of <span class="math inline">\(p_B,q_B,r_B\)</span> to take both parities, which is impossible because the spreads add to at most 2. At <span class="math inline">\(L\)</span> chains per slab the analogue of P1 is an <span class="math inline">\(L\)</span>-periodic pattern along lines with fractions in <span class="math inline">\(\tfrac1L\mathbb Z\)</span> (for prime <span class="math inline">\(L\)</span>), and the ‘spreads add to at most 2’ becomes a budget in units of <span class="math inline">\(\tfrac1L\)</span>; the parity argument would have to become an argument on residues mod <span class="math inline">\(L\)</span>.</p>
+<p><strong>Conjecture D4.</strong> On a member, in an odd frozen state with three types, one coordinate profile is constant on both sublattices and the corresponding axis is one-way. If proved, H follows on the whole family, thin members included, without <span class="math inline">\(K_u\)</span>.</p>
+<h2 id="d5-cells-with-gcdbc-2-and-other-gcds-larger">5. D5: cells with gcd(b,c) = 2 and other gcds larger</h2>
+<p>Every step used the two-chain form for all three axes: Step 1 needs <span class="math inline">\(X\)</span>-lines to alternate, and <span class="math inline">\(X = a_x + \pi(E_z - E_y)\)</span> involves the chains of axes <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span>; (★) uses <span class="math inline">\(E^B_z\)</span>, i.e. two chains of axis <span class="math inline">\(z\)</span> per slab (<span class="math inline">\(\gcd(a,b) = 2\)</span>); Step 4 compares <span class="math inline">\(E_x\)</span> with <span class="math inline">\(E_z\)</span> and <span class="math inline">\(E_y\)</span>; Step 5 uses <span class="math inline">\(E_y\)</span>, <span class="math inline">\(E_z\)</span> on planes <span class="math inline">\(\equiv 0, 2 \pmod 4\)</span>. On (4,4,6) and (8,4,6), with rods along <span class="math inline">\(x\)</span>, <span class="math inline">\(\gcd(b,c) = 2\)</span> but <span class="math inline">\(\gcd(a,b) = 4\)</span>: four chains of axis <span class="math inline">\(z\)</span> per pair of planes, so <span class="math inline">\(F_z\)</span> has components in the characters of <span class="math inline">\(\mathbb Z_4\)</span>, <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span> are not of the form <span class="math inline">\(a + \pi b\)</span>, and fractions <span class="math inline">\(\tfrac14\)</span> are possible. Solver (h458): on (4,4,6) some A <span class="math inline">\(y\)</span>-line is not 8-periodic (SAT, 0.2 s), so Corollary P1 fails there; (V′) is nevertheless UNSAT on (4,4,6) (1.8 s) and (8,4,6) (6.4 s). So the proof does not extend as it stands; it would need the four-character version of Theorem P for axis <span class="math inline">\(z\)</span> (this is package E’s situation, at <span class="math inline">\(L = 4\)</span> for one axis).</p>
+<h2 id="computations">6. Computations</h2>
+<p>From <code>scratch_h</code>, <code>.venv/bin/python</code>, <code>PYTHONPATH=&lt;repo&gt;:&lt;repo&gt;/experiments/08_frozen_structure</code>, <code>TMPDIR=&lt;repo&gt;/.tmp</code>. SAT through <code>h32_cap</code> (<code>one</code>, <code>run_batch</code>), cap ≤ 300 s; no query hit its cap.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>command</th>
+<th>what it tested</th>
+<th>verdict</th>
+<th>wall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h451_sample.py 2,2,2 pat 10 60</code>, <code>2,4,6 pat 10 60</code></td>
+<td>pattern states (type model)</td>
+<td>3 and 4 distinct states</td>
+<td>1.7 s each</td>
+</tr>
+<tr>
+<td><code>h452_check.py h451_pat_222.json h451_pat_246.json --show</code></td>
+<td>D1 formulas, lines, separability, chain inequality</td>
+<td>7/7 pass; all fractions integral</td>
+<td>1.1 s</td>
+</tr>
+<tr>
+<td><code>h453_query.py 2,2,2 60</code>, <code>2,4,6 60</code></td>
+<td>ctrl, Vp, V4, A3, AF, BF, odd, G1, G3</td>
+<td>ctrl SAT; V4 SAT; all others UNSAT (both cells)</td>
+<td>3.5 s, 4.6 s</td>
+</tr>
+<tr>
+<td><code>h454_star.py 2,2,2 2,4,6</code>; <code>2,2,4 2,2,6 4,6,10 2,6,10</code></td>
+<td>(★) as exact linear identity, (C) by modular rank; controls</td>
+<td>48/48 + 20/20 HOLDS 0; controls CONSTANT 2 and NOT CONSTANT on every cell</td>
+<td>0.5 s; 13 s (log <code>.tmp/h454.log</code>)</td>
+</tr>
+<tr>
+<td><code>h455_special.py 2,2,2 60 10</code>, <code>2,4,6 60 10</code>, <code>4,6,10 120 8</code>, <code>2,2,6 60 8</code></td>
+<td>special case: control S, lemma S+L, S+bridgeheads; facts A1–A6 and θ constant on models of S</td>
+<td>S SAT (5, 11, 8, 7 states), S+L UNSAT, S+br UNSAT; all facts hold</td>
+<td>1.9, 1.8, 16, 1.7 s</td>
+</tr>
+<tr>
+<td><code>h456_algebra.py</code></td>
+<td>sympy re-derivation of (F1), pinning sums, parity differences</td>
+<td>ALL OK</td>
+<td>0.6 s</td>
+</tr>
+<tr>
+<td><code>h451_sample.py CELL odd 60 120</code> on (2,2,2), (2,2,4), (2,4,6)</td>
+<td>odd frozen states</td>
+<td>54, 56, 59 distinct</td>
+<td>0.3, 0.5, 3.2 s solver</td>
+</tr>
+<tr>
+<td><code>h451_sample.py 4,6,10 odd 4 120</code>; <code>4,6,10 odd 29 290 1</code></td>
+<td>odd frozen states</td>
+<td>5; 3 (27 of 30 queries unanswered at the 290 s batch cap)</td>
+<td>37 s; 290 s</td>
+</tr>
+<tr>
+<td><code>h457_odd.py …</code>, <code>h459_d4stats.py …</code></td>
+<td>D4 description; D1 checks on odd states</td>
+<td>tables of §4</td>
+<td>&lt; 5 s per cell</td>
+</tr>
+<tr>
+<td><code>h458_d5.py 120</code></td>
+<td>D5: (V′) on (4,4,6), (8,4,6); period 8 on (4,4,6)</td>
+<td>UNSAT, UNSAT; SAT</td>
+<td>9.9 s</td>
+</tr>
+<tr>
+<td><code>h460_weak.py 2,4,6 60</code>, <code>4,6,10 120</code></td>
+<td>a test of the proof: pattern with <span class="math inline">\(\gamma,\gamma&#39;\)</span> only ‘not of type <span class="math inline">\(y\)</span>’; W1 + B has <span class="math inline">\(x\)</span>; W2 + <span class="math inline">\(\gamma\)</span> of type <span class="math inline">\(x\)</span></td>
+<td>W0 SAT; W1, W2 UNSAT on both</td>
+<td>1.5 s, 6.5 s</td>
+</tr>
+<tr>
+<td><code>h451_sample.py 4,6,10 pat 10 200</code>; <code>h452_check.py h451_pat_4610.json</code></td>
+<td>pattern states on (4,6,10), D1 checks</td>
+<td>2 states, 2/2 pass</td>
+<td>2.1 s, 0.5 s</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-failed-and-why">7. What failed, and why</h2>
+<ol type="1">
+<li><strong>A wrong step in my first version of step 5.</strong> I first derived that the deviations <span class="math inline">\(u_z \pm u&#39;_z\)</span> on planes <span class="math inline">\(z\equiv 0\)</span> vanish from ‘every <span class="math inline">\(\delta_z = \pm1\)</span>’ in one class; that does not follow, because a deviation of <span class="math inline">\(\pm2\)</span> can be compensated by <span class="math inline">\(\psi\)</span>. The correct argument uses both classes of B containing a plane (the pinning paragraph), which is what the proof above does, and the conclusion was then re-checked symbolically (h456).</li>
+<li><strong>Theorem 11’s route at even length.</strong> In profile terms its first step is (★), and its missing piece (the vertex <span class="math inline">\(P\)</span>) is the equality <span class="math inline">\(E^A_x(0,-) = E^A_x(4,-)\)</span>. No linear argument gives it (the LP is positive, gtwo); it is exactly where integrality enters, through the quadrant argument of Step 4 and the parity count of Step 5.</li>
+<li><strong>Special case not observable.</strong> The special case never occurs in pattern states (AF UNSAT), so Step 5 could not be checked on solutions; it was checked by realising the special case without the bridgeheads (h455: non-vacuous control, the lemma UNSAT, facts A1–A6 exact on 31 states) and by symbolic algebra.</li>
+</ol>
+<h2 id="rules">8. Rules</h2>
+<ul>
+<li><strong>Broken: one solver process at a time.</strong> <code>h458_d5.py</code> (three queries, 9.9 s in all) ran while the background sampler <code>h451_sample.py 4,6,10 odd 29 290 1</code> was still solving. I noticed afterwards; no other overlap. No verdict depends on timing.</li>
+<li>One Bash call ran <code>python -</code> with stdin empty (a slip; it did nothing). No heredoc was used.</li>
+<li>I edited my own new script <code>h457_odd.py</code> once with <code>sed -i</code> (output format). No existing file was touched.</li>
+<li>No heredocs; nothing written to /tmp (scratch outputs in <code>&lt;repo&gt;/.tmp</code>). H, ‘odd and all six directions’, or anything equivalent to H was not run. The D4 samples ask for ‘some hexagon odd’ only.</li>
+</ul>
+<h2 id="the-main-loops-starting-point">9. The main loop’s starting point</h2>
+<ul>
+<li>The form <span class="math inline">\(F_x = \Phi(x) + \pi[\delta_x(-1)^{z/2} + \delta&#39;_x]\)</span> on A is <strong>right</strong>, with <span class="math inline">\(\delta_x = e_{01}\)</span> (pair of planes above), <span class="math inline">\(\delta&#39;_x = e_{23}\)</span> (below). ‘The same form for <span class="math inline">\(F_y\)</span>, <span class="math inline">\(F_z\)</span> with the coordinates permuted cyclically’ is right with the chain signs of §0; with the other natural sign for <span class="math inline">\(\{0,2\}\)</span> (constant <span class="math inline">\(x - z\)</span> read as <span class="math inline">\((x+y-z)/4\)</span>) the factor is <span class="math inline">\((-1)^{z/2}\)</span>, not <span class="math inline">\((-1)^{x/2}\)</span>, which is the same up to relabelling <span class="math inline">\(e_{02}(y) \to (-1)^{y/2}e_{02}(y)\)</span>.</li>
+<li>‘A takes the values 0, 1/2, 1’, ‘a line with fraction 1/2 alternates’, ‘period 8’, ‘the rod line is all of type <span class="math inline">\(x\)</span> at once’: all <strong>right</strong>.</li>
+<li>‘Nine functions of one coordinate on each sublattice’: right as a count, but they are <strong>not independent between sublattices</strong>: the six E-functions of B are those of A shifted by one plane, <span class="math inline">\(E^B_k(n&#39;,\sigma) = \tfrac12(\sigma D^A_k(n&#39;-1) - S^A_k(n&#39;+1))\)</span> (the <span class="math inline">\(e_{k-}\)</span> part with a sign change), while the three a-profiles of B are independent of those of A. The B form is <span class="math inline">\(F_x = \Phi^B_x(x) + \pi_B[(-1)^{(z-1)/2}e_{01}(x-1) - e_{23}(x+1)]\)</span> with <span class="math inline">\(\pi_B = (-1)^{(x+y+z-3)/4}\)</span>.</li>
+<li>Nothing else was wrong.</li>
+</ul>
+</main>
+</body>
+</html>

@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The shape of the proof of (V): its deletion-minimal cores are thin but global — they touch every x-grid and every transverse residue, no tube round th</title>
+<meta name="description" content="The shape of the proof of (V): its deletion-minimal cores are thin but global — they touch every x-grid and every transverse residue, no tube round the x-circle suffices, there is no bounded-x induction step (the next cage's bridgehead pattern is not determined at all), and the s">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "The shape of the proof of (V): its deletion-minimal cores are thin but global — they touch every x-grid and every transverse residue, no tube round the x-circle suffices, there is no bounded-x induction step (the next cage's bridgehead pattern is not determined at all), and the statement survives both the affine and the LP relaxation, so no linear certificate exists. What is new and cheap: (V) needs only four literals — both rods type x, one lower bridgehead type y, one upper bridgehead type z — and Theorem U holds under that weakened hypothesis too",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-22-ucore.html",
+ "datePublished": "2026-09-22",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus 5, 1M context), prover agent ucore, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-22-ucore.md">Markdown source</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">The shape of the proof of (V): its deletion-minimal cores are thin but global — they touch every x-grid and every transverse residue, no tube round the x-circle suffices, there is no bounded-x induction step (the next cage’s bridgehead pattern is not determined at all), and the statement survives both the affine and the LP relaxation, so no linear certificate exists. What is new and cheap: (V) needs only four literals — both rods type x, one lower bridgehead type y, one upper bridgehead type z — and Theorem U holds under that weakened hypothesis too</h1>
+
+<p class="author">Claude (Opus 5, 1M context), prover agent ucore, for Lyndon Drake</p>
+<p class="date">2026-09-22</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#verdicts" id="toc-verdicts">1. Verdicts</a></li>
+<li><a href="#setting" id="toc-setting">2. Setting</a></li>
+<li><a href="#deletion-minimal-cores-solver" id="toc-deletion-minimal-cores-solver">3. Deletion-minimal cores (solver)</a></li>
+<li><a href="#no-tube-round-the-x-circle-solver" id="toc-no-tube-round-the-x-circle-solver">4. No tube round the x-circle (solver)</a></li>
+<li><a href="#the-shape-of-the-x-support-computed" id="toc-the-shape-of-the-x-support-computed">5. The shape of the x-support (computed)</a></li>
+<li><a href="#no-one-step-statement-solver" id="toc-no-one-step-statement-solver">6. No one-step statement (solver)</a></li>
+<li><a href="#v-survives-the-affine-and-lp-relaxations-computed" id="toc-v-survives-the-affine-and-lp-relaxations-computed">7. (V) survives the affine and LP relaxations (computed)</a></li>
+<li><a href="#the-near-miss-computed" id="toc-the-near-miss-computed">8. The near-miss (computed)</a></li>
+<li><a href="#the-minimal-hypothesis-and-a-stronger-theorem-u-solver" id="toc-the-minimal-hypothesis-and-a-stronger-theorem-u-solver">9. The minimal hypothesis, and a stronger Theorem U (solver)</a></li>
+<li><a href="#what-the-proof-shape-is-and-what-remains" id="toc-what-the-proof-shape-is-and-what-remains">10. What the proof shape is, and what remains</a></li>
+<li><a href="#computations-run" id="toc-computations-run">11. Computations run</a></li>
+</ul>
+</details></nav>
+<p>Status tags as in the note: <strong>proved</strong>, <strong>computed</strong>, <strong>solver</strong>, <strong>conjecture</strong>. New scripts are <code>experiments/08_frozen_structure/scratch_h/h110_ucore.py</code> … <code>h119_minU.py</code>. Every UNSAT below comes with a SAT control on the same clause set, and every solve runs in a <code>subprocess.run</code> child with a hard wall-clock cap (SIGKILL on expiry) — the <code>h32_cap</code> discipline, never an in-process solver. No existing script was modified and nothing was committed. Builds on <code>2026-09-22-orient.md</code> (§3–4: the unoriented cage, Theorem U, lemma (V)), <code>2026-09-21-laws.md</code> (the cage, C and Pᵏ) and <code>2026-09-21-sheetcore.md</code> (M′, the plaquette laws).</p>
+<h2 id="verdicts">1. Verdicts</h2>
+<ol type="1">
+<li><strong>(V) has no small core in any direction (solver, L = 3, 4, 5).</strong> The deletion-minimal hexagon cores are <em>thin but global</em>: 89 of 432 hexagons at L = 3, 260 of 1024 at L = 4, 591 of 2000 at L = 5 for the nearest target — a fifth to a third of the lattice — yet they occupy <strong>every one of the 4L x-grids and every residue of both transverse circles</strong>. The same holds for a far target and for the “not type y” form. There is no window lemma to find.</li>
+<li><strong>Not a tube (solver, L = 3, 4, 5).</strong> With the x-circle left completely closed and the transverse plane cut instead, every proper transverse box is SAT: at L = 5 (box 20) boxes of radius 4, 6, 8 and even 9 — 1280 of 2000 hexagons, one transverse residue removed in each of y and z — leave “a type-x B-site on grid g+1” satisfiable; only the full transverse torus is UNSAT. Cutting a <em>single</em> residue in y alone (1600 hexagons) still kills the whole-grid form, though it leaves the one-site form forced. So (V) needs the x-circle <em>and</em> both transverse circles.</li>
+<li><strong>The x-support is an arc, never a bounded slab (computed, L = 4, 5).</strong> Scanning all windows [−a, b] of x-grids: (V) is forced exactly when (a ≥ 3 ∧ b ≥ 9) ∨ (a ≥ 6 ∧ b ≥ 6) ∨ (a ≥ 9 ∧ b ≥ 3) at L = 4, and (a ≥ 3 ∧ b ≥ 11) ∨ (a ≥ 8 ∧ b ≥ 8) ∨ (a ≥ 11 ∧ b ≥ 3) at L = 5. The middle corner is h101’s symmetric threshold 2L − 2, reproduced exactly; the two outer corners are new, and they are <em>cheaper</em>: the smallest windows that prove (V) have 13 of 16 grids at L = 4 (640 of 1024 hexagons) and 15 of 20 at L = 5 (1200 of 2000). The support is the circle minus a short arc: 3 grids of 16 spared at L = 4, 5 of 20 at L = 5. Two points are not a trend, but the support is in neither case a bounded slab — it is at least three quarters of the circle.</li>
+<li><strong>There is no bounded-x step, and nothing to induct on (solver, L = 4, 5).</strong> Two separate negatives. First, the pattern does not propagate: with yy/zz at O, the cage at O + 4e_x is forced to be <em>straight</em> (both rods type x) but its bridgehead pattern is <strong>completely undetermined</strong> — all four transverse patterns yy/yy, yy/zz, zz/yy and zz/zz are SAT on the full torus (only the patterns with a type-x bridgehead are excluded, and those follow from B being x-free). An unoriented cage does not force the next cage to be unoriented, so the obvious induction does not exist. Second, even the weaker statement “the next rod is type x” is not a bounded-x step: at L = 5 no proper x-window forces it, and the L = 4 window that does is again the 2L − 2 slab. The five statements V_near, V_any, V_planey, rod +6 and rod −6 all flip from SAT to UNSAT at exactly the same window.</li>
+<li><strong>(V) is not a linear identity, and not even an LP consequence (computed, L = 3, 4).</strong> Relax the type field to X[v, a] ∈ ℚ with one-hot and (T2) as linear equations. With the cage pattern and the target “b is type x” adjoined, rank(A) = rank([A | b]) at both L = 3 (557) and L = 4 (1365): the affine system is <strong>feasible</strong>. So is the LP relaxation 0 ≤ X ≤ 1 (HiGHS, both L). Since <code>laws</code> Task 5 showed the cage laws C, Pˣ, Pʸ, Pᶻ span the whole linear calculus, <strong>no combination of cage laws can prove (V)</strong>. A hand proof must use the 0/1 condition combinatorially, as sheetcore’s F(i) + G(j) ∈ {0, 1} step does.</li>
+<li><strong>The hypothesis is four literals (solver, L = 4, 5; new).</strong> (V) does not need the yy/zz pattern. It needs exactly: <strong>both rods type x, one lower bridgehead type y, one upper bridgehead type z</strong>. Every proper subset of those four literals is SAT: rods alone, rods with one bridgehead, one rod with both single bridgeheads, the two bridgeheads with no rod. (The oriented pattern rods + yy + yy is SAT too, but that is a different pattern, not a weakening.) Which lower and which upper bridgehead is chosen makes no difference.</li>
+<li><strong>Theorem U holds under the same four literals (solver, L = 3, 4, 5; new).</strong> “Both rods x, one lower bridgehead y, one upper bridgehead z, and some hexagon odd” is UNSAT in 0.3 s, 2.9 s, 14.9 s — the same cost as the eight-literal version — with each of the three one-literal-weaker controls SAT. This is a strictly stronger Theorem U, and a much better hand target.</li>
+</ol>
+<p>Theorem H is not proved, and (V) is not proved. §10 says what the proof shape now is.</p>
+<h2 id="setting">2. Setting</h2>
+<p>Notation as in <code>2026-09-22-orient.md</code> §3. On the (L, L, L) torus, box (4L)³ in a/4 units, fix an A-cage at O = a₀ + (2, 0, 0). Relative x-coordinates dx are measured from O. The cage’s <strong>rods</strong> (x-methylenes) are v = O − 2e_x at dx = −2 and v′ = O + 2e_x at dx = +2; the two <strong>lower bridgeheads</strong> are at dx = −1 (grid g+1 in the orient report’s labelling, g being v’s grid) and the two <strong>upper bridgeheads</strong> at dx = +1 (grid g+3). The <strong>unoriented pattern yy/zz</strong> is: both rods type x, both lower bridgeheads type y, both upper bridgeheads type z.</p>
+<p>Lemma <strong>(V)</strong> is “under yy/zz, no B-site of grid g+1 is type x”, equivalently “grid g+1 is a complete type-y plane”. With the grid-count identity and the sublattice mirror of M′ it gives Theorem U. Targets below: <strong>near</strong> = the B-site of grid g+1 at relative position (−1, −3, 1), the closest non-bridgehead site of that grid; <strong>far</strong> = the transversally antipodal one.</p>
+<p>The model throughout is the type-only model <code>a4_typemodel.TypeModel</code>: one-hot at every vertex and (T2) on a chosen set of hexagons. No bonds, no ice rule, no sign field.</p>
+<h2 id="deletion-minimal-cores-solver">3. Deletion-minimal cores (solver)</h2>
+<p><code>h110_ucore.py</code> puts a selector s_h on each hexagon’s (T2) clauses, asserts the pattern and the target, takes CaDiCaL’s assumption core over the selectors, and then runs one destructive deletion pass with core refinement at every step (the <code>h50_window.py</code> pattern, inside one capped child). Minimality is verified afterwards: each single deletion is SAT.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr>
+<th>L</th>
+<th>target</th>
+<th>query</th>
+<th>core₀</th>
+<th>deletion-minimal</th>
+<th>of all hexagons</th>
+<th>x-grids occupied</th>
+<th>y-circle</th>
+<th>z-circle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>near</td>
+<td>b is x</td>
+<td>177</td>
+<td><strong>89</strong></td>
+<td>432</td>
+<td>12 of 12</td>
+<td>11/12 (gap 1)</td>
+<td>wraps</td>
+</tr>
+<tr>
+<td>3</td>
+<td>near</td>
+<td>b not y</td>
+<td>150</td>
+<td><strong>124</strong></td>
+<td>432</td>
+<td>12 of 12</td>
+<td>wraps</td>
+<td>wraps</td>
+</tr>
+<tr>
+<td>3</td>
+<td>far</td>
+<td>b is x</td>
+<td>177</td>
+<td><strong>109</strong></td>
+<td>432</td>
+<td>12 of 12</td>
+<td>wraps</td>
+<td>wraps</td>
+</tr>
+<tr>
+<td>3</td>
+<td>far</td>
+<td>b not y</td>
+<td>194</td>
+<td><strong>107</strong></td>
+<td>432</td>
+<td>12 of 12</td>
+<td>wraps</td>
+<td>wraps</td>
+</tr>
+<tr>
+<td>4</td>
+<td>near</td>
+<td>b is x</td>
+<td>543</td>
+<td><strong>260</strong></td>
+<td>1024</td>
+<td>16 of 16</td>
+<td>wraps</td>
+<td>wraps</td>
+</tr>
+<tr>
+<td>4</td>
+<td>near</td>
+<td>b not y</td>
+<td>441</td>
+<td><strong>309</strong></td>
+<td>1024</td>
+<td>16 of 16</td>
+<td>wraps</td>
+<td>wraps</td>
+</tr>
+<tr>
+<td>4</td>
+<td>far</td>
+<td>b is x</td>
+<td>647</td>
+<td><strong>379</strong></td>
+<td>1024</td>
+<td>16 of 16</td>
+<td>wraps</td>
+<td>wraps</td>
+</tr>
+<tr>
+<td>4</td>
+<td>far</td>
+<td>b not y</td>
+<td>599</td>
+<td><strong>361</strong></td>
+<td>1024</td>
+<td>16 of 16</td>
+<td>wraps</td>
+<td>wraps</td>
+</tr>
+<tr>
+<td>5</td>
+<td>near</td>
+<td>b is x</td>
+<td>1030</td>
+<td><strong>591</strong></td>
+<td>2000</td>
+<td>20 of 20</td>
+<td>wraps</td>
+<td>wraps</td>
+</tr>
+<tr>
+<td>5</td>
+<td>near</td>
+<td>b not y</td>
+<td>1088</td>
+<td><strong>802</strong></td>
+<td>2000</td>
+<td>20 of 20</td>
+<td>wraps</td>
+<td>wraps</td>
+</tr>
+</tbody>
+</table>
+<p>“wraps” means every residue of that circle carries a core vertex, so the core has no transverse gap at all. The cores are <em>not</em> concentrated near the cage: at L = 4 the near-target core has between 6 and 24 vertices on each of the sixteen grids, thinning only slightly at the antipode (6, 8, 11 vertices on dx = −8, −7, −6 against 22–24 near the cage). These are deletion-minimal, not minimum, so the true minimum may be smaller — but it cannot be <em>transversally</em> smaller than §4 allows, and it cannot be <em>longitudinally</em> smaller than §5 allows, and both of those are global. The L = 5 profile is the same shape: 10 to 15 core vertices on the three grids nearest the antipode (dx = −8, −9, −10) against 40 to 44 on the grids nearest the cage, with every one of the twenty grids occupied.</p>
+<h2 id="no-tube-round-the-x-circle-solver">4. No tube round the x-circle (solver)</h2>
+<p><code>h111_tube.py</code> closes the x-circle completely (no x restriction on the hexagons) and cuts the transverse plane instead: (T2) only on hexagons all of whose vertices satisfy |dy| ≤ RTy, |dz| ≤ RTz. If (V) were a tube statement — a bounded cross-section carried round the circle — some bounded RT would be UNSAT.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>L</th>
+<th>box</th>
+<th>RTy : RTz</th>
+<th>hexagons</th>
+<th>“some B on g+1 in box is x”</th>
+<th>“near target is x”</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>12</td>
+<td>4 : 4</td>
+<td>108</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>3</td>
+<td>12</td>
+<td>6 : 6 (full)</td>
+<td>432</td>
+<td>UNSAT</td>
+<td>UNSAT</td>
+</tr>
+<tr>
+<td>4</td>
+<td>16</td>
+<td>4 : 4</td>
+<td>144</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>4</td>
+<td>16</td>
+<td>6 : 6</td>
+<td>400</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>4</td>
+<td>16</td>
+<td>8 : 8 (full)</td>
+<td>1024</td>
+<td>UNSAT</td>
+<td>UNSAT</td>
+</tr>
+<tr>
+<td>5</td>
+<td>20</td>
+<td>4 : 4</td>
+<td>180</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>5</td>
+<td>20</td>
+<td>6 : 6</td>
+<td>500</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>5</td>
+<td>20</td>
+<td>8 : 8</td>
+<td>980</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>5</td>
+<td>20</td>
+<td>9 : 9</td>
+<td>1280</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>5</td>
+<td>20</td>
+<td>8 : 10</td>
+<td>1400</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>5</td>
+<td>20</td>
+<td>9 : 10</td>
+<td>1600</td>
+<td>SAT</td>
+<td><strong>UNSAT</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td>20</td>
+<td>10 : 9</td>
+<td>1600</td>
+<td>SAT</td>
+<td><strong>UNSAT</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td>20</td>
+<td>10 : 10 (full)</td>
+<td>2000</td>
+<td>UNSAT</td>
+<td>UNSAT</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Verdict.</strong> No proper transverse box works for the whole-grid statement. The one-site statement survives a one-residue cut in a single transverse direction (the 1600-hexagon rows) but not a one-residue cut in both, and not a two-residue cut in one. So (V) is a statement on the closed three-torus, not a tube round x. This also rules out proving (V) on an infinite slab or a transversally infinite cylinder and then specialising.</p>
+<h2 id="the-shape-of-the-x-support-computed">5. The shape of the x-support (computed)</h2>
+<p><code>h115_shape.py</code> scans every window [XLO, XHI] of x-grids, with x measured forward from O so a window may run round the circle, and asks whether the hexagons inside already force (V). Write a = −XLO (grids below O) and b = XHI (above). U = UNSAT (the window proves it), S = SAT, . = the window is the whole torus. The matrices for the one-site and whole-grid queries are <strong>identical</strong>, so only one is shown.</p>
+<p>L = 4 (box 16), query “some non-bridgehead B-site of grid g+1 is type x”:</p>
+<pre><code>  a\b   0   1   2   3   4   5   6   7   8   9  10  11  12  13  14
+    0   S   S   S   S   S   S   S   S   S   S   S   S   S   S   S
+    1   S   S   S   S   S   S   S   S   S   S   S   S   S   S   U
+    2   S   S   S   S   S   S   S   S   S   S   S   S   S   U   .
+    3   S   S   S   S   S   S   S   S   S   U   U   U   U   .   .
+    4   S   S   S   S   S   S   S   S   S   U   U   U   .   .   .
+    5   S   S   S   S   S   S   S   S   S   U   U   .   .   .   .
+    6   S   S   S   S   S   S   U   U   U   U   .   .   .   .   .
+    7   S   S   S   S   S   S   U   U   U   .   .   .   .   .   .
+    8   S   S   S   S   S   S   U   U   .   .   .   .   .   .   .
+    9   S   S   S   U   U   U   U   .   .   .   .   .   .   .   .
+   10   S   S   S   U   U   U   .   .   .   .   .   .   .   .   .
+   11   S   S   S   U   U   .   .   .   .   .   .   .   .   .   .
+   12   S   S   S   U   .   .   .   .   .   .   .   .   .   .   .</code></pre>
+<p>L = 5 (box 20) has the same shape with corners (3, 11), (8, 8), (11, 3).</p>
+<p><strong>Three thresholds, not one.</strong> The middle corner a = b = 2L − 2 is exactly h101’s symmetric slab threshold, reproduced independently. The two outer corners — (3, 9) and (9, 3) at L = 4, (3, 11) and (11, 3) at L = 5 — are new: a window that reaches only three grids below the cage but far round the other way also proves (V). Two values of L are too few to fit a formula to the outer corners; what is clear is that they are strictly cheaper than the symmetric slab at L = 5 and equal to it at L = 4. The smallest windows that prove (V) are therefore 13 of 16 grids (L = 4) and 15 of 20 (L = 5), not 2(2L − 2) + 1 = 13 and 17. In particular the <strong>minimum shrinks below the symmetric slab at L = 5</strong>, and the arc that can be spared is 3 grids at L = 4 and 5 at L = 5 — it grows, but far slower than the circle.</p>
+<p><strong>Reading.</strong> The forcing is not a wave that leaves the cage in both directions and meets at the antipode: a window that reaches 9 grids one way and 3 the other proves (V) at L = 4, while the symmetric 5-and-5 window does not. What matters is the total arc and a minimum reach of 3 on the short side — i.e. enough room to pass the cage’s own five grids [−2, 2] and one grid beyond the lower bridgehead.</p>
+<h2 id="no-one-step-statement-solver">6. No one-step statement (solver)</h2>
+<p><code>h112_step.py</code> takes x-slabs of 2, 3 and 4 cages and the full torus, assumes yy/zz at O, and reports the backbone over the ten sites of each cage (rods, four transverse methylenes, four bridgeheads) together with a scan of the nine straight patterns for the cage at O + 4e_x.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>slab</th>
+<th>cage 1 rods</th>
+<th>cage 1 bridgeheads</th>
+<th>patterns SAT for cage 1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2 cages, dx ∈ [−2, 6]</td>
+<td>x, <strong>free</strong></td>
+<td>free</td>
+<td>xx/xx, yy/yy, yy/zz, zz/yy, zz/zz</td>
+</tr>
+<tr>
+<td>3 cages, dx ∈ [−2, 10]</td>
+<td>x, x</td>
+<td>free</td>
+<td>xx/xx, yy/yy, yy/zz, zz/yy, zz/zz</td>
+</tr>
+<tr>
+<td>full torus</td>
+<td>x, x</td>
+<td>non-x only</td>
+<td><strong>yy/yy, yy/zz, zz/yy, zz/zz</strong></td>
+</tr>
+</tbody>
+</table>
+<p>(The 3-cage slab is 13 of 16 grids, i.e. the 2L − 2 threshold again — see §5 — so its extra forcing is not a bounded step. On the slabs a cage may still have type-x bridgeheads; only the closed torus excludes xx/xx, and that is just B being x-free.)</p>
+<p><strong>The bridgehead pattern of the next cage is not determined — at all.</strong> On the full torus the cage at O + 4e_x may be unoriented (yy/zz, zz/yy) or <strong>oriented</strong> (yy/yy, zz/zz). There is therefore no invariant of the form “cage j is unoriented ⇒ cage j+1 is unoriented” to induct on. This is consistent with Theorem U rather than in tension with it: U concludes curl-free, and curl-free states are full of oriented cages.</p>
+<p>What <em>is</em> forced everywhere is weaker and already known: the whole A x-line through v is type x, every B-site is non-x, and each cage’s four transverse methylenes are non-y / non-z (the six methylene exclusions, which are law C applied to a straight cage and are provable by hand).</p>
+<p>And the surviving candidate for a step — “the far rod of the next cage is type x” — is itself x-global. <code>h113_prop.py</code> at L = 5 tried the windows [−2, 6] … [−6, 10] for six starting patterns (yy/zz, zz/yy, yy/yy, zz/zz, rods only, one rod only): every one is SAT until the window becomes the whole torus. <code>h114_thresh.py</code> then measured five consequences of yy/zz on one scale:</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>L = 5 window</th>
+<th>grids</th>
+<th>hexagons</th>
+<th>V_near</th>
+<th>V_any</th>
+<th>V_planey</th>
+<th>rod +6</th>
+<th>rod −6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[−6, 6]</td>
+<td>13</td>
+<td>1000</td>
+<td>SAT</td>
+<td>SAT</td>
+<td>SAT</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>[−7, 7]</td>
+<td>15</td>
+<td>1200</td>
+<td>SAT</td>
+<td>SAT</td>
+<td>SAT</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>[−8, 8]</td>
+<td>17</td>
+<td>1400</td>
+<td>UNSAT</td>
+<td>UNSAT</td>
+<td>UNSAT</td>
+<td>UNSAT</td>
+<td>UNSAT</td>
+</tr>
+<tr>
+<td>[−6, 11]</td>
+<td>18</td>
+<td>1500</td>
+<td>UNSAT</td>
+<td>UNSAT</td>
+<td>UNSAT</td>
+<td>UNSAT</td>
+<td>UNSAT</td>
+</tr>
+</tbody>
+</table>
+<p>They flip together. The continuation of the x-line is exactly as global as (V) itself, so “propagate along the line, then close up” is not available as a proof strategy: the propagation step <em>is</em> the theorem.</p>
+<h2 id="v-survives-the-affine-and-lp-relaxations-computed">7. (V) survives the affine and LP relaxations (computed)</h2>
+<p><code>h116_linear.py</code> relaxes the type field: variables X[v, a] ∈ ℚ, one equation Σ_a X[v, a] = 1 per vertex and one equation Σ_{v ∈ h} X[v, α_h(v)] = 2 per hexagon — (T2) verbatim as a linear equation. Ranks are computed exactly by Gaussian elimination modulo 2³¹ − 1; the LP is HiGHS.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>L</th>
+<th>system</th>
+<th>rank(A)</th>
+<th>rank([A | b])</th>
+<th>affine</th>
+<th>LP (0 ≤ X ≤ 1)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>one-hot + (T2) + yy/zz</td>
+<td>556</td>
+<td>556</td>
+<td>feasible</td>
+<td>feasible</td>
+</tr>
+<tr>
+<td>3</td>
+<td>… + “near B-site is type x”</td>
+<td>557</td>
+<td>557</td>
+<td><strong>feasible</strong></td>
+<td><strong>feasible</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td>one-hot + (T2) + yy/zz</td>
+<td>1364</td>
+<td>1364</td>
+<td>feasible</td>
+<td>feasible</td>
+</tr>
+<tr>
+<td>4</td>
+<td>… + “near B-site is type x”</td>
+<td>1365</td>
+<td>1365</td>
+<td><strong>feasible</strong></td>
+<td><strong>feasible</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consequence for a hand proof.</strong> <code>laws</code> Task 5 established that C and Pˣ, Pʸ, Pᶻ on every cage of both kinds span the whole linear calculus of the type field, and that integrality adds no linear relation. Adding the target raises the rank by exactly one and keeps the system consistent, so the negation of (V) is linearly consistent with all of them. <strong>No rational combination of cage laws is a certificate for (V).</strong> Any hand proof must at some point use 0/1 or one-hot as an <em>inequality</em> or a case split — the way sheetcore’s sheet theorem uses f(i, j) = F(i) + G(j) ∈ {0, 1} to force F or G constant. This is the single most useful negative result here: it rules out the linear-algebra-round-the-torus route that §5 of the orient report suggested.</p>
+<h2 id="the-near-miss-computed">8. The near-miss (computed)</h2>
+<p><code>h117_defect.py</code> takes a window one grid short of the threshold (L = 4, [−6, 5], 576 of 1024 hexagons), asserts yy/zz and a type-x B-site on grid g+1, and describes a model. This is what a hand proof has to exclude.</p>
+<ul>
+<li>Every constrained grid carries <strong>exactly 8 type-x sites out of 32</strong> — both sublattices, all twelve grids of the window. The unconstrained grids (dx = +6 … +9, beyond the window) are uniformly type z: the structure simply stops at the gap.</li>
+<li>The A x-line through v is x at dx = −2 and +2 and <strong>breaks</strong> at both ends of the window: type z at dx = +6 (inside the gap) and type y at dx = −6 (the window’s lowest grid, which almost no complete hexagon reaches).</li>
+<li>On each B-grid the type-x sites lie mostly on one diagonal line y + z = const — 4 to 6 of the 8 — and that constant <strong>drifts by +2 per B-grid</strong>: −5 → 10, −3 → 12, −1 → 14, +1 → 0, +3 → 2, +5 → 4. The counterexample is a <em>tilted kink sheet</em> spiralling along x.</li>
+<li>192 of the 576 constrained hexagons are odd: the near-miss is not a curl-free state with a blemish, it is a thoroughly odd window state.</li>
+</ul>
+<p>So the obstruction (V) expresses is the closure of a tilted sheet round the closed three-torus. In a window the sheet can enter, drift, and terminate in the gap; on the closed torus it must come back to itself, and the cage at O pins the phase it would have to return to. Because the sheet is tilted, closing it needs the transverse circles as well as the x-circle — which is exactly what §4 measures. That is a genuinely global, genuinely integral statement, matching §4, §5 and §7.</p>
+<h2 id="the-minimal-hypothesis-and-a-stronger-theorem-u-solver">9. The minimal hypothesis, and a stronger Theorem U (solver)</h2>
+<p><code>h118_weaken.py</code> runs every sub-pattern of yy/zz on the full torus. Results are identical at L = 4 and L = 5.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>hypothesis</th>
+<th>“some B on g+1 is x”</th>
+<th>“grid g+1 all y”</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rods only</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>lower yy only, or upper zz only, or yy + zz without the rods</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>rods + yy, or rods + zz</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>rods + one lower y, or rods + one upper z</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>one rod + one lower y + one upper z</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>one rod + yy + zz (either rod dropped)</td>
+<td>UNSAT</td>
+<td>UNSAT</td>
+</tr>
+<tr>
+<td><strong>rods + one lower y + one upper z</strong> (either choice)</td>
+<td><strong>UNSAT</strong></td>
+<td><strong>UNSAT</strong></td>
+</tr>
+<tr>
+<td>rods + yy + zz (= yy/zz)</td>
+<td>UNSAT</td>
+<td>UNSAT</td>
+</tr>
+<tr>
+<td>rods + lower zz + upper yy (= zz/yy)</td>
+<td>UNSAT</td>
+<td>SAT (the plane is z)</td>
+</tr>
+<tr>
+<td>rods + yy + upper yy (= yy/yy, oriented)</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lemma (V′) (solver, L = 4, 5).</strong> <em>Let v and v′ = v + 4e_x both be type x. Let b be a B-neighbour of v one grid above v (dx = −1 relative to the cage centre) with τ(b) = y, and b′ a B-neighbour of v′ one grid below v′ (dx = +1) with τ(b′) = z. Then no B-site of b’s grid is type x, and b’s grid is a complete type-y plane.</em></p>
+<p>Both b and b′ lie strictly between the two rods. Four literals, and every proper subset of the four is satisfiable — so this is the minimal hypothesis in the strongest sense the solver can certify. In sheetcore’s plaquette language it reads: <em>a plaquette of an A-grid whose two A-middles m, M are both type x, with one column-edge B-vertex of type y and one row-edge B-vertex of type z, forces the column-edge grid (g − 1) to be x-free.</em></p>
+<p><code>h119_minU.py</code> checks that Theorem U itself holds under the same four literals:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>L</th>
+<th>min pattern + some hexagon odd</th>
+<th>controls (each one literal weaker)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>UNSAT 0.3 s</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>4</td>
+<td>UNSAT 2.9 s</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>5</td>
+<td>UNSAT 14.9 s</td>
+<td>SAT</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Theorem U′ (solver, L = 3, 4, 5).</strong> <em>A frozen state containing an A-vertex pair v, v + 4e_x both of type x, with a type-y B-neighbour of v above it and a type-z B-neighbour of v + 4e_x below it, is curl-free.</em></p>
+<p>This costs the solver exactly what the eight-literal version cost, so nothing was lost by weakening, and it is a strictly better hand target: the hypothesis is now four sites in one plaquette rather than a whole cage pattern.</p>
+<h2 id="what-the-proof-shape-is-and-what-remains">10. What the proof shape is, and what remains</h2>
+<p><strong>What (V) is not.</strong> It is not a window lemma (§3), not a tube round the x-circle (§4), not a bounded-x induction with a closure contradiction (§6 — the induction hypothesis does not exist, because the next cage’s bridgehead pattern is free), and not a linear consequence of the cage laws (§7). All four of the natural routes are closed by computation; the orient report §4 left the core uncomputed and named the first three as the obvious things to try.</p>
+<p><strong>What it is (conjecture, from §8).</strong> The mechanism looks like the closure of a tilted kink sheet round the closed three-torus. The near-miss configuration at L = 4 is a (T2)-consistent sheet of 8 type-x sites per grid whose transverse phase drifts by a fixed amount per grid; the hypothesis (V′) pins the phase at one plaquette; and the contradiction would be that the drift cannot return the sheet to that phase after 4L grids. That last step is a conjecture — the drift was measured in one model at one L — not a computed fact. But it is the same <em>kind</em> of argument as sheetcore’s sheet theorem — a conserved local quantity, integrated round a circle, with an integrality step that splits a two-variable function into F(i) + G(j) — but it must run round the x-circle as well as the transverse ones, which no lemma in the project does yet.</p>
+<p><strong>The hand proof therefore needs, in order:</strong></p>
+<ol type="1">
+<li><strong>A phase invariant for the kink sheet along x.</strong> Sheetcore’s plaquette law already says the mixed second difference of the B-kink indicator on the transverse lattice equals [m type x] − [M type x], with m, M the A-middles two grids away. Under (V′) both middles of the plaquette at O are type x, so that source vanishes <em>there</em>. The missing object is the quantity that is conserved as one steps from B-grid to B-grid in x, and whose value the drift in §8 measures. It should be an F(i) + G(j) decomposition carried along x, not within a single grid.</li>
+<li><strong>The integrality step.</strong> Whatever that invariant is, §7 guarantees it cannot be derived by summing cage laws with rational coefficients. The 0/1 condition must enter, as it does in sheetcore §3, where F(i) + G(j) ∈ {0, 1} forces one of F, G constant.</li>
+<li><strong>The closure contradiction.</strong> The invariant must fail to close after 4L grids, given the phase (V′) pins. §5’s asymmetric thresholds say how much room the closure needs, and it is less than h101’s symmetric slab: 13 of 16 grids at L = 4 and 15 of 20 at L = 5, in windows reaching only 3 grids below the cage.</li>
+</ol>
+<p><strong>Two concrete next computations</strong>, if the route is pursued:</p>
+<ul>
+<li>Identify the drift invariant numerically. Take the near-miss models of §8 at several window sizes and several L, and fit the per-grid transverse phase of the type-x set; then test whether the fitted invariant is forced on the full torus by a backbone query. If the drift is always ±2 per B-grid, that is a two-line hand lemma waiting to be found.</li>
+<li>Check whether (V′) has a <em>sign-free</em> counterpart with the ice rule restored. Everything here is type-only; if the bond-level model makes the invariant visible as a flux, the closure argument may be easier there.</li>
+</ul>
+<p><strong>What this does for Theorem H.</strong> Nothing directly — H still reduces, via U′ and the hand corner case, to “oriented loops + a corner ⇒ some direction missing”. But Theorem U′ is now a four-literal hypothesis with a fifteen-second solver proof at L = 5, and the obstruction to a hand proof is isolated to one missing object: a conserved transverse phase for the kink sheet along x. That is a narrower target than the orient report left.</p>
+<h2 id="computations-run">11. Computations run</h2>
+<p>All from <code>scratch_h</code> with the project <code>.venv</code>, <code>PYTHONPATH=&lt;repo&gt;:&lt;repo&gt;/experiments/08_frozen_structure</code>, <code>TMPDIR=.tmp</code>; every solve in an <code>h32_cap</code>-style child with a hard SIGKILL cap. Wall-clock is the whole invocation unless noted.</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>script</th>
+<th>what</th>
+<th>L</th>
+<th>wall</th>
+<th>verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h110_ucore.py 3 both both</code></td>
+<td>four deletion-minimal cores</td>
+<td>3</td>
+<td>1 s</td>
+<td>cores 89 / 124 / 109 / 107 of 432; all 12 x-grids; both circles wrap</td>
+</tr>
+<tr>
+<td><code>h110_ucore.py 4 both both</code></td>
+<td>four deletion-minimal cores</td>
+<td>4</td>
+<td>66 s</td>
+<td>cores 260 / 309 / 379 / 361 of 1024; all 16 x-grids; both circles wrap</td>
+</tr>
+<tr>
+<td><code>h110_ucore.py 5 near both</code></td>
+<td>near-target cores</td>
+<td>5</td>
+<td>700 s</td>
+<td>cores 591 (30 s) and 802 (670 s) of 2000; all 20 x-grids; both circles wrap</td>
+</tr>
+<tr>
+<td><code>h111_tube.py 3 / 4 / 5</code></td>
+<td>transverse boxes, x-circle closed</td>
+<td>3, 4, 5</td>
+<td>&lt; 2 s each</td>
+<td>every proper box SAT; only the full transverse torus UNSAT</td>
+</tr>
+<tr>
+<td><code>h111_tube.py 5 9:10 10:9 8:10 …</code></td>
+<td>one-sided transverse cuts</td>
+<td>5</td>
+<td>&lt; 1 s each</td>
+<td>one-residue cut in y alone still forces the one-site form, not the grid form</td>
+</tr>
+<tr>
+<td><code>h112_step.py 4 2,3,full</code></td>
+<td>backbones + nine-pattern scan</td>
+<td>4</td>
+<td>&lt; 5 s</td>
+<td>next cage straight; bridgeheads free; yy/yy, yy/zz, zz/yy, zz/zz all SAT</td>
+</tr>
+<tr>
+<td><code>h113_prop.py 5 …</code></td>
+<td>does any pattern propagate the x-line in a window?</td>
+<td>5</td>
+<td>&lt; 2 s per window</td>
+<td>every proper window SAT, for all six patterns</td>
+</tr>
+<tr>
+<td><code>h114_thresh.py 5 …</code></td>
+<td>five statements on one window scale</td>
+<td>5</td>
+<td>≈ 1 s per window</td>
+<td>all five flip together at [−8, 8]</td>
+</tr>
+<tr>
+<td><code>h115_shape.py 4 14 14</code></td>
+<td>225-window matrix, both queries</td>
+<td>4</td>
+<td>≈ 2 min each</td>
+<td>three threshold corners (3, 9), (6, 6), (9, 3)</td>
+</tr>
+<tr>
+<td><code>h115_shape.py 5 18 18</code></td>
+<td>361-window matrix</td>
+<td>5</td>
+<td>≈ 9 min</td>
+<td>corners (3, 11), (8, 8), (11, 3)</td>
+</tr>
+<tr>
+<td><code>h116_linear.py 3 / 4</code></td>
+<td>affine rank + LP feasibility</td>
+<td>3, 4</td>
+<td>5 s / 4 min</td>
+<td>both relaxations <strong>feasible</strong>: no linear certificate</td>
+</tr>
+<tr>
+<td><code>h117_defect.py 4 -6 5</code></td>
+<td>the near-miss model</td>
+<td>4</td>
+<td>&lt; 1 s</td>
+<td>8 type-x per grid; tilted sheet drifting +2 per B-grid; 192 odd hexagons</td>
+</tr>
+<tr>
+<td><code>h118_weaken.py 4 / 5</code></td>
+<td>20 sub-patterns × 2 queries</td>
+<td>4, 5</td>
+<td>1 s each</td>
+<td>minimal hypothesis = rods + one lower y + one upper z</td>
+</tr>
+<tr>
+<td><code>h119_minU.py 3 / 4 / 5</code></td>
+<td>Theorem U under the minimal hypothesis</td>
+<td>3, 4, 5</td>
+<td>0.3 / 2.9 / 14.9 s</td>
+<td>UNSAT; all four weaker controls SAT</td>
+</tr>
+</tbody>
+</table>
+</main>
+</body>
+</html>

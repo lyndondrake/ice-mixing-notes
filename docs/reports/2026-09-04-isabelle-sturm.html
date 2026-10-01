@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subagent report: Isabelle/HOL certification of the stage-4a real-root verdicts (2026-09-04)</title>
+<meta name="description" content="Subagent report: Isabelle/HOL certification of the stage-4a real-root verdicts (2026-09-04)">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Subagent report: Isabelle/HOL certification of the stage-4a real-root verdicts (2026-09-04)",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-04-isabelle-sturm.html",
+ "datePublished": "2026-09-04",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "inLanguage": "en-GB"
+}</script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-04-isabelle-sturm.md">Markdown source</a></p></div>
+<main class="doc">
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#subagent-report-isabellehol-certification-of-the-stage-4a-real-root-verdicts-2026-09-04" id="toc-subagent-report-isabellehol-certification-of-the-stage-4a-real-root-verdicts-2026-09-04">Subagent report: Isabelle/HOL certification of the stage-4a real-root verdicts (2026-09-04)</a>
+<ul>
+<li><a href="#headline" id="toc-headline">0. Headline</a></li>
+<li><a href="#the-24-row-verdict-table" id="toc-the-24-row-verdict-table">1. The 24-row verdict table</a></li>
+<li><a href="#what-each-lemma-actually-proves" id="toc-what-each-lemma-actually-proves">2. What each lemma actually proves</a></li>
+<li><a href="#the-squarefreenessdegree-12-wall-what-was-not-done-and-why" id="toc-the-squarefreenessdegree-12-wall-what-was-not-done-and-why">3. The squarefreeness/degree-12 wall — what was NOT done, and why</a></li>
+<li><a href="#build" id="toc-build">4. Build</a></li>
+<li><a href="#files" id="toc-files">5. Files</a></li>
+</ul></li>
+</ul>
+</details></nav>
+<h1 id="subagent-report-isabellehol-certification-of-the-stage-4a-real-root-verdicts-2026-09-04">Subagent report: Isabelle/HOL certification of the stage-4a real-root verdicts (2026-09-04)</h1>
+<p>Provenance: Claude Opus 5 (1M) formalisation subagent, dispatched by the Fable main loop, 2026-09-04. Task: certify, in Isabelle/HOL and independently of Python, the 24 real-rootedness verdicts that <code>icemix.logconcave.real_root_counts</code> computes for the six stage-4a cells’ four marginal polynomials each. Compute: GB10 (spark, arm64), CPU only, no GPU, no ARC (no ARC acknowledgement is owed); shared with three other subagents on the same 20-core machine throughout. Artefacts: <code>formal/isabelle/</code> (new: <code>ROOT</code>, <code>Squarefree_Nonreal.thy</code>, <code>Marginals_111.thy</code> … <code>Marginals_123.thy</code>, <code>All_Marginals.thy</code>, <code>gen_theory.py</code>, <code>summary.json</code>, <code>README.md</code>). <strong>Every number in the generated theories is read straight out of <code>experiments/04_lorentzian_giant/results/results.json</code> by <code>gen_theory.py</code>; none is retyped by hand.</strong> Nothing was committed; the main loop commits. Nothing outside <code>formal/isabelle/</code> and this report was touched.</p>
+<hr />
+<h2 id="headline">0. Headline</h2>
+<p>All 24 marginal polynomials — degree, exact real-root count, and headline real-rooted/not-real-rooted verdict — are <strong>independently certified in Isabelle/HOL 2025-2</strong> (the AFP <code>sturm</code> method, Manuel Eberl’s <code>Sturm_Sequences</code>, an entirely different implementation from the Python Sturm-sequence code in <code>icemix/logconcave.py</code>). <strong>All 24 verdicts agree with Python; zero disagreements.</strong> This also independently re-certifies the four verdicts pinned by <code>tests/test_frozen.py::test_marginals_are_not_real_rooted_beyond_degree_four</code>.</p>
+<p>Squarefreeness (<code>gcd p (pderiv p) = 1</code>, decided by <code>eval</code> over <code>complex poly</code>) was additionally proved for the 13 of 24 polynomials with degree ≤ 8. For the 6 of those that are <em>not</em> real-rooted, this squarefreeness feeds a general reusable lemma (<code>Squarefree_Nonreal.nonreal_root_exists</code>, proved once from the fundamental theorem of algebra) that produces an <strong>explicit non-real complex root witness</strong> — proof that the real-root deficit is a genuine complex root, not a repeated real root masquerading as one. The other 11 polynomials (all degree ≥ 12) hit a hard <code>eval</code> performance wall on squarefreeness (see §3) and fall back, as the brief explicitly licenses, to a plain <code>card {x::real. poly p x = 0} &lt; degree p</code> verdict with no squarefreeness claim.</p>
+<p><code>isabelle build -d formal/isabelle -o threads=6 IceMixingSturm</code> exits <strong>0</strong> in <strong>0:10:08 elapsed (0:21:03 CPU, 6 threads)</strong>, with no <code>***</code> error lines.</p>
+<hr />
+<h2 id="the-24-row-verdict-table">1. The 24-row verdict table</h2>
+<p>Degree, exact real-root count <code>k</code> (both independently derived by Isabelle’s <code>sturm</code>, not assumed), squarefreeness, verdict, and agreement with Python’s <code>real_root_counts</code>. “Squarefree” = “yes (ℂ)” means <code>gcd p (pderiv p) = 1</code> was proved by <code>eval</code> over <code>complex poly</code>; “not attempted” means the brief’s licensed fallback was taken (see §3) — this is a scope decision, not a failed proof.</p>
+<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>marginal</th>
+<th style="text-align: right;">degree</th>
+<th style="text-align: right;">real roots <code>k</code></th>
+<th>squarefree</th>
+<th>verdict</th>
+<th>Isabelle lemma</th>
+<th>agrees with Python</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,1,1)</td>
+<td>Wx</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td>yes (ℂ)</td>
+<td>real-rooted</td>
+<td><code>verdict_111_Wx</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,1,1)</td>
+<td>Wy</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td>yes (ℂ)</td>
+<td>real-rooted</td>
+<td><code>verdict_111_Wy</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,1,1)</td>
+<td>Wz</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td>yes (ℂ)</td>
+<td>real-rooted</td>
+<td><code>verdict_111_Wz</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,1,1)</td>
+<td>s111</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td>yes (ℂ)</td>
+<td>NOT real-rooted (non-real root witness)</td>
+<td><code>verdict_111_s111</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>Wx</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">4</td>
+<td>yes (ℂ)</td>
+<td>NOT real-rooted (non-real root witness)</td>
+<td><code>verdict_112_Wx</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>Wy</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">4</td>
+<td>yes (ℂ)</td>
+<td>NOT real-rooted (non-real root witness)</td>
+<td><code>verdict_112_Wy</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>Wz</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td>yes (ℂ)</td>
+<td>real-rooted</td>
+<td><code>verdict_112_Wz</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>s111</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">4</td>
+<td>yes (ℂ)</td>
+<td>NOT real-rooted (non-real root witness)</td>
+<td><code>verdict_112_s111</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td>Wx</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">4</td>
+<td>not attempted</td>
+<td>NOT real-rooted (<code>k&lt;deg</code> only)</td>
+<td><code>verdict_113_Wx</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td>Wy</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">4</td>
+<td>not attempted</td>
+<td>NOT real-rooted (<code>k&lt;deg</code> only)</td>
+<td><code>verdict_113_Wy</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td>Wz</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td>yes (ℂ)</td>
+<td>real-rooted</td>
+<td><code>verdict_113_Wz</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td>s111</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">2</td>
+<td>not attempted</td>
+<td>NOT real-rooted (<code>k&lt;deg</code> only)</td>
+<td><code>verdict_113_s111</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,1,4)</td>
+<td>Wx</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">4</td>
+<td>not attempted</td>
+<td>NOT real-rooted (<code>k&lt;deg</code> only)</td>
+<td><code>verdict_114_Wx</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,1,4)</td>
+<td>Wy</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">4</td>
+<td>not attempted</td>
+<td>NOT real-rooted (<code>k&lt;deg</code> only)</td>
+<td><code>verdict_114_Wy</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,1,4)</td>
+<td>Wz</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td>yes (ℂ)</td>
+<td>real-rooted</td>
+<td><code>verdict_114_Wz</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,1,4)</td>
+<td>s111</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">4</td>
+<td>not attempted</td>
+<td>NOT real-rooted (<code>k&lt;deg</code> only)</td>
+<td><code>verdict_114_s111</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>Wx</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">4</td>
+<td>not attempted</td>
+<td>NOT real-rooted (<code>k&lt;deg</code> only)</td>
+<td><code>verdict_122_Wx</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>Wy</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">4</td>
+<td>yes (ℂ)</td>
+<td>NOT real-rooted (non-real root witness)</td>
+<td><code>verdict_122_Wy</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>Wz</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">4</td>
+<td>yes (ℂ)</td>
+<td>NOT real-rooted (non-real root witness)</td>
+<td><code>verdict_122_Wz</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>s111</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">6</td>
+<td>not attempted</td>
+<td>NOT real-rooted (<code>k&lt;deg</code> only)</td>
+<td><code>verdict_122_s111</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,2,3)</td>
+<td>Wx</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">8</td>
+<td>not attempted</td>
+<td>NOT real-rooted (<code>k&lt;deg</code> only)</td>
+<td><code>verdict_123_Wx</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,2,3)</td>
+<td>Wy</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">8</td>
+<td>not attempted</td>
+<td>NOT real-rooted (<code>k&lt;deg</code> only)</td>
+<td><code>verdict_123_Wy</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,2,3)</td>
+<td>Wz</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">8</td>
+<td>yes (ℂ)</td>
+<td>real-rooted</td>
+<td><code>verdict_123_Wz</code></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,2,3)</td>
+<td>s111</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">4</td>
+<td>not attempted</td>
+<td>NOT real-rooted (<code>k&lt;deg</code> only)</td>
+<td><code>verdict_123_s111</code></td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<p>Summary: 7 real-rooted (all four marginals at (1,1,1) except s111; Wz at (1,1,2)/(1,1,3)/(1,1,4); Wz at (1,2,3)) and 17 not-real-rooted, matching the brief’s cross-check exactly. All 24 <code>n_real</code> values match <code>icemix.logconcave.real_root_counts</code> output; <strong>zero disagreements</strong>. Raw data: <code>formal/isabelle/summary.json</code>.</p>
+<hr />
+<h2 id="what-each-lemma-actually-proves">2. What each lemma actually proves</h2>
+<p>Per polynomial <code>p</code> (see <code>formal/isabelle/README.md</code> for the full walkthrough):</p>
+<ul>
+<li><strong><code>degree_&lt;name&gt;</code></strong>: <code>degree (p :: real poly) = n</code>, by <code>eval</code>. All 24.</li>
+<li><strong><code>sturm_&lt;name&gt;</code></strong>: <code>card {x::real. poly p x = 0} = k</code>, by the AFP <code>sturm</code> method — a certified Isabelle decision procedure for Sturm’s theorem, unrelated in implementation to the Python code. All 24, <strong>including both degree-24 cases</strong> ((1,2,3) Wx and s111) — <code>sturm</code> itself has no degree wall (§3).</li>
+<li><strong><code>sqfree_&lt;name&gt;</code></strong>: <code>gcd (p :: complex poly) (pderiv p) = 1</code>, by <code>eval</code>. Only the 13 polynomials with degree ≤ 8.</li>
+<li><strong><code>verdict_&lt;name&gt;</code></strong>: three shapes, chosen per polynomial by what’s provable — see §0 and the README’s “What is proved” section. The non-real-root-witness form is discharged by a single general lemma, <code>Squarefree_Nonreal.nonreal_root_exists</code>, proved once (not per polynomial) from:
+<ol type="1">
+<li><code>coprime_pderiv_imp_rsquarefree</code> — a squarefree complex polynomial has no point where it and its derivative vanish together (via <code>poly_eq_0_iff_dvd</code> and <code>is_unit_iff_degree</code>).</li>
+<li><code>rsquarefree_card_roots_complex</code> — combined with <code>size_proots_complex</code> (the fundamental theorem of algebra, already in <code>HOL-Computational_Algebra.Fundamental_Theorem_Algebra</code>), a squarefree complex polynomial has exactly <code>degree p</code> distinct roots.</li>
+<li>The main lemma: map the real polynomial into <code>complex poly</code>, note the image of its real roots under <code>complex_of_real</code> is exactly the subset of complex roots with <code>Im z = 0</code> (via the homomorphism identity <code>poly (map_poly complex_of_real p) (complex_of_real x) = complex_of_real (poly p x)</code>), and count: if the real-root count <code>k</code> is less than the total complex-root count <code>degree p</code>, some complex root has <code>Im z ≠ 0</code>.</li>
+</ol></li>
+</ul>
+<p>This is a genuine formalisation, not a restatement of the Python output: Isabelle proves each <code>card {...} = k</code> lemma from first principles via Sturm’s theorem (or refuses to, which would be a disagreement — none occurred), and the non-real-root witness is constructed via the fundamental theorem of algebra, independent of anything Python computed.</p>
+<hr />
+<h2 id="the-squarefreenessdegree-12-wall-what-was-not-done-and-why">3. The squarefreeness/degree-12 wall — what was NOT done, and why</h2>
+<p>Part (c) of the brief asks for squarefreeness on all 24 polynomials, with an explicit licence to fall back to (a)+(b) only “if squarefreeness proves hard.” It did.</p>
+<p><strong>Empirical finding</strong> (<code>formal/isabelle/probe_all/</code>, a 24-way parallel probe run, <code>-j 3 -o threads=2</code>, 240s per-lemma timeout, since deleted after use — the finding is recorded here): <code>eval</code> on <code>gcd (p :: complex poly) (pderiv p)</code> — the executable subresultant-style polynomial gcd in <code>HOL-Computational_Algebra.Polynomial_Factorial</code> (<code>gcd_poly_code</code>, via <code>pseudo_mod</code> + <code>primitive_part</code> at each step) —</p>
+<ul>
+<li><strong>proves squarefreeness for all 13 degree-≤8 polynomials in 5–11 seconds each</strong>, including ones with 10-digit coefficients (e.g. (1,2,3) Wz, max coefficient 2,218,493,976, 8s);</li>
+<li><strong>times out (&gt;240s) on all 11 degree-≥12 polynomials</strong>, including ones with <em>modest</em> 5–6 digit coefficients (e.g. (1,1,3) Wx, max coefficient 56,222, still failed).</li>
+</ul>
+<p>So the wall is <strong>degree, not coefficient magnitude</strong> — isolated by testing (1,2,3) Wz (degree 8, huge coefficients: 8s) against (1,1,3) Wy (degree 12, modest coefficients: still timed out at 240s) and against <code>sturm</code> on the same (1,1,3) Wy polynomial (19s — no problem at all). This points at coefficient blow-up internal to the naive/subresultant-lite pseudo-remainder sequence the code equation implements, not at the input size. A first smoke test on the full (1,2,3) cell (all four marginals, degrees 8/12/24/24 together) hit a 20-minute session timeout at only 9% CPU utilisation, consistent with the same blow-up (large intermediate rationals, not compute-bound work).</p>
+<p><strong>Decision:</strong> attempt squarefreeness (and therefore the non-real-root witness) only for degree ≤ 8 (<code>SQUAREFREE_DEGREE_LIMIT = 8</code> in <code>gen_theory.py</code>); the 11 degree-≥12 polynomials get <code>degree_*</code> + <code>sturm_*</code> only, with a <code>verdict_*</code> of <code>card {...} &lt; degree p</code> and no squarefreeness or non-real-root claim. This is the licensed fallback, not a proof failure — nothing was attempted and abandoned mid-build; the scope was decided before generating those 11 theories, from the probe evidence above.</p>
+<p><strong>Not investigated further</strong> (out of scope for this pass, flagged for anyone who wants full squarefreeness on all 24): a modular/CRT-based gcd algorithm, or computing squarefreeness over <code>int poly</code>/<code>rat poly</code> instead of <code>complex poly</code> (untested — the wall was isolated on <code>complex poly</code>; <code>rat poly</code> might behave differently, though the (1,1,3) Wy timeout was in fact first observed on <code>rat poly</code> before the switch to <code>complex poly</code>, so a different base ring is unlikely to help). <code>sturm</code> itself was never the bottleneck at any degree tested (up to 24).</p>
+<hr />
+<h2 id="build">4. Build</h2>
+<p>Prerequisite (session heap for <code>Sturm_Sequences</code>, one-time):</p>
+<pre><code>isabelle build -b -o threads=6 Sturm_Sequences</code></pre>
+<p>0:03:58 elapsed (0:13:51 CPU), exit 0, tmux session <code>isabelle-sturm-build</code>.</p>
+<p>Main build:</p>
+<pre><code>isabelle build -d formal/isabelle -o threads=6 IceMixingSturm</code></pre>
+<p><strong>0:10:08 elapsed, 0:21:03 CPU (factor 2.08, 6 threads), exit 0</strong>, tmux session <code>isabelle-final</code>, log <code>formal/isabelle/final-build.log</code> (kept — no <code>***</code> error/warning lines). Isabelle 2025-2, AFP <code>afp-2025-2</code> (matching component versions), <code>~/.local/opt/afp/thys/Sturm_Sequences</code>.</p>
+<p>Regenerate the theories from <code>results.json</code> (never hand-edit the <code>Marginals_*.thy</code> coefficient lists):</p>
+<pre><code>~/.pyenv/versions/3.12.13/bin/python3 formal/isabelle/gen_theory.py</code></pre>
+<hr />
+<h2 id="files">5. Files</h2>
+<ul>
+<li><code>formal/isabelle/ROOT</code> — session <code>IceMixingSturm</code>.</li>
+<li><code>formal/isabelle/Squarefree_Nonreal.thy</code> — the three general lemmas (hand-written, not regenerated).</li>
+<li><code>formal/isabelle/Marginals_111.thy</code> … <code>Marginals_123.thy</code> — the 24 polynomials’ lemmas, six theories, one per cell (generated).</li>
+<li><code>formal/isabelle/All_Marginals.thy</code> — imports all six.</li>
+<li><code>formal/isabelle/gen_theory.py</code> — the generator; reads <code>results.json</code> directly, no hand-typed coefficients.</li>
+<li><code>formal/isabelle/summary.json</code> — machine-readable per-polynomial record (degree, <code>n_real</code>, <code>n_distinct</code>, squarefree-attempted/proved, <code>verdict_kind</code>) — source of the table in §1.</li>
+<li><code>formal/isabelle/README.md</code> — how to build and check, and the squarefreeness scope cut.</li>
+<li><code>formal/isabelle/final-build.log</code> — the clean build log referenced above.</li>
+</ul>
+<p>Not touched: anything outside <code>formal/isabelle/</code> and this report, including the other subagents’ concurrent work visible in <code>formal/theorem1/</code>, <code>formal/theorem2/</code>, <code>experiments/07_certificates/</code>, <code>icemix/cnf.py</code> (not mine — left as found).</p>
+</main>
+</body>
+</html>

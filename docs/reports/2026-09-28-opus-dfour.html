@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Package dfour: Theorem H proved by hand on every cell (2a', 2b', 2c') with a', b', c' pairwise coprime, thin members included, without K_u. In an odd </title>
+<meta name="description" content="Package dfour: Theorem H proved by hand on every cell (2a', 2b', 2c') with a', b', c' pairwise coprime, thin members included, without K_u. In an odd frozen state with three types both sublattices carry the same one of six profile cases, (i)_k (the profile of coordinate k constan">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Package dfour: Theorem H proved by hand on every cell (2a', 2b', 2c') with a', b', c' pairwise coprime, thin members included, without K_u. In an odd frozen state with three types both sublattices carry the same one of six profile cases, (i)_k (the profile of coordinate k constant, the other two of spread 1) or (ii)_k (every k-line alternates), and axis k is one-way. The proof uses Theorem U on the family, Theorem M′, the profile description of twochain, the current description of the signed moments (Theorems 17 and 19 of the note) and Lemma 4. The case (i) and the equal case (ii) are settled by the signed line fractions, the mixed case (ii) by a parity argument on the E-data of the types. Theorem M′ is solver-UNSAT at extent 2 on (2,2,2), (2,2,6), (2,4,6), 18 of 18 with controls",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-28-opus-dfour.html",
+ "datePublished": "2026-09-28",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus), agent dfour, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-28-opus-dfour.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/thm-23.html">thm-23</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Package dfour: Theorem H proved by hand on every cell (2a’, 2b’, 2c’) with a’, b’, c’ pairwise coprime, thin members included, without K_u. In an odd frozen state with three types both sublattices carry the same one of six profile cases, (i)_k (the profile of coordinate k constant, the other two of spread 1) or (ii)_k (every k-line alternates), and axis k is one-way. The proof uses Theorem U on the family, Theorem M′, the profile description of twochain, the current description of the signed moments (Theorems 17 and 19 of the note) and Lemma 4. The case (i) and the equal case (ii) are settled by the signed line fractions, the mixed case (ii) by a parity argument on the E-data of the types. Theorem M′ is solver-UNSAT at extent 2 on (2,2,2), (2,2,6), (2,4,6), 18 of 18 with controls</h1>
+
+<p class="author">Claude (Opus), agent dfour, for Lyndon Drake</p>
+<p class="date">2026-09-28</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#status-table" id="toc-status-table">Status table</a></li>
+<li><a href="#setting-and-notation" id="toc-setting-and-notation">0. Setting and notation</a></li>
+<li><a href="#f1-the-census-and-the-statement" id="toc-f1-the-census-and-the-statement">1. F1: the census, and the statement</a></li>
+<li><a href="#the-proof" id="toc-the-proof">2. The proof</a></li>
+<li><a href="#f3-the-thin-members" id="toc-f3-the-thin-members">3. F3: the thin members</a></li>
+<li><a href="#computations" id="toc-computations">4. Computations</a></li>
+<li><a href="#what-failed-and-why" id="toc-what-failed-and-why">5. What failed, and why</a></li>
+<li><a href="#rules" id="toc-rules">6. Rules</a></li>
+</ul>
+</details></nav>
+<p>Status tags: <strong>proved</strong> (argument written out here in full), <strong>computed</strong> (exact, reproducible, no solver), <strong>solver</strong> (SAT verdict through <code>h32_cap</code>, a test and never a step of a proof), <strong>conjecture</strong>. New scripts <code>experiments/08_frozen_structure/scratch_h/h480_lib.py</code> to <code>h485_verify.py</code>. No existing file was modified; nothing was committed; all computation ran on this Mac.</p>
+<h2 id="status-table">Status table</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>statement</th>
+<th>tag</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Theorem H on the family.</strong> On every member (2a’, 2b’, 2c’), a’, b’, c’ pairwise coprime, thin members included, every odd frozen state has an axis that is empty or one-way</td>
+<td><strong>proved</strong>, given the record: Theorem U on the family (twochain, check8), Theorem M′, Theorem P of twochain, Theorems 17 and 19 of the note, Lemma 4 of the note, (C). K_u, Theorem 1′, Theorems 3 to 9 and the walls are <strong>not</strong> used</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Statement S (the sharpened D4).</strong> In an odd frozen state of a member in which all three types occur, both sublattices carry all three types and the same case label, (i)_k or (ii)_k (equivalently the same slack vector), and axis k is one-way, with one sign on A and B together</td>
+<td><strong>proved</strong> (it is what the proof of 1 establishes); <strong>computed</strong> on 388 unconstrained three-type states of six members and 109 constrained ones, 0 exceptions</td>
+</tr>
+<tr>
+<td>3</td>
+<td>L0 (classification): a sublattice with three types has one of six slack vectors, the cases (i)_x, (i)_y, (i)_z, (ii)_x, (ii)_y, (ii)_z</td>
+<td><strong>proved</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td>L1: in an odd frozen state on a member every k-line of each sublattice has all its type-k vertices of one sign</td>
+<td><strong>proved</strong> given Theorem U and Theorem 17; <strong>computed</strong> 0 exceptions</td>
+</tr>
+<tr>
+<td>5</td>
+<td>L2: explicit formulas for the signed line fractions of B in terms of those of A (from Theorem 19)</td>
+<td><strong>proved</strong> from Theorem 19; <strong>computed</strong> exactly on 526 unconstrained + 171 constrained states, 0 exceptions; a deliberately wrong sign fails on 62 of 88 states of (2,4,6)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>L3 (stripes): an axis two-way on one sublattice has its line fraction there depending on one transverse coordinate</td>
+<td><strong>proved</strong> (Lemma 4 of the note); <strong>computed</strong> 0 exceptions in 1,000 (state, sublattice, axis) cases</td>
+</tr>
+<tr>
+<td>7</td>
+<td>L4: the mean signed fraction of an axis is the same on A and on B; so an axis one-way on A and one-way on B is one-way</td>
+<td><strong>proved</strong> (from L2, or from the flux identity of the report of 22 September)</td>
+</tr>
+<tr>
+<td>8</td>
+<td>L5: case (i)_k on a sublattice makes axis k one-way there, and (i)_k on A forces (i)_k on B</td>
+<td><strong>proved</strong></td>
+</tr>
+<tr>
+<td>9</td>
+<td>L6: case (ii)_k on both sublattices makes axis k one-way on each</td>
+<td><strong>proved</strong></td>
+</tr>
+<tr>
+<td>10</td>
+<td>L7 (types only): no type-model solution on a member has every A z-line alternating, every B x-line alternating and a vertex of type y on A; so a mixed pair of cases (ii) is impossible</td>
+<td><strong>proved</strong>; <strong>solver</strong> UNSAT on five cells, controls SAT</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Case equality holds already in the type model: ‘every B z-line alternates, three types on A and on B, some A z-line does not’ is UNSAT on (2,2,2), (2,2,6), (2,4,6) without signs and without oddness</td>
+<td><strong>solver</strong> (the proof above uses signs for the part with a case (i)); a type-only proof of that part is <strong>open</strong></td>
+</tr>
+<tr>
+<td>12</td>
+<td>In case (ii)_k all three axes are one-way (twochain’s D4 names the axes of the two constant profiles; only axis k is proved)</td>
+<td><strong>computed</strong> on 109 constrained + 3 unconstrained states, 0 exceptions; <strong>conjecture</strong> beyond that</td>
+</tr>
+<tr>
+<td>13</td>
+<td>In three-type states every two-way axis is two-way on each sublattice separately</td>
+<td><strong>computed</strong>, 309 of 309 two-way axes; not needed and not proved</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Theorem M′ at extent 2: on (2,2,2), (2,2,6), (2,4,6), type model, ‘odd, S has no type k, S′ has type k’ UNSAT for all 3 axes × 2 sublattices; both controls (drop ‘odd’; drop ‘S has no type k’) SAT in every case</td>
+<td><strong>solver</strong> (18 UNSAT, 36 SAT)</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Periodicity on the family.</strong> Every frozen zero-flux state of a member is invariant under a nonzero translation</td>
+<td><strong>proved</strong> given 1, the flux identity, Lemma A and Theorem P of the curl-reduction note (record)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="setting-and-notation">0. Setting and notation</h2>
+<p>Member: <span class="math inline">\((a,b,c) = (2a&#39;,2b&#39;,2c&#39;)\)</span> with <span class="math inline">\(a&#39;,b&#39;,c&#39;\)</span> pairwise coprime, i.e. all three extents even and every pair with gcd exactly 2. Members include (2,2,2), (2,2,4), (2,2,6), (2,4,6), (2,6,10), (4,6,10), (6,10,14) and permutations. (2,2,4) <strong>is</strong> a member (<span class="math inline">\(a&#39;=b&#39;=1\)</span>, <span class="math inline">\(c&#39;=2\)</span>; each pair of (2,2,4) has gcd 2): the task’s remark was right to ask.</p>
+<p>Everything below is in the notation of twochain’s report (Theorem P) and of the note. On a sublattice <span class="math inline">\(S\)</span>, the <span class="math inline">\(k\)</span>-line fraction of type <span class="math inline">\(k\)</span> is <span class="math inline">\(a_k\)</span>; Corollary P2 gives integer profiles with <span class="math display">\[2a_y = p(x) - r(z),\quad 2a_z = q(y) - p(x),\quad 2a_x = 2 + r(z) - q(y),\]</span> the chain inequality <span class="math inline">\(\max r \le \min p\)</span>, <span class="math inline">\(\max p\le\min q\)</span>, <span class="math inline">\(\max q \le \min r + 2\)</span>, and the slack vector <span class="math inline">\(s = (R, g_{rp}, P, g_{pq}, Q, g_{qr})\)</span> = (spread <span class="math inline">\(r\)</span>, <span class="math inline">\(\min p - \max r\)</span>, spread <span class="math inline">\(p\)</span>, <span class="math inline">\(\min q - \max p\)</span>, spread <span class="math inline">\(q\)</span>, <span class="math inline">\(\min r + 2 - \max q\)</span>), six non-negative integers with sum 2. The <span class="math inline">\(x\)</span>-lines of A are indexed by all pairs <span class="math inline">\((y,z)\)</span> of even residues (mod <span class="math inline">\(4b\)</span>, <span class="math inline">\(4c\)</span>), those of B by all pairs of odd residues, and likewise for the other axes; so every line function is defined on a full product set.</p>
+<p>Signs: <span class="math inline">\(n_k(v) = \varepsilon(v)[\tau(v) = k]\)</span>. The <strong>signed fraction</strong> <span class="math inline">\(\sigma_k^S(\ell)\)</span> is the mean of <span class="math inline">\(n_k\)</span> over the <span class="math inline">\(k\)</span>-line <span class="math inline">\(\ell\)</span> of <span class="math inline">\(S\)</span>. Axis <span class="math inline">\(k\)</span> is one-way (two-way, empty) on <span class="math inline">\(S\)</span> when the type-<span class="math inline">\(k\)</span> vertices of <span class="math inline">\(S\)</span> have one sign (both, none). An axis one-way on A and on B may still be two-way.</p>
+<p>Theorem 19 of the note (scomp, Theorem F): in a frozen state with every hole oriented there are six functions <span class="math inline">\(F_{01}, F_{23}\)</span> of <span class="math inline">\(x\)</span>, <span class="math inline">\(U_{02}, U_{13}\)</span> of <span class="math inline">\(y\)</span>, <span class="math inline">\(W_{03}, W_{12}\)</span> of <span class="math inline">\(z\)</span> with, on A, <span class="math display">\[\sigma_x = U_+(y) + W_+(z),\quad \sigma_y = F_+(x) + W_-(z),\quad \sigma_z = F_-(x) + U_-(y),\]</span> where <span class="math inline">\(U_\pm = U_{02}\pm U_{13}\)</span>, <span class="math inline">\(W_\pm = W_{03} \pm W_{12}\)</span>, <span class="math inline">\(F_\pm = F_{01}\pm F_{23}\)</span>, and on B the same six functions at <span class="math inline">\(x-1, x+1, y-1, y+1, z-1, z+1\)</span> in the order named.</p>
+<h2 id="f1-the-census-and-the-statement">1. F1: the census, and the statement</h2>
+<p>Samples: odd frozen states (type model + (T2) + sign field + ‘some hexagon odd’, random assumption literals, <strong>no condition on directions or types</strong>), from twochain (h451), check8 (h471; states without a sign field are skipped: 1 on (2,2,2), 13 on (4,6,10)) and new samples (h482). States with an empty axis are included. Analysis <code>h485_verify.py</code>, exact.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>odd states</th>
+<th>with an empty axis</th>
+<th>three types</th>
+<th>labels A/B (three types)</th>
+<th>three types: axis of the label one-way, same sign on A and B</th>
+<th>three types: all three axes two-way</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(2,2,2)</td>
+<td>78</td>
+<td>15</td>
+<td>63</td>
+<td>(i)x 21, (i)y 23, (i)z 17, (ii)y 1, (ii)z 1; all equal on A and B</td>
+<td>63/63</td>
+<td>0</td>
+</tr>
+<tr>
+<td>(2,2,4)</td>
+<td>56</td>
+<td>14</td>
+<td>42</td>
+<td>(i)x 11, (i)y 16, (i)z 14, (ii)z 1; all equal</td>
+<td>42/42</td>
+<td>0</td>
+</tr>
+<tr>
+<td>(2,2,6)</td>
+<td>145</td>
+<td>34</td>
+<td>111</td>
+<td>(i)x 37, (i)y 50, (i)z 24; all equal</td>
+<td>111/111</td>
+<td>0</td>
+</tr>
+<tr>
+<td>(2,4,6)</td>
+<td>88</td>
+<td>17</td>
+<td>71</td>
+<td>(i)x 38, (i)y 13, (i)z 20; all equal</td>
+<td>71/71</td>
+<td>0</td>
+</tr>
+<tr>
+<td>(2,6,10)</td>
+<td>118</td>
+<td>28</td>
+<td>90</td>
+<td>(i)x 60, (i)y 15, (i)z 15; all equal</td>
+<td>90/90</td>
+<td>0</td>
+</tr>
+<tr>
+<td>(4,6,10)</td>
+<td>41</td>
+<td>30</td>
+<td>11</td>
+<td>(i)x 5, (i)y 2, (i)z 4; all equal</td>
+<td>11/11</td>
+<td>0</td>
+</tr>
+<tr>
+<td>(2,2,2), (2,2,6), (2,4,6), constrained ‘every A z-line alternates’</td>
+<td>171</td>
+<td>62</td>
+<td>109</td>
+<td>(ii)z on both, 109/109</td>
+<td>109/109 (and all three axes one-way in all 109)</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>Per axis pattern (overall, three-type states): every combination with at least one O occurs (OOO, OOT, OTO, TOO, OTT, TOT, TTO), and the O is always at the axis of the label in case (i). In every three-type state, a two-way axis is two-way on A and on B separately (309 of 309). No state has ‘one-way on A, one-way on B, opposite signs’ on any axis. Odd states with an empty axis have two types on each sublattice, the same two (M′), and sometimes different slack vectors on A and B.</p>
+<p><strong>Statement S.</strong> In an odd frozen state of a member in which all three types occur, both sublattices carry all three types, they carry the same label (i)_k or (ii)_k of Lemma L0 below, and axis <span class="math inline">\(k\)</span> is one-way (one sign on A and B together). This holds with no exception on 497 three-type states of six members (388 unconstrained, 109 constrained), it implies Theorem H, and it is proved in §2.</p>
+<p>On twochain’s two exceptional states (two constant profiles, ‘pq’ on (2,2,2) and (2,2,4) in its sample, and one ‘pr’): these are exactly case (ii)_z and case (ii)_y. A statement of the form ‘the axis of the constant profile is one-way’ would there name axes <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> (or <span class="math inline">\(z\)</span> and <span class="math inline">\(x\)</span>); Statement S names instead the axis whose lines all alternate. In the sample all three axes are one-way in every case-(ii) state, so both readings pass the data; only S is proved.</p>
+<h2 id="the-proof">2. The proof</h2>
+<p>Throughout: a member <span class="math inline">\((a,b,c)\)</span>, an odd frozen state on it.</p>
+<h3 id="reductions">2.1 Reductions</h3>
+<p>If some axis is empty there is nothing to prove, so assume all three types occur. <strong>Both sublattices carry all three types</strong>: if <span class="math inline">\(S\)</span> had no vertex of type <span class="math inline">\(k\)</span> while <span class="math inline">\(S&#39;\)</span> has one, Theorem M′ would give even curl. <strong>Every hole is oriented</strong>: Theorem U on the family (twochain §3, check8). So Theorems 17 to 19 of the note apply (Lemma 3 gives the three laws at every hole).</p>
+<h3 id="lemma-l0-classification-proved">2.2 Lemma L0 (classification; proved)</h3>
+<p><em>If <span class="math inline">\(S\)</span> carries all three types, its slack vector is one of</em> <span class="math display">\[\text{(i)}_x: (1,0,0,0,1,0),\ \ \text{(i)}_y: (1,0,1,0,0,0),\ \ \text{(i)}_z: (0,0,1,0,1,0),\ \ \text{(ii)}_x: (0,0,1,0,0,1),\ \ \text{(ii)}_y: (0,1,0,0,1,0),\ \ \text{(ii)}_z: (1,0,0,1,0,0).\]</span></p>
+<p><em>Proof.</em> Type <span class="math inline">\(y\)</span> occurs on <span class="math inline">\(S\)</span> iff <span class="math inline">\(\max(p - r) &gt; 0\)</span>, and <span class="math inline">\(\max p - \min r = R + g_{rp} + P\)</span>. Likewise type <span class="math inline">\(z\)</span> iff <span class="math inline">\(P + g_{pq} + Q \ge 1\)</span>, and type <span class="math inline">\(x\)</span> iff <span class="math inline">\(\max(r + 2 - q) = R + g_{qr} + Q \ge 1\)</span>. So each of the three arcs <span class="math inline">\(\{R, g_{rp}, P\}\)</span>, <span class="math inline">\(\{P, g_{pq}, Q\}\)</span>, <span class="math inline">\(\{Q, g_{qr}, R\}\)</span> of the cycle of six slots carries a unit, with two units in all. A slot lies in two arcs if it is <span class="math inline">\(R\)</span>, <span class="math inline">\(P\)</span> or <span class="math inline">\(Q\)</span>, otherwise in one. Two units on one slot meet at most two arcs. So either the units are on two distinct slots among <span class="math inline">\(R, P, Q\)</span> (three vectors), or one is on a spread and the other on the only gap not in the two arcs of that spread (<span class="math inline">\(P\)</span> with <span class="math inline">\(g_{qr}\)</span>, <span class="math inline">\(Q\)</span> with <span class="math inline">\(g_{rp}\)</span>, <span class="math inline">\(R\)</span> with <span class="math inline">\(g_{pq}\)</span>). <span class="math inline">\(\square\)</span></p>
+<p>Read off with the shift <span class="math inline">\(p = 0\)</span> (other cases by the cyclic symmetry of the profile relations):</p>
+<ul>
+<li>**(i)_x**: <span class="math inline">\(p\)</span> constant; <span class="math inline">\(r \in \{-1, 0\}\)</span> and <span class="math inline">\(q \in \{0, 1\}\)</span>, each taking both values. So <span class="math inline">\(a_y = -r(z)/2 \in \{0,\tfrac12\}\)</span> depends on <span class="math inline">\(z\)</span> only, <span class="math inline">\(a_z = q(y)/2 \in \{0, \tfrac12\}\)</span> on <span class="math inline">\(y\)</span> only, each takes both values, and <span class="math inline">\(a_x = 1 - a_y(z) - a_z(y)\)</span> depends on both <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span>.</li>
+<li>**(ii)_z**: <span class="math inline">\(p, q\)</span> constant with <span class="math inline">\(q = p + 1\)</span>, <span class="math inline">\(r \in \{p - 1, p\}\)</span> taking both values. So <span class="math inline">\(a_z \equiv \tfrac12\)</span>, and <span class="math inline">\(a_y(z) = (p - r(z))/2\)</span>, <span class="math inline">\(a_x(z) = \tfrac12 - a_y(z)\)</span> depend on <span class="math inline">\(z\)</span> only, each taking both values 0 and <span class="math inline">\(\tfrac12\)</span>. Write <span class="math inline">\(Z_x\)</span>, <span class="math inline">\(Z_y\)</span> for the planes <span class="math inline">\(z\)</span> of <span class="math inline">\(S\)</span> with <span class="math inline">\(a_x = \tfrac12\)</span>, resp. <span class="math inline">\(a_y = \tfrac12\)</span>: a partition, both parts non-empty.</li>
+<li>(i)_k and (ii)_k in general: (i)_k means the profile of coordinate <span class="math inline">\(k\)</span> is constant and the other two have spread 1; (ii)_k means every <span class="math inline">\(k\)</span>-line of <span class="math inline">\(S\)</span> alternates. The labels are invariant under the inversion <span class="math inline">\(v\mapsto(1,1,1)-v\)</span> (which exchanges A and B and replaces each profile <span class="math inline">\(f(t)\)</span> by <span class="math inline">\(f(1-t)\)</span>) and are permuted with the axes by coordinate permutations.</li>
+</ul>
+<h3 id="lemma-l1-one-sign-per-line-proved-given-theorem-u-and-theorem-17">2.3 Lemma L1 (one sign per line; proved given Theorem U and Theorem 17)</h3>
+<p><em>Every <span class="math inline">\(k\)</span>-line of either sublattice has all its vertices of type <span class="math inline">\(k\)</span> of one sign, and <span class="math inline">\(n_k(v + 8e_k) = n_k(v)\)</span>.</em></p>
+<p><em>Proof.</em> By Theorem 17, <span class="math inline">\(n_x = G_{02} + G_{13} + G_{03} + G_{12}\)</span>, <span class="math inline">\(G_f(v)\)</span> the weight of the chain of family <span class="math inline">\(f\)</span> through <span class="math inline">\(v\)</span>. The translation by <span class="math inline">\(8e_x\)</span> maps each chain of a family of axis <span class="math inline">\(y\)</span> or <span class="math inline">\(z\)</span> onto itself: the A vertices of a chain of <span class="math inline">\(\{0,2\}\)</span> are <span class="math inline">\(v_0 + t(2,0,2)\)</span>, and <span class="math inline">\((8,0,0) \equiv t(2,0,2)\)</span> modulo <span class="math inline">\((4a,4b,4c)\)</span> needs <span class="math inline">\(t \equiv 4 \pmod{2a}\)</span>, <span class="math inline">\(t \equiv 0 \pmod{2c}\)</span>, which is solvable because <span class="math inline">\(\gcd(2a,2c) = 4\)</span>; the same for <span class="math inline">\(\{1,3\}\)</span> and, with <span class="math inline">\(\gcd(2a, 2b) = 4\)</span>, for <span class="math inline">\(\{0,3\}, \{1,2\}\)</span>; the B vertices of a chain are its A vertices plus a fixed <span class="math inline">\(d_i\)</span>. Hence <span class="math inline">\(n_x(v + 8e_x) = n_x(v)\)</span>, and likewise for <span class="math inline">\(y\)</span>, <span class="math inline">\(z\)</span>. By P1 a <span class="math inline">\(k\)</span>-line has <span class="math inline">\(a_k \in \{0, \tfrac12, 1\}\)</span>. If <span class="math inline">\(a_k = 1\)</span>, consecutive vertices <span class="math inline">\(v\)</span>, <span class="math inline">\(v + 4e_k\)</span> are the two rods of the straight hole <span class="math inline">\(v + 2e_k\)</span>, which is oriented, so they have one sign. If <span class="math inline">\(a_k = \tfrac12\)</span> the type-<span class="math inline">\(k\)</span> vertices of the line are <span class="math inline">\(v + 8me_k\)</span> for one <span class="math inline">\(v\)</span>, all with the same <span class="math inline">\(n_k\)</span>. (At extent 2 along <span class="math inline">\(k\)</span> a line has two vertices: a half line has one rod, a full line two rods joined by two straight holes; the argument is the same.) <span class="math inline">\(\square\)</span></p>
+<p>So on each line <span class="math inline">\(\sigma_k = \pm a_k\)</span>, and the direction fractions <span class="math inline">\(\rho^k_\pm = (a_k \pm \sigma_k)/2 \ge 0\)</span> satisfy <span class="math inline">\(\rho^k_+\rho^k_- = 0\)</span> line by line.</p>
+<h3 id="lemma-l2-the-signed-fractions-of-b-proved-from-theorem-19">2.4 Lemma L2 (the signed fractions of B; proved from Theorem 19)</h3>
+<p>Substituting <span class="math inline">\(U_{02} = (U_+ + U_-)/2\)</span>, <span class="math inline">\(U_{13} = (U_+ - U_-)/2\)</span> and so on into the B form of Theorem 19: <span class="math display">\[\begin{aligned}
+\sigma_x^B(y,z) &amp;= \tfrac12[U_+(y{-}1) + U_+(y{+}1)] + \tfrac12[U_-(y{-}1) - U_-(y{+}1)] + \tfrac12[W_+(z{-}1) + W_+(z{+}1)] + \tfrac12[W_-(z{-}1) - W_-(z{+}1)],\\
+\sigma_y^B(x,z) &amp;= \tfrac12[F_+(x{-}1) + F_+(x{+}1)] + \tfrac12[F_-(x{-}1) - F_-(x{+}1)] + \tfrac12[W_+(z{-}1) - W_+(z{+}1)] + \tfrac12[W_-(z{-}1) + W_-(z{+}1)],\\
+\sigma_z^B(x,y) &amp;= \tfrac12[F_+(x{-}1) - F_+(x{+}1)] + \tfrac12[F_-(x{-}1) + F_-(x{+}1)] + \tfrac12[U_+(y{-}1) - U_+(y{+}1)] + \tfrac12[U_-(y{-}1) + U_-(y{+}1)].
+\end{aligned}\qquad(\mathrm{B})\]</span> The A fractions determine each pair <span class="math inline">\((U_+, W_+)\)</span>, <span class="math inline">\((F_+, W_-)\)</span>, <span class="math inline">\((F_-, U_-)\)</span> up to adding a constant to one member and subtracting it from the other, and each right side of (B) is unchanged by such a change (checked term by term). So <strong>the signed fractions of B are determined by those of A</strong>, by (B). <strong>Computed</strong>: (B) holds exactly on every one of the 697 states of §1 (the A functions read off with a gauge, <code>h485</code>); with the sign of the <span class="math inline">\(U_-\)</span> term reversed it fails on 62 of 88 states of (2,4,6).</p>
+<p>A remark used repeatedly: if <span class="math inline">\(a^S_k\)</span> depends on one transverse coordinate only and vanishes on some plane <span class="math inline">\(c_0\)</span> of that coordinate, then <span class="math inline">\(\sigma_k^S = 0\)</span> on that plane (L1), so the part of the separable function <span class="math inline">\(\sigma_k^S\)</span> in the other coordinate is constant. And if a periodic function <span class="math inline">\(f\)</span> on the even (or odd) residues satisfies <span class="math inline">\(f(t-1) - f(t+1) = \kappa\)</span> for all <span class="math inline">\(t\)</span>, summing round the circle gives <span class="math inline">\(\kappa = 0\)</span>, so <span class="math inline">\(f\)</span> is constant.</p>
+<h3 id="lemma-l3-stripes-proved">2.5 Lemma L3 (stripes; proved)</h3>
+<p><em>If axis <span class="math inline">\(k\)</span> is two-way on <span class="math inline">\(S\)</span>, then <span class="math inline">\(a^S_k\)</span> depends on one transverse coordinate only.</em></p>
+<p><em>Proof.</em> <span class="math inline">\(\rho_\pm = (a_k \pm \sigma_k)/2\)</span> are non-negative functions on the product set of <span class="math inline">\(k\)</span>-lines of <span class="math inline">\(S\)</span>, separable (<span class="math inline">\(a_k\)</span> by P2, <span class="math inline">\(\sigma_k\)</span> by Theorem 19), with product zero (L1) and neither identically zero. Lemma 4 of the note: both depend on the same single coordinate. So does <span class="math inline">\(a_k = \rho_+ + \rho_-\)</span>. <span class="math inline">\(\square\)</span></p>
+<h3 id="lemma-l4-the-sign-of-an-axis-is-shared-proved">2.6 Lemma L4 (the sign of an axis is shared; proved)</h3>
+<p><em>The mean of <span class="math inline">\(\sigma_k\)</span> over the <span class="math inline">\(k\)</span>-lines of A equals its mean over those of B. So if axis <span class="math inline">\(k\)</span> has vertices on A and on B and is one-way on each, it is one-way.</em></p>
+<p><em>Proof.</em> The <span class="math inline">\(x\)</span>-lines of A are all pairs of even <span class="math inline">\((y,z)\)</span>, those of B all pairs of odd; the mean of <span class="math inline">\(U_{02}(y-1) + U_{13}(y+1)\)</span> over odd <span class="math inline">\(y\)</span> is the mean of <span class="math inline">\(U_+\)</span> over even <span class="math inline">\(y\)</span>, and so on (Theorem 19). If <span class="math inline">\(k\)</span> were <span class="math inline">\(+\)</span> on A and <span class="math inline">\(-\)</span> on B the two means would be positive and negative. (Equivalently: the flux identity of the report of 22 September, <span class="math inline">\(M_k(t)\)</span> the same on every plane of both sublattices.) <span class="math inline">\(\square\)</span></p>
+<h3 id="lemma-l5-case-i-proved">2.7 Lemma L5 (case (i); proved)</h3>
+<p>*(a) If <span class="math inline">\(S\)</span> is in case (i)_k, axis <span class="math inline">\(k\)</span> is one-way on <span class="math inline">\(S\)</span>. (b) If A is in case (i)_k and B carries three types, B is in case (i)_k.*</p>
+<p>By a coordinate permutation (which maps a member to a member and preserves A, B, bonds, types, signs up to relabelling, oddness), take <span class="math inline">\(k = x\)</span>.</p>
+<p><em>(a)</em> In (i)_x, <span class="math inline">\(a_x = 1 - a_y(z) - a_z(y)\)</span> with <span class="math inline">\(a_y\)</span> non-constant in <span class="math inline">\(z\)</span> and <span class="math inline">\(a_z\)</span> non-constant in <span class="math inline">\(y\)</span>, so it depends on both. By L3 axis <span class="math inline">\(x\)</span> is not two-way on <span class="math inline">\(S\)</span>; it occurs on <span class="math inline">\(S\)</span>, so it is one-way there. <span class="math inline">\(\square\)</span></p>
+<p><em>(b)</em> Let <span class="math inline">\(x\)</span> have sign <span class="math inline">\(s\)</span> on A (by (a)), so <span class="math inline">\(\sigma_x^A = s\,a_x^A = s(1 - a^A_y(z) - a^A_z(y))\)</span> and, after a gauge, <span class="math inline">\(U_+(y) = -s\,a_z^A(y) + c_1\)</span>.</p>
+<p><em><span class="math inline">\(F_+\)</span> and <span class="math inline">\(F_-\)</span> are constant.</em> <span class="math inline">\(a_y^A\)</span> vanishes on some plane <span class="math inline">\(z_1\)</span>, so <span class="math inline">\(\sigma_y^A(x, z_1) = F_+(x) + W_-(z_1) = 0\)</span> for all <span class="math inline">\(x\)</span>. <span class="math inline">\(a_z^A\)</span> vanishes on some plane <span class="math inline">\(y_1\)</span>, so <span class="math inline">\(F_-\)</span> is constant. Put <span class="math inline">\(F_\pm \equiv f_\pm\)</span>. Then <span class="math inline">\(\sigma_z^A(x,y) = f_- + U_-(y) =: \tau(y)\)</span> depends on <span class="math inline">\(y\)</span> only, with <span class="math inline">\(|\tau| = a^A_z(y) \in \{0, \tfrac12\}\)</span>; put <span class="math inline">\(\rho_\pm(y) = (a^A_z(y) \pm \tau(y))/2 \in \{0,\tfrac12\}\)</span>, <span class="math inline">\(\rho_+\rho_- = 0\)</span>.</p>
+<p><em><span class="math inline">\(p_B\)</span> is constant.</em> With <span class="math inline">\(F_\pm\)</span> constant, the <span class="math inline">\(x\)</span>-parts of <span class="math inline">\(\sigma_y^B\)</span> and <span class="math inline">\(\sigma_z^B\)</span> in (B) are constant, so <span class="math inline">\(\sigma^B_y\)</span> depends on <span class="math inline">\(z\)</span> only and <span class="math inline">\(\sigma_z^B\)</span> on <span class="math inline">\(y\)</span> only; by L1 so do <span class="math inline">\(a^B_y = |\sigma^B_y| = (p_B(x) - r_B(z))/2\)</span> and <span class="math inline">\(a^B_z = (q_B(y) - p_B(x))/2\)</span>. Hence <span class="math inline">\(p_B\)</span> is constant. By L0 the cases with <span class="math inline">\(p\)</span> constant are (i)_x, (ii)_z and (ii)_y.</p>
+<p>*B is not (ii)_z.* There <span class="math inline">\(a^B_z \equiv \tfrac12\)</span>, so <span class="math inline">\(|\sigma^B_z| = \tfrac12\)</span> everywhere; and <span class="math inline">\(a^B_x\)</span> depends on <span class="math inline">\(z\)</span> only and vanishes on some plane, so the <span class="math inline">\(y\)</span>-part of <span class="math inline">\(\sigma_x^B\)</span> is constant. Substituting <span class="math inline">\(U_+ = -s(\rho_+ + \rho_-) + c_1\)</span> and <span class="math inline">\(U_- = \rho_+ - \rho_- - f_-\)</span> into (B):</p>
+<ul>
+<li><span class="math inline">\(s = +1\)</span>: <span class="math inline">\(y\)</span>-part of <span class="math inline">\(\sigma^B_x\)</span> <span class="math inline">\(= c_1 - \rho_-(y-1) - \rho_+(y+1)\)</span>, and <span class="math inline">\(\sigma^B_z = \rho_+(y+1) - \rho_-(y-1)\)</span>;</li>
+<li><span class="math inline">\(s = -1\)</span>: <span class="math inline">\(y\)</span>-part <span class="math inline">\(= c_1 + \rho_+(y-1) + \rho_-(y+1)\)</span>, and <span class="math inline">\(\sigma_z^B = \rho_+(y-1) - \rho_-(y+1)\)</span>.</li>
+</ul>
+<p>Take <span class="math inline">\(s = +1\)</span>. For every odd <span class="math inline">\(y\)</span>, <span class="math inline">\(\rho_-(y-1) + \rho_+(y+1)\)</span> is a constant <span class="math inline">\(K\)</span> and <span class="math inline">\(|\rho_+(y+1) - \rho_-(y-1)| = \tfrac12\)</span>. The values lie in <span class="math inline">\(\{0, \tfrac12\}\)</span>, so exactly one of the two is <span class="math inline">\(\tfrac12\)</span>, for every odd <span class="math inline">\(y\)</span>. Let <span class="math inline">\(y_0\)</span> be an even plane with <span class="math inline">\(a^A_z(y_0) = 0\)</span> (it exists in (i)_x). At <span class="math inline">\(y = y_0 + 1\)</span>: <span class="math inline">\(\rho_-(y_0) = 0\)</span>, so <span class="math inline">\(\rho_+(y_0 + 2) = \tfrac12\)</span>. If <span class="math inline">\(\rho_+(y_0 + 2m) = \tfrac12\)</span> then <span class="math inline">\(\rho_-(y_0 + 2m) = 0\)</span> and, at <span class="math inline">\(y = y_0 + 2m + 1\)</span>, <span class="math inline">\(\rho_+(y_0 + 2m + 2) = \tfrac12\)</span>. After <span class="math inline">\(2b\)</span> steps, <span class="math inline">\(y_0 + 4b \equiv y_0\)</span> and <span class="math inline">\(\rho_+(y_0) = \tfrac12\)</span>, against <span class="math inline">\(a^A_z(y_0) = 0\)</span>. For <span class="math inline">\(s = -1\)</span> the same induction runs on <span class="math inline">\(\rho_-(y_0 + 2m)\)</span>.</p>
+<p>*B is not (ii)_y.* The same argument with <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span> exchanged: <span class="math inline">\(|\sigma^B_y| = \tfrac12\)</span>; <span class="math inline">\(a_x^B\)</span> depends on <span class="math inline">\(y\)</span> only and vanishes somewhere, so the <span class="math inline">\(z\)</span>-part of <span class="math inline">\(\sigma^B_x\)</span> is constant; <span class="math inline">\(W_+(z) = -s\,a^A_y(z) + c_2\)</span>, <span class="math inline">\(\sigma^A_y(x,z) = f_+ + W_-(z)\)</span> with modulus <span class="math inline">\(a_y^A(z)\)</span>; the two expressions in (B) have exactly the shape above with <span class="math inline">\(W\)</span> for <span class="math inline">\(U\)</span>, and <span class="math inline">\(a^A_y\)</span> vanishes on some plane <span class="math inline">\(z_0\)</span>. <span class="math inline">\(\square\)</span></p>
+<h3 id="lemma-l6-equal-cases-ii-proved">2.8 Lemma L6 (equal cases (ii); proved)</h3>
+<p>*If A and B are both in case (ii)_k, axis <span class="math inline">\(k\)</span> is one-way on A and on B.*</p>
+<p><em>Proof.</em> Take <span class="math inline">\(k = z\)</span>. On A, <span class="math inline">\(a^A_y(z)\)</span> and <span class="math inline">\(a^A_x(z)\)</span> each vanish on some plane, so (remark in §2.4) <span class="math inline">\(F_+ \equiv f_+\)</span> and <span class="math inline">\(U_+ \equiv u_+\)</span>. On B, <span class="math inline">\(a_y^B\)</span> and <span class="math inline">\(a_x^B\)</span> depend on <span class="math inline">\(z\)</span> only and each vanishes on some plane, so the <span class="math inline">\(x\)</span>-part of <span class="math inline">\(\sigma^B_y\)</span>, which is <span class="math inline">\(f_+ + \tfrac12[F_-(x-1) - F_-(x+1)]\)</span>, is constant, and the <span class="math inline">\(y\)</span>-part of <span class="math inline">\(\sigma^B_x\)</span>, which is <span class="math inline">\(u_+ + \tfrac12[U_-(y-1) - U_-(y+1)]\)</span>, is constant. By the circle remark <span class="math inline">\(F_-\)</span> and <span class="math inline">\(U_-\)</span> are constant. So <span class="math inline">\(\sigma^A_z = F_- + U_-\)</span> is constant, of modulus <span class="math inline">\(a^A_z = \tfrac12\)</span>: axis <span class="math inline">\(z\)</span> is one-way on A. The inversion exchanges A and B, preserves the labels, oddness, frozenness, and carries signs along (<span class="math inline">\(n&#39;(v&#39;) = n(v)\)</span> satisfies the bond rule, since the bond <span class="math inline">\((a, a+d)\)</span> goes to the bond <span class="math inline">\(((1,1,1)-a-d,\ (1,1,1)-a)\)</span> of the same direction), so <span class="math inline">\(z\)</span> is one-way on B too. <span class="math inline">\(\square\)</span></p>
+<h3 id="lemma-l7-mixed-cases-ii-proved-types-only">2.9 Lemma L7 (mixed cases (ii); proved, types only)</h3>
+<p><em>On a member, no solution of the type model has <span class="math inline">\(a^A_z \equiv \tfrac12\)</span> on every <span class="math inline">\(z\)</span>-line of A, <span class="math inline">\(a^B_x \equiv \tfrac12\)</span> on every <span class="math inline">\(x\)</span>-line of B, and a vertex of type <span class="math inline">\(y\)</span> on A.</em> Consequently, if both sublattices carry three types and are in cases (ii)<em>k and (ii)</em>{k’}, then <span class="math inline">\(k = k&#39;\)</span>: the coordinate permutations act simply transitively on ordered pairs of distinct labels, and they map the pair to <span class="math inline">\((z, x)\)</span> on another member, where A (ii)_z has a vertex of type <span class="math inline">\(y\)</span>.</p>
+<p><em>Setting.</em> Theorem P: at a vertex of <span class="math inline">\(S\)</span> in class <span class="math inline">\((\xi,\eta,\zeta)\)</span>, <span class="math inline">\(X = a_x + \pi(E_z - E_y)\)</span>, <span class="math inline">\(Y = a_y + \pi(E_x - E_z)\)</span>, <span class="math inline">\(Z = a_z + \pi(E_y - E_x)\)</span> with <span class="math inline">\(E_x = E^S_x(x,\zeta)\)</span>, <span class="math inline">\(E_y = E^S_y(y,\xi)\)</span>, <span class="math inline">\(E_z = E^S_z(z,\eta)\)</span>. Parity rule: <span class="math inline">\(|E_z - E_y| = \tfrac12[a_x = \tfrac12]\)</span> and cyclically. Coupling: <span class="math inline">\(E^B_k(n&#39;,\sigma) = \tfrac12(\sigma D^A_k(n&#39;-1) - S^A_k(n&#39;+1))\)</span>. Each value <span class="math inline">\(E^A_k(n,\sigma)\)</span> belongs to exactly one A class <span class="math inline">\(c \in \{c_0,c_1,c_2,c_3\} = \{(+++), (+--), (-+-), (--+)\}\)</span>; write <span class="math inline">\(e^c_x(x)\)</span>, <span class="math inline">\(e^c_y(y)\)</span>, <span class="math inline">\(e^c_z(z)\)</span> for the values of class <span class="math inline">\(c\)</span>, defined on the planes <span class="math inline">\(X_c\)</span>, <span class="math inline">\(Y_c\)</span>, <span class="math inline">\(Z_c\)</span> of the right residue mod 4; every triple in <span class="math inline">\(X_c\times Y_c\times Z_c\)</span> is a vertex of class <span class="math inline">\(c\)</span> (the residues add to <span class="math inline">\(0 \bmod 4\)</span> because the class has an even number of minus signs). Put <span class="math inline">\(b^c_x(y,z) = e^c_z(z) - e^c_y(y)\)</span>.</p>
+<p><em>The table (computed, symbolic, <code>h484_classes.py</code>).</em> Expanding <span class="math inline">\(2(E^B_z - E^B_y)\)</span> at a B vertex of class <span class="math inline">\(c&#39;_j\)</span> (the B class with the same sign triple as <span class="math inline">\(c_j\)</span>) by the coupling and grouping the eight A values by class, each group is <span class="math inline">\(\pm b^c_x\)</span> at planes <span class="math inline">\(y_c \in \{y&#39;-1, y&#39;+1\}\)</span>, <span class="math inline">\(z_c \in \{z&#39;-1, z&#39;+1\}\)</span>, namely the plane of the residue that class <span class="math inline">\(c\)</span> uses. For the two B classes with <span class="math inline">\(\eta&#39; = +\)</span>: <span class="math display">\[\begin{aligned}
+c&#39;_0 = (+,+,+):\ &amp; 2b^B_x = +b^{c_0}_x(y&#39;{-}1, z&#39;{-}1) - b^{c_1}_x(y&#39;{+}1, z&#39;{+}1) - b^{c_2}_x(y&#39;{-}1, z&#39;{+}1) - b^{c_3}_x(y&#39;{+}1, z&#39;{-}1),\\
+c&#39;_2 = (-,+,-):\ &amp; 2b^B_x = -b^{c_0}_x(y&#39;{-}1, z&#39;{+}1) - b^{c_1}_x(y&#39;{+}1, z&#39;{-}1) + b^{c_2}_x(y&#39;{-}1, z&#39;{-}1) - b^{c_3}_x(y&#39;{+}1, z&#39;{+}1).
+\end{aligned}\]</span> In both rows class <span class="math inline">\(c\)</span> uses the same <span class="math inline">\(y\)</span>-plane, and the relative sign of the two terms of <span class="math inline">\(\{c_0, c_3\}\)</span> (and of <span class="math inline">\(\{c_1, c_2\}\)</span>) is opposite in the two rows. (The script prints all four B classes and all three pairs of axes; every group has the form claimed.)</p>
+<p><em>Facts from the hypotheses.</em> On A, <span class="math inline">\(a_z \equiv \tfrac12\)</span>, so (L0 reading) <span class="math inline">\(a_x\)</span>, <span class="math inline">\(a_y\)</span> depend on <span class="math inline">\(z\)</span> only, and the even planes split into <span class="math inline">\(Z_x\)</span> (<span class="math inline">\(a_x = \tfrac12\)</span>) and <span class="math inline">\(Z_y\)</span> (<span class="math inline">\(a_y = \tfrac12\)</span>); type <span class="math inline">\(y\)</span> on A means <span class="math inline">\(Z_y \neq \emptyset\)</span>. Parity on A: <span class="math inline">\(|b^c_x(y,z)| = \tfrac12[z\in Z_x]\)</span>; and for <span class="math inline">\(z \in Z_x\cap Z_c\)</span>, <span class="math inline">\(|E_x - E_z| = \tfrac12[a_y = \tfrac12] = 0\)</span> at every vertex of the plane, so <span class="math inline">\(e^c_x(x) = e^c_z(z)\)</span> for all <span class="math inline">\(x \in X_c\)</span>: <span class="math inline">\(e^c_x\)</span> is constant and <span class="math inline">\(e^c_z\)</span> takes that same value on every plane of <span class="math inline">\(Z_x\cap Z_c\)</span>. Hence <strong><span class="math inline">\(b^c_x(y, z)\)</span> is the same for all <span class="math inline">\(z \in Z_x \cap Z_c\)</span></strong>. On B, <span class="math inline">\(a_x \equiv \tfrac12\)</span>, so <span class="math inline">\(|b^B_x| = \tfrac12\)</span> at every B vertex.</p>
+<p><em>(★) No two adjacent planes of <span class="math inline">\(Z_y\)</span>.</em> If <span class="math inline">\(z_0, z_0 + 2 \in Z_y\)</span>, at any B vertex with <span class="math inline">\(z&#39; = z_0 + 1\)</span> every term of the table vanishes, so <span class="math inline">\(b^B_x = 0\)</span>: contradiction.</p>
+<p><em>Conclusion.</em> Take <span class="math inline">\(z_0 \in Z_y\)</span>; by (★), <span class="math inline">\(z_0 \pm 2 \in Z_x\)</span>. These two planes have the same residue mod 4; let <span class="math inline">\(\{c, \tilde c\}\)</span> be the two A classes using that residue for <span class="math inline">\(E_z\)</span> (<span class="math inline">\(\{c_0, c_3\}\)</span> or <span class="math inline">\(\{c_1, c_2\}\)</span>). Fix <span class="math inline">\(y&#39; \equiv 1 \pmod 4\)</span>. The B planes <span class="math inline">\(z_0 - 1\)</span> and <span class="math inline">\(z_0 + 1\)</span> have opposite <span class="math inline">\(\zeta&#39;\)</span>, so one carries vertices of class <span class="math inline">\(c&#39;_0\)</span> and the other of class <span class="math inline">\(c&#39;_2\)</span>, both with this <span class="math inline">\(y&#39;\)</span>. At each, only the terms of <span class="math inline">\(c\)</span>, <span class="math inline">\(\tilde c\)</span> survive (their <span class="math inline">\(z\)</span>-plane is <span class="math inline">\(z_0 \mp 2 \in Z_x\)</span>, the other two classes sit on <span class="math inline">\(z_0 \in Z_y\)</span>), and by the fact above these terms are the same numbers <span class="math inline">\(t = b^{c}_x(y_c, \cdot)\)</span>, <span class="math inline">\(\tilde t = b^{\tilde c}_x(y_{\tilde c}, \cdot)\)</span> at both vertices, each <span class="math inline">\(\pm\tfrac12\)</span>. The two rows give <span class="math inline">\(|t - \tilde t| = 1\)</span> and <span class="math inline">\(|t + \tilde t| = 1\)</span> (up to overall signs), which no <span class="math inline">\(t, \tilde t \in \{\pm\tfrac12\}\)</span> satisfy. <span class="math inline">\(\square\)</span></p>
+<p><strong>Solver test (not a step).</strong> ‘every A <span class="math inline">\(z\)</span>-line alternates, every B <span class="math inline">\(x\)</span>-line alternates, A has type <span class="math inline">\(y\)</span>’ is UNSAT on (2,2,2), (2,2,6), (2,4,6), (4,2,6), (6,4,2); the same without ‘A has type <span class="math inline">\(y\)</span>’, and with ‘A has type <span class="math inline">\(x\)</span>’ instead, are SAT on all five (<code>h483</code>).</p>
+<h3 id="theorem-h-on-the-family-proved-given-the-record">2.10 Theorem H on the family (proved, given the record)</h3>
+<p><em>On every member, every odd frozen state has an axis that is empty or one-way. More precisely Statement S of §1 holds.</em></p>
+<p><em>Proof.</em> By §2.1 assume both sublattices carry three types and every hole is oriented. By L0 each sublattice has a label. If A is in case (i)_k, then B is in case (i)_k (L5b), axis <span class="math inline">\(k\)</span> is one-way on A and on B (L5a), and by L4 it is one-way. If B is in case (i)_k, the inversion reduces to the previous sentence. Otherwise both are in case (ii); by L7 with the same <span class="math inline">\(k\)</span>; by L6 axis <span class="math inline">\(k\)</span> is one-way on A and on B, and by L4 it is one-way. <span class="math inline">\(\square\)</span></p>
+<p><strong>Which members.</strong> Every member, thin or not: the argument uses only that all three extents are even with pairwise gcd 2 (two chains of each family per pair of planes, for L1 and for Theorem P), plus the record’s results on the family. No extent bound enters: the circles of planes in L5 and L6 have length <span class="math inline">\(2b\)</span> or <span class="math inline">\(2a \ge 2\)</span>, and in L7 the planes <span class="math inline">\(z_0 \pm 2\)</span> may coincide (extent 2 along <span class="math inline">\(z\)</span>, 8 planes) without harm.</p>
+<p><strong>Dependencies, named.</strong> Theorem U on the family (twochain Theorem V, with (C), (S1), Lemma 2, the cage enumeration of Lemma 3, Theorem M′; confirmed by check8); Theorem M′ (check6’s proof; tested at extent 2 in §3); Theorem P and Corollaries P1 to P3 of twochain, with the coupling (confirmed by check8); Theorems 17 and 19 of the note (scomp; the note records that this section <strong>has not been read by an independent checker</strong>, and this proof depends on it through L1, L2, L3, L4); Lemma 4 of the note. Not used: <span class="math inline">\(K_u\)</span>, Theorem 1′, Lemma 1, Theorems 3 to 9, Lemma 5, Lemma 6, the walls, any certificate beyond those inside Theorem U and M′.</p>
+<h3 id="f4-periodicity-on-the-family-proved-given-the-record">2.11 F4: periodicity on the family (proved, given the record)</h3>
+<p><em>Every frozen zero-flux state of a member is invariant under a nonzero translation.</em> If it has even curl, Theorem P of the curl-reduction note (recorded as proved for every cell) gives a one-cube period. If it is odd, Theorem H above gives an empty or one-way axis. A one-way axis <span class="math inline">\(k\)</span> with a vertex has, by the flux identity (report of 22 September, Theorem (v)), <span class="math inline">\(\Phi_k = M_k(t) \neq 0\)</span> on a plane <span class="math inline">\(t\)</span> containing type <span class="math inline">\(k\)</span>, which is excluded in zero flux. So an axis is empty, and Lemma A gives invariance under <span class="math inline">\(\Lambda_x\)</span> (or <span class="math inline">\(\Lambda_y\)</span>, <span class="math inline">\(\Lambda_z\)</span>), which contains the nonzero translation <span class="math inline">\((0, 2c, 2c)\)</span> (take <span class="math inline">\(t = c\)</span>: <span class="math inline">\(c(0,2,2) - c(0,2,-2) = (0,0,4c) \equiv 0\)</span>, so <span class="math inline">\(c(0,2,2) \in \Lambda_x\)</span>, and <span class="math inline">\(2c \not\equiv 0 \bmod 4c\)</span>). Dependencies: this Theorem H, the flux identity, Lemma A, Theorem P (curl note); none re-derived here.</p>
+<h2 id="f3-the-thin-members">3. F3: the thin members</h2>
+<p><strong>Theorem M′ at extent 2 (solver, type model, <code>h483</code>).</strong> For each of (2,2,2), (2,2,6), (2,4,6), each axis <span class="math inline">\(k\)</span> and each sublattice <span class="math inline">\(S\)</span>: ‘(T2), <span class="math inline">\(S\)</span> has no vertex of type <span class="math inline">\(k\)</span>, <span class="math inline">\(S&#39;\)</span> has one, some hexagon odd’ is <strong>UNSAT</strong> (18 of 18, at most 1.8 s each). Controls, both <strong>SAT</strong> in all 18 cases: the same without ‘odd’, and ‘(T2), odd, <span class="math inline">\(S\)</span> and <span class="math inline">\(S&#39;\)</span> both have type <span class="math inline">\(k\)</span>’. So M′ holds on these cells in the type model (which has no signs and is weaker than the ice rule, so this is stronger than M′ needs).</p>
+<p><strong>Reading of the note’s results used on a thin member.</strong> The proof above uses from the note Lemma 3 (through Theorem U and Theorem 17), Lemma 4, Theorem M′, Theorems 17 and 19. Lemma 1, Theorems 3 to 8 are not used, so I did not read them for extent 2.</p>
+<ul>
+<li>Lemma 3 (and Lemma 2): statements about one cage (one hexagon). At extent 2 along <span class="math inline">\(k\)</span> the methylenes <span class="math inline">\(O \pm 2e_k\)</span> are distinct (they differ by 4 modulo 8), so the cage embeds; in any case the identity holds on the lattice and a torus state lifts to a periodic lattice state, so it holds at every extent.</li>
+<li>Lemma 4: no geometry.</li>
+<li>Theorem 17: its proof is character by character and uses no size condition; scomp checked the dimension formula exactly on (2,2,2), (2,2,4), (2,4,6), and every sampled odd state of the thin members here satisfies the consequences L1, L2 exactly.</li>
+<li>Theorem 19: averaging along a line of length 2 visits each of the two chains of a family in the pair of planes once (the step <span class="math inline">\(4\)</span> in <span class="math inline">\(y\)</span> changes <span class="math inline">\(y - z\)</span> by 4, exchanging the classes mod 8), so the argument holds.</li>
+<li>L1 at extent 2 along <span class="math inline">\(k\)</span>: the period 8 is then trivial, and the argument given in §2.3 for lines of two vertices applies.</li>
+<li>Theorem P of twochain on thin members: check8’s item (b) confirms it (planes <span class="math inline">\(\equiv 2 \bmod 4\)</span> exist along every axis, A-planes 0, 4 and 2, 6 are distinct).</li>
+</ul>
+<p>Nothing found fails at extent 2.</p>
+<h2 id="computations">4. Computations</h2>
+<p>From <code>scratch_h</code>, <code>.venv/bin/python</code>, <code>PYTHONPATH=&lt;repo&gt;:&lt;repo&gt;/experiments/08_frozen_structure</code>, <code>TMPDIR=&lt;repo&gt;/.tmp</code>. Every SAT query through <code>h32_cap.run_batch</code>, cap ≤ 280 s per batch. Scripts: <code>h480_lib.py</code> (profiles, slack, signs, patterns), <code>h481_census.py</code> (first census), <code>h482_sample.py</code> (odd sampling; optional type constraint ‘every k-line of S alternates’), <code>h483_query.py</code> (tests of candidate lemmas), <code>h484_classes.py</code> (symbolic table of L7), <code>h485_verify.py</code> (exact checks of U, L1, L2, L3, L4, M′, S2, S3 and the census).</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>command</th>
+<th>what it tested</th>
+<th>verdict</th>
+<th>wall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h481_census.py C</code> for (2,2,2), (2,2,4), (2,4,6), (4,6,10)</td>
+<td>first census on saved states</td>
+<td>twochain’s D4 pattern; A and B same slack in all three-type states</td>
+<td>≤ 1.3 s each</td>
+</tr>
+<tr>
+<td><code>h482_sample.py 2,2,2 halfAz 5 60 1</code>, <code>2,4,6 …</code></td>
+<td>pre-flight, constrained sampling</td>
+<td>4 and 4 states</td>
+<td>0.2 s solver each</td>
+</tr>
+<tr>
+<td><code>h482_sample.py C halfAz 80 120 2</code>, C = (2,2,2), (2,4,6), (2,2,6)</td>
+<td>case-(ii)_z states (a condition on types only)</td>
+<td>50, 64, 54 distinct</td>
+<td>0.9, 1.1, 0.6 s</td>
+</tr>
+<tr>
+<td><code>h483_query.py 2,2,2 60 …</code> (5 specs)</td>
+<td>first test of the mixed case</td>
+<td>halfAz+halfBz+three SAT; halfAz+halfBx+three UNSAT (with and without sign field and odd); halfAz+halfBx SAT</td>
+<td>0.1–0.3 s each</td>
+</tr>
+<tr>
+<td><code>h483_query.py C 120 …</code> (8 specs), C = (2,2,2), (2,2,4), (2,4,6)</td>
+<td>all mixed pairs, equal pairs as controls</td>
+<td>4 mixed UNSAT, 2 equal SAT, one-sided ‘three’ UNSAT, on each cell</td>
+<td>≤ 0.4 s each</td>
+</tr>
+<tr>
+<td><code>h483_query.py C 120 T+halfAz+halfBx+hasAy / +hasAx / (none)</code>, five cells incl. (4,2,6), (6,4,2)</td>
+<td>L7 as stated, with controls</td>
+<td>UNSAT / SAT / SAT on all five</td>
+<td>≤ 0.3 s each</td>
+</tr>
+<tr>
+<td><code>h484_classes.py</code></td>
+<td>the class table of L7, all 4 B classes × 3 pairs</td>
+<td>every group <span class="math inline">\(\pm(e_i - e_j)\)</span>: True</td>
+<td>&lt; 1 s</td>
+</tr>
+<tr>
+<td><code>h482_sample.py 2,6,10 odd 3 120 1</code>, <code>2,2,6 odd 3 60 1</code></td>
+<td>pre-flight</td>
+<td>4, 3 states</td>
+<td>1.6, 0.2 s</td>
+</tr>
+<tr>
+<td><code>h482_sample.py 2,2,6 odd 150 200 2</code></td>
+<td>unconstrained odd states</td>
+<td>143 distinct</td>
+<td>2.2 s</td>
+</tr>
+<tr>
+<td><code>h482_sample.py 2,6,10 odd 120 280 2</code></td>
+<td>unconstrained odd states</td>
+<td>115 distinct (118 SAT, 3 UNSAT under random assumptions)</td>
+<td>176.8 s</td>
+</tr>
+<tr>
+<td><code>h485_verify.py C</code> for six cells; <code>--neg</code> on (2,4,6)</td>
+<td>exact checks and census (§1)</td>
+<td>0 failures on 526 states; negative control fails 62/88</td>
+<td>≤ 2 s each</td>
+</tr>
+<tr>
+<td><code>h485_verify.py C --cons=halfAz</code>, three cells</td>
+<td>the same on 171 constrained states</td>
+<td>0 failures; 109 three-type states, all (ii)z/(ii)z, all OOO</td>
+<td>≤ 1 s each</td>
+</tr>
+<tr>
+<td><code>h483_query.py C 120 T+halfBz+threeA+threeB(+sign+odd)+nothalfAz</code> and controls, C = (2,2,2), (2,2,6), (2,4,6)</td>
+<td>case equality at type level (item 11)</td>
+<td>UNSAT with and without signs and odd; controls ‘without nothalfAz’ and ‘nothalfAz+three’ SAT</td>
+<td>≤ 0.7 s each</td>
+</tr>
+<tr>
+<td><code>h483_query.py C 120 …</code> M′ block, C = (2,2,2), (2,2,6), (2,4,6)</td>
+<td>F3: M′, 3 axes × 2 sublattices, two controls each</td>
+<td>18 UNSAT, 36 SAT</td>
+<td>≤ 1.8 s each</td>
+</tr>
+<tr>
+<td><code>h482_sample.py 4,6,10 odd 3 120 1</code></td>
+<td>pre-flight</td>
+<td>4 states</td>
+<td>4.1 s</td>
+</tr>
+<tr>
+<td><code>h482_sample.py 4,6,10 odd 100 280 2</code></td>
+<td>unconstrained odd states</td>
+<td>25 SAT, <strong>76 no verdict</strong> (batch cap hit at 280 s)</td>
+<td>280 s</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-failed-and-why">5. What failed, and why</h2>
+<ol type="1">
+<li><strong>Line fractions alone do not exclude the mixed case (ii).</strong> My first attempt at A (ii)_z with B (ii)_x used only the signed fractions (B). It forces <span class="math inline">\(U_-\)</span> constant and <span class="math inline">\(D \equiv 0\)</span> and the sign of <span class="math inline">\(x\)</span> on A to be constant along runs, but it leaves a consistent-looking configuration in which <span class="math inline">\(Z_x\)</span>, <span class="math inline">\(Z_y\)</span> alternate and all three axes are two-way at the level of line averages. The contradiction comes from the types (L7), found after the solver showed that the mixed case is UNSAT already in the type model. In that first attempt I also wrote that the runs of <span class="math inline">\(Z_y\)</span> must have even length; the correct consequence of the sign relations is only that <span class="math inline">\(|Z_y|\)</span> is even. Neither statement is used.</li>
+<li><strong>A type-only proof of case equality is not in hand.</strong> The solver says that the case of B forces the case of A already in the type model (item 11); my proof of the part involving a case (i) uses the signs (L5b). A type-only proof would remove Theorems 17 and 19 from that step, but not from L1, L3, L4.</li>
+<li><strong>D4 in its literal form is not proved in case (ii).</strong> There twochain’s statement names the axes of the two constant profiles; S names the alternating axis. All three are one-way in every sampled case-(ii) state, but I have no argument for the other two.</li>
+<li><strong>Sampling on (4,6,10) is slow</strong>: after a pre-flight of 4 queries in 4 s, the batch of 101 queries hit its 280 s cap with 76 unanswered (no verdict), leaving 41 states with a sign field on that cell, 11 with three types. The (2,6,10) batch took 177 s against about 60 s projected from its pre-flight. Neither was near ten minutes.</li>
+</ol>
+<h2 id="rules">6. Rules</h2>
+<ul>
+<li><strong>Broken once: <code>python -</code> with empty stdin.</strong> One Bash call ran <code>.venv/bin/python -</code> with nothing on stdin (a slip while editing); it did nothing and read no input.</li>
+<li>One solver process at a time: the two background sampling batches ran alone; only the non-solver analysis <code>h485_verify.py</code> on (2,2,2) ran while the (2,2,6)/(2,6,10) batch was in the background.</li>
+<li>Pre-flight: done for every sampling batch (see §5.4 for two underestimates); no command exceeded ten minutes.</li>
+<li>No heredocs; nothing written to /tmp (states, logs in <code>&lt;repo&gt;/.tmp</code>; the harness’s own background-task logs went to its directory). No existing file was modified; I edited only my own new scripts. Git not touched. Scripts and report of agent cubethree (h500–h529) not read or run.</li>
+<li>Theorem H, ‘odd and all six directions’, or anything equivalent was <strong>not</strong> run. The sampling selectors are ‘some hexagon odd’, plus, for the constrained samples, a condition on types only (‘every z-line of A alternates’). The lemma tests (L7, case equality, M′) contain no condition on signs or directions.</li>
+</ul>
+</main>
+</body>
+</html>

@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Theorem 9's method applied to the box lemma R_b: the integral family, the branch certificates, and why no closed form in the branches</title>
+<meta name="description" content="Theorem 9's method applied to the box lemma R_b: the integral family, the branch certificates, and why no closed form in the branches">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Theorem 9's method applied to the box lemma R_b: the integral family, the branch certificates, and why no closed form in the branches",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-10-01-opus-rbox.html",
+ "datePublished": "2026-10-01",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus), agent rbox, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-10-01-opus-rbox.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/closed-r-then-monodromy.html">closed-r-then-monodromy</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Theorem 9’s method applied to the box lemma R_b: the integral family, the branch certificates, and why no closed form in the branches</h1>
+
+<p class="author">Claude (Opus), agent rbox, for Lyndon Drake</p>
+<p class="date">2026-10-01</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#verdict" id="toc-verdict">Verdict</a></li>
+<li><a href="#statement-tested" id="toc-statement-tested">Statement tested</a></li>
+<li><a href="#t1.-the-lp-and-the-integral-family" id="toc-t1.-the-lp-and-the-integral-family">T1. The LP and the integral family</a></li>
+<li><a href="#t2.-branches-and-canonical-certificates-computed-exact" id="toc-t2.-branches-and-canonical-certificates-computed-exact">T2. Branches and canonical certificates (computed, exact)</a></li>
+<li><a href="#t3.-tabulation-across-b-computed-h688" id="toc-t3.-tabulation-across-b-computed-h688">T3. Tabulation across b (computed; h688)</a></li>
+<li><a href="#what-is-left-and-a-stop-rule" id="toc-what-is-left-and-a-stop-rule">What is left and a stop rule</a></li>
+<li><a href="#scripts-and-timings" id="toc-scripts-and-timings">Scripts and timings</a></li>
+<li><a href="#rules-kept-or-broken" id="toc-rules-kept-or-broken">Rules kept or broken</a></li>
+</ul>
+</details></nav>
+<h1 id="verdict">Verdict</h1>
+<p><strong>FAMILY GROWS</strong> (computed for b = 3, 4, 5; not decided for b &gt;= 6, see T1.4). Every integral family that closes the LP of the box at one value of b that I found fails at the next: the 3-vertex family that closes b = 3 leaves 2 feasible branches at b = 4, the 7-vertex family that closes b = 4 leaves 10 at b = 5, and the 24-vertex set that closes b = 5 is MILP-feasible at b = 6 and b = 7. The smallest L1 ball of integral vertices about the next hole O_1 = (6,0,0) that closes the LP has radius 4, 5, 6 for b = 3, 4, 5, but radius 6 still suffices at b = 6, so growth beyond b = 5 is not established. Holding the family fixed (the 7-vertex family, which closes both b = 3 and b = 4), the branch certificates split cleanly into two kinds: <strong>local</strong> certificates (support 4 to 40 rows), identical row for row at b = 3 and b = 4, and <strong>global</strong> certificates whose support takes every y-value of the closed circle and whose support, L1 norm and number of distinct multiplier values grow with b (the all-x branch: 118 rows, L1 199, 22 values at b = 3; 283 rows, L1 1367/2, 58 values at b = 4). No rule uniform in b is visible in the global ones. A closed form, if there is one, has to be sought in sums over the closed y-lines (the parameter that grows), not in branch certificates on a fixed integral family.</p>
+<h1 id="statement-tested">Statement tested</h1>
+<p>Exactly h633’s box lemma, type model (h360_lib), cell (a, b, c), O = (2,0,0). Variables X, Y, Z &gt;= 0 at every vertex lying on a box hexagon (vertices on no box hexagon carry only their own one-hot row, which is always satisfiable, so they are dropped). Equality rows:</p>
+<ul>
+<li>one-hot X + Y + Z = 1 at each such vertex;</li>
+<li>(T2) linear: the sum of the six matching indicators equals 2, on every hexagon all six of whose vertices have -3 &lt;= x - 2 &lt;= 2b+1 and |z| &lt;= 2b-1 (y unrestricted, the y-circle of length 4b closed);</li>
+<li>the four literals X(v_0) = X(v_1) = 1, Y(beta) = 1, Y(gamma’) = 0 with v_0 = (0,0,0), v_1 = (4,0,0), beta = (1,1,1), gamma’ = (3,-1,1);</li>
+<li>the negated conclusion X(v_2) = 0, v_2 = (8,0,0);</li>
+<li>on a branch, rows t(u,k) = 1 (“u has type k”) for the family vertices.</li>
+</ul>
+<p>Cells (12,3,8), (12,4,8), (12,5,6), (12,6,8), (12,7,8): the box does not wrap (4a &gt; 2b+5, 4c &gt; 4b-1). Positions below are <strong>relative to O</strong> (absolute = relative + (2,0,0)) unless marked absolute.</p>
+<p><strong>Symmetry group</strong> (proved by inspection). The lattice symmetries that fix O, the x-axis and its direction, and the box are the identity, the C2 rotation (x,y,z) -&gt; (x,-y,-z) about the rod axis, and the two mirrors exchanging y and z (which exchange types y and z). The mirrors move Y(beta) = 1 to a Z literal; C2 maps the hypothesis pair {beta, gamma’} to the other pair {beta’ = (1,-1,-1), gamma = (3,1,-1)} (cubethree’s “by symmetry”). So the symmetry group of the hypothesis set is <strong>trivial</strong>, and no symmetry was imposed on the duals. Explored: with X(v_2) = 0 the LP itself forces Y(beta’) = 1 and Y(gamma) = 0 (h684 maxima), so the LP closure of the hypotheses is C2-symmetric; I did not exploit this.</p>
+<h1 id="t1.-the-lp-and-the-integral-family">T1. The LP and the integral family</h1>
+<p><strong>T1.1 R has no linear content in the box (computed, HiGHS, controls).</strong></p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>b</th>
+<th>cell</th>
+<th>hexagons</th>
+<th>vertices</th>
+<th>rows</th>
+<th>LP with X(v_2) = 0</th>
+<th>X(v_2) range, literals only</th>
+<th>control, no literals</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>(12,3,8)</td>
+<td>192</td>
+<td>171</td>
+<td>368</td>
+<td>feasible</td>
+<td>[0, 1]</td>
+<td>feasible</td>
+</tr>
+<tr>
+<td>4</td>
+<td>(12,4,8)</td>
+<td>480</td>
+<td>376</td>
+<td>861</td>
+<td>feasible</td>
+<td>[0, 1]</td>
+<td>feasible</td>
+</tr>
+<tr>
+<td>5</td>
+<td>(12,5,6)</td>
+<td>960</td>
+<td>695</td>
+<td>1660</td>
+<td>feasible</td>
+<td>[0, 1]</td>
+<td>feasible</td>
+</tr>
+<tr>
+<td>6</td>
+<td>(12,6,8)</td>
+<td>1680</td>
+<td>1152</td>
+<td>2837</td>
+<td>feasible</td>
+<td>[0, 1]</td>
+<td>feasible</td>
+</tr>
+</tbody>
+</table>
+<p>One LP takes 0.6 to 2.2 s in a child process (mostly start-up), so the pre-flight put every T1 sweep under a minute; the MILPs were the cost.</p>
+<p><strong>T1.2 The A x-line through O + 2e_y does not close the box (computed).</strong> Restricted to the box it has 2, 3, 3 vertices at b = 3, 4, 5 (relative (4n, 2, 0), 4n in [-3, 2b+1], so about b/2 of them). Branching on X only: 3 of 4, 6 of 8 and 7 of 8 branches stay feasible; the line through O - 2e_y at b = 4: 6 of 8. Cubethree’s sufficiency of this line was on the torus (6,3,3), where the line closes round the x-circle; in the box it is cut and does not suffice. I did not try full type patterns on it, because (T1.3) found thinner families nearer the rod.</p>
+<p><strong>T1.3 Irreducible families by MILP deletion (computed, floating MILP; h686).</strong> All types integral is infeasible (the SAT statement). Deleting vertices from the integral set, farthest from relative (4,0,0) first, by whole L1 shells and then singly, keeping a vertex when the MILP becomes feasible or does not finish in its time limit:</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>b</th>
+<th>start set</th>
+<th>irreducible family (relative)</th>
+<th>size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>whole box</td>
+<td>(3,-1,-1), (4,0,-2), (4,0,2) [vertex-by-vertex order, h686 default]</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>whole box</td>
+<td>(4,0,-2), (4,0,2), (4,2,0), (5,-1,1), (5,1,-1) [shell order]</td>
+<td>5</td>
+</tr>
+<tr>
+<td>4</td>
+<td>L1 ball radius 6 about (4,0,0), 59 vertices</td>
+<td>(4,0,+-2), (4,2,0), (5,-1,-3), (5,-1,1), (5,1,-1), (5,1,3)</td>
+<td>7</td>
+</tr>
+<tr>
+<td>5</td>
+<td>ball radius 6, 60 vertices</td>
+<td>not finished (280 s cap): 24 vertices left, still reducible</td>
+<td>&lt;= 24</td>
+</tr>
+</tbody>
+</table>
+<p>The b = 3 families sit on the cage of O_1 = relative (4,0,0): its methylenes (4,0,+-2), (4,2,0), its lower bridgehead (3,-1,-1) (absolute (5,-1,-1) = v_1 + d_1) and its upper bridgeheads (5,+-1,-+1). At b = 4 two more vertices of the same B x-chains of step (0,2,2) in the plane x = 5 appear, (5,-1,-3) and (5,1,3). The b = 5 set (partial) is the 24 vertices (1,+-1,-+1), (2,0,0), (3,-3,1), (3,-1,-1), (3,-1,3), (3,1,-3), (3,1,1), (3,3,-1), (4,+-2,0), (4,0,+-2), (5,-3,-1), (5,-1,-3), (5,-1,1), (5,1,-1), (5,1,3), (5,3,1), (6,0,0), (7,+-1,+-1) (same signs), (8,0,+-2).</p>
+<p><strong>T1.4 Does a fixed family survive the next b? (computed; h685 LP trees, h686 MILP).</strong></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>family</th>
+<th>closes at</th>
+<th>at the next b</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3-vertex (b = 3)</td>
+<td>b = 3: 25 LP nodes, 17 infeasible leaves</td>
+<td>b = 4: 2 feasible branches of 15 leaves</td>
+</tr>
+<tr>
+<td>7-vertex (b = 4)</td>
+<td>b = 3 (19 leaves), b = 4 (51 leaves)</td>
+<td>b = 5: 10 feasible branches of 83 leaves; adding (5,-3,-5), (5,3,5) still 10</td>
+</tr>
+<tr>
+<td>24-vertex (b = 5)</td>
+<td>b = 5 (MILP infeasible, 9 s)</td>
+<td>b = 6: MILP feasible (9 s); b = 7: MILP feasible (28 s)</td>
+</tr>
+</tbody>
+</table>
+<p>Least L1 radius r about relative (4,0,0) such that integrality of every vertex within r closes the LP (single MILPs, h686 <code>--startonly</code>):</p>
+<table>
+<thead>
+<tr>
+<th>b</th>
+<th>r = 2</th>
+<th>r = 4</th>
+<th>r = 5</th>
+<th>r = 6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>feasible (6 vertices)</td>
+<td><strong>infeasible</strong> (10)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td>feasible (10)</td>
+<td><strong>infeasible</strong> (22)</td>
+<td>infeasible (59)</td>
+</tr>
+<tr>
+<td>5</td>
+<td></td>
+<td>feasible (10)</td>
+<td>feasible (22)</td>
+<td><strong>infeasible</strong> (60)</td>
+</tr>
+<tr>
+<td>6</td>
+<td></td>
+<td></td>
+<td>feasible (22)</td>
+<td><strong>infeasible</strong> (60)</td>
+</tr>
+<tr>
+<td>7</td>
+<td></td>
+<td></td>
+<td></td>
+<td>not decided (MILP over 90 s cap)</td>
+</tr>
+</tbody>
+</table>
+<p>So the needed radius goes 4, 5, 6 for b = 3, 4, 5 and <strong>stays 6 at b = 6</strong>. That is the one datum against unbounded growth, and I could not decide b = 7 within the cap. The branch count on a fixed family also grows (7-vertex family: 19 leaves at b = 3, 51 at b = 4). The verdict FAMILY GROWS rests on b = 3 to 5 and on every concrete family failing at the next b; it is not established for all b.</p>
+<h1 id="t2.-branches-and-canonical-certificates-computed-exact">T2. Branches and canonical certificates (computed, exact)</h1>
+<p>For each branch: least-L1 Farkas vector y (A^T y &gt;= 0, b.y = -1) by HiGHS in a child process, rationalised (least denominator in a ladder 1, 2, 3, 4, 6, …, 10^6) and <strong>verified exactly in Fractions</strong>; the control is the same branch without X(v_2) = 0. All branches were certified; no rationalisation failed; no branch was feasible for the families named.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr>
+<th>run</th>
+<th>b</th>
+<th>family</th>
+<th>leaves</th>
+<th>exact</th>
+<th>max support</th>
+<th>max L1</th>
+<th>den</th>
+<th>control feasible / infeasible</th>
+<th>file (sha256)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F3</td>
+<td>3</td>
+<td>3-vertex</td>
+<td>17</td>
+<td>17</td>
+<td>163</td>
+<td>678</td>
+<td>&lt;= 8</td>
+<td>8 / 9</td>
+<td><code>certs/h683_b3_1238_F3.json</code> (357c38683f790dbe05dfe69de6c93544a2280acdd1678989e1b7bead40581e9f)</td>
+</tr>
+<tr>
+<td>F7</td>
+<td>3</td>
+<td>7-vertex</td>
+<td>19</td>
+<td>19</td>
+<td>160</td>
+<td>866</td>
+<td>&lt;= 4</td>
+<td>6 / 13</td>
+<td><code>certs/h683_F7_12,3,8.json</code> (99de27fc069bc218f209aefeb410a2f291e4c5df152443a02a11a48c9f5eb5b6)</td>
+</tr>
+<tr>
+<td>F7</td>
+<td>4</td>
+<td>7-vertex</td>
+<td>51</td>
+<td>51</td>
+<td>413</td>
+<td>11022/5</td>
+<td>&lt;= 24</td>
+<td>11 / 40</td>
+<td><code>certs/h683_F7_12,4,8.json</code> (10f9deea6bf57ca17b3f9543efc2fe70391f94a5559dd45392a9f7c269427e81)</td>
+</tr>
+</tbody>
+</table>
+<p>A branch whose control is infeasible is excluded by the hypotheses alone (its certificate does not use X(v_2) = 0); those with a feasible control use the negated conclusion. The JSON files hold, per branch, every support row with its multiplier and label (kind; vertex or hexagon hole relative to O and sigma) and the columns with positive reduced value.</p>
+<p>Rows by kind: every certificate uses only one-hot, (T2), literal, negation and branch rows (there are no bound rows: the variables are non-negative and the positive reduced columns play the role of the r_j of Theorem 9). Typical global certificate (F7, b = 4, branch all three methylenes of type x): 130 one-hot, 145 (T2), 4 literals, 1 negation, 3 fixings; 85 positive reduced columns.</p>
+<p><strong>Uniqueness of the canonical form: not checked.</strong> Least L1 need not be unique; I added no secondary tie-break. The local certificates agree exactly between two independent LPs (b = 3 and b = 4), which is weak evidence of uniqueness for them; for the global ones it is open.</p>
+<h1 id="t3.-tabulation-across-b-computed-h688">T3. Tabulation across b (computed; h688)</h1>
+<p>The 15 branches common to the 7-vertex family at b = 3 and b = 4:</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr>
+<th>branch (relative)</th>
+<th>supp b=3</th>
+<th>L1 b=3</th>
+<th>supp b=4</th>
+<th>L1 b=4</th>
+<th>identical</th>
+<th>values 3/4</th>
+<th>extent b=3</th>
+<th>extent b=4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(4,0,-2)=z (4,0,2)=y (4,2,0)=y</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>yes</td>
+<td>2/2</td>
+<td>one hexagon</td>
+<td>same</td>
+</tr>
+<tr>
+<td>(4,0,-2)=y (4,0,2)=z (4,2,0)=y</td>
+<td>11</td>
+<td>7</td>
+<td>11</td>
+<td>7</td>
+<td>yes</td>
+<td>3/3</td>
+<td>x[3,5] |z|&lt;=1</td>
+<td>same</td>
+</tr>
+<tr>
+<td>(4,0,-2)=z (4,0,2)=z</td>
+<td>11</td>
+<td>7</td>
+<td>11</td>
+<td>7</td>
+<td>yes</td>
+<td>3/3</td>
+<td>x[3,5] |z|&lt;=1</td>
+<td>same</td>
+</tr>
+<tr>
+<td>(4,0,-2)=y (4,0,2)=z (4,2,0)=x (5,-1,-3)=z</td>
+<td>19</td>
+<td>19/2</td>
+<td>19</td>
+<td>19/2</td>
+<td>yes</td>
+<td>6/6</td>
+<td>x[3,6] |z|&lt;=2</td>
+<td>same</td>
+</tr>
+<tr>
+<td>(4,0,-2)=y (4,0,2)=z (4,2,0)=z</td>
+<td>22</td>
+<td>14</td>
+<td>22</td>
+<td>14</td>
+<td>yes</td>
+<td>4/4</td>
+<td>x[-1,4] |z|&lt;=2</td>
+<td>same</td>
+</tr>
+<tr>
+<td>(4,0,-2)=z (4,0,2)=y (4,2,0)=z</td>
+<td>22</td>
+<td>14</td>
+<td>22</td>
+<td>14</td>
+<td>yes</td>
+<td>4/4</td>
+<td>x[-1,4] |z|&lt;=2</td>
+<td>same</td>
+</tr>
+<tr>
+<td>(4,0,-2)=y (4,0,2)=y</td>
+<td>34</td>
+<td>24</td>
+<td>34</td>
+<td>24</td>
+<td>yes</td>
+<td>6/6</td>
+<td>x[-1,5] |z|&lt;=2</td>
+<td>same</td>
+</tr>
+<tr>
+<td>(4,0,-2)=z (4,0,2)=y (4,2,0)=x (5,-1,-3)=y</td>
+<td>38</td>
+<td>29</td>
+<td>38</td>
+<td>29</td>
+<td>yes</td>
+<td>6/6</td>
+<td>x[-1,5] |z|&lt;=3</td>
+<td>same</td>
+</tr>
+<tr>
+<td>(4,0,-2)=x (4,0,2)=x (4,2,0)=z</td>
+<td>40</td>
+<td>47</td>
+<td>40</td>
+<td>47</td>
+<td>yes</td>
+<td>9/9</td>
+<td>x[-1,5] |z|&lt;=2</td>
+<td>same</td>
+</tr>
+<tr>
+<td>(4,0,-2)=z (4,0,2)=y (4,2,0)=x (5,-1,-3)=x</td>
+<td>102</td>
+<td>151</td>
+<td>43</td>
+<td>33</td>
+<td>no</td>
+<td>29/8</td>
+<td>all 12 y</td>
+<td>6 y</td>
+</tr>
+<tr>
+<td>(4,0,-2)=y (4,0,2)=z (4,2,0)=x (5,-1,-3)=x</td>
+<td>103</td>
+<td>137</td>
+<td>212</td>
+<td>227</td>
+<td>no</td>
+<td>16/33</td>
+<td>all 12 y</td>
+<td>all 16 y</td>
+</tr>
+<tr>
+<td>(4,0,-2)=x (4,0,2)=x (4,2,0)=y</td>
+<td>116</td>
+<td>211</td>
+<td>268</td>
+<td>761</td>
+<td>no</td>
+<td>21/44</td>
+<td>all 12 y</td>
+<td>all 16 y</td>
+</tr>
+<tr>
+<td>(4,0,-2)=x (4,0,2)=x (4,2,0)=x</td>
+<td>118</td>
+<td>199</td>
+<td>283</td>
+<td>1367/2</td>
+<td>no</td>
+<td>22/58</td>
+<td>all 12 y</td>
+<td>all 16 y</td>
+</tr>
+<tr>
+<td>(4,0,-2)=x (4,0,2)=z</td>
+<td>152</td>
+<td>381</td>
+<td>413</td>
+<td>9339/5</td>
+<td>no</td>
+<td>29/98</td>
+<td>all 12 y</td>
+<td>all 16 y</td>
+</tr>
+<tr>
+<td>(4,0,-2)=z (4,0,2)=x</td>
+<td>153</td>
+<td>429</td>
+<td>413</td>
+<td>11022/5</td>
+<td>no</td>
+<td>30/99</td>
+<td>all 12 y</td>
+<td>all 16 y</td>
+</tr>
+</tbody>
+</table>
+<p>“all 12 y / all 16 y”: the hexagon holes and one-hot vertices of the support take every y-value of the circle (4b values). The 36 branches that exist only at b = 4 split the same way: 19 with support 4 to 23, 17 with support 114 to 375.</p>
+<p>What I read from this (explored):</p>
+<ol type="1">
+<li><strong>The local certificates are b-independent lemmas.</strong> Nine branches have the same certificate, row for row and multiplier for multiplier, at b = 3 and b = 4, inside x in [-1, 6] and |z| &lt;= 3, multipliers in {+-1/2, +-1, +-2, …} with at most 9 distinct values. Example (F7, both b, branch (4,0,+-2) = x, (4,2,0) = z; 40 rows): (T2) at the hexagons of hole (0,0,0) with multipliers 3, 1, 2 for sigma = (-1,-1,1), (-1,1,-1), (1,-1,-1), of hole (4,0,0) with -1, -1 for (1,-1,-1), (1,1,1), of holes (2,+-2,0) with +-1/2 on all four sigma; literals -4 X(v_0), -2 X(v_1), -4 Y(beta), +2 Y(gamma’), +2 for X(v_2) = 0; one-hot -5/2 at (1,-1,1), -2 at (-1,-1,-1), -1 at (0,+-2,0), -1/2 at (1,-3,-1), (1,1,-1), (1,3,1), +1/2 at (3,-1,-1), (3,-3,1), (3,1,1), (3,3,-1), +1 at (4,+-2,0), (4,0,+-2), (5,-1,1), (5,1,-1). These are finite statements about the cages of O and O_1 and need no closed form.</li>
+<li><strong>The global certificates are where R lives</strong>, and they are the ones that use the whole circle. Their support grows by about a factor 2.4 from b = 3 to b = 4 (118 to 283 rows for the all-x branch, about a third of the box’s rows in each case), their L1 norm by 3.4 to 5.8, their distinct multiplier values by 2 to 3.3, and their denominators from 2 to 24. No multiplier pattern repeats between b = 3 and b = 4, and I did not find a rule tying a multiplier to its position relative to O, the rod line or the box edges.</li>
+<li>So the analogue of Theorem 9’s four rules was not found, and the identity step of T3 was not reached: there was no rule to verify by formula.</li>
+</ol>
+<h1 id="what-is-left-and-a-stop-rule">What is left and a stop rule</h1>
+<ol type="1">
+<li><strong>Do not</strong> repeat: the A x-lines through O +- 2e_y in the box (fail); least-L1 branch certificates on a fixed vertex family (the global ones do not stabilise in b); MILP deletion over the whole box at b &gt;= 5 (individual MILPs exceed 5 s and the filter does not finish in 10 minutes).</li>
+<li><strong>The one open datum that could reverse the verdict:</strong> whether the integral ball of radius 6 about O_1 closes the LP at b = 7 and b = 8 (the MILP did not finish in 90 s at b = 7). If it does, a bounded family exists (at most 60 vertices, which is still too many branches to tabulate by hand, so the practical conclusion would not change much). One run of at most 10 minutes per b, then stop.</li>
+<li><strong>Where a closed form should be sought instead.</strong> Every global certificate spans the full y-circle; this agrees with rodline’s reading (sums of P^y over closed y-lines of holes, whose methylene terms telescope, as in the proof of Theorem 5). The thing to tabulate is the certificate projected onto closed y-lines: for each (x, z) the sum of multipliers of the rows on the y-line of holes or vertices at (x, z). If those line sums are uniform in b while the in-line distribution is not (least L1 spreads mass arbitrarily along a line whose rows are translates of one another), the closed form exists in the line sums. That is a computation on the existing JSON files (no new solving), and it is the next step if anyone continues; stop if the projected sums of the all-x branch differ between b = 3 and b = 4 beyond translation.</li>
+<li>The C2 symmetry of the LP closure (T2 note) could be imposed after adding Y(beta’) = 1 and Y(gamma) = 0 as derived rows; it would halve the search but not change the growth.</li>
+</ol>
+<h1 id="scripts-and-timings">Scripts and timings</h1>
+<p>All new, in <code>experiments/08_frozen_structure/scratch_h/</code>; no existing script modified; nothing committed. Every LP and MILP ran in a child process with a hard <code>subprocess.run</code> timeout, one at a time.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>script</th>
+<th>purpose</th>
+<th>wall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h680_rbox_lib.py</code></td>
+<td>box exactly as h633; LP rows; primal and least-L1 Farkas in a child; rationalise; exact verify</td>
+<td>library</td>
+</tr>
+<tr>
+<td><code>h681_rbox_t1.py</code></td>
+<td>T1.1 and T1.2: LP feasibility, X(v_2) range, control, X patterns on a line family</td>
+<td>about 75 s in all</td>
+</tr>
+<tr>
+<td><code>h682_rbox_batch.py</code></td>
+<td>batched branch LPs and MILPs in one child (highspy): maxall, split, tree, milpdel, milpshell, grow</td>
+<td>engine</td>
+</tr>
+<tr>
+<td><code>h684_rbox_single.py</code></td>
+<td>per-variable LP maxima under the negation (single-vertex closers: none at b = 3)</td>
+<td>3.4 s</td>
+</tr>
+<tr>
+<td><code>h685_rbox_tree.py</code></td>
+<td>case-split trees on a family (T1.4)</td>
+<td>0.4 to 25 s each, 1 run killed at 300 s (see below)</td>
+</tr>
+<tr>
+<td><code>h686_rbox_milpdel.py</code></td>
+<td>MILP deletion filters and region tests (T1.3, T1.4)</td>
+<td>88 s (b=3), 580 s cap (b=4 whole box, partial), 7 s, 56 s, 37 s, 2 x 280 s cap (b=5, partial), 9 short region MILPs about 160 s</td>
+</tr>
+<tr>
+<td><code>h687_rbox_grow.py</code></td>
+<td>greedy family growth (abandoned: it adds LP-forced vertices)</td>
+<td>31 s</td>
+</tr>
+<tr>
+<td><code>h683_rbox_cert.py</code></td>
+<td>T2: exact canonical certificates per branch, JSON to <code>certs/</code></td>
+<td>64 s, 69 s, 198 s</td>
+</tr>
+<tr>
+<td><code>h688_rbox_compare.py</code></td>
+<td>T3: cross-b comparison of certificates (no solving)</td>
+<td>&lt; 1 s</td>
+</tr>
+</tbody>
+</table>
+<p>Solver and LP wall time in all: about 38 minutes of the 90 allowed. One LP-tree run hung (highspy re-solving after bound changes at b = 4) and was killed at its 300 s cap; fixed by <code>clearSolver()</code> before each re-solve, and I checked outside the sandbox (<code>pgrep</code>) that no child was left running. The second b = 5 deletion run (radius 8) repeated the first to no purpose (280 s).</p>
+<h1 id="rules-kept-or-broken">Rules kept or broken</h1>
+<p>Kept: read the handover block, the rodline report, the cubethree sections, the note’s sections on Theorem 9 and Theorem U, and the scripts named, before running anything; reused h633’s box and h360_lib’s hexagons exactly; pre-flight timed (one LP at b = 3, 0.6 to 4 s in a child); Mac only, no Sparks, no expq; one solver child at a time; every LP or MILP in a child with a hard timeout; no job over ten minutes; scripts numbered h680 to h688 with the required docstring and usage line; every reported certificate rationalised and verified exactly with its control recorded; no reach measurements, no (V) on any window; no commits; report under 400 lines, status tags on claims.</p>
+<p>Bent: the h686 MILP runs at b = 4 (whole box) and b = 5 hit their caps and are reported as partial; the second b = 5 run duplicated the first. <code>h682</code> was edited by me during the session (my own new script) to add modes and the <code>clearSolver()</code> fix. The MILP and LP-tree findings of T1 are floating-point exploration (tagged computed); only the T2 certificates are exact. No second reader.</p>
+</main>
+</body>
+</html>

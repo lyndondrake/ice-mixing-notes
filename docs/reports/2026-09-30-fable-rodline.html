@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Statement R (the whole line of the rods): its reach, the height language, and what is proved by hand</title>
+<meta name="description" content="Statement R (the whole line of the rods): its reach, the height language, and what is proved by hand">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Statement R (the whole line of the rods): its reach, the height language, and what is proved by hand",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-30-fable-rodline.html",
+ "datePublished": "2026-09-30",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Fable), agent rodline, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-30-fable-rodline.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/statement-r-box-lemma.html">statement-r-box-lemma</a>, <a href="../claims/theorem-h-orientation/weights-integrality-correction.html">weights-integrality-correction</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Statement R (the whole line of the rods): its reach, the height language, and what is proved by hand</h1>
+
+<p class="author">Claude (Fable), agent rodline, for Lyndon Drake</p>
+<p class="date">2026-09-30</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#verdict" id="toc-verdict">Verdict</a></li>
+<li><a href="#statement-tested" id="toc-statement-tested">Statement tested</a></li>
+<li><a href="#reach-tables" id="toc-reach-tables">Reach tables</a></li>
+<li><a href="#the-height-language" id="toc-the-height-language">The height language</a></li>
+<li><a href="#r-by-hand" id="toc-r-by-hand">R by hand</a></li>
+<li><a href="#what-is-left-and-a-stop-rule" id="toc-what-is-left-and-a-stop-rule">What is left and a stop rule</a></li>
+<li><a href="#scripts-and-timings" id="toc-scripts-and-timings">Scripts and timings</a></li>
+<li><a href="#rules-kept-or-broken" id="toc-rules-kept-or-broken">Rules kept or broken</a></li>
+</ul>
+</details></nav>
+<h1 id="verdict">Verdict</h1>
+<p><strong>R TORUS, in the weak form of one circle.</strong> Statement R is not a window lemma in the sense of (V)’s record and not a torus statement either: its first step, that <span class="math inline">\(v_2 = (8,0,0)\)</span> is of type <span class="math inline">\(x\)</span>, is forced inside a <strong>box over one closed transverse circle</strong>. With the rods along <span class="math inline">\(x\)</span>, the lower bridgehead <span class="math inline">\((1,1,1)\)</span> of type <span class="math inline">\(y\)</span> and the upper bridgehead <span class="math inline">\((3,-1,1)\)</span> not of type <span class="math inline">\(y\)</span>, the box is <span class="math inline">\(x \in [-3, 2b+1]\)</span> relative to the hole, <span class="math inline">\(|z| \le 2b -
+1\)</span>, and the whole <span class="math inline">\(y\)</span>-circle of the cell <span class="math inline">\((a, b, c)\)</span>. Nothing depends on <span class="math inline">\(a\)</span>, <span class="math inline">\(c\)</span> or <span class="math inline">\(\gcd(b,c)\)</span> once the <span class="math inline">\(y\)</span>-circle is fixed. The reach is linear in <span class="math inline">\(b\)</span>, the extent of the closed circle. DRAT certificates of this box lemma are written and checked for <span class="math inline">\(b = 3, 4, 5, 6\)</span> (solver, 0.1 to 0.7 s each). On the full torus the reach shortens to <span class="math inline">\(2g+1\)</span>, <span class="math inline">\(g = \gcd(b,c)\)</span>, which is exactly the law of (V); but R survives the cut of a transverse grid along <span class="math inline">\(z\)</span>, where (V) does not, so R is strictly weaker than (V) and is not (V) in disguise. (V) implies R in two lines (Lemma 6 and <span class="math inline">\(P^x\)</span>). The later positions <span class="math inline">\(v_j\)</span>, <span class="math inline">\(j \ge 3\)</span>, are forced as soon as the box reaches them, with a <span class="math inline">\(z\)</span>-radius that grows by about one grid per cube. In the heights of (C) the statement R has no linear content (the four chains of axes <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span> through <span class="math inline">\(v_j\)</span> carry the label <span class="math inline">\(j\)</span> modulo <span class="math inline">\(\gcd(a,c)\)</span> and <span class="math inline">\(\gcd(a,b)\)</span>, so (C) relates no two positions of a cubic cell), which agrees with cubethree’s feasible LP; R is an integrality statement. What is left is a hand proof of the box lemma for every <span class="math inline">\(b\)</span>; the certificates for <span class="math inline">\(b=3\)</span> (19 kB) and <span class="math inline">\(b=4\)</span> (50 kB) are its guide.</p>
+<h1 id="statement-tested">Statement tested</h1>
+<p>Coordinates in quarter-cube units, cell <span class="math inline">\((a,b,c)\)</span> modulo <span class="math inline">\((4a,4b,4c)\)</span>, A = even coordinates with sum <span class="math inline">\(\equiv 0 \pmod 4\)</span>, B = A + (1,1,1). A-hole <span class="math inline">\(O = (2,0,0)\)</span>, rods <span class="math inline">\(v_0 = (0,0,0)\)</span> and <span class="math inline">\(v_1 = (4,0,0)\)</span> of type <span class="math inline">\(x\)</span>; lower bridgehead <span class="math inline">\(\beta = (1,1,1) = v_0 + d_0\)</span> of type <span class="math inline">\(y\)</span>; upper bridgehead in four forms:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>form</th>
+<th>literal</th>
+<th>note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ng2</code></td>
+<td><span class="math inline">\((3,-1,1) = \gamma&#39;\)</span> not of type <span class="math inline">\(y\)</span></td>
+<td>cubethree’s R (h514 <code>R</code>); <span class="math inline">\(\beta, \gamma&#39;\)</span> share the <span class="math inline">\(z\)</span>-chain through <span class="math inline">\((2,0,2)\)</span></td>
+</tr>
+<tr>
+<td><code>zg2</code></td>
+<td><span class="math inline">\((3,-1,1)\)</span> of type <span class="math inline">\(z\)</span></td>
+<td></td>
+</tr>
+<tr>
+<td><code>zg</code></td>
+<td><span class="math inline">\((3,1,-1) = \gamma\)</span> of type <span class="math inline">\(z\)</span></td>
+<td>the four-literal form of (V′), h620</td>
+</tr>
+<tr>
+<td><code>ng</code></td>
+<td><span class="math inline">\((3,1,-1)\)</span> not of type <span class="math inline">\(y\)</span></td>
+<td>h509’s non-forcing pair</td>
+</tr>
+</tbody>
+</table>
+<p>Conclusion tested: <span class="math inline">\(v_j = (4j, 0, 0)\)</span> is of type <span class="math inline">\(x\)</span>, one assumption literal per <span class="math inline">\(j\)</span>; relative <span class="math inline">\(x\)</span> of <span class="math inline">\(v_j\)</span> is <span class="math inline">\(4j - 2\)</span>, unwrapped. Windows: hexagons all six of whose vertices have relative <span class="math inline">\(x\)</span> in <span class="math inline">\([-P, Q]\)</span>; <code>one</code> = <span class="math inline">\([-3, Q]\)</span>, <code>sym</code> = <span class="math inline">\([-Q, Q]\)</span>; a <strong>cut</strong> drops every hexagon with a vertex on the transverse grid farthest from the line (relative <span class="math inline">\(y = -2b\)</span> or <span class="math inline">\(z =
+-2c\)</span>); a <strong>tube</strong> keeps only hexagons with <span class="math inline">\(|y| \le W\)</span> and <span class="math inline">\(|z| \le W\)</span>, or on one axis only. Two models: <strong>type</strong> = one-hot everywhere and (T2) on the window’s hexagons (h360_lib); <strong>bond</strong> = ice rule on every vertex of the torus and the two-arc rule on the window’s hexagons (icemix, as h620). Every window is one child process (h32_cap) with a control (the literals alone) and the <span class="math inline">\(j\)</span>-queries; UNSAT means forced; <span class="math inline">\(Q\)</span> sweeps upward; cap 120 s. The negation of (V) (some B vertex on the grid <span class="math inline">\(x = 1\)</span> of type <span class="math inline">\(x\)</span>) was added as a comparison query on the cut and tube windows only.</p>
+<h1 id="reach-tables">Reach tables</h1>
+<p><strong>A. Torus, no cut</strong> (type model; the bond model gave identical numbers on (12,4,4) and (10,5,5), 60 s). Forms <code>zg</code>, <code>zg2</code>, <code>ng2</code> agree on every cell; <code>ng</code> forces nothing beyond the periodicity <span class="math inline">\(j \mapsto j + \gcd(a,c)\)</span> of (C) along the line (e.g. on (12,4,4) it forces <span class="math inline">\(v_4, v_5, v_8, v_9\)</span> and never <span class="math inline">\(v_2\)</span>, <span class="math inline">\(v_3\)</span>, even in the symmetric window one grid short of the torus).</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th><span class="math inline">\(g\)</span></th>
+<th><span class="math inline">\(v_2\)</span>, <code>one</code> <span class="math inline">\([-3,Q]\)</span></th>
+<th><span class="math inline">\(v_2\)</span>, <code>sym</code></th>
+<th><span class="math inline">\(v_j\)</span>, <span class="math inline">\(j\ge3\)</span>, <code>one</code></th>
+<th><span class="math inline">\(v_j\)</span>, <code>sym</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(8,3,3)</td>
+<td>3</td>
+<td>7</td>
+<td>6</td>
+<td><span class="math inline">\(x_j\)</span></td>
+<td><span class="math inline">\(\lvert x_j\rvert\)</span></td>
+</tr>
+<tr>
+<td>(9,3,3)</td>
+<td>3</td>
+<td>7</td>
+<td>6</td>
+<td><span class="math inline">\(x_j\)</span></td>
+<td><span class="math inline">\(\lvert x_j\rvert\)</span> (the antipode <span class="math inline">\(x=-18\)</span> not reached)</td>
+</tr>
+<tr>
+<td>(12,4,6)</td>
+<td>2</td>
+<td>6</td>
+<td>6</td>
+<td><span class="math inline">\(x_j\)</span></td>
+<td><span class="math inline">\(\lvert x_j\rvert\)</span></td>
+</tr>
+<tr>
+<td>(12,4,4)</td>
+<td>4</td>
+<td>9</td>
+<td>6</td>
+<td><span class="math inline">\(x_j\)</span></td>
+<td><span class="math inline">\(\lvert x_j\rvert\)</span></td>
+</tr>
+<tr>
+<td>(12,4,8)</td>
+<td>4</td>
+<td>9</td>
+<td>6</td>
+<td><span class="math inline">\(x_j\)</span></td>
+<td><span class="math inline">\(\lvert x_j\rvert\)</span></td>
+</tr>
+<tr>
+<td>(10,5,5)</td>
+<td>5</td>
+<td>11</td>
+<td>8</td>
+<td><span class="math inline">\(\max(x_j, 11)\)</span></td>
+<td><span class="math inline">\(\max(\lvert x_j\rvert, 8)\)</span></td>
+</tr>
+<tr>
+<td>(12,5,5)</td>
+<td>5</td>
+<td>11</td>
+<td>8</td>
+<td><span class="math inline">\(\max(x_j, 11)\)</span></td>
+<td><span class="math inline">\(\max(\lvert x_j\rvert, 8)\)</span></td>
+</tr>
+<tr>
+<td>(12,6,6)</td>
+<td>6</td>
+<td>13</td>
+<td>10</td>
+<td><span class="math inline">\(\max(x_j, 13)\)</span></td>
+<td><span class="math inline">\(\max(\lvert x_j\rvert, 10)\)</span></td>
+</tr>
+<tr>
+<td>(12,8,8)</td>
+<td>8</td>
+<td>17</td>
+<td>not run</td>
+<td><span class="math inline">\(\max(x_j, 17)\)</span> (<span class="math inline">\(j \le 4\)</span>)</td>
+<td>not run</td>
+</tr>
+</tbody>
+</table>
+<p>Law (solver, nine cells): one-sided reach of <span class="math inline">\(v_2\)</span> is <span class="math inline">\(\max(6, 2g+1)\)</span> and symmetric <span class="math inline">\(\max(6, 2g-2)\)</span>; these are the thresholds <span class="math inline">\((3, 2g+1)\)</span> and <span class="math inline">\((2g-2, 2g-2)\)</span> of (V) in the record. Every later <span class="math inline">\(v_j\)</span> is forced the moment the window contains it, once the window has passed the threshold.</p>
+<p><strong>B. Cut and tube windows, form <code>ng2</code>, <code>one</code>, type model</strong>; the column V is the negation of (V) on the same clause set.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>window</th>
+<th><span class="math inline">\(v_2\)</span></th>
+<th><span class="math inline">\(v_3\)</span></th>
+<th><span class="math inline">\(v_4\)</span></th>
+<th><span class="math inline">\(v_5\)</span></th>
+<th>V</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(12,4,4)</td>
+<td>torus</td>
+<td>9</td>
+<td>10</td>
+<td>14</td>
+<td>18</td>
+<td>9</td>
+</tr>
+<tr>
+<td>(12,4,4)</td>
+<td>cut <span class="math inline">\(y\)</span></td>
+<td>10</td>
+<td>10</td>
+<td>15</td>
+<td>18</td>
+<td>none <span class="math inline">\(\le 23\)</span></td>
+</tr>
+<tr>
+<td>(12,4,4)</td>
+<td>cut <span class="math inline">\(z\)</span></td>
+<td>9</td>
+<td>10</td>
+<td>14</td>
+<td>none <span class="math inline">\(\le 23\)</span></td>
+<td>none</td>
+</tr>
+<tr>
+<td>(12,4,4)</td>
+<td>tube 7, 6 or 5 (both axes)</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>(10,5,5)</td>
+<td>cut <span class="math inline">\(z\)</span></td>
+<td>11</td>
+<td>11</td>
+<td>14</td>
+<td>18</td>
+<td>none <span class="math inline">\(\le 19\)</span></td>
+</tr>
+<tr>
+<td>(10,5,5)</td>
+<td>cut <span class="math inline">\(y\)</span></td>
+<td>12</td>
+<td>12</td>
+<td>14</td>
+<td>19</td>
+<td>none</td>
+</tr>
+<tr>
+<td>(10,5,5)</td>
+<td>tube 9 (both)</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>(12,8,8)</td>
+<td>cut <span class="math inline">\(y\)</span></td>
+<td>22</td>
+<td>22</td>
+<td>22</td>
+<td>—</td>
+<td>none <span class="math inline">\(\le 43\)</span></td>
+</tr>
+<tr>
+<td>(12,8,8)</td>
+<td>tube 3 to 12 (both)</td>
+<td>none <span class="math inline">\(\le 21\)</span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(12,4,8)</td>
+<td>cut <span class="math inline">\(y\)</span></td>
+<td>none <span class="math inline">\(\le 23\)</span></td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>(12,4,8)</td>
+<td>cut <span class="math inline">\(z\)</span></td>
+<td>9</td>
+<td>10</td>
+<td>14</td>
+<td>18</td>
+<td>none</td>
+</tr>
+<tr>
+<td>(12,4,6)</td>
+<td>cut <span class="math inline">\(y\)</span></td>
+<td>none <span class="math inline">\(\le 23\)</span></td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>(12,4,6)</td>
+<td>cut <span class="math inline">\(z\)</span></td>
+<td>9</td>
+<td>10</td>
+<td>14</td>
+<td>18</td>
+<td>none</td>
+</tr>
+<tr>
+<td>(12,6,6)</td>
+<td>cut <span class="math inline">\(y\)</span></td>
+<td>15</td>
+<td>15</td>
+<td>15</td>
+<td>18</td>
+<td>none</td>
+</tr>
+<tr>
+<td>(12,4,8), form <code>zg</code></td>
+<td>cut <span class="math inline">\(y\)</span> / cut <span class="math inline">\(z\)</span></td>
+<td>none / 9</td>
+<td>none / 10</td>
+<td>none / 14</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>So R needs the closed <strong><span class="math inline">\(y\)</span>-circle</strong> and not the <span class="math inline">\(z\)</span>-circle: with <span class="math inline">\(z\)</span> cut it is forced with reach <span class="math inline">\(2b+1\)</span> on every cell tried (9 for <span class="math inline">\(b=4\)</span> whatever <span class="math inline">\(c\)</span> and <span class="math inline">\(g\)</span>, 11 for <span class="math inline">\(b=5\)</span>), and with <span class="math inline">\(y\)</span> cut it survives only when <span class="math inline">\(b = c\)</span>, with a larger reach (10, 12, 15, 22 for <span class="math inline">\(c = 4, 5, 6, 8\)</span>), presumably by a second mechanism on the <span class="math inline">\(z\)</span>-circle that the equal extents allow. (V) fails on every cut, as the record says.</p>
+<p><strong>C. Box over the <span class="math inline">\(y\)</span>-circle: <span class="math inline">\(x \in [-3, Q]\)</span>, <span class="math inline">\(|z| \le W\)</span>, <span class="math inline">\(y\)</span> unrestricted.</strong></p>
+<table>
+<thead>
+<tr>
+<th>cell</th>
+<th><span class="math inline">\(b\)</span></th>
+<th><span class="math inline">\(W\)</span></th>
+<th><span class="math inline">\(v_2\)</span></th>
+<th><span class="math inline">\(v_3\)</span></th>
+<th><span class="math inline">\(v_4\)</span></th>
+<th><span class="math inline">\(v_5\)</span></th>
+<th><span class="math inline">\(v_6\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(12,3,8)</td>
+<td>3</td>
+<td>3</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(12,3,8)</td>
+<td>3</td>
+<td>5</td>
+<td>7</td>
+<td>10</td>
+<td>none <span class="math inline">\(\le 23\)</span></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(12,3,8)</td>
+<td>3</td>
+<td>7</td>
+<td>7</td>
+<td>10</td>
+<td>14</td>
+<td>18</td>
+<td>none <span class="math inline">\(\le 23\)</span></td>
+</tr>
+<tr>
+<td>(12,3,8)</td>
+<td>3</td>
+<td>9, 11, 13</td>
+<td>7</td>
+<td>10</td>
+<td>14</td>
+<td>18</td>
+<td>22</td>
+</tr>
+<tr>
+<td>(12,4,8)</td>
+<td>4</td>
+<td>3, 5</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(12,4,8)</td>
+<td>4</td>
+<td>7, 9, 11</td>
+<td>9</td>
+<td>10</td>
+<td>14</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(12,4,8)</td>
+<td>4</td>
+<td>5 on <span class="math inline">\(y\)</span> only, <span class="math inline">\(z\)</span> closed</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(10,5,5)</td>
+<td>5</td>
+<td>3, 5, 7</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(10,5,5)</td>
+<td>5</td>
+<td>9</td>
+<td>11</td>
+<td>11</td>
+<td>14</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(12,6,8)</td>
+<td>6</td>
+<td>5, 7, 9</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(12,6,8)</td>
+<td>6</td>
+<td>11</td>
+<td>13</td>
+<td>13</td>
+<td>14</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Law (solver, four values of <span class="math inline">\(b\)</span>): the first step needs <span class="math inline">\(Q = 2b+1\)</span> and <span class="math inline">\(W =
+2b-1\)</span>; the <span class="math inline">\(z\)</span>-radius needed for <span class="math inline">\(v_j\)</span> then grows by two every two cubes (<span class="math inline">\(W = 5, 5, 7, 7, 9\)</span> for <span class="math inline">\(j = 2, \dots, 6\)</span> at <span class="math inline">\(b = 3\)</span>), so on a cubic cell the far half of the line uses the <span class="math inline">\(z\)</span>-circle as well.</p>
+<p><strong>Backbone of the box</strong> (h631, (12,4,8), <span class="math inline">\(Q = 9\)</span>, <span class="math inline">\(W = 7\)</span>, 376 vertices, 0.5 s): 149 forced literals, all at relative <span class="math inline">\(x \le 5\)</span> and <span class="math inline">\(|z| \le 5\)</span>; the B <span class="math inline">\(y\)</span>-lines at <span class="math inline">\((x, z) = (3, \pm1)\)</span> (through <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\gamma&#39;\)</span>) and at <span class="math inline">\((5, \pm 3)\)</span> (absolute <span class="math inline">\(x\)</span>) are forced entirely free of type <span class="math inline">\(x\)</span>, the line through <span class="math inline">\(\beta\)</span> has 14 of 32 forced; the rod <span class="math inline">\(v_2\)</span> is forced. On the torus window <span class="math inline">\([-3, 9]\)</span> of (12,4,4), by contrast, every B vertex of the window is forced not to be of type <span class="math inline">\(x\)</span> (416 vertices, 403 forced literals, 0.6 s): there R is a consequence of (V) in the window.</p>
+<p><strong>Certificates</strong> (h633, type model, form <code>ng2</code>; <code>certs/h633_R_b&lt;b&gt;_&lt;cell&gt;_q.{cnf,drat}</code> with a <code>_ctrl.cnf</code> that is SAT). Hypotheses, exactly: one-hot at every vertex of the cell; (T2) on every hexagon all six of whose vertices satisfy <span class="math inline">\(-3 \le x - 2 \le 2b+1\)</span> and <span class="math inline">\(|z| \le 2b-1\)</span>; the four unit clauses <span class="math inline">\(X(v_0) =
+X(v_1) = 1\)</span>, <span class="math inline">\(Y(\beta) = 1\)</span>, <span class="math inline">\(Y(\gamma&#39;) = 0\)</span>; negated conclusion <span class="math inline">\(X(v_2) =
+0\)</span>. The box does not wrap when <span class="math inline">\(4a &gt; 2b+5\)</span> and <span class="math inline">\(4c &gt; 4b-1\)</span>, so each certificate is a lemma for every cell with that <span class="math inline">\(b\)</span> meeting these bounds, and for their quotients by lifting.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr>
+<th><span class="math inline">\(b\)</span></th>
+<th>cell</th>
+<th>hexagons</th>
+<th>clauses</th>
+<th>cadical</th>
+<th>drat-trim</th>
+<th>proof</th>
+<th>cnf sha256</th>
+<th>drat sha256</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>(12,3,8)</td>
+<td>192</td>
+<td>14 213</td>
+<td>UNSAT 0.0 s</td>
+<td>VERIFIED 0.1 s</td>
+<td>19 kB</td>
+<td>c16d0141d6a4f64f</td>
+<td>8aafe99657383a05</td>
+</tr>
+<tr>
+<td>4</td>
+<td>(12,4,8)</td>
+<td>480</td>
+<td>24 773</td>
+<td>UNSAT 0.1 s</td>
+<td>VERIFIED 0.1 s</td>
+<td>50 kB</td>
+<td>917bd529b9bd7d96</td>
+<td>05bc8b4887b6e303</td>
+</tr>
+<tr>
+<td>5</td>
+<td>(12,5,6)</td>
+<td>960</td>
+<td>36 485</td>
+<td>UNSAT 0.2 s</td>
+<td>VERIFIED 0.1 s</td>
+<td>570 kB</td>
+<td>289175f169e9bada</td>
+<td>88ce53b9c97abce1</td>
+</tr>
+<tr>
+<td>6</td>
+<td>(12,6,8)</td>
+<td>1680</td>
+<td>62 117</td>
+<td>UNSAT 0.7 s</td>
+<td>VERIFIED 0.4 s</td>
+<td>2.2 MB</td>
+<td>1eb3931e8a4ef651</td>
+<td>ceeb294a6d681da8</td>
+</tr>
+</tbody>
+</table>
+<p>The type model is weaker than the bond model (the types of a frozen state satisfy (T2)), so each certificate also covers the frozen states.</p>
+<h1 id="the-height-language">The height language</h1>
+<p>Everything in this section except the integrality count is in the record: (C) and the plane parametrisation <span class="math inline">\(F_z = P(n) + Q(m)\)</span> are in the note’s section on the coprime cells; the window <span class="math inline">\(F_z \le F_x \le F_y \le F_z + 1\)</span> and the gauge of one constant per kagome layer are in <code>2026-09-10-u-heights.md</code> §3. What follows restates them in one notation and checks them exactly on 1,417 states (h632).</p>
+<p><strong>Definitions.</strong> On sublattice <span class="math inline">\(S\)</span> with <span class="math inline">\(\sigma = +1\)</span> on A and <span class="math inline">\(-1\)</span> on B, <span class="math inline">\(h_x = F_x\)</span>, <span class="math inline">\(h_y = F_y + \sigma\beta\)</span>, <span class="math inline">\(h_z = F_z - \sigma\alpha\)</span>. Then (C) reads <span class="math inline">\(Y = h_x - h_z\)</span>, <span class="math inline">\(Z = h_y - h_x\)</span>, <span class="math inline">\(X = 1 + h_z - h_y\)</span>.</p>
+<p><strong>Lemma H1 (window and gap; proved).</strong> In every solution of the type model, at every vertex, <span class="math inline">\(h_z \le h_x \le h_y \le h_z + 1\)</span>, and exactly one of the three differences <span class="math inline">\(h_x - h_z\)</span>, <span class="math inline">\(h_y - h_x\)</span>, <span class="math inline">\(h_z + 1 - h_y\)</span> equals 1: the type is <span class="math inline">\(y\)</span>, <span class="math inline">\(z\)</span> or <span class="math inline">\(x\)</span> respectively. Type <span class="math inline">\(x\)</span> if and only if the three heights agree. <em>Proof.</em> The three differences are the indicators <span class="math inline">\(Y\)</span>, <span class="math inline">\(Z\)</span>, <span class="math inline">\(X\)</span>, which lie in <span class="math inline">\(\{0,1\}\)</span> and add to 1. <span class="math inline">\(\square\)</span></p>
+<p><strong>Lemma H2 (separability on a pair of planes; proved).</strong> On the pair of <span class="math inline">\(k\)</span>-planes <span class="math inline">\(\{t, t+1\}\)</span> of <span class="math inline">\(S\)</span>, <span class="math inline">\(h_k(v) = f(C_1(v)) + f(C_2(v))\)</span>, where <span class="math inline">\(C_1, C_2\)</span> are the chains of the two families of axis <span class="math inline">\(k\)</span> through <span class="math inline">\(v\)</span>, labelled by residues modulo <span class="math inline">\(g_k\)</span> (<span class="math inline">\(g_x = \gcd(b,c)\)</span> etc.), and every pair of labels occurs at a vertex of the pair of planes. <em>Proof.</em> The first statement is the definition of <span class="math inline">\(F_k\)</span>; the second is the note’s transitivity argument (translations of the plane fix one label and move the other). Checked computationally: on every pair of <span class="math inline">\(x\)</span>-planes of the five cells below the label pairs fill the <span class="math inline">\(g_x \times g_x\)</span> product. <span class="math inline">\(\square\)</span> Note that <span class="math inline">\(h_y\)</span> and <span class="math inline">\(h_z\)</span> on that pair of planes are not separable in these labels; they involve chains transverse to the planes.</p>
+<p><strong>Lemma H3 (gauge; proved and computed).</strong> A kagome layer <span class="math inline">\(\Lambda\)</span> is the set of chains whose step is orthogonal to a bond direction <span class="math inline">\(d_i\)</span> and whose A vertices lie on one plane <span class="math inline">\(v \cdot d_i = s\)</span>; each chain lies in two layers and each vertex in four, one per direction, meeting one chain of each axis there. Adding <span class="math inline">\(c_\Lambda\)</span> to the weights of the chains of <span class="math inline">\(\Lambda\)</span> leaves <span class="math inline">\(Y\)</span> and <span class="math inline">\(Z\)</span> unchanged and shifts the three heights at every vertex by the same amount <span class="math inline">\(\sum_i c_{\Lambda_i(v)}\)</span> (proved: one chain of each axis). There are <span class="math inline">\(4\gcd(a,b,c)\)</span> layers. Computed on (3,3,3), (4,4,4), (6,3,3), (12,4,4), (5,5,5): the kernel of <span class="math inline">\((f, \alpha, \beta) \mapsto (Y,Z)\)</span> has dimension <span class="math inline">\(12, 16, 12, 16, 20 = 4\gcd(a,b,c)\)</span>, the layer indicators are independent and lie in it, so the kernel is exactly the layer span and the heights are determined up to that common shift. <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are determined by the state.</p>
+<p><strong>Checks (h632).</strong> (C) was solved exactly (least squares, rationalised, verified in Fractions) on every one of the 637 odd corpus states of (3,3,3) and 720 of (4,4,4), and on 20 sampled solutions of the type model on each of (6,3,3), (12,4,4), (5,5,5): 1,417 states, 1,417 exact solutions, 0 violations of the window and 0 vertices whose type is not the open gap (these two are identities once (C) holds, so the check is of (C)). The antisymmetric constants are <span class="math inline">\((0,0)\)</span> on 553 of 637 and 645 of 720 corpus states and on all 60 samples; otherwise <span class="math inline">\(\pm\frac16, \pm\frac13\)</span> at <span class="math inline">\(L=3\)</span> and <span class="math inline">\(\pm\frac18, \pm\frac14\)</span> at <span class="math inline">\(L=4\)</span>.</p>
+<p><strong>Integrality (computed; disagrees with the record as I read it).</strong> The gauge orbit of <span class="math inline">\(f\)</span> contains an integer vector on 19 of 637 states of (3,3,3), 20 of 720 of (4,4,4), and 0 of 60 samples (decided exactly by propagating fractional parts on the layer graph, the lifted vector re-verified against (C)). The least <span class="math inline">\(d\)</span> with a representative in <span class="math inline">\(\frac1d\mathbb{Z}\)</span> is 27 or 54 for 424 of the 637 states at <span class="math inline">\(L=3\)</span>, 32 to 96 for 456 of 720 at <span class="math inline">\(L=4\)</span>, and up to 160 on (12,4,4) with 9 of 20 states needing <span class="math inline">\(d &gt; 216\)</span>. The 10 September statement that balanced <span class="math inline">\(f\)</span> “can be taken integral on every state examined” does not hold on the corpus; the main loop should check whether the chain modes of that report are normalised differently before treating this as a correction.</p>
+<h1 id="r-by-hand">R by hand</h1>
+<p>Notation: <span class="math inline">\(O_j = v_j + 2e_x\)</span> is the A-hole between <span class="math inline">\(v_j\)</span> and <span class="math inline">\(v_{j+1}\)</span>; its lower bridgeheads are <span class="math inline">\(v_j + d_0, v_j + d_1\)</span> and its upper ones <span class="math inline">\(v_{j+1}
++ d_2, v_{j+1} + d_3\)</span>, all on B.</p>
+<p><strong>Lemma R1 (the step; proved).</strong> In the type model, for every <span class="math inline">\(j\)</span>, <span class="math inline">\(X(v_{j+1}) - X(v_j) = \#\{\text{upper bridgeheads of } O_j \text{ of type }
+x\} - \#\{\text{lower ones of type } x\}\)</span>. If no bridgehead of <span class="math inline">\(O_j\)</span> has type <span class="math inline">\(x\)</span> then <span class="math inline">\(X(v_{j+1}) = X(v_j)\)</span>. <em>Proof.</em> Law <span class="math inline">\(P^x\)</span> at <span class="math inline">\(O_j\)</span>. <span class="math inline">\(\square\)</span></p>
+<p><strong>Lemma R2 ((V) implies R; proved).</strong> If the B grid <span class="math inline">\(x = 1\)</span> has no vertex of type <span class="math inline">\(x\)</span>, then B has no vertex of type <span class="math inline">\(x\)</span> and every <span class="math inline">\(v_j\)</span> is of type <span class="math inline">\(x\)</span>. <em>Proof.</em> Lemma 6 of the note (grid counts) gives the same number of type-<span class="math inline">\(x\)</span> vertices on every B plane normal to <span class="math inline">\(x\)</span>, so all are zero; then Lemma R1 along the line, from <span class="math inline">\(X(v_0) = 1\)</span>. <span class="math inline">\(\square\)</span> This is why R has (V)’s reach on the torus, and why every B vertex of the threshold window is forced there (backbone above). The converse fails: R holds on the <span class="math inline">\(z\)</span>-cut cylinder where (V) does not (Table B).</p>
+<p><strong>Lemma R3 (the line in the heights; proved).</strong> <span class="math inline">\(X(v_j) = 1 - D_j\)</span> with <span class="math inline">\(D_j = h_y(v_j) - h_z(v_j) \in \{0, 1\}\)</span>, and <span class="math inline">\(D_j = \varphi(j \bmod
+\gcd(a,c)) + \psi(j \bmod \gcd(a,b))\)</span>, where <span class="math inline">\(\varphi\)</span> is the sum of the weights of the two <span class="math inline">\(y\)</span>-chains through <span class="math inline">\(v_j\)</span> plus <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\psi\)</span> minus the sum of the two <span class="math inline">\(z\)</span>-chains through <span class="math inline">\(v_j\)</span> plus <span class="math inline">\(\alpha\)</span>. <em>Proof.</em> The <span class="math inline">\(y\)</span>-chain of family <span class="math inline">\(\{d_0,d_2\}\)</span> through <span class="math inline">\(v_j\)</span> is <span class="math inline">\(\{(4j + 2n, 0, 2n)\}\)</span>, with constant <span class="math inline">\((x - z)/4 \equiv j \pmod{\gcd(a,c)}\)</span>; likewise the other three. <span class="math inline">\(\square\)</span> On a cubic cell all four labels are <span class="math inline">\(j \bmod L\)</span>, so (C) imposes no relation between <span class="math inline">\(D_j\)</span> and <span class="math inline">\(D_{j&#39;}\)</span> for <span class="math inline">\(j \ne j&#39;\)</span>: the rods fix <span class="math inline">\(D_0 = D_1 = 0\)</span> and say nothing about <span class="math inline">\(D_2\)</span>. This is the exact content of cubethree’s “the rods fix two positions of three” and of its feasible LP: R is an integrality statement, not a linear one. When <span class="math inline">\(\gcd(a,b,c) = 1\)</span> the pair of labels runs over the product and Lemma 8 of the note makes <span class="math inline">\(\varphi\)</span> or <span class="math inline">\(\psi\)</span> constant, which is the route of Theorem 13.</p>
+<p><strong>Lemma R4 (what the bridgeheads say in the heights; proved).</strong> With <span class="math inline">\(Y(\beta) = 1\)</span> and <span class="math inline">\(Y(\gamma&#39;) = 0\)</span>, and <span class="math inline">\(Z_c\)</span> the <span class="math inline">\(z\)</span>-chain of family <span class="math inline">\(\{d_1, d_2\}\)</span> through <span class="math inline">\((2,0,2)\)</span> that carries both, <span class="math display">\[f(X^{01}_{v_0}) + f(X^{23}_\beta) - f(X^{23}_{v_1}) - f(X^{01}_{\gamma&#39;})
+= 1 + f(Z^{03}_{v_0}) - f(Z^{03}_{v_1}),\]</span> where <span class="math inline">\(X^{01}_{v_0}\)</span> is the <span class="math inline">\(x\)</span>-chain of family <span class="math inline">\(\{d_0,d_1\}\)</span> through <span class="math inline">\(v_0\)</span> (planes 0, 1), <span class="math inline">\(X^{23}_\beta\)</span> the one through <span class="math inline">\(\beta\)</span> (planes 1, 2), <span class="math inline">\(X^{23}_{v_1}\)</span> (planes 3, 4), <span class="math inline">\(X^{01}_{\gamma&#39;}\)</span> (planes 2, 3), and <span class="math inline">\(Z^{03}_{v}\)</span> the <span class="math inline">\(z\)</span>-chain of family <span class="math inline">\(\{d_0,d_3\}\)</span> through <span class="math inline">\(v\)</span>. <em>Proof.</em> Subtract <span class="math inline">\(Y = h_x - h_z\)</span> at <span class="math inline">\(\gamma&#39;\)</span> from the same at <span class="math inline">\(\beta\)</span>; <span class="math inline">\(Z_c\)</span> cancels. <span class="math inline">\(\square\)</span> The right side is a difference of the <span class="math inline">\(z\)</span>-heights of the two rods, the left a combination of four <span class="math inline">\(x\)</span>-chains in the planes <span class="math inline">\(0\)</span> to <span class="math inline">\(4\)</span>; the identity is what the note’s Theorem 10 uses first. With <span class="math inline">\(g = 1\)</span> the four <span class="math inline">\(x\)</span>-chains are functions of their planes and the argument closes round the rod axis. With <span class="math inline">\(g \ge 2\)</span> it does not, and no linear argument can (Lemma R3).</p>
+<p><strong>The gap, stated precisely.</strong> What is not proved by hand is the box lemma:</p>
+<blockquote>
+<p><strong>Conjecture R<span class="math inline">\(_b\)</span>.</strong> For every <span class="math inline">\(b\)</span>, on every cell <span class="math inline">\((a, b, c)\)</span> with <span class="math inline">\(4a &gt;
+2b + 5\)</span> and <span class="math inline">\(4c &gt; 4b - 1\)</span>, the hypotheses of the certificate table (one-hot, (T2) on the hexagons of the box <span class="math inline">\(x \in [-3, 2b+1]\)</span>, <span class="math inline">\(|z| \le 2b - 1\)</span> over the closed <span class="math inline">\(y\)</span>-circle, and the four literals) force <span class="math inline">\(X(v_2) = 1\)</span>.</p>
+</blockquote>
+<p>Certified for <span class="math inline">\(b = 3, 4, 5, 6\)</span>; solver-true on the torus of every cell in Table A; false with <span class="math inline">\(W = 2b - 3\)</span> or <span class="math inline">\(Q = 2b\)</span> on every cell tried (Table C), and false on any tube in <span class="math inline">\(y\)</span>. Given R<span class="math inline">\(_b\)</span>, the rest of R on a cubic cell is Lemma R1 once B is known to be <span class="math inline">\(x\)</span>-free near the line, and that is (V) again; on the torus the solver forces the later positions as they enter the window, but the mechanism there is (V) in the window (backbone), so R does not stand on its own for <span class="math inline">\(j \ge 3\)</span> without the <span class="math inline">\(z\)</span>-circle either.</p>
+<p>What the certificate suggests the hand proof uses: the closed <span class="math inline">\(y\)</span>-lines (the <span class="math inline">\(y\)</span>-lines of B through the four bridgeheads are <span class="math inline">\(2b\)</span> vertices long and are forced <span class="math inline">\(x\)</span>-free in whole, two of them at <span class="math inline">\(x = 3\)</span> and two more at <span class="math inline">\(x
+= 5\)</span>), the sums of <span class="math inline">\(P^y\)</span> over closed <span class="math inline">\(y\)</span>-lines of holes, whose methylene terms telescope (the proof of Theorem 5), and an integrality step of the kind cubethree found sufficient (the one A <span class="math inline">\(x\)</span>-line through <span class="math inline">\(O + 2e_y\)</span>). The width <span class="math inline">\(2b - 1\)</span> in <span class="math inline">\(z\)</span> and <span class="math inline">\(2b + 1\)</span> in <span class="math inline">\(x\)</span> are both the length of a <span class="math inline">\(y\)</span>-line less a constant, which points at a count on <span class="math inline">\(y\)</span>-lines that must saturate. I did not find the identity, and did not force one.</p>
+<h1 id="what-is-left-and-a-stop-rule">What is left and a stop rule</h1>
+<ol type="1">
+<li><strong>A hand proof of R<span class="math inline">\(_b\)</span> for all <span class="math inline">\(b\)</span>.</strong> One round, from the <span class="math inline">\(b = 3\)</span> certificate (192 hexagons, 19 kB) and the backbone: look for a sum of <span class="math inline">\(P^y\)</span> over the closed <span class="math inline">\(y\)</span>-lines of holes in the box that, with the integrality of one line, forces <span class="math inline">\(D_2 = 0\)</span>. Stop if a session produces no identity whose reach is <span class="math inline">\(2b+1\)</span>; then R<span class="math inline">\(_b\)</span> stays a per-<span class="math inline">\(b\)</span> certificate, which is enough for Theorem H on no new cell (R is weaker than (V)).</li>
+<li><strong>Do not</strong> measure more reach, sweep more cells, or re-run (V) on windows, slabs or cuts; the (V) queries here were comparison controls only (fourteen solves) and reproduced the record.</li>
+<li><strong>For the plan “R, then monodromy along the rod axis, then integrality”:</strong> R gives the full line at the cost of one closed transverse circle and integrality, and the full line does not give (V) (the <span class="math inline">\(z\)</span>-cut cylinder has R and not (V)); whatever (V) needs from the second transverse circle is not supplied by R, and the monodromy step must supply it.</li>
+<li><strong>Owed to the record:</strong> the integrality of the weights, which the 10 September report claims and the corpus contradicts as read here; and R as a consequence of (V) (Lemma R2), which the note’s list of what the pattern forces states as a solver fact.</li>
+</ol>
+<h1 id="scripts-and-timings">Scripts and timings</h1>
+<p>All new, in <code>experiments/08_frozen_structure/scratch_h/</code>; none existing modified; nothing committed.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>script</th>
+<th>purpose</th>
+<th>solver wall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h630_rreach.py</code></td>
+<td>reach sweeps: cells joined by <code>+</code>, <code>--model type\|bond</code>, <code>--forms</code>, <code>--win one,sym</code>, <code>--cut AX</code>, <code>--tube W [--tubeax AX]</code>, <code>--js</code>, <code>--vtarget</code>, <code>--Qmax</code>, <code>--timeout</code></td>
+<td>Table A 594 s; bond 60 s; cuts and tubes 262 s</td>
+</tr>
+<tr>
+<td><code>h631_backbone.py</code></td>
+<td>forced literals of a window, per grid and per <span class="math inline">\(y\)</span>-line</td>
+<td>1.1 s</td>
+</tr>
+<tr>
+<td><code>h632_heights.py</code></td>
+<td>exact solve of (C), heights, kernel, integral lifts, on corpus and samples</td>
+<td>1.4 s (samples); 60 s of exact arithmetic</td>
+</tr>
+<tr>
+<td><code>h633_rcert.py</code></td>
+<td>DRAT certificates of R<span class="math inline">\(_b\)</span> with SAT controls</td>
+<td>1.7 s in all</td>
+</tr>
+</tbody>
+</table>
+<p>Solver wall time in all: about 16 minutes of the 90 allowed. One batch was killed at the 120 s cap: (12,6,6), form <code>ng</code>, symmetric window <span class="math inline">\(Q =
+22\)</span>, 6,048 hexagons; its finished queries are in Table A’s note on <code>ng</code> and nothing rests on it. Every UNSAT reported has a SAT control on the same clause set without the negated conclusion. Everything ran in the Mac <code>.venv</code>, one solver process at a time, on this machine only.</p>
+<h1 id="rules-kept-or-broken">Rules kept or broken</h1>
+<p>Kept: read the note, the two reports and the scripts named before starting; type-only model as in h360_lib and bond model as in h620, both used; every solve in a child with a hard cap (120 s, backbones 300 s, cadical 300 s); one solver process at a time; no job over 10 minutes; no Sparks, no expq; scripts <code>h630</code>–<code>h633</code>; no commits; <code>h580</code>–<code>h619</code> and the topics of kuwall and zeroflux untouched; status tags and counts given; report under 400 lines; UK English, no em-dashes.</p>
+<p>Bent: the negation of (V) was solved on cut and tube windows as a comparison, which touches the handover’s closed list for (V); these were controls for R’s tables, not new measurements of (V), and every one agreed with the record. The lemmas H1 to H3 and R1 to R4 are proved here by me and have no second reader; the certificates were checked by drat-trim only.</p>
+</main>
+</body>
+</html>

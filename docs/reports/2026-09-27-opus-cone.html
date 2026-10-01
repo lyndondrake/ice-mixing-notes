@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>(R⁺_O) is proved for every separation: the Farkas certificates are one closed-form family (Lemma O +1 on the diamond, (T2) −½ on the hexagons that tou</title>
+<meta name="description" content="(R⁺_O) is proved for every separation: the Farkas certificates are one closed-form family (Lemma O +1 on the diamond, (T2) −½ on the hexagons that touch it, one-hot ½·min(2, μ_b), bond rule ¼·min(4, n_E)), and the identity they prove is a corner law, exactly one of the six corner">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "(R⁺_O) is proved for every separation: the Farkas certificates are one closed-form family (Lemma O +1 on the diamond, (T2) −½ on the hexagons that touch it, one-hot ½·min(2, μ_b), bond rule ¼·min(4, n_E)), and the identity they prove is a corner law, exactly one of the six corner holes of the diamond takes its in-rod from outside. The same certificate proves (S) at every gap. Its validity is a check of nine local star types plus one lemma, 'no vertex sees exactly two bridge holes of the diamond', and that lemma is where the transverse offset ≤ 1 enters. Orientation is needed at every hole of the diamond, straight holes included, so the cone proof does not make (R⁺) independent of Theorem U",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-27-opus-cone.html",
+ "datePublished": "2026-09-27",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus), agent cone, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-27-opus-cone.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/thm-9-diagonal-law.html">thm-9-diagonal-law</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">(R⁺_O) is proved for every separation: the Farkas certificates are one closed-form family (Lemma O +1 on the diamond, (T2) −½ on the hexagons that touch it, one-hot ½·min(2, μ_b), bond rule ¼·min(4, n_E)), and the identity they prove is a corner law, exactly one of the six corner holes of the diamond takes its in-rod from outside. The same certificate proves (S) at every gap. Its validity is a check of nine local star types plus one lemma, ‘no vertex sees exactly two bridge holes of the diamond’, and that lemma is where the transverse offset ≤ 1 enters. Orientation is needed at every hole of the diamond, straight holes included, so the cone proof does not make (R⁺) independent of Theorem U</h1>
+
+<p class="author">Claude (Opus), agent cone, for Lyndon Drake</p>
+<p class="date">2026-09-27</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#status-table" id="toc-status-table">0. Status table</a></li>
+<li><a href="#the-certificate-family-read-as-a-family-task-1" id="toc-the-certificate-family-read-as-a-family-task-1">1. The certificate family, read as a family (task 1)</a></li>
+<li><a href="#what-the-certificate-proves-the-corner-law" id="toc-what-the-certificate-proves-the-corner-law">2. What the certificate proves: the corner law</a></li>
+<li><a href="#the-proof-for-every-separation" id="toc-the-proof-for-every-separation">3. The proof for every separation</a></li>
+<li><a href="#task-3-the-direction-model-invariant" id="toc-task-3-the-direction-model-invariant">4. Task 3: the direction-model invariant</a></li>
+<li><a href="#task-4-where-orientation-is-needed" id="toc-task-4-where-orientation-is-needed">5. Task 4: where orientation is needed</a></li>
+<li><a href="#what-failed" id="toc-what-failed">6. What failed</a></li>
+<li><a href="#the-exact-residual" id="toc-the-exact-residual">7. The exact residual</a></li>
+<li><a href="#computations-this-mac-wall-clock" id="toc-computations-this-mac-wall-clock">8. Computations (this Mac, wall clock)</a></li>
+</ul>
+</details></nav>
+<p><em>Note by the main loop (2026-09-27).</em> Standing of this report when archived: the closed form was re-run by the main loop with the author’s verifier on nine separations (5, 7, 9, 11, 21, 33, −5, −9, −21; exact check passed, four slack columns each); the validity of the four row families was checked from the definitions. The proof for every s (Lemmas A, B, 3, 5) has been read but not independently re-derived; an independent checker (agent check2) is in flight. Until it lands, read ‘proved for every s’ as ‘proved by the agent, certified for 5 ≤ s ≤ 101 and −61 ≤ s ≤ −5, independent check pending’.</p>
+<p><em>Independent check landed the same day (<code>2026-09-27-opus-check2.md</code>): confirmed with corrections, no gap, for every s.</em> Corrections to read into this report: (C1) the bond multiplier +¼·min(4, n_E) is for the row written d·n(a) − d·n(a + d) with a the A end; with the opposite orientation the combination fails. (C2) In Lemma B case (iii) the hypothesis gives the bound ≥ 6, not ≥ 4; the conclusion stands; Lemma B fails at every offset of Chebyshev norm 2 from the first admissible separation (s = 6 at (2,0)), not first at s = 10. (C3) The formula for D in §3.1 is for h_v an A-hole; from a B-hole j_a and j_b are exchanged; the report’s route to v on B by symmetry is valid, and the checker verified that case directly.</p>
+<p>Status tags: <strong>proved</strong> (argument written here; finite checks named and re-runnable), <strong>certified</strong> (exact rational certificate verified in <code>fractions.Fraction</code>), <strong>computed</strong> (exhaustive over the stated range, 0 exceptions), <strong>solver</strong> (capped SAT, <code>h32_cap</code>), <strong>conjecture</strong>. Scripts <code>scratch_h/h310_*.py</code> – <code>h319_*.py</code> (new). Nothing tracked was edited and nothing was committed. Everything ran on this Mac, one LP or solver process at a time. Logs: <code>.tmp/h319_verify.log</code>, <code>.tmp/h319_patterns.log</code>.</p>
+<p>Conventions follow the lines report. k = z. v = (0,0,0) ∈ A, of type z. w = (dx, dy, s) is of type z, and h_v = v + 2e_z, h_w = w − 2e_z. D = D(h_v, h_w) is the causal diamond of holes. Light-cone coordinates are t = z − 2, a = x + y and b = x − y.</p>
+<h2 id="status-table">0. Status table</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>statement</th>
+<th>status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Closed form.</strong> Write the certificate as λ·(Ax − b), with rows one-hot, (T2), bond rule d·n(a) = d·n(a+d) and Lemma O on D, plus the two hypotheses. Its multipliers are: Lemma O <strong>+1</strong> on every hole of D; (T2) <strong>−½</strong> on every hexagon with at least one hole in D; one-hot <strong>½·min(2, μ_b(u))</strong>, where μ_b(u) is the number of holes of D having u as a bridgehead; bond <strong>¼·min(4, n_E)</strong>, where n_E is the number of the bond’s six hexagons with both holes in D; hypotheses <strong>+1</strong></td>
+<td><strong>proved</strong> valid for all s ≥ 5 (§3); <strong>certified</strong> exactly for s = 5, 7, …, 101 and s = −5, …, −61 (78 separations, 705 925 rows at s = 101)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>**(R⁺_O) for every separation.** For |s| ≥ 5 it follows from row 1 (negative s by the rotary reflection (x,y,z) ↦ (y,−x,−z) and the global flip). For |s| = 3 it is conservation (lines §5.2); for |s| = 1 it is the bond rule</td>
+<td><strong>proved</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Corner law.</strong> In every frozen state in which all holes of D are oriented: [in(h_v) = −e_z] + [in(h_w) = +e_z] + Σ over the ‘isolated outward methylenes’ [in(h) = d] = 1</td>
+<td><strong>proved</strong>. That the lateral terms are exactly the four holes of D extreme in ±x, ±y is <strong>certified</strong> for s ≤ 101</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>(S) at every gap, from the same certificate.</strong> No gap hypothesis is needed: two type-z vertices on one z-line with D oriented share a sign. The scope is exactly transverse Chebyshev offset ≤ 1: at offsets (2,0), (2,2) and (3,1) there is no certificate (the LP is feasible)</td>
+<td><strong>proved</strong> (§3, Lemma B covers offset (0,0)); <strong>certified</strong> for s = 8, 12, …, 32; <strong>computed</strong> for the other offsets</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Structure.</strong> The certificate equals Σ over internal hexagons of the conservation gadget, minus Σ over holes of (deg − 1) × the one-in gadget, plus Q_D. Q_D is made of one-hot rows at vertices with ≥ 3 bridge holes in D and bond rows on bonds whose six hexagons are all internal. The conservation lemma is thereby a <em>linear</em> identity on two cages</td>
+<td><strong>proved</strong>; the identity is <strong>certified</strong> exactly (s = 9, 13, 21); the gadgets are <strong>certified</strong> for all 8 edge types</td>
+</tr>
+<tr>
+<td>6</td>
+<td>The LP duals, made canonical (minimum L1 norm plus the pair’s symmetries), agree with row 1 on Lemma O and (T2) at every s. Their one-hot and bond parts differ by transport freedom. Once one-hot is fixed at ½·min(2, μ_b), the bond current J(u) is forced at every vertex except six near the apices</td>
+<td><strong>computed</strong> s = 5 … 21</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Task 3: there is no cross-section invariant. The invariant is the corner functional, which is a sum over the whole diamond. TR is not used. The direction model fails because it lacks the vertex count (‘every vertex is the in-rod of exactly one hole’) and the bond rule on the faces</td>
+<td><strong>proved</strong> (for what the certificate uses); direction model plus vertex constraint <strong>untested</strong></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Task 4: in the LP every hole of D is indispensable (deleting any single Lemma O row kills the certificate, s = 5 … 13). Orientation at corner holes only (a theorem, and implied by (T2) on the cage) gives SAT at every radius tried. Orientation at straight holes only gives UNSAT at the cone radius. So the cone proof of (R⁺) needs Theorem U on the straight holes of D</td>
+<td><strong>computed</strong> (LP); <strong>solver</strong> (L = 8, s = 5 … 13, R ≤ 8)</td>
+</tr>
+<tr>
+<td>9</td>
+<td>The corner law fails for unbalanced diamonds: the LP max of the corner functional is 2 to 4, with the min always 1. So no induction over sub-diamonds is available</td>
+<td><strong>computed</strong>, all diamonds with n ≤ 6 steps</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consequence for the map.</strong> H ⇐ K_u + Theorem U + (R⁺_O), and (R⁺_O) is now proved. <strong>H ⇐ K_u + Theorem U.</strong> The residue of Theorem U is (V).</p>
+<h2 id="the-certificate-family-read-as-a-family-task-1">1. The certificate family, read as a family (task 1)</h2>
+<p><code>h297_farkas.py 8 R 1,1,5 2 show</code> was regenerated: 24 rows, with the predecessor’s multipliers. <code>h310_cone.py</code> rebuilds the same rows on the infinite lattice (a box, no torus). It then computes a canonical Farkas dual: minimum ‖y‖₁, with the two symmetries of the pair imposed. These are the x↔︎y swap (or (x,y) ↦ (−y,−x) for s ≡ 3 mod 4), and the inversion p ↦ w − p with n ↦ −n, which exchanges v and w. The canonical duals for s = 5, 7, 9, 11 and 13 (support 25, 71, 147, 253, 401 rows) share three features at every s:</p>
+<ul>
+<li>Lemma O: 1 on <em>every</em> hole of D, and on nothing else;</li>
+<li>(T2): −½ on <em>every</em> hexagon with at least one hole in D (7, 18, 38, 67, 109 hexagons), and on no other;</li>
+<li>one-hot ½ or 1, bonds ¼, ½ or 1, and the support lies inside U(D), the union of the cages of the holes of D (<code>h314</code>: the LP restricted to rows inside U(D) is still infeasible).</li>
+</ul>
+<p>The one-hot and bond parts are not unique, and a local fit made them canonical. Three fits were tried: a table keyed by the local shape of D around each hole (<code>h315</code>, <code>h316</code>), a bulk-plus-boundary model (<code>h317</code>), and finally a table keyed by the ‘signature’ of each row, meaning the D-membership of the holes whose cages contain it (<code>h318</code>). With the Lemma O and (T2) parts fixed, the signature fit gave the one-hot rule ½·min(2, μ_b) (§0 row 1). The only remaining unknowns were then the bonds. Their fitted table has 52 entries (13 signatures per bond direction). Read off, it is exactly ¼·min(4, n_E), where n_E ∈ {0, 1, 2, 6} is the number of the bond’s six hexagons whose two holes both lie in D. That is the closed form. In the notation of rphand and lines (identity Σ λ_i (A_i x − b_i) ≡ −1 − r·x):</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>row</th>
+<th>multiplier λ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lemma O at h</td>
+<td>1 if h ∈ D</td>
+</tr>
+<tr>
+<td>(T2) at hexagon e</td>
+<td>−½ if e has a hole in D</td>
+</tr>
+<tr>
+<td>one-hot at u</td>
+<td>½·min(2, μ_b(u)), μ_b(u) = #{h ∈ D : u is a bridgehead of h} ∈ {0, 1, 3, 4}</td>
+</tr>
+<tr>
+<td>bond (a, a+d)</td>
+<td>¼·min(4, n_E), n_E ∈ {0, 1, 2, 6}</td>
+</tr>
+<tr>
+<td>p_z(v) = 1, m_z(w) = 1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>In diamond coordinates the pattern is simple. Deep inside D every vertex has one-hot 1 and every bond 1. On the faces, vertices with three bridge holes in D have one-hot 1 and their bonds carry ½ or ¼. On the edges of the octahedron, vertices with one bridge hole in D have one-hot ½. Vertices whose star meets D only in methylenes have one-hot 0. A uniform bond value contributes nothing to the moment current at a vertex (Σ_d d = 0), so the bulk carries no current and all the transport happens in the boundary layer.</p>
+<p>With the one-hot rule fixed, the interval that the column conditions allow for the bond current J_k(u) = Σ (±β) d_k shrinks to a point at every vertex, except the three plus three vertices whose star meets D in no bridge hole (<strong>computed</strong>, s = 21). So given the one-hot rule the certificate is essentially unique, and b·y = −1 is tight.</p>
+<h2 id="what-the-certificate-proves-the-corner-law">2. What the certificate proves: the corner law</h2>
+<p>Exact verification of the closed form (<code>h319_corner.py verify</code>, no LP) gives, for every s from 5 to 101 and every s from −5 to −61, A^T y ≥ 0 and b·y = −1. There are exactly four positive slack columns, each of value 1. For s ≥ 7 they are the in-rods from outside at the four holes of D that are extreme in the −x, −y, +y and +x directions. For s = 9 these are p_x(−4,0,4), p_y(0,−4,4), m_y(1,5,5) and m_x(5,1,5). Dropping the hypothesis rows, the identity therefore reads, on every frozen state with D oriented:</p>
+<blockquote>
+<p><strong>Corner law.</strong> [in(h_v) = −e_z] + [in(h_w) = +e_z] + [in(c₋ₓ) = −e_x] + [in(c₋ᵧ) = −e_y] + [in(c₊ᵧ) = +e_y] + [in(c₊ₓ) = +e_x] = 1,</p>
+</blockquote>
+<p>where c_d is the hole of D extreme in direction d. Read with the octahedron in mind: D has six corners, and <strong>exactly one of them takes its in-rod from outside, along its own axis.</strong> The first two terms are ‘v points up’ and ‘w points down’, so (R⁺_O) is the statement that the corner law cannot count 2. For s = 5 the lateral corners coincide with h_v and h_w, and the law is the conservation lemma τ·in(h_v) = τ·in(h_w). For D a single hole it is ‘one in-rod per hole’. The law is <strong>proved</strong> for every s ≥ 5 in §3; that the lateral terms sit at these four holes is <strong>certified</strong> for s ≤ 101.</p>
+<h2 id="the-proof-for-every-separation">3. The proof for every separation</h2>
+<h3 id="coordinates-and-the-diamond">3.1 Coordinates and the diamond</h3>
+<p>Holes of the same sublattice as h_v sit at even t, and a z-monotone hexagon path alternates a-steps (from A-holes: a changes by ±2) and b-steps (from B-holes). Reaching layer t takes j_a(t) = ⌈t/2⌉ a-steps and j_b(t) = ⌊t/2⌋ b-steps, and a walk of j steps of ±2 from 0 reaches exactly the c with |c| ≤ 2j and c ≡ 2j (mod 4). Hence, with n = s − 4, n_a = ⌈n/2⌉, n_b = ⌊n/2⌋ and (a_w, b_w) the coordinates of h_w, <span class="math display">\[D=\{h:\ 0\le\lambda_i(h)\le C_i,\ i=1..4\},\quad \lambda_{1,2}=2j_a(t)\mp a,\ \ \lambda_{3,4}=2j_b(t)\mp b,\]</span> with C₁,₂ = 2n_a ∓ a_w and C₃,₄ = 2n_b ∓ b_w. On holes all λ_i and C_i are multiples of 4. (<strong>Proved</strong>; checked equal to the path-defined D for s ≤ 25.)</p>
+<h3 id="the-star-of-a-vertex-is-a-tetrahedron-proved">3.2 The star of a vertex is a tetrahedron (proved)</h3>
+<p>A vertex u lies in the cages of ten holes. Six are <em>own holes</em> u ± 2e_k (u is their methylene) and four are <em>bridge holes</em> u + σ (u is their bridgehead). The own hole u + 2s e_k is hexagon-adjacent to the bridge hole u + σ iff σ_k = s. So the ten holes are the vertices (bridge holes) and edges (own holes) of a tetrahedron T(u). The twelve incidences are the twelve hexagons through u, the hexagons of axis k being those through the two opposite edges u ± 2e_k. The four bonds at u are the four faces: the bond u–(u+d) lies in the six hexagons of the triangle opposite the vertex u − d (A-vertex u; mirrored for B).</p>
+<p><strong>Lemma 1 (locality, proved).</strong> Every row that contains the variables of u has a multiplier fixed by the D-membership of the holes of T(u), plus the hypothesis rows if u ∈ {v, w}. The rows are: one-hot(u) (μ_b), the twelve (T2) rows (the two holes of each hexagon lie in T(u)), the Lemma O rows of the own holes, and the four bonds (their hexagons’ holes lie in T(u)). So the column value is <span class="math display">\[C(u,k,\pm)=-\tfrac12\min(2,\mu_b)+\tfrac12T_k-[u\mp2e_k\in D]\pm J_k-(\text{hyp}),\]</span> where T_k is the number of axis-k hexagons at u touching D and J = Σ_bonds β·(±d) is the moment current. (<strong>Computed</strong>: this local formula agrees with the global A^T y at every column, 0 mismatches over 17 580 columns for s = 5, 7, 9, 13, 21.)</p>
+<p><strong>Lemma A (cuts, proved).</strong> On T(u) each λ_i takes exactly two values, 4c and 4c − 4. The upper level set is a <em>vertex-star</em> Star_H (a bridge hole H with its three edges) or its complement, the <em>face</em> Face_H opposite H. Hence each of the eight inequalities of §3.1 cuts T(u) in T, ∅, a Star_H or a Face_H, and D ∩ T(u) is an intersection of such sets. For the A-vertex at the origin: λ₁’s upper level is Face(H₊₊₋), λ₂’s is Face(H₋₋₋), λ₃’s is Star(H₋₊₊) and λ₄’s is Star(H₊₋₊). (<strong>Computed</strong> for every vertex class: 380 of 380 (vertex, λ_i) pairs, both sublattices, all z mod 4.)</p>
+<p><strong>Lemma 3 (the local table, proved by a finite check).</strong> Intersections of cuts give 50 subsets of T(u), in 9 classes under the point group T_d of the vertex; A and B are identical under the inversion through a bond midpoint. The column values are:</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>D ∩ T(u)</th>
+<th>μ_b</th>
+<th>T</th>
+<th>J</th>
+<th>columns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>∅</td>
+<td>0</td>
+<td>0,0,0</td>
+<td>0</td>
+<td>all 0</td>
+</tr>
+<tr>
+<td>one bridge hole H</td>
+<td>1</td>
+<td>1,1,1</td>
+<td>0</td>
+<td>all 0</td>
+</tr>
+<tr>
+<td>one own hole h = u − 2d, alone</td>
+<td>0</td>
+<td>2 on axis d</td>
+<td>0</td>
+<td><strong>1 at [in(h) = d]</strong>, all else 0</td>
+</tr>
+<tr>
+<td>H + one of its edges</td>
+<td>1</td>
+<td>2,1,1</td>
+<td>½ along that edge’s axis</td>
+<td>all 0</td>
+</tr>
+<tr>
+<td>H + two of its edges</td>
+<td>1</td>
+<td>2,2,1</td>
+<td>½,½,0</td>
+<td>all 0</td>
+</tr>
+<tr>
+<td>Star_H</td>
+<td>1</td>
+<td>2,2,2</td>
+<td>½(1,1,1)-type</td>
+<td>all 0</td>
+</tr>
+<tr>
+<td>Face_H</td>
+<td>3</td>
+<td>3,3,3</td>
+<td>½(±1,±1,±1)</td>
+<td>all 0</td>
+</tr>
+<tr>
+<td>T(u)</td>
+<td>4</td>
+<td>4,4,4</td>
+<td>0</td>
+<td>all 0</td>
+</tr>
+<tr>
+<td>Face_H ∩ Face_H′ (H, H′ and the edge between them)</td>
+<td><strong>2</strong></td>
+<td>2,2,2</td>
+<td>1 along the edge</td>
+<td><strong>−1</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The hypothesis vertices are of type ‘one own hole alone’: T(v) ∩ D = {h_v}, whose column [in(h_v) = −e_z] = p_z(v) has value 1 before the hypothesis row and 0 after it; likewise for w. (<strong>Computed</strong>: all 50 intersections for A- and B-vertices of both z-parities; the positive entries are exactly the single-own-hole sets, with value 1 at the one column stated.) Each entry is a hand computation from the column formula of Lemma 1. For example, for ‘H + one edge’ with u the origin, H = H₋₋₋ and edge Ox−: w = ½, T = (2,1,1), the bonds d₂, d₃ carry n_E = 1 (β = −¼, in the y-sign of the scripts), J = (½,0,0), so C(x,+) = −½ + 1 − 1 + ½ = 0 and C(x,−) = −½ + 1 − 0 − ½ = 0.</p>
+<p><strong>Lemma B (no vertex sees exactly two bridge holes; proved).</strong> If the transverse offset of w from v is (0,0) or (±1,±1), then μ_b(u) ≠ 2 for every vertex u.</p>
+<p><em>Proof.</em> Write F for the future of h_v and P for the past of h_w, so D = F ∩ P, F is closed upwards and P downwards. Take an A-vertex u at layer t (t even), with J = t/2, so j_a(t−1) = J, j_b(t−1) = J − 1, j_a(t+1) = J + 1 and j_b(t+1) = J. Its lower bridge holes are L± = (t−1, a ± 2, b), differing in a. Its upper bridge holes are U± = (t+1, a, b ± 2), differing in b. Every L precedes every U (a b-step, then an a-step). Three cases give μ_b = 2.</p>
+<p><em>(i) both L in D, both U out.</em> By upward closure U± ∈ F, so U± ∉ P. From L± ∈ P we get |a − a_w| ≤ 2(n_a − J − 1), which is the a-bound of U at t+1. Also |b − b_w| ≤ 2(n_b − J + 1). Moving b by 2 towards b_w gives some U_ε ∈ P. The only exception is b = b_w with J − 1 = n_b (parity), and then the a-bound needs n_a ≥ n_b + 2, which is impossible because n_a − n_b ≤ 1. So U_ε ∈ D, a contradiction.</p>
+<p><em>(ii) both U in D, both L out.</em> By downward closure L± ∈ P, so L± ∉ F. From U± ∈ F we get |b| ≤ 2J − 2 = 2j_b(t−1) and |a| ≤ 2J + 2. Moving a by 2 towards 0 gives an L ∈ F: if a = 0, parity forces J odd, so J ≥ 1. So that L is in D, a contradiction.</p>
+<p><em>(iii) one L and one U in D.</em> Write the pair as L_in = (t−1, a + 2η, b) ∈ D and U_ε = (t+1, a, b + 2ε) ∈ D, with the other two out. Closure gives L_out ∉ F and U₋ε ∉ P. The first says a + 2η is F’s extreme a-value on the −η side, so a = −2η(J + 1). The second says b + 2ε is P’s extreme b-value on the −ε side, so b = b_w − 2ε(n_b − J + 1). Now U_ε ∈ P needs |a − a_w| ≤ 2(n_a − J − 1), which gives 4J ≤ 2n_a − 4 + |a_w|. And L_in ∈ F needs |b| ≤ 2(J − 1), which gives 4J ≥ 2n_b + 4 − |b_w|. Together, 2(n_a − n_b) ≥ 8 − |a_w| − |b_w| ≥ 4, which is impossible.</p>
+<p>For B-vertices the lower pair differs in b and the upper in a. The same three computations go through with a and b exchanged: (i) needs n_b − n_a ≤ 0, (ii) always holds, and (iii) needs 2(n_a − n_b) ≤ |a_w| + |b_w| − 4, which is impossible when |a_w| + |b_w| = 2 max(|dx|, |dy|) ≤ 2. ∎</p>
+<p>The hypothesis max(|dx|, |dy|) ≤ 1 is used only here, and it is sharp. At offset (2,0), case (iii) for B-vertices is realised (the vertex (1, −3, 5) at s = 10 has μ_b = 2 and column −1), and there is no certificate at that offset.</p>
+<p><strong>Lemma 5 (the z-columns, proved).</strong> A single-own-hole star with d = −e_z occurs only at u = v. If h = u + 2e_z ≠ h_v, then h has a down-neighbour h′ = h − τ in D, and h′ − u = (−τ_x, −τ_y, 1), so h′ is a bridge hole of u. Symmetrically, d = +e_z occurs only at w.</p>
+<p><strong>Theorem (proved).</strong> For every odd s ≥ 5, with w at transverse offset (±1, ±1) (the sign pattern fixed by the parity of s), the closed-form y satisfies A^T y ≥ 0 and b·y = −1. Hence no frozen state with every hole of D oriented has ε(v) = +1 and ε(w) = −1, and the corner law of §2 holds as an identity.</p>
+<p><em>Proof.</em> Lemmas A, B and 3 give A^T y ≥ 0, with positive entries only at single-own-hole stars. For b·y, evaluate the formal identity Σ y_i (A_i x − b_i) = (A^T y)·x − b·y at x₀, the state with every vertex of type z and sign +. It satisfies every one-hot, (T2), bond and Lemma O row: the z-rod above each hole points away and the one below points in. It also satisfies p_z(v) = 1 but not m_z(w) = 1, so the left side is 1. On the right, x₀ is supported on the p_z columns, which vanish by Lemmas 3 and 5, so b·y = −1. Then for any state satisfying all rows, 0 = (A^T y)·x + 1 ≥ 1, a contradiction. ∎</p>
+<p>Negative separations follow by the rotary reflection (x,y,z) ↦ (y,−x,−z), which maps separation s to −s, together with the global flip. They were also certified directly (s = −5 … −61, flipped hypothesis pair). The identity is a finite combination of rows of the infinite lattice. Its periodisation onto any (L,L,L) torus is again a valid certificate, because the columns of the periodisation are sums of non-negative columns. So it holds on every torus, in every state whose projected diamond holes are oriented.</p>
+<p>The same-line case (offset (0,0), s ≡ 0 mod 4) is covered by Lemma B as well. <strong>(S) holds at every gap with no gap hypothesis</strong> (certified s = 8 … 32; the slack is again at the four lateral corners). So Theorem S is no longer needed for (S≥1): the cone certificate gives it directly from Lemma O.</p>
+<h3 id="what-the-certificate-is-proved">3.3 What the certificate is (proved)</h3>
+<p>Take D = {O, O + τ}. The closed form restricted to this pair is a gadget γ_e whose formal identity is Σ γ_e·(Ax − b) = [τ·in(O) = −1] + [τ·in(O+τ) = +1] − 1. This is the in-conservation lemma, as a linear identity on the 14 vertices of two cages. (<strong>Certified</strong>, all 8 edge types. The lines report proved it by enumeration.) For D = {h} the gadget η_h gives ins(h) − 1. The full certificate then decomposes as <span class="math display">\[y_D=\sum_{e\in E(D)}\gamma_e-\sum_{h\in D}(\deg_E h-1)\,\eta_h+Q_D+\text{hyps},\]</span> where Q_D = Σ_u ½(μ_b(u) − 2)⁺·one-hot(u) + ½·Σ_{n_E = 6} bond. (<strong>Certified</strong> row by row, s = 9, 13, 21. The coefficient matching is also immediate by hand: a hexagon with both holes in D gets ½(deg₁ + deg₂ − 1) − ½(deg₁ − 1 + deg₂ − 1) = ½.)</p>
+<p>So the proof reads: <strong>add the conservation laws of all the internal hexagons, subtract (deg − 1) times ‘one in-rod per hole’, and close the bulk with ‘every vertex is the in-rod of exactly one hole’ (one-hot) and the boundary layer with the bond rule.</strong> The in-indicator I_d(h) enters the telescoped sum with coefficient 1 − n⁺_d(h), where n⁺_d(h) is the number of D-neighbours of h on the d side. That coefficient is −1 at interior holes. In the bulk, Q_D’s one-hot rows (weight 1 at vertices with μ_b = 4) supply exactly those terms. On the faces, its one-hot rows of weight ½ and its bond rows repair the boundary layer. What is left is the flux through the six corners. That the repair is exact is the content of Lemma 3.</p>
+<h2 id="task-3-the-direction-model-invariant">4. Task 3: the direction-model invariant</h2>
+<p>The invariant is the corner functional of §2, and it is not a quantity on horizontal cross-sections. Three observations settle this.</p>
+<ul>
+<li>The corner law is exact only for balanced diamonds, those of transverse offset ≤ 1. For a general diamond D(h₁, h₂), the functional (summed over all extreme holes) has LP minimum 1 but maximum 2, 3 or 4 (<code>h319 all</code>, every h₂ within 6 steps, 1 of 9 and 2 of 12 shapes pass at 4 and 5 steps). A sweep through sub-diamonds or through layers leaves the balanced family at once, so no cross-section quantity is carried unchanged. This agrees with the lines report’s finding that the induction on separation does not close.</li>
+<li>The 1+1-dimensional product structure enters in exactly one place: Lemma B, where the two light-cone coordinates are handled separately and the offset bound |a_w| + |b_w| ≤ 2 appears.</li>
+<li>TR is never used. In the full model the conservation lemma is linear (§3.3). What the direction model lacks is the vertex count: one-hot at bulk vertices, read as ‘every vertex is the in-rod of exactly one of its two holes’. It also lacks the bond rule on the faces, which relates the moments of face vertices whose own holes lie partly outside D. Whether the direction model plus the vertex constraint suffices was <strong>not tested</strong>.</li>
+</ul>
+<h2 id="task-4-where-orientation-is-needed">5. Task 4: where orientation is needed</h2>
+<ul>
+<li><strong>LP (computed, <code>h310</code>, box of radius (s−1)/2 + 1).</strong> For s = 5, 7, 9, 11 and 13, deleting the Lemma O row of any single hole of D (2, 6, 14, 26 and 44 holes) makes the LP feasible. D is therefore the unique deletion-minimal set.</li>
+<li><strong>Solver (<code>h319 solver</code>, L = 8, the tube of radius R around both lines on the whole z-circle, orientation only on D).</strong> Four variants were run, each with its equal-sign control SAT:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>s</th>
+<th>R</th>
+<th>none</th>
+<th>corners only</th>
+<th>straight holes only</th>
+<th>all holes of D</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>2 – 8</td>
+<td>SAT</td>
+<td>SAT</td>
+<td>UNSAT</td>
+<td>UNSAT</td>
+</tr>
+<tr>
+<td>7</td>
+<td>3</td>
+<td>SAT</td>
+<td>SAT</td>
+<td>UNSAT</td>
+<td>UNSAT</td>
+</tr>
+<tr>
+<td>9</td>
+<td>2 / 4 – 8</td>
+<td>SAT</td>
+<td>SAT</td>
+<td>SAT / UNSAT</td>
+<td>SAT / UNSAT</td>
+</tr>
+<tr>
+<td>11</td>
+<td>4 / 5 – 8</td>
+<td>SAT</td>
+<td>SAT</td>
+<td>SAT / UNSAT</td>
+<td>UNSAT / UNSAT</td>
+</tr>
+<tr>
+<td>13</td>
+<td>5 / 6 – 8</td>
+<td>SAT</td>
+<td>SAT</td>
+<td>SAT / UNSAT</td>
+<td>UNSAT / UNSAT</td>
+</tr>
+</tbody>
+</table>
+<p>Corner orientation (‘if the two rods lie on different axes, one points in and one out’) is a theorem, and on the tube it is already implied by (T2) and the bond rule on the cage. So ‘corners only’ equals ‘none’, and it is SAT at every radius tried. Straight-hole orientation on D alone suffices at the cone radius (s − 1)/2. All four variants are SAT below that radius, except where noted (at s = 13, R = 2 and 4 are SAT in every variant). The integral model with full orientation sometimes needs one less radius than the LP (s = 11, 13).</p>
+<p><strong>Answer.</strong> The certificate needs Lemma O at the straight holes of D, which is Theorem U’s content on the diamond. (R⁺) proved by the cone is therefore <strong>not</strong> independent of Theorem U. On the whole torus (R⁺) holds in every frozen state (extremal §9, solver L ≤ 5), but that is the global statement, and nothing here gives a local proof of it.</p>
+<h2 id="what-failed">6. What failed</h2>
+<ul>
+<li><strong>G1, the plain sum of the edge gadgets</strong> (one-hot ½·μ_b, bonds ¼·n_E, uncapped): valid at s = 5 only. It fails at every vertex with μ_b = 3 by −½ in one column per axis, a bulk double count. The caps min(2, ·) and min(4, ·) are the fix.</li>
+<li><strong>Local tables keyed by the neighbour pattern of a hole</strong> (<code>h315</code>): infeasible. Tables keyed by neighbours of neighbours (60 classes), or by the product status in the two light-cone rectangles (76 classes, <code>h316</code>), fit s ≤ 25 and predict s = 27 … 33 exactly, but have 579 entries and explain nothing. A bulk-plus-one-correction-per-missing-neighbour model (<code>h317</code>) is infeasible (IPM); with pair corrections it fits with 56 parameters. All of these are superseded by §1.</li>
+<li><strong>The corner law as an induction over general diamonds</strong>: false (§4).</li>
+<li><strong>Other offsets</strong> (2,0), (2,2), (3,1): no certificate. The LP relaxation is feasible there, and at (2,0) the obstruction is precisely μ_b = 2 at a B-vertex (Lemma B, case (iii)).</li>
+<li><strong>Bookkeeping (caught):</strong> the first negative-s runs reported two negative columns. The hypothesis pair must be flipped (m_z(v), p_z(w)) to match the mirror statement. With that done all negative separations pass. This was not a failure of the law.</li>
+<li><strong>Harness slip (caught):</strong> a background run died on an empty token from <code>seq</code>; it was rerun after the parsing was fixed.</li>
+</ul>
+<h2 id="the-exact-residual">7. The exact residual</h2>
+<p>(R⁺_O) is proved for every separation, and (S) for every gap, both with Lemma O on the causal diamond as their only hypothesis beyond (T2), one-hot and the bond rule. The map becomes</p>
+<blockquote>
+<p><strong>H ⇐ K_u + Theorem U</strong>, with (V) the residue of Theorem U and K_u within the scope of its certificates.</p>
+</blockquote>
+<p>What remains open from this task:</p>
+<ul>
+<li>The identification of the four lateral terms of the corner law for s &gt; 101. This is not needed for (R⁺).</li>
+<li>Whether a proof of (R⁺) that avoids Lemma O at straight holes exists. It would have to be global (§5).</li>
+</ul>
+<p>The Theorem of §3.2 rests on four finite checks, all of the size of a cage check and all re-runnable in seconds: the 380 cut-structure cases of Lemma A, the 50-intersection table of Lemma 3, the local formula of Lemma 1 against the global columns, and the census. The census confirms that exactly 68 star patterns (9 classes) occur for every s from 15 to 201, and none with a negative column. Lemma B makes the census unnecessary for the proof, but it is an independent confirmation.</p>
+<h2 id="computations-this-mac-wall-clock">8. Computations (this Mac, wall clock)</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>script / mode</th>
+<th>what</th>
+<th>time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h297_farkas.py 8 R 1,1,5 2 show</code></td>
+<td>predecessor certificate regenerated</td>
+<td>1.8 s</td>
+</tr>
+<tr>
+<td><code>h310_cone.py w R sym [show]</code></td>
+<td>canonical duals (min L1, pair symmetries), s = 5 … 13</td>
+<td>≤ 0.6 s each</td>
+</tr>
+<tr>
+<td><code>h311_local.py [2]</code></td>
+<td>conservation (in and out) is an LP identity on two cages (14 and 82 vertices)</td>
+<td>seconds</td>
+</tr>
+<tr>
+<td><code>h312_guess.py</code></td>
+<td>G1 (uncapped) closed form: valid only at s = 5</td>
+<td>&lt; 1 s</td>
+</tr>
+<tr>
+<td><code>h313_bondfit.py w R cap2</code></td>
+<td>bond completion for the capped one-hot rule, s = 5 … 17; slack columns</td>
+<td>&lt; 1 s each</td>
+</tr>
+<tr>
+<td><code>h314_support.py w R cages sym</code></td>
+<td>certificate supported in U(D), s = 5 … 13</td>
+<td>&lt; 1 s each</td>
+</tr>
+<tr>
+<td><code>h315_local.py</code>, <code>h316_table.py</code>, <code>h317_additive.py</code></td>
+<td>local-table fits and tests (§6)</td>
+<td>0.3 – 3.5 s</td>
+</tr>
+<tr>
+<td><code>h318_sig.py FIT TEST fixnb show</code></td>
+<td>signature bond table: 52 entries = ¼·min(4, n_E); tests to s = 31</td>
+<td>2 s</td>
+</tr>
+<tr>
+<td><code>h319_corner.py verify</code></td>
+<td>closed form exact, s = 5 … 101, −5 … −61</td>
+<td>168 s total (s = 101: 21 450 holes, 705 925 rows)</td>
+</tr>
+<tr>
+<td><code>h319_corner.py localcheck</code></td>
+<td>local column formula = global columns, s = 5 … 21</td>
+<td>seconds</td>
+</tr>
+<tr>
+<td><code>h319_corner.py patterns</code></td>
+<td>star census s = 5 … 201: 68 patterns, stable from s = 15</td>
+<td>223 s</td>
+</tr>
+<tr>
+<td><code>h319_corner.py orbits</code>; 50-intersection check</td>
+<td>9 classes; only Face ∩ Face negative</td>
+<td>seconds</td>
+</tr>
+<tr>
+<td><code>h319_corner.py all 0,0,2 6</code></td>
+<td>corner law on every diamond with ≤ 6 steps</td>
+<td>0.5 s</td>
+</tr>
+<tr>
+<td><code>h319_corner.py solver 8 200 ...</code></td>
+<td>task 4 variants, s = 5 … 13, R ≤ 8</td>
+<td>≤ 1 s per call</td>
+</tr>
+<tr>
+<td>LP single-deletion test (<code>h310</code> rows)</td>
+<td>every hole of D indispensable, s = 5 … 13</td>
+<td>110 s total</td>
+</tr>
+<tr>
+<td>closed form, same line s = 8 … 32; offsets (2,0), (2,2), (3,1)</td>
+<td>(S) certified; other offsets no certificate</td>
+<td>seconds</td>
+</tr>
+<tr>
+<td>λ-cut structure; D = {0 ≤ λ ≤ C}; gadget identities; decomposition</td>
+<td>Lemma A, §3.1, §3.3</td>
+<td>seconds</td>
+</tr>
+</tbody>
+</table>
+<p>No run exceeded four minutes. Every SAT query ran through <code>h32_cap</code> with its control.</p>
+</main>
+</body>
+</html>

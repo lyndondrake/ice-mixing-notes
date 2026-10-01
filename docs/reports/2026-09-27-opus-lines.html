@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>(S≥1) is a corollary of (R⁺) and Lemma O (proved), so H ⇐ K_u + Lemma O + (R⁺). Neither law is tube-local: without Lemma O both are global in all thre</title>
+<meta name="description" content="(S≥1) is a corollary of (R⁺) and Lemma O (proved), so H ⇐ K_u + Lemma O + (R⁺). Neither law is tube-local: without Lemma O both are global in all three directions (the class of (V)); with Lemma O both have a light-cone reach, R*(s) = (s−1)/2, so no tube automaton exists. With Lem">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "(S≥1) is a corollary of (R⁺) and Lemma O (proved), so H ⇐ K_u + Lemma O + (R⁺). Neither law is tube-local: without Lemma O both are global in all three directions (the class of (V)); with Lemma O both have a light-cone reach, R*(s) = (s−1)/2, so no tube automaton exists. With Lemma O, (R⁺) is a counting statement on the causal diamond between the two rods (exact LP certificates for every separation up to 19, valid for every L), and a new two-cage law (conservation of τ·in and τ·out across every hexagon, plus a trail rule; proved by exhaustive check) gives (R⁺) by hand for |s| ≤ 5",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-27-opus-lines.html",
+ "datePublished": "2026-09-27",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus), agent lines, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-27-opus-lines.md">Markdown source</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">(S≥1) is a corollary of (R⁺) and Lemma O (proved), so H ⇐ K_u + Lemma O + (R⁺). Neither law is tube-local: without Lemma O both are global in all three directions (the class of (V)); with Lemma O both have a light-cone reach, R*(s) = (s−1)/2, so no tube automaton exists. With Lemma O, (R⁺) is a counting statement on the causal diamond between the two rods (exact LP certificates for every separation up to 19, valid for every L), and a new two-cage law (conservation of τ·in and τ·out across every hexagon, plus a trail rule; proved by exhaustive check) gives (R⁺) by hand for |s| ≤ 5</h1>
+
+<p class="author">Claude (Opus), agent lines, for Lyndon Drake</p>
+<p class="date">2026-09-27</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#status-table" id="toc-status-table">0. Status table</a></li>
+<li><a href="#what-may-be-assumed-proved" id="toc-what-may-be-assumed-proved">1. What may be assumed (proved)</a></li>
+<li><a href="#reach" id="toc-reach">2. Reach</a></li>
+<li><a href="#the-automaton-none-and-why" id="toc-the-automaton-none-and-why">3. The automaton: none, and why</a></li>
+<li><a href="#hand-proofs-s-from-r" id="toc-hand-proofs-s-from-r">4. Hand proofs: (S) from (R⁺)</a></li>
+<li><a href="#hand-proofs-and-certificates-for-r" id="toc-hand-proofs-and-certificates-for-r">5. Hand proofs and certificates for (R⁺)</a></li>
+<li><a href="#what-failed-and-one-near-miss" id="toc-what-failed-and-one-near-miss">6. What failed, and one near-miss</a></li>
+<li><a href="#the-exact-residual" id="toc-the-exact-residual">7. The exact residual</a></li>
+<li><a href="#computations-all-on-this-mac-wall-clock" id="toc-computations-all-on-this-mac-wall-clock">8. Computations (all on this Mac; wall clock)</a></li>
+</ul>
+</details></nav>
+<p>Status tags: <strong>proved</strong> (argument written here), <strong>proved (cage check)</strong> (exhaustive enumeration of a finite configuration, the standard of Lemma R), <strong>certified</strong> (an exact rational Farkas certificate, verified after rounding, on a finite set of rows that embeds in every torus), <strong>computed</strong> (whole odd corpus, 637 states at L = 3 and 720 at L = 4, 0 exceptions), <strong>solver</strong> (type-only model with the sign field, capped child process), <strong>conjecture</strong>. Scripts <code>scratch_h/h290_*.py</code> – <code>h299_*.py</code> (new; nothing else was modified, nothing was committed, no Spark was used; every SAT solve ran in a capped child process through <code>h32_cap</code> or its own <code>subprocess.run</code> worker, one at a time).</p>
+<p>Conventions: k = z throughout; v = (0,0,0) ∈ A; an A z-line sits at transverse (x, y) both even, a B z-line at both odd; the four diagonal lines of a line are at transverse offset (±1, ±1). The <em>separation</em> s of a pair is |Δz| (odd for (R⁺), a multiple of 4 for (S)). The <em>tube of radius R</em> is everything within transverse Chebyshev distance R of the line(s); a hexagon, bond or cage is in the tube if all its vertices are.</p>
+<h2 id="status-table">0. Status table</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>statement</th>
+<th>status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Without Lemma O, (R⁺) (s ≥ 5) needs the whole transverse torus; (S≥1) needs all but a band of width ≤ 7 at the transverse antipode (reach 2L − 4 at L = 5…8); both also need almost the whole k-circle and almost the whole slab. The class of (V)</td>
+<td><strong>solver</strong>, L = 4…8</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Both laws are used in the reduction only in odd states, and the hypothesis of (S≥1) already makes a state odd; so Lemma O may be assumed when proving them</td>
+<td><strong>proved</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>With Lemma O the reach is a light cone: (R⁺) at separation s needs radius (s−1)/2, (S) at separation s needs about s/2, independent of L. No fixed tube suffices; <strong>no tube automaton exists</strong></td>
+<td><strong>solver</strong>, L = 6, 8, 10, s ≤ 19</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Theorem S.</strong> (S) at separation s ⇐ Lemma O on the holes between + (R⁺) at separations &lt; s. Hence <strong>(S≥1) ⇐ (R⁺) + Lemma O</strong>, and <strong>H ⇐ K_u + Lemma O + (R⁺)</strong></td>
+<td><strong>proved</strong>; computed</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Lemma D: a k-line whose four diagonal lines carry no type-k vertex has n_k constant along it (k-free, or all type k of one sign)</td>
+<td><strong>proved</strong> mod Lemma O; computed 24 483 + 51 951 lines</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Conservation lemma.</strong> For a hexagon joining oriented holes O and O + τ: τ·in(O) = τ·in(O+τ) and τ·out(O) = τ·out(O+τ); together with a <strong>trail rule</strong> TR at odd hexagons this is the <em>exact</em> two-cage relation (198 of 900 state pairs)</td>
+<td><strong>proved (cage check)</strong>; computed, 0 violations</td>
+</tr>
+<tr>
+<td>7</td>
+<td>(R⁺) for |s| ≤ 5 from the conservation lemma in two lines (recovers Lemma R, adds s = 5)</td>
+<td><strong>proved</strong> mod Lemma O at two holes</td>
+</tr>
+<tr>
+<td>8</td>
+<td>With Lemma O, (R⁺) at separation s is a linear consequence of one-hot, (T2), the bond rule d·n(a) = d·n(b) and Lemma O on the causal diamond between the two rods’ holes</td>
+<td><strong>certified</strong> for s = ±3, …, ±13, 15, 17, 19; (S) for gaps 1, 2</td>
+</tr>
+<tr>
+<td>9</td>
+<td>(R⁺) for all s</td>
+<td><strong>open</strong>; the residual is one statement (§7)</td>
+</tr>
+<tr>
+<td>10</td>
+<td>(R⁺) does not follow from (S) + Lemma O inside any fixed tube; the laws at one level are cyclically dependent (R1(s) ⇐ R3(≤ s+2); R3(s) ⇐ S(≤ s+1) + R1(&lt; s); S(s) ⇐ R(&lt; s))</td>
+<td><strong>solver</strong> (tube radius 2, L = 8)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-may-be-assumed-proved">1. What may be assumed (proved)</h2>
+<p>A frozen state is either curl-free or odd (rods report §1: odd hexagons are exactly the N = 2 octants of corners, curl-free ⟺ no corners). If a k-line carries a type-k vertex v and v + 4e_k is not type k, the hole v + 2e_k has the rod v and a transverse rod, so it is a corner and the state is odd. So the hypothesis of (S≥1) forces oddness, and in an odd state Lemma O (every hole: one rod toward it, one away) holds by Theorem U. (R⁺) has no such hypothesis, but every use of it in the reduction (rphand Theorem RP₁ step 3, Theorem W cases 1 and 2) is inside an odd three-type state. <strong>Both laws may therefore be proved with Lemma O as a hypothesis</strong>, and this changes everything below: without it the laws are global, with it they are cone-local and counting statements.</p>
+<p>Notation for oriented holes: in(h) (out(h)) is the unit vector from the hole h to the methylene that is its in-rod (out-rod). A rod h + 2d of axis |d| points away from h iff its sign equals the side, so in(h) = d iff τ(h + 2d) = |d| and ε(h + 2d) = −(side). The in-rod of h on side d is the out-rod of h + 4d on side −d: out(h + 4 in(h)) = −in(h).</p>
+<h2 id="reach">2. Reach</h2>
+<h3 id="without-lemma-o-global-solver-h290-h291">2.1 Without Lemma O: global (solver, <code>h290</code>, <code>h291</code>)</h3>
+<p>Tube, minimal R at which the violation is UNSAT (control with equal signs SAT in every row):</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr>
+<th>L</th>
+<th>(S) gap 1</th>
+<th>(S) gap 2</th>
+<th>(S) gap 3</th>
+<th>(S) gap 4</th>
+<th>(R⁺) s = 5</th>
+<th>(R⁺) s = 7</th>
+<th>(R⁺) s = 9</th>
+<th>whole torus is R =</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td>6</td>
+<td>6</td>
+<td>–</td>
+<td>–</td>
+<td>whole</td>
+<td>–</td>
+<td>–</td>
+<td>7</td>
+</tr>
+<tr>
+<td>5</td>
+<td>6</td>
+<td>6</td>
+<td>–</td>
+<td>–</td>
+<td>whole (R = 8 SAT)</td>
+<td>whole</td>
+<td>whole</td>
+<td>9</td>
+</tr>
+<tr>
+<td>6</td>
+<td>8</td>
+<td>8</td>
+<td>8</td>
+<td>≥ 8 (7 SAT)</td>
+<td>whole (R = 10 SAT)</td>
+<td>whole</td>
+<td>–</td>
+<td>11</td>
+</tr>
+<tr>
+<td>7</td>
+<td>10</td>
+<td>–</td>
+<td>8</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>13</td>
+</tr>
+<tr>
+<td>8</td>
+<td>12</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>whole (R = 14 SAT)</td>
+<td>–</td>
+<td>–</td>
+<td>15</td>
+</tr>
+</tbody>
+</table>
+<ol start="19" type="A">
+<li>is forced once the tube’s complement is a band of width ≤ 7 at the transverse antipode (R = 2L − 4 for L ≥ 5; at L = 7 gap 3 the other arc of the line is short and the reach drops to 8). (R⁺) at s ≥ 5 needs <em>every</em> hexagon. The other shapes at L = 6 (full in the other two directions): slab |x| ≤ D: (S) D = 8, (R⁺) D = 10 of 11; k-window [z_v − D, z_w + D]: (S) D = 6, (R⁺) D = 8 (the whole circle). So neither law is local in any direction — the signature of (V) (orient report §4: “SAT up to |dx| ≤ 2L − 3”). Without Lemma O no automaton, strip or window argument can exist.</li>
+</ol>
+<h3 id="with-lemma-o-on-the-tubes-holes-a-light-cone-solver-h292">2.2 With Lemma O on the tube’s holes: a light cone (solver, <code>h292</code>)</h3>
+<p>Orientation (“exactly one of the six methylenes points away”) is added at every hole whose cage lies in the tube.</p>
+<table>
+<thead>
+<tr>
+<th>L</th>
+<th>(R⁺) s = 3</th>
+<th>5</th>
+<th>7</th>
+<th>9</th>
+<th>11</th>
+<th>13</th>
+<th>15</th>
+<th>17</th>
+<th>19</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6</td>
+<td>–</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td>8</td>
+<td>≤ 1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td>10</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+<p>**R*(s) = (s − 1)/2, independent of L.** Below it the tube is SAT, i.e. a genuine periodic configuration of the tube (every tube hexagon (T2), every tube bond the bond rule, every tube hole oriented) violating the law. (S) at L = 8: gap 0 → 2, gap 1 (s = 8) → 4, gap 2 (s = 12) → 6, gap 3 (s = 16) → &gt; 6; gaps 4, 5, 6 → 6, 4, 2 (the other arc of the circle, of length 32 − s, is the short one: the cone follows the shorter arc even though it carries no hypothesis). The LP relaxation (§5.3) is infeasible at exactly the same radii.</p>
+<h3 id="with-lemma-o-and-induction-hypotheses-solver-h294-l-8">2.3 With Lemma O and induction hypotheses (solver, <code>h294</code>, L = 8)</h3>
+<p>IH = the laws for every same-line and diagonal pair in the tube of minimal arc &lt; s (sound in a minimal-counterexample argument).</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>hypotheses</th>
+<th>(S) gaps 1–3</th>
+<th>(R⁺) s ≡ 1 (mod 4): 9, 13, −9</th>
+<th>(R⁺) s ≡ 3: 7, 11, 15, −11</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O</td>
+<td>4, 6, &gt; 6</td>
+<td>4, 6, 4</td>
+<td>3, 5, 7, 5</td>
+</tr>
+<tr>
+<td>O + IH</td>
+<td><strong>2</strong> (also inside 6 of the ends)</td>
+<td>4, 6, 4 (cone)</td>
+<td>3, 5, 7, 5 (cone)</td>
+</tr>
+<tr>
+<td>O + (S) at all separations</td>
+<td>–</td>
+<td>cone</td>
+<td>2, 4, 6, 4</td>
+</tr>
+<tr>
+<td>O + (R⁺, s ≡ 3) at all separations</td>
+<td>–</td>
+<td><strong>2</strong></td>
+<td>–</td>
+</tr>
+<tr>
+<td>O + (R⁺, s ≡ 3) up to s + 2</td>
+<td>–</td>
+<td><strong>2</strong></td>
+<td>–</td>
+</tr>
+<tr>
+<td>O + (S) up to s + 1 + (R⁺, s ≡ 1) below s</td>
+<td>–</td>
+<td>–</td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td>O + (S) below s + all of IH</td>
+<td>–</td>
+<td>–</td>
+<td>cone</td>
+</tr>
+</tbody>
+</table>
+<p>So (S)’s induction step is local (it is Theorem S, §4), but (R⁺)’s is not: each residue class needs the other at a <em>larger</em> separation. At level m the statements R1(4m+1), R3(4m+3), S(4m+4) depend on each other in a cycle, and that cycle is what the torus breaks and a tube cannot.</p>
+<h3 id="deletion-minimal-cores-h293-l-8-flag-o">2.4 Deletion-minimal cores (<code>h293</code>, L = 8, flag o)</h3>
+<table>
+<thead>
+<tr>
+<th>law</th>
+<th>R</th>
+<th>hexagons</th>
+<th>bonds</th>
+<th>oriented holes</th>
+<th>extent (transverse, k)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(R⁺) (1,1,5)</td>
+<td>2</td>
+<td>7</td>
+<td>5</td>
+<td>2: (0,0,2), (1,1,3)</td>
+<td>3, [0, 5]</td>
+</tr>
+<tr>
+<td>(R⁺) (1,−1,7)</td>
+<td>3</td>
+<td>20</td>
+<td>19</td>
+<td>7</td>
+<td>4, [0, 8]</td>
+</tr>
+<tr>
+<td>(R⁺) (1,1,9)</td>
+<td>4</td>
+<td>38</td>
+<td>30</td>
+<td>14</td>
+<td>5, [0, 9]</td>
+</tr>
+<tr>
+<td>(R⁺) (1,−1,11)</td>
+<td>5</td>
+<td>67</td>
+<td>51</td>
+<td>26</td>
+<td>6, [0, 11]</td>
+</tr>
+<tr>
+<td>(S) gap 1</td>
+<td>4</td>
+<td>26</td>
+<td>17</td>
+<td>10</td>
+<td>4, [0, 8]</td>
+</tr>
+</tbody>
+</table>
+<p>The oriented holes of the (R⁺) cores are exactly the <strong>causal diamond</strong> D(h_v, h_w) of §5.3 (2, 6, 14, 26 holes): the holes lying on some z-monotone hexagon path from h_v = v + 2e_z (the hole v’s rod enters) up to h_w = w − 2e_z (the hole w’s rod enters). An up-path alternates an A→B step (±1, ±1, 1) with x = y, which moves a = x + y by ±2, and a B→A step with x = −y, which moves b = x − y by ±2. So the diamond is a product of two 1+1-dimensional light cones, and its transverse radius at the middle is (s − 1)/2.</p>
+<h2 id="the-automaton-none-and-why">3. The automaton: none, and why</h2>
+<p>Task 2 asked for an automaton on a fixed tube. There is none:</p>
+<ul>
+<li><strong>Without Lemma O</strong> the tube of radius R is SAT for every R below the whole transverse torus (§2.1). A tube automaton of any radius would have closed walks through the violation.</li>
+<li><strong>With Lemma O</strong> the tube of radius R is SAT at every separation s &gt; 2R + 1 (§2.2; e.g. R = 2 at s = 7, R = 6 at s = 15, R = 8 at s = 19). Each SAT answer is a periodic tube configuration, i.e. a closed walk of the radius-R automaton through a violating pair. So for each fixed R the automaton is refuted by a separation of order 2R. The cone does not saturate up to s = 19 at L = 10.</li>
+<li><strong>With Lemma O and any induction on separation</strong> the step for (R⁺) is not tube-local either (§2.3). A tube automaton for the step would need the other residue class at larger separation, so it is circular.</li>
+</ul>
+<p>The failure modes the lemma-s audit lists were checked. <strong>Over-constraint:</strong> every tube model is a subset of the torus constraints (the torus row R = 99 reproduces the torus verdicts, controls SAT), and the one over-constraint I introduced was caught this way (§6). <strong>Dropped checks at a seam:</strong> the tubes are full k-circles with no seam, and the per-s certificates of §5.3 were checked to have k-support inside the window [z_v, z_w] (no wrap). The direction model of §5.2 was validated on the whole corpus (every hexagon of every state in the relation) and against the full model: it is weaker, as it must be (reach 4 against 3 at s = 7, equal elsewhere).</p>
+<p>So the answer to Task 2 is negative, and the reason is exact. (R⁺) is not a statement about a bounded cross-section, but it is not global either: its domain of dependence is the causal diamond, which grows linearly with the separation. What replaces the automaton is §5.3, a uniform <em>linear</em> argument over that diamond.</p>
+<h2 id="hand-proofs-s-from-r">4. Hand proofs: (S) from (R⁺)</h2>
+<p><strong>Lemma (telescoped sP) (proved).</strong> Let ℓ be a k-line of S with vertices u_j = u₀ + 4j e_k and holes O_j = u_j + 2e_k. If O_a, …, O_{b−1} are oriented, then <span class="math display">\[n_k(u_b) - n_k(u_a) \;=\; \sum_{j=a}^{b-1}\ \sum_{s} s_k\, n_k(O_j + s),\]</span> and the right side is a signed sum of n_k over <strong>the vertices of the four diagonal lines of ℓ with k-coordinate strictly between those of u_a and u_b</strong>, each exactly once, with sign s_k (the same for all vertices of one diagonal line).</p>
+<p><em>Proof.</em> Sum Lemma sP (rphand §2, proved by cage check) over O_a … O_{b−1}; the left sides telescope. Each hole has one bridgehead on each diagonal line, at k-offset s_k = ±1, fixed per line (for A-holes s_k = −s_x s_y). Consecutive holes are 4 apart, and so are consecutive vertices of a line, so the bridgeheads run through the diagonal vertices in the open window without repetition. ∎ The convention (coefficient s_k, the same for A- and B-holes) was checked on the corpus: 0 violations of sP_z and P^z in 137 592 + 368 640 (state, hole) pairs (<code>h298 check</code>).</p>
+<p><strong>Theorem S (proved).</strong> Let v = u_a and w = u_b be type-k vertices of ℓ, with the holes between them oriented. Suppose every pair (v, x) and (x, w), where x is a type-k vertex on a diagonal line of ℓ strictly inside the window, satisfies (R⁺). Then ε(v) = ε(w).</p>
+<p><em>Proof.</em> If such an x exists, ε(v) = ε(x) = ε(w). Otherwise every term on the right of the telescoped identity is 0, so n_k(w) = n_k(v), and both are type k. ∎</p>
+<p>Every pair (v, x), (x, w) has separation &lt; s = 4(b − a). So <strong>(S) at separation s ⇐ Lemma O on the holes between + (R⁺) at separations &lt; s</strong>, for all gaps including gap 0. In odd states Lemma O holds, so the line-sign law (S) = Lemma O (gap 0) + (S≥1) follows from (R⁺). <strong>Corollary: H ⇐ K_u + Lemma O + (R⁺)</strong>, the reduction of rphand §4 with (S≥1) removed, since (S) is used there only in odd states (the stripe theorem and RP₁ step 2).</p>
+<p><strong>Lemma D (proved mod Lemma O).</strong> If the four diagonal lines of ℓ carry no type-k vertex, n_k is constant along ℓ: ℓ is k-free or entirely of type k with one sign. (Telescope between consecutive vertices.) Computed: 24 483 + 51 951 such lines, 0 exceptions, 817 + 1587 of them full.</p>
+<p><strong>The rung identity (proved).</strong> An A-vertex a and B-vertex a + d₀, d₀ = (1,1,1), always have ε(a) = ε(a + d₀) (the bond rule with d₀_τ = 1 for every τ). So on the (1,1) ladder, (R⁺)(a₀, b_I) with b_I = a_I + d₀ is the statement ε(a₀) = ε(a_I) about the A-line alone, whenever a₀ and b_I are type k. The other ladders carry the factor d_{τ(a)} d_{τ(b)}.</p>
+<h2 id="hand-proofs-and-certificates-for-r">5. Hand proofs and certificates for (R⁺)</h2>
+<h3 id="the-two-cage-relation-proved-cage-check-h295-cage-analyse">5.1 The two-cage relation (proved, cage check; <code>h295 cage</code>, <code>analyse</code>)</h3>
+<p>Take a hexagon joining the A-hole O and the B-hole O′ = O + τ. The union of the two cages has 14 vertices and 7 hexagons. Of the 3¹⁴ type assignments, 6192 satisfy (T2) on the 7 hexagons. Every one has a consistent sign field on the union (unique up to the global flip), and 5136 have both holes oriented. Collecting (in, out) at O and at O′ over these and their flips gives <strong>198 of the 900</strong> state pairs, the same for all four τ. They are exactly the pairs satisfying:</p>
+<ul>
+<li><strong>Conservation lemma.</strong> τ·in(O) = τ·in(O′) and τ·out(O) = τ·out(O′). (Each side is ±1: whether the rod lies in the octant of τ or of −τ.)</li>
+<li><strong>Trail rule TR.</strong> If the hexagon is odd, with both rods of one hole on the hexagon’s side and both rods of the other on the far side, then the in-rods of the two holes share an axis or the out-rods do.</li>
+</ul>
+<p>Conservation is the conjunction of (T2) in rod form (#rods of O on τ’s side + #rods of O′ on −τ’s side = 2), HI_in (the in-rods of O and O′ are not both on the far sides) and its reversal HI_out. Given (T2), each of HI_in and HI_out is a monotonicity, and their sum is fixed, so both are equalities. TR is the local form of the rods-report corner rule (§2 there: the triple never swaps in ↔︎ out). Computed on the whole corpus: 0 violations of (T2) rod form, HI_in, HI_out and TR on 275 184 + 737 280 (state, hexagon) pairs.</p>
+<h3 id="r-for-s-5-proved-mod-lemma-o-at-two-holes">5.2 (R⁺) for |s| ≤ 5 (proved, mod Lemma O at two holes)</h3>
+<ul>
+<li>s = 3, w = (1,−1,3). v of sign + points up: in(0,0,2) = −e_z. w of sign − points down: in(1,−1,1) = +e_z. The holes differ by τ = (1,−1,−1), a hexagon step, and τ·(−e_z) = +1 ≠ −1 = τ·(+e_z). This contradicts conservation.</li>
+<li>s = 5, w = (1,1,5): in(0,0,2) = −e_z and in(1,1,3) = +e_z. Here τ = (1,1,1) gives −1 ≠ +1.</li>
+<li>s = −3, −5 (w below): use out instead. v of sign + is the out-rod of (0,0,−2), with out = +e_z. w = (1,1,−3) of sign − is the out-rod of (1,1,−1), with out = −e_z, and τ = (1,1,1). For w = (1,−1,−5), (1,−1,−3) has out = −e_z and τ = (1,−1,−1).</li>
+<li>s = ±1 is the bond rule.</li>
+</ul>
+<p>This recovers Lemma R (by a different finite check) and adds s = ±5: <strong>when the two target holes are hexagon-adjacent, (R⁺) is one line of conservation.</strong> For |s| ≥ 7 they are not adjacent. In-conservation alone then does not suffice (the model with rod links and conservation of τ·in only is SAT at s = 7, 9, 11), and neither does conservation without TR (SAT at s = 7, 9). Conservation + TR + rod links (the <em>direction model</em>: a state (in, out) per hole, 30 states) does suffice at s = 5, 7, 9, 11 with the cone reach (<code>h295 dir</code>, L = 8; 4, 4, 5 against the full model’s 3, 4, 5). So <strong>(R⁺) is a statement about oriented rod loops with the two hexagon rules alone</strong>; signs and types beyond the loops are not needed.</p>
+<h3 id="r-is-a-counting-statement-on-the-causal-diamond-certified-per-s-h296-h297">5.3 (R⁺) is a counting statement on the causal diamond (certified per s; <code>h296</code>, <code>h297</code>)</h3>
+<p>Relax to real variables p_k(u), m_k(u) ≥ 0 (type k with sign ±; n_k = p_k − m_k). The rows are:</p>
+<ul>
+<li>one-hot: Σ(p + m) = 1;</li>
+<li>(T2) per hexagon;</li>
+<li>the bond rule, which is <strong>linear in the moment field</strong>: d·n(a) = d·n(b);</li>
+<li>Lemma O: Σ_k p_k(h + 2e_k) + m_k(h − 2e_k) = 1.</li>
+</ul>
+<p>Fix p_z(v) = 1 and maximise m_z(w). <strong>The optimum is 0 exactly from the cone radius on</strong>, and 1 below it (s = 7…19, the same radii as §2.2). The dual certificate, rounded to 1/24 and re-verified in exact rational arithmetic (Aᵀy ≤ c, b·y = 0), has multipliers only in {1, ½, ¼, −½}: +1 on Lemma O rows, −½ on (T2) rows, ½ or 1 on one-hot, ¼, ½ or 1 on bonds. The identity reads m_z(w) + Σ r_j x_j = 0 with r ≥ 0. At s = 5 the slack terms are the transverse in-rods of (0,0,2) from −x, −y and of (1,1,3) from +x, +y: HI in LP form. The support lies in the window [z_v, z_w] (k-range [1, s − 1]; checked, no wrap) at transverse extent (s − 1)/2. Each certificate is therefore a finite identity of the infinite lattice and <strong>proves (R⁺) at that separation on every torus, in every state whose diamond holes are oriented.</strong></p>
+<p>Certified: s = ±3, ±5, ±7, ±9, ±11, ±13 and 15 (L = 8); 13, 17, 19 (L = 10; 1132 rows at s = 19). (S): gap 1 (R = 4) and gap 2 (R = 6). Restricting the Lemma O rows to the causal diamond D(h_v, h_w) keeps the LP infeasible for s = 5, …, 13 and (S) gaps 1, 2 (<code>h296 … diamond</code>; |D| = 2, 6, 14, 26, 44 and 10, 35). So <strong>Lemma O is needed only on the causal diamond.</strong> The cage laws alone (sP, P^k, law C, O without (T2) across hexagons and without the bond rows) are not enough: that LP is feasible (<code>h298</code>, <code>h299</code>).</p>
+<p><strong>Hand proof beyond |s| = 5: not found.</strong> The certificates are uniform in shape (the diamond, fixed multiplier values), which points to a discrete Green’s-function summation over D. The sum of the Lemma O rows over D is a divergence theorem for the rod flow, since in an oriented hole “one away” together with law C is “zero divergence”. The (T2) and bond rows then transport the two incoming apex fluxes (v’s rod into h_v from below, w’s into h_w from above) to the lateral boundary. I did not find the closed form of the bond and one-hot part of the certificate.</p>
+<h2 id="what-failed-and-one-near-miss">6. What failed, and one near-miss</h2>
+<ul>
+<li><strong>An automaton on a tube, with or without Lemma O</strong>: impossible (§3).</li>
+<li><strong>Induction on separation</strong>: the step for (S) is local, the step for (R⁺) is not (§2.3). The dependency R1(s) → R3(s + 2) → S(s + 3) → R(&lt; s + 3) returns to level s.</li>
+<li><strong>A “cone law”</strong> (any up-rod below and down-rod above in its causal future are incompatible) is false. On the torus the lifted cones cover everything, so it would force every axis one-way. Only the diagonal and same-line cases hold.</li>
+<li><strong>HI alone</strong> proves only s = 5; <strong>conservation without TR</strong> fails at s ≥ 7.</li>
+<li><strong>Near-miss (caught):</strong> the first two-cage relation was built from one sign normalisation, without the global flip. The direction model was then <em>stronger</em> than the full model (UNSAT at radius 3 where the full model is SAT), which is impossible for a projection. Closing the relation under the flip (99/127 → 198 pairs, now the same for all τ) fixed it. This is the lemma-s audit’s over-constraint failure mode, detected by comparing a projection with its source.</li>
+<li><strong>Bug (caught):</strong> a flag test <code>"all" in flags</code> fired on the token <code>Sall</code> and put Lemma O on every hole of the torus. It was visible as a jump in the oriented-hole count; the affected run was repeated.</li>
+</ul>
+<h2 id="the-exact-residual">7. The exact residual</h2>
+<p>With this report the three inputs of rphand are two: <strong>H ⇐ K_u + Lemma O + (R⁺)</strong> (proved, given rphand’s reduction). And (R⁺) is needed only in odd states, where it may use Lemma O on the causal diamond. What remains is:</p>
+<blockquote>
+<p>**(R⁺_O)** <em>If the holes of the causal diamond between h_v = v + 2e_z and h_w = w − 2e_z are oriented, an up-pointing z-rod v and a down-pointing z-rod w on diagonal lines (w above v, at any separation s) cannot coexist</em> (and the mirror with out-rods for w below v).</p>
+</blockquote>
+<p>Its status: proved for |s| ≤ 5 (conservation); certified for |s| ≤ 13 and s = 15, 17, 19 on every L; solver at every separation for L ≤ 5 (extremal §9). It is a linear consequence of one-hot, (T2), the bond rule and Lemma O on D, and a consequence of the oriented rod loops with conservation and TR (§5.1–5.2). A proof for all s needs the uniform certificate: a summation over the diamond whose (T2)/bond part is written out once for every s. This is the natural next hand target, and it is a 1+1+1-dimensional light-cone argument, not an automaton. The remaining global input of H is then only Lemma O, i.e. Theorem U and its residue (V).</p>
+<h2 id="computations-all-on-this-mac-wall-clock">8. Computations (all on this Mac; wall clock)</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>script</th>
+<th>what</th>
+<th>time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h290_reach.py L cap S\|R seps Rs</code></td>
+<td>tube reach, no Lemma O, L = 4, 5, 6, 7, 8</td>
+<td>0.3 – 44 s per call</td>
+</tr>
+<tr>
+<td><code>h291_shapes.py 6 … slab\|kwin</code></td>
+<td>slab and k-window reach, L = 6</td>
+<td>3 – 9 s</td>
+</tr>
+<tr>
+<td><code>h292_oriented.py L cap law seps Rs o</code></td>
+<td>tube reach with Lemma O on tube holes, L = 6, 8, 10</td>
+<td>0.5 – 36 s</td>
+</tr>
+<tr>
+<td><code>h293_core.py 8 300 law sep R o</code></td>
+<td>deletion-minimal cores (hexagons, bonds, holes)</td>
+<td>0.2 – 1.6 s</td>
+</tr>
+<tr>
+<td><code>h294_induct.py 8 300 law seps Rs flags</code></td>
+<td>induction step with IH / (S) / (R⁺) residue classes; <code>ends&lt;W&gt;</code>, <code>box&lt;W&gt;</code></td>
+<td>0.3 – 20 s</td>
+</tr>
+<tr>
+<td><code>h295_hi.py corpus 3\|4</code></td>
+<td>Lemma O, HI, (T2) rod form, HI_out, TR, Lemma D on the corpus</td>
+<td>2 s, 4 s</td>
+</tr>
+<tr>
+<td><code>h295_hi.py cage</code> / <code>analyse</code></td>
+<td>two-cage enumeration (3¹⁴, vectorised), relation = conservation + TR</td>
+<td>2 s</td>
+</tr>
+<tr>
+<td><code>h295_hi.py dir 8 R seps Rs [cons\|consin\|cons+TR]</code></td>
+<td>direction model (states (in, out), hexagon relation, rod links)</td>
+<td>40 s; variants 3 min</td>
+</tr>
+<tr>
+<td><code>h296_lp.py L law seps Rs [noO] [x diamond]</code></td>
+<td>LP relaxation; Lemma O only on the causal diamond</td>
+<td>5 – 30 s</td>
+</tr>
+<tr>
+<td><code>h297_farkas.py L law sep R [show]</code></td>
+<td>exact Farkas certificates, support and slack</td>
+<td>3 – 57 s</td>
+</tr>
+<tr>
+<td><code>h298_wave.py check L</code> / LP</td>
+<td>sP_z and P^z convention on the corpus; z-only cage laws (feasible)</td>
+<td>2 – 5 s</td>
+</tr>
+<tr>
+<td><code>h299_cagelp.py 8 R 1,1,5 3 rows</code></td>
+<td>which row families the certificate needs</td>
+<td>seconds</td>
+</tr>
+</tbody>
+</table>
+<p>Every UNSAT above has its control (equal signs, same model) SAT beside it. No solve exceeded 16 s.</p>
+</main>
+</body>
+</html>

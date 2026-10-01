@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probe of a phase quantity Q on the solutions of the negation of (V′): none of the listed candidates is defined or constrained on the dense solutions; </title>
+<meta name="description" content="Probe of a phase quantity Q on the solutions of the negation of (V′): none of the listed candidates is defined or constrained on the dense solutions; the integer solutions of a window span a much smaller affine space than the real solutions, cut out by a backbone and two-variable">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Probe of a phase quantity Q on the solutions of the negation of (V′): none of the listed candidates is defined or constrained on the dense solutions; the integer solutions of a window span a much smaller affine space than the real solutions, cut out by a backbone and two-variable equations",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-29-opus-moment.html",
+ "datePublished": "2026-09-29",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus 5), agent moment, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-29-opus-moment.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/closed-tilted-sheet.html">closed-tilted-sheet</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Probe of a phase quantity Q on the solutions of the negation of (V′): none of the listed candidates is defined or constrained on the dense solutions; the integer solutions of a window span a much smaller affine space than the real solutions, cut out by a backbone and two-variable equations</h1>
+
+<p class="author">Claude (Opus 5), agent moment, for Lyndon Drake</p>
+<p class="date">2026-09-29</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#verdict" id="toc-verdict">1. Verdict</a></li>
+<li><a href="#the-models" id="toc-the-models">2. The models</a></li>
+<li><a href="#the-candidates" id="toc-the-candidates">3. The candidates</a></li>
+<li><a href="#step-4" id="toc-step-4">4. Step 4</a></li>
+<li><a href="#the-affine-hull-step-3" id="toc-the-affine-hull-step-3">5. The affine hull (Step 3)</a></li>
+<li><a href="#what-failed" id="toc-what-failed">6. What failed</a></li>
+<li><a href="#rules" id="toc-rules">7. Rules</a></li>
+<li><a href="#commands-from-the-repository-root-pythonpath-and-tmpdir-as-in-the-brief" id="toc-commands-from-the-repository-root-pythonpath-and-tmpdir-as-in-the-brief">8. Commands (from the repository root, <code>PYTHONPATH</code> and <code>TMPDIR</code> as in the brief)</a></li>
+</ul>
+</details></nav>
+<p>Tags: <strong>proved</strong>, <strong>computed</strong> (exact arithmetic or direct evaluation on saved solutions), <strong>solver</strong> (CaDiCaL or HiGHS verdict under a hard cap), <strong>conjecture</strong>.</p>
+<p>New scripts, all in <code>experiments/08_frozen_structure/scratch_h/</code>: <code>h570_lib.py</code>, <code>h570_worker.py</code>, <code>h571_sample.py</code>, <code>h572_fourier.py</code>, <code>h573_batch.py</code>, <code>h574_chains.py</code>, <code>h575_detail.py</code>, <code>h576_pairs.py</code>, <code>h577_hull.py</code>, <code>h578_worker.py</code>, <code>h578_implied.py</code>, <code>h579_eqs.py</code>, <code>h579b_rel.py</code>, <code>h579c_pairs.py</code>, <code>h579d_verify.py</code>, <code>h579e_classify.py</code>. They import the geometry, the pattern and the encoders from <code>h560_lib</code> / <code>h360_lib</code>, unchanged. Saved samples: <code>.tmp/h571_*.pkl</code>; hull points: <code>.tmp/h578_*.pkl</code>, <code>.tmp/h579d_*.pkl</code>; logs <code>.tmp/h572_*.log</code>, <code>.tmp/h573_*.log</code>, <code>.tmp/h574_*.log</code>, <code>.tmp/h579e_*.log</code>.</p>
+<p>Setting as in the sheet report: cell <span class="math inline">\((a,b,c)\)</span>, rods along <span class="math inline">\(x\)</span>, <span class="math inline">\(g=\gcd(b,c)\)</span>, hole <span class="math inline">\(O=(2,0,0)\)</span>, the four literals, the negation “some B-vertex of grid <span class="math inline">\(dx=-1\)</span> is of type <span class="math inline">\(x\)</span>” (or a fixed target of that grid), (T2) on the hexagons of the window <span class="math inline">\([-P,Q]\)</span> only, closed transverse torus. On a grid, <span class="math inline">\(s=y+z\)</span> and <span class="math inline">\(d=y-z\)</span> modulo <span class="math inline">\(4g\)</span> (relative to <span class="math inline">\(O\)</span>).</p>
+<h2 id="verdict">1. Verdict</h2>
+<p><strong>NO.</strong> None of the candidates listed in the brief, nor the three of my own, is a quantity <span class="math inline">\(Q\)</span> with properties (i) to (iii). On the dense solutions of the negation (one-sided windows <span class="math inline">\([-3,q]\)</span> with <span class="math inline">\(q\le 2g-2\)</span>, symmetric windows, a fixed target), the label phases on the Lemma-11 lines (<span class="math inline">\(\chi_d\)</span>, <span class="math inline">\(\chi_s\)</span>, all <span class="math inline">\(j\)</span>), every other character of the transverse torus, the chain and cell counts, the graph winding and the layer sums are either undefined in some solutions (the coefficient is exactly 0 in 0 to 9% of the pairs (solution, grid)) or unconstrained (the increment of the argument from grid to grid takes as many distinct values as there are solutions, of both signs, and the total winding takes both admissible values). The only exact relations of the label coefficients between two grids are <span class="math inline">\(F_j(dx+2g/\gcd(j,g))=\pm F_j(dx)\)</span>, and these are linear laws (in the row space of the window’s equations), so they cannot carry integrality. On the extreme models the candidates behave as the formula of the sheet says, which checks the code. The affine hull (Step 3) gave the one positive result: on four settings the integer solutions span an affine space of dimension 90, 152, 112 and 234 inside real solution spaces of dimension 210, 333, 332 and 484 (exact, with every extra equation verified by the solver). The extra equations are a backbone (variables fixed in every solution) and two-variable equations <span class="math inline">\(t_i=t_j\)</span> or <span class="math inline">\(t_i=1-t_j\)</span>, in classes of up to 74 variables that span the whole window. They are listed in §5. None of them is a phase, and I did not use them to build one (that would be a new route).</p>
+<h2 id="the-models">2. The models</h2>
+<p><code>h571_sample.py</code> (via <code>h573_batch.py</code>): for each setting several solver runs (fresh CaDiCaL, random phases reseeded before every solve, blocking on the type-<span class="math inline">\(x\)</span> set of the window), merged and deduplicated on that set. A second pass (<code>--hamming 40</code>) makes each later model differ from every earlier one of the same run on at least 40 type-<span class="math inline">\(x\)</span> literals of the window (sequential-counter encoding). Solver models are not a uniform sample. The frequencies below describe the sample only and are not probabilities.</p>
+<p>Cells: <span class="math inline">\((12,4,4)\)</span>, <span class="math inline">\((12,4,8)\)</span> (<span class="math inline">\(g=4\)</span>); <span class="math inline">\((12,5,5)\)</span>, <span class="math inline">\((12,5,10)\)</span> (<span class="math inline">\(g=5\)</span>); <span class="math inline">\((12,6,6)\)</span> (<span class="math inline">\(g=6\)</span>); <span class="math inline">\((16,7,7)\)</span> (<span class="math inline">\(g=7\)</span>). Windows: one-sided <span class="math inline">\([-3,q]\)</span> for <span class="math inline">\(q=2g, 2g-2, \dots, \ge g\)</span>; symmetric <span class="math inline">\([-(2g-3),2g-3]\)</span> and <span class="math inline">\([-(2g-2),2g-3]\)</span> (one short of the symmetric corner); with a fixed target, near <span class="math inline">\((1,-3)\)</span> and far <span class="math inline">\((2g+1,1-2g)\)</span>, on <span class="math inline">\([-3,2g-2]\)</span> and <span class="math inline">\([-(2g-2),2g-3]\)</span>. That is 54 settings in the plain pass and 20 in the Hamming pass.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>kind</th>
+<th>distinct models per setting</th>
+<th>pairwise distance of type-<span class="math inline">\(x\)</span> sets (min / median / max), typical</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\([-3,2g]\)</span> (extreme)</td>
+<td>2 (enumeration complete)</td>
+<td><span class="math inline">\(132\)</span> (<span class="math inline">\(g=4\)</span>) to <span class="math inline">\(404\)</span> (<span class="math inline">\(g=7\)</span>)</td>
+</tr>
+<tr>
+<td><span class="math inline">\([-3,q]\)</span>, <span class="math inline">\(q\le 2g-2\)</span></td>
+<td>58 to 75 (plain), 34 to 50 (Hamming)</td>
+<td>e.g. <span class="math inline">\((12,5,5)\)</span> <span class="math inline">\([-3,8]\)</span>: 12 / 220 / 364; Hamming: 24 / 224 / 358</td>
+</tr>
+<tr>
+<td>symmetric</td>
+<td>18 to 71</td>
+<td>e.g. <span class="math inline">\((12,6,6)\)</span> <span class="math inline">\([-9,9]\)</span>: 19 / 353 / 509</td>
+</tr>
+<tr>
+<td>far target</td>
+<td>8 to 75</td>
+<td>e.g. <span class="math inline">\((16,7,7)\)</span> <span class="math inline">\([-3,12]\)</span>: 112 / 368 / 588</td>
+</tr>
+<tr>
+<td>near target</td>
+<td>4 to 75 on <span class="math inline">\([-3,2g-2]\)</span>; <strong>1</strong> at <span class="math inline">\([-(2g-2),2g-3]\)</span> for every <span class="math inline">\(g\)</span> (enumeration complete)</td>
+<td></td>
+</tr>
+<tr>
+<td>hull samples</td>
+<td>337 (<span class="math inline">\(g=4\)</span>), 1066 (<span class="math inline">\(g=5\)</span>), 2251 (<span class="math inline">\(g=6\)</span>, merged with solver witnesses)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The two extreme models I sampled on <span class="math inline">\((12,4,4)\)</span> <span class="math inline">\([-3,8]\)</span> are identical, on the type-<span class="math inline">\(x\)</span> set of the window, to the saved models of agent sheet (<code>h561_g4a</code>), which <code>h569_formula.py</code> fits to the formula (computed).</p>
+<h2 id="the-candidates">3. The candidates</h2>
+<p>All are computed on the saved models by <code>h572_fourier.py</code> (every character of the transverse torus), <code>h574_chains.py</code> (counts, cells, Lemma-11 lines, winding, own candidates), <code>h575_detail.py</code> (per-grid detail) and <code>h576_pairs.py</code> (exact relations between two grids).</p>
+<p><strong>Extreme models first (code check).</strong> On <span class="math inline">\([-3,2g]\)</span>, <span class="math inline">\(g=4\)</span> to <span class="math inline">\(7\)</span>: on every grid the type-<span class="math inline">\(x\)</span> set is a union of cells and a graph over the classes of <span class="math inline">\(s\)</span>, with <span class="math inline">\(n_x=2bc/g\)</span> per grid. <span class="math inline">\(\chi_s\)</span> vanishes identically (one cell in each class of <span class="math inline">\(s\)</span>) and <span class="math inline">\(\chi_d\)</span> (<span class="math inline">\(j=1\)</span>) never vanishes. Its argument on the A-grids follows <span class="math inline">\(d=\pm x\)</span> with the defects, and the total winding over the A-grids <span class="math inline">\(-2..2g\)</span> is <span class="math inline">\(\pm 0.547, \pm 0.551, \pm 0.547, \pm 0.543, \pm 0.540\)</span> turns (the two orientations). Example, <span class="math inline">\((12,5,5)\)</span>, arguments in units of <span class="math inline">\(2\pi/20\)</span>: <span class="math inline">\(1.76, 2.69, 3.31, 4.24, 8.0, 8.24, 7.31\)</span> and their negatives (computed). This is the sheet.</p>
+<p><strong>(a) Counts on chains and cells.</strong> Per grid, <span class="math inline">\(n_x\)</span> ranges widely on the dense models (e.g. <span class="math inline">\((16,7,7)\)</span> <span class="math inline">\([-3,12]\)</span>: 14 to 58 on A-grids, against 14 in the extreme). The type-<span class="math inline">\(x\)</span> set is a union of whole cells on 10/365 to 44/737 of the (model, grid) pairs, and a graph over <span class="math inline">\(s\)</span> on at most 22/737. With a fixed target it is never a union of cells (0/450, 0/600). So the counts per chain are not the indicator of a graph, and the “phase of the graph” is undefined on almost every grid (computed).</p>
+<p><strong>(b) Fourier coefficients, all characters, all types.</strong> For each sublattice and each type <span class="math inline">\(x,y,z\)</span>: the characters whose coefficient is non-zero on every grid of every model, and those whose increment of argument from grid to grid takes at most two values across the models (two orientations allowed; any per-grid frame allowed, because the test compares models at the same step). On every dense one-sided setting (<span class="math inline">\(q\le 2g-2\)</span>) and every symmetric setting without a fixed target, <strong>no character passes both</strong> except the real characters (<span class="math inline">\(\pm1\)</span>-valued, e.g. <span class="math inline">\((m,n)=(b,c)\)</span> on the non-square cells), which is a parity count with increments <span class="math inline">\(0\)</span> or <span class="math inline">\(\pi\)</span> by construction. This includes the characters that are functions of <span class="math inline">\(z\)</span> alone or of <span class="math inline">\(y\)</span> alone, which are the counts along the chains of axes <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span> in any frame (computed; <code>.tmp/h572_all.log</code>, <code>.tmp/h572_h.log</code>).</p>
+<p><strong>(c) The Lemma-11 lines (<span class="math inline">\(\chi_d\)</span>, <span class="math inline">\(\chi_s\)</span>), <span class="math inline">\(j=1\)</span>, type <span class="math inline">\(x\)</span>, A-grids.</strong> Examples (computed; “zero” = fraction of (model, grid) with coefficient exactly 0; “inc” = increments <span class="math inline">\(&gt;0\)</span> / <span class="math inline">\(&lt;0\)</span> / <span class="math inline">\(=0\)</span>; “nd” = largest number of distinct increments at one step across the models):</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>setting</th>
+<th>models</th>
+<th><span class="math inline">\(\chi_d\)</span>: zero, inc, nd, winding range</th>
+<th><span class="math inline">\(\chi_s\)</span>: zero, inc, nd, winding range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(12,4,4) [−3,6]</td>
+<td>58</td>
+<td>0.07; 108/60/32; 19; −0.5..0.5</td>
+<td>0.08; 108/84/16; 22; −0.5..0.5</td>
+</tr>
+<tr>
+<td>(12,5,5) [−3,8]</td>
+<td>71</td>
+<td>0.01; 173/130/44; 58; −0.5..0.5</td>
+<td>0.03; 162/175/8; 65; −0.5..0.5</td>
+</tr>
+<tr>
+<td>(12,5,10) [−3,8]</td>
+<td>71</td>
+<td>0.00; 186/165/4; 70; −0.5..0.5</td>
+<td>0.03; 135/210/0; 68; −0.5..0.5</td>
+</tr>
+<tr>
+<td>(12,6,6) [−3,10]</td>
+<td>71</td>
+<td>0.02; 158/216/38; 46; −0.5..0.5</td>
+<td>0.03; 229/168/13; 59; −0.5..0.5</td>
+</tr>
+<tr>
+<td>(16,7,7) [−3,12]</td>
+<td>71</td>
+<td>0.00; 273/224/0; 71; −0.5..0.5</td>
+<td>0.03; 238/245/0; 69; −0.5..0.5</td>
+</tr>
+<tr>
+<td>(12,6,6) [−9,9]</td>
+<td>65</td>
+<td>0.03; 200/296/5; 33; −0.83..0.83</td>
+<td>0.03; 248/248/5; 37; −0.96..0.94</td>
+</tr>
+<tr>
+<td>same, Hamming pass</td>
+<td>48 each</td>
+<td>same picture: zero 0.00–0.09, both signs, nd = 32–48</td>
+<td>same</td>
+</tr>
+</tbody>
+</table>
+<p>So on the dense models the modulus vanishes in some solutions (the argument is undefined there), and where it is defined the argument moves by an arbitrary amount in either sense. Per grid the number of distinct arguments is close to the number of models: e.g. <span class="math inline">\((12,5,5)\)</span> <span class="math inline">\([-3,8]\)</span>, <span class="math inline">\(\chi_d\)</span>: 49, 41, 60, 52, 57, 48 distinct arguments of 71 on the six A-grids, one to three zeros per grid (<code>h575_detail.py</code>).</p>
+<p>The winding range “−0.5..0.5” is not a free value. <code>h576_pairs.py</code> finds, on every dense setting, the exact relations <span class="math inline">\(F_j(dx+2g)=(-1)^jF_j(dx)\)</span> (and <span class="math inline">\(F_j(dx+2g/\gcd(j,g))=\pm F_j(dx)\)</span> when <span class="math inline">\(\gcd(j,g)&gt;1\)</span>) for both families and both sublattices, on every pair of grids of the window at that distance, and no others. <code>h579b_rel.py</code> shows that all of them lie in the row space of the window’s equations {one-hot, (T2), literals} (float rank: <span class="math inline">\(E\)</span> 750, <span class="math inline">\(E\)</span> plus the 24 relations 750, on <span class="math inline">\((12,4,4)\)</span> <span class="math inline">\([-3,6]\)</span>). They are <strong>linear laws</strong> (computed). So over one circuit of <span class="math inline">\(2g\)</span> grids the label coefficient turns by exactly half a turn, in either sense, and this holds on the real relaxation as well. It cannot give the contradiction.</p>
+<p><strong>Fixed targets.</strong> With the far target, one-sided, the increments of <span class="math inline">\(\chi_s\)</span> are mostly negative (375/375 on <span class="math inline">\((12,5,10)\)</span> and 525/525 on <span class="math inline">\((16,7,7)\)</span>, but 5 positive of 375 on <span class="math inline">\((12,5,5)\)</span>, 1 positive and 5 zero of 450 on <span class="math inline">\((12,6,6)\)</span>, 17 positive of 300 on <span class="math inline">\((12,4,8)\)</span>), with 51 to 75 distinct values per step (e.g. <span class="math inline">\((12,5,10)\)</span>: increments from <span class="math inline">\(-7.62\)</span> to <span class="math inline">\(-0.29\)</span> units of <span class="math inline">\(2\pi/20\)</span>). So there is no monotone rule without exceptions, and no fixed rate. At the symmetric near-corner <span class="math inline">\([-(2g-2),2g-3]\)</span> with the far target, <span class="math inline">\(\chi_s\)</span> has one increment at every step in every model, <span class="math inline">\(+1/(2g)\)</span> turn per A-step, total <span class="math inline">\((2g-3)/(2g)\)</span> turn at <span class="math inline">\(g=4,5,6,7\)</span> (8 to 49 models; computed). This is a rigid, near-extreme regime of the same kind as the sheet (with the near target there is only one model). Without the target the same window gives <span class="math inline">\(\chi_s\)</span> with 4 distinct increments of both signs, and <span class="math inline">\(\chi_d\)</span> with 15 to 48.</p>
+<p><strong>(d) Own candidate 1, the layer sum</strong> (A-grid <span class="math inline">\(dx\)</span> plus B-grid <span class="math inline">\(dx+1\)</span>, B shifted): the same as (c). E.g. <span class="math inline">\((12,5,5)\)</span> <span class="math inline">\([-3,8]\)</span>: zero 0.01; increments 140/104/33; nd 58.</p>
+<p><strong>(e) Own candidate 2, the field <span class="math inline">\([y]-[z]\)</span></strong> (the orientation of the sheet) on <span class="math inline">\(\chi_d\)</span>, <span class="math inline">\(\chi_s\)</span>: zero 0.00 to 0.01, nd 70 to 74 of 71 to 75, windings in <span class="math inline">\([-1.5,1.55]\)</span> turns. Unconstrained.</p>
+<p><strong>(f) Own candidate 3, the graph winding</strong> <span class="math inline">\(\sum_s (D(s+1)-D(s))/4g\)</span> on grids where the type-<span class="math inline">\(x\)</span> set is a graph over <span class="math inline">\(s\)</span>: it is defined only on those grids (at most a few per cent of the dense pairs). Where it is defined it is 0 on the one-sided windows and 0 or 1 (once 2) on the symmetric ones. It is undefined on the dense solutions.</p>
+<p><strong>Winding numbers or moments of the type-<span class="math inline">\(x\)</span> set on the label torus.</strong> The first moment on the label circle is the <span class="math inline">\(j=1\)</span> coefficient (c). A winding of the type-<span class="math inline">\(x\)</span> set round the label torus is defined only when the set is a closed curve of cells, that is on the graph grids (f).</p>
+<p>Verdict of Step 2: no candidate is defined on every dense solution, and none obeys a rule from grid to grid on them (computed, on the sampled models; the counter-examples are genuine solutions, so each “undefined” or “two different increments” is certain, not a sampling artefact).</p>
+<h2 id="step-4">4. Step 4</h2>
+<p>No candidate survived Step 2, so no lemma was stated or tested. The negative statements in §3 rest on explicit solutions of the window (solver models) and need no further test.</p>
+<h2 id="the-affine-hull-step-3">5. The affine hull (Step 3)</h2>
+<p>Variables: <span class="math inline">\(t(v,k)\)</span> for the vertices of the window. Real solution space: one-hot, (T2) as “the six sum to 2” (exact for 0/1), the four literals, and the target when fixed. Ranks are taken modulo <span class="math inline">\(p=2^{31}-1\)</span>. Since <span class="math inline">\(\mathrm{rank}_\mathbb{Q}\ge\mathrm{rank}_p\)</span>, <span class="math inline">\(n-\mathrm{rank}_p(E)\)</span> bounds the real dimension from above and <span class="math inline">\(\mathrm{rank}_p\)</span> of the differences of the points bounds the hull from below.</p>
+<p>First attempt (<code>h577_hull.py</code>, <span class="math inline">\((12,4,4)\)</span> <span class="math inline">\([-3,6]\)</span>, 344 samples): hull at least 89, real space at most 210, so not equal. Then <code>h578_implied.py</code> (HiGHS <code>milp</code>, random directions in the complement) found 2 new points, after which min = max along a random direction: hull 90 (solver: milp, one direction). I then replaced this by an exact check. <code>h579d_verify.py</code> takes every variable that is constant on the points and every pair of columns that are equal or complementary on the points, and tests each with CaDiCaL: the violating assignment is added as assumptions to {one-hot, (T2) on the window, negation} under the four literals. A SAT answer adds a point and the loop repeats; the final state has every query UNSAT and the control SAT. Then, if <span class="math inline">\(\mathrm{rank}_p\)</span>(points) <span class="math inline">\(= n-\mathrm{rank}_p(E+\text{backbone}+\text{pairs})\)</span>, the hull is exactly this space: the verified equations bound it from above over <span class="math inline">\(\mathbb{Q}\)</span>, the points from below.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th>setting</th>
+<th><span class="math inline">\(n\)</span></th>
+<th>real dim (<span class="math inline">\(n-\mathrm{rank}\,E\)</span>)</th>
+<th>integer hull dim</th>
+<th>backbone equations beyond <span class="math inline">\(E\)</span></th>
+<th>two-variable equations beyond those</th>
+<th>status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(12,4,4) [−3,6]</td>
+<td>960</td>
+<td>210</td>
+<td><strong>90</strong></td>
+<td>83</td>
+<td>37</td>
+<td>exact (solver)</td>
+</tr>
+<tr>
+<td>(12,5,5) [−3,8]</td>
+<td>1800</td>
+<td>333</td>
+<td><strong>152</strong></td>
+<td>115</td>
+<td>66</td>
+<td>exact (solver)</td>
+</tr>
+<tr>
+<td>(12,5,5) [−3,8], target (11,−9)</td>
+<td>1800</td>
+<td>332</td>
+<td><strong>112</strong></td>
+<td>220</td>
+<td>0</td>
+<td>solver: equations verified; the last point came from milp (h578), then the points span the bound 112</td>
+</tr>
+<tr>
+<td>(12,6,6) [−3,10]</td>
+<td>3024</td>
+<td>484</td>
+<td><strong>234</strong></td>
+<td>139</td>
+<td>111</td>
+<td>exact (solver); needed 2251 points</td>
+</tr>
+</tbody>
+</table>
+<p>So the linear functionals that are constant on the integer solutions are <strong>not</strong> only the laws. For the one-sided dense windows they are exactly the laws, plus the backbone, plus the two-variable equations. Neither Step 3 outcome of the brief holds as stated: the hull is strictly smaller, and the extra equations are these. What they look like (<code>h579e_classify.py</code>; full lists in <code>.tmp/h579e_v4466.log</code>, <code>_v5588.log</code>, <code>_v66610b.log</code>):</p>
+<ul>
+<li><strong>Backbone</strong> (by grid, type, value). On <span class="math inline">\((12,5,5)\)</span>: grid <span class="math inline">\(-3\)</span>: 6 vertices not <span class="math inline">\(x\)</span>. Grid <span class="math inline">\(-2\)</span>: the rod <span class="math inline">\(v\)</span> is <span class="math inline">\(x\)</span>; 6 not <span class="math inline">\(x\)</span>, 12 not <span class="math inline">\(y\)</span>, 2 fixed <span class="math inline">\(y\)</span>, 5 not <span class="math inline">\(z\)</span>, 4 fixed <span class="math inline">\(z\)</span>. Grid <span class="math inline">\(-1\)</span>: 2 not <span class="math inline">\(x\)</span>, 2 fixed <span class="math inline">\(y\)</span> (the bridgehead and its partner), 4 not <span class="math inline">\(z\)</span>. Grid <span class="math inline">\(1\)</span>: 30 not <span class="math inline">\(y\)</span>, 2 fixed <span class="math inline">\(z\)</span>. Grid <span class="math inline">\(2\)</span>: the rod <span class="math inline">\(v&#39;\)</span>, 9 not <span class="math inline">\(z\)</span>. And so on to the far end. The pattern is the same at <span class="math inline">\(g=4,5,6\)</span>, with counts growing with <span class="math inline">\(g\)</span> (grid 1, not <span class="math inline">\(y\)</span>: 20, 30, 44).</li>
+<li><strong>Two-variable equations.</strong> Classes of equal or complementary variables (105 classes at <span class="math inline">\(g=4\)</span>, 209 at <span class="math inline">\(g=5\)</span>, 382 at <span class="math inline">\(g=6\)</span>), the largest of 56, 64 and 74 variables spanning <strong>every grid of the window</strong>. The largest class at every <span class="math inline">\(g\)</span> contains <span class="math inline">\(t((0,0,\pm2),x)\)</span> and <span class="math inline">\(t((-2,\pm2,\mp2),x)\)</span> and, complementary to them, <span class="math inline">\(t((0,0,\pm2),y)\)</span> and <span class="math inline">\(t((-2,\pm2,\mp2),z)\)</span>. It is one Boolean switch next to the hole whose value is copied to vertices on every grid. It is <strong>not</strong> the orientation of the sheet: both extreme models have the same value, <span class="math inline">\((y,y,z,z)\)</span> on those four vertices. Smaller classes join grids at distance exactly <span class="math inline">\(2g\)</span> by a translation along a chain of axis <span class="math inline">\(y\)</span>. E.g. at <span class="math inline">\(g=4\)</span>: <span class="math inline">\(t((-2,0,4),x)=t((0,0,6),x)=t((6,0,-4),x)\)</span> and <span class="math inline">\(t((-2,-8,-4),x)=t((2,-8,0),x)=t((6,-8,\pm4),x)\)</span>.</li>
+<li>These equations depend on the window: at <span class="math inline">\([-3,6]\)</span> on <span class="math inline">\((12,5,5)\)</span> the big switch is not rigid (models with <span class="math inline">\((0,1,2,2)\)</span> and <span class="math inline">\((1,0,2,2)\)</span> on the four vertices exist), and with the near target the switch takes the other value in every model. So they are not local laws. They are integer consequences of the whole window.</li>
+</ul>
+<p>What this does and does not settle: it closes nothing about linear <span class="math inline">\(Q\)</span> in the sense of the brief. The laws alone do not describe the integer solutions; the backbone and the switches do. But none of the extra functionals is a phase: each one is a constant or a copy of a bit.</p>
+<h2 id="what-failed">6. What failed</h2>
+<ul>
+<li>Every phase candidate on the dense solutions (§3).</li>
+<li>The first affine-hull comparison, by sampling alone: the solver’s samples missed points (2 at <span class="math inline">\(g=4\)</span> and <span class="math inline">\(g=5\)</span> were found only by the targeted queries), and at <span class="math inline">\(g=6\)</span> the first 870 points spanned only 211 of the 234 dimensions. More samples closed it; <code>milp</code> on 3024 binaries was stopped by its 300 s cap without an answer.</li>
+<li>The random-direction <code>milp</code> test is only as good as HiGHS’s tolerances (default relative MIP gap). I did not rely on it for the exact results. It supplied two points and a consistency check.</li>
+</ul>
+<h2 id="rules">7. Rules</h2>
+<ul>
+<li>One solver or optimiser process at a time: kept. Every run was sequential in the foreground, and nothing ran in the background.</li>
+<li>Every solve and every <code>milp</code> ran in a child process under <code>subprocess.run(timeout=...)</code>, as in <code>h560_lib.run_job</code>. One <code>milp</code> hit the cap (300 s, <span class="math inline">\(g=6\)</span>).</li>
+<li>Every UNSAT in §5 has a SAT control on the same clause set (the first query of each batch).</li>
+<li>Script names: the brief allows <code>h570_*</code> to <code>h579_*</code>. Four of mine are <code>h579b_</code>, <code>h579c_</code>, <code>h579d_</code>, <code>h579e_</code>, which is a stretch of that pattern. I also ran four short inline <code>python -c</code> checks (comparing saved model sets, the ratio <span class="math inline">\(F(\text{end})/F(\text{start})\)</span>, and the switch values; no solver). Heredocs: none. Nothing under <code>docs/</code>, no LOG, HANDOVER or README, no git. I edited my own new scripts after first use (h570_lib, h572, h573, h578, h579d); no existing script was modified.</li>
+</ul>
+<h2 id="commands-from-the-repository-root-pythonpath-and-tmpdir-as-in-the-brief">8. Commands (from the repository root, <code>PYTHONPATH</code> and <code>TMPDIR</code> as in the brief)</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>command</th>
+<th>wall</th>
+<th>result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h571_sample.py 12,4,4 3 8 g4_q8 --k 6 --seeds 1</code></td>
+<td>0.4 s</td>
+<td>2 models (the sheet’s)</td>
+</tr>
+<tr>
+<td><code>h573_batch.py 4</code></td>
+<td>22 s</td>
+<td>18 settings, g = 4</td>
+</tr>
+<tr>
+<td><code>h573_batch.py 5 6</code></td>
+<td>75 s</td>
+<td>28 settings</td>
+</tr>
+<tr>
+<td><code>h573_batch.py 7</code></td>
+<td>115 s</td>
+<td>10 settings</td>
+</tr>
+<tr>
+<td><code>h573_batch.py 4 5 6 --only one --hamming 40 --suffix _h --seeds 2</code></td>
+<td>160 s</td>
+<td>16 settings</td>
+</tr>
+<tr>
+<td><code>h573_batch.py 7 --only one --hamming 40 --suffix _h --seeds 2</code></td>
+<td>134 s</td>
+<td>4 settings</td>
+</tr>
+<tr>
+<td><code>h572_fourier.py GLOB:1*</code>, <code>GLOB:*_h</code></td>
+<td>~2 min, ~1 min</td>
+<td>§3 (b)</td>
+</tr>
+<tr>
+<td><code>h574_chains.py GLOB:1*</code>, <code>GLOB:*_h</code></td>
+<td>~2 min, ~1 min</td>
+<td>§3 (a), (c)–(f)</td>
+</tr>
+<tr>
+<td><code>h575_detail.py</code> (4 calls), <code>h576_pairs.py</code> (5 settings)</td>
+<td>&lt; 30 s</td>
+<td>§3 (c)</td>
+</tr>
+<tr>
+<td><code>h571_sample.py ... H_12_4_4_m3_6 --k 60 --seeds 20</code>; <code>H_12_5_5_m3_8</code>; <code>H_12_6_6_m3_10 --seeds 25</code></td>
+<td>16 s; 27 s; 72 s</td>
+<td>hull samples</td>
+</tr>
+<tr>
+<td><code>h577_hull.py H_12_4_4_m3_6 12_4_4_m3_6</code></td>
+<td>5 s</td>
+<td>89 vs 210</td>
+</tr>
+<tr>
+<td><code>h578_implied.py H_12_4_4_m3_6</code> (twice, 2 and 4 rounds)</td>
+<td>89 s, 86 s</td>
+<td>+2 points; 90 (milp)</td>
+</tr>
+<tr>
+<td><code>h579_eqs.py</code>, <code>h579b_rel.py</code>, <code>h579c_pairs.py</code> on h4466</td>
+<td>&lt; 20 s each</td>
+<td>83 backbone + 37 pairs; relations are laws</td>
+</tr>
+<tr>
+<td><code>h579d_verify.py H_12_4_4_m3_6</code></td>
+<td>8 s</td>
+<td>exact 90 / 210</td>
+</tr>
+<tr>
+<td><code>h579d_verify.py H_12_5_5_m3_8</code></td>
+<td>16 s</td>
+<td>exact 152 / 333</td>
+</tr>
+<tr>
+<td><code>h579d_verify.py 12_5_5_m3_8_far</code>; <code>h578_implied.py far5 --from-verify v5588far</code></td>
+<td>23 s; 101 s</td>
+<td>112 / 332</td>
+</tr>
+<tr>
+<td><code>h579d_verify.py 12_6_6_m3_10</code></td>
+<td>270 s</td>
+<td>211 of bound 234</td>
+</tr>
+<tr>
+<td><code>h578_implied.py g6 --from-verify v66610 --rounds 1 --cap 300</code></td>
+<td>300 s CAPPED</td>
+<td>no answer</td>
+</tr>
+<tr>
+<td><code>h579d_verify.py H_12_6_6_m3_10 --merge v66610 --cap 500</code></td>
+<td>18 s</td>
+<td>exact 234 / 484</td>
+</tr>
+<tr>
+<td><code>h579e_classify.py</code> on v4466, v5588, v66610b</td>
+<td>&lt; 5 s</td>
+<td>§5 lists</td>
+</tr>
+</tbody>
+</table>
+</main>
+</body>
+</html>

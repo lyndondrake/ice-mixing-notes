@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>(V) given Statement R: the reach drops by exactly the literal X(v_2) = 1 and no more, the models short of threshold are many and are not label classes</title>
+<meta name="description" content="(V) given Statement R: the reach drops by exactly the literal X(v_2) = 1 and no more, the models short of threshold are many and are not label classes, both cut cylinders still refute (V), and on the B grid x = 1 the parametrisation (C) has no linear content at all">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "(V) given Statement R: the reach drops by exactly the literal X(v_2) = 1 and no more, the models short of threshold are many and are not label classes, both cut cylinders still refute (V), and on the B grid x = 1 the parametrisation (C) has no linear content at all",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-10-01-fable-screw.html",
+ "datePublished": "2026-10-01",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Fable), agent screw, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-10-01-fable-screw.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/closed-r-then-monodromy.html">closed-r-then-monodromy</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">(V) given Statement R: the reach drops by exactly the literal X(v_2) = 1 and no more, the models short of threshold are many and are not label classes, both cut cylinders still refute (V), and on the B grid x = 1 the parametrisation (C) has no linear content at all</h1>
+
+<p class="author">Claude (Fable), agent screw, for Lyndon Drake</p>
+<p class="date">2026-10-01</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#verdict" id="toc-verdict">Verdict</a></li>
+<li><a href="#statement-tested" id="toc-statement-tested">Statement tested</a></li>
+<li><a href="#t1-tables" id="toc-t1-tables">T1 tables</a></li>
+<li><a href="#lemmas-in-the-heights-for-every-cell" id="toc-lemmas-in-the-heights-for-every-cell">Lemmas, in the heights, for every cell</a></li>
+<li><a href="#t3.-the-exact-gap" id="toc-t3.-the-exact-gap">T3. The exact gap</a></li>
+<li><a href="#what-is-left-and-a-stop-rule" id="toc-what-is-left-and-a-stop-rule">What is left and a stop rule</a></li>
+<li><a href="#scripts-and-timings" id="toc-scripts-and-timings">Scripts and timings</a></li>
+<li><a href="#rules-kept-or-broken" id="toc-rules-kept-or-broken">Rules kept or broken</a></li>
+</ul>
+</details></nav>
+<h1 id="verdict">Verdict</h1>
+<p><strong>NOT THERE.</strong> The monodromy picture of step 2, in the form the brief gives it (given R, the type-x set of a B grid normal to x is a label class of one chain family, advancing one label per cube, closing after g cubes with the wrong type), is refuted by T1 and by hand.</p>
+<ol type="1">
+<li>R shortens the one-sided reach of (V) from 2g + 1 to 2g - 1 on all five cells tried (g = 4, 5, 6, 4, 8), and the whole of the shortening is the single literal X(v_2) = 1, the one rod of R that lies inside the window [-3, 2g - 1]: with that literal alone in place of R the reach is the same 2g - 1 on every cell. R contributes nothing else inside a window (solver).</li>
+<li>One grid short of the new threshold the negation of (V) given R has 8 models of the type-x set of B on (12,4,4) and 32 on (12,4,8) (enumeration complete), and more than 50 on (10,5,5) and (12,6,6) (capped). On no grid of any model is the type-x set a union of classes of either x-chain family, and on no model is the type-x set of a grid a translate of that of the grid one cube earlier. The two-model sheet of item 7 is not the near-threshold structure given R (solver, computed).</li>
+<li>(V) given R is false on the whole y-cut cylinder and on the whole z-cut cylinder of every cell tried, with (T2) on every hexagon not through the cut grid. R supplies neither transverse circle (solver, one query per cell and cut).</li>
+<li>By hand, for every cell: on the B grid x = 1 each transverse chain meets the grid in c/gcd(a,c) or b/gcd(a,b) vertices, so on every cell with b | a and c | a (every cubic cell and the four test cells) each meets it once, and (C) restricted to the grid is onto: it imposes no linear condition on h_y - h_z, hence none on the type-x set of the grid. The pair (y-chain labels, z-chain labels) at a vertex of the grid is never a product on any cell, so Lemma 8 has nothing to act on; the premise of T2(i) fails on every cell (proved here, no second reader; checked exactly on seven cells).</li>
+<li>The weights of the transverse chains, seen from the B grids along the rod axis, are sheared by one chain label per cube and return after gcd(a,c) or gcd(a,b) cubes; on (12,8,8) that is 4 cubes while (V) given R needs 2g - 1 = 15 grids, g = gcd(b,c) = 8. The g of the reach law is the modulus of the x-chain labels d = y - z and s = y + z on grids normal to x, not the period of any weight of (C) along the rod axis. A monodromy in the weights of (C) cannot be the mechanism on every cell (proved geometry plus solver on one cell).</li>
+</ol>
+<p>What stands: the reach of (V) given R is still 2g + O(1) over the closed transverse torus and dies on every cut, so the obstruction is still a closure over the x-chain labels of both circles. But R is not a first step towards it, and the heights of (C) carry no linear shadow of it on a grid.</p>
+<h1 id="statement-tested">Statement tested</h1>
+<p>Coordinates in quarter-cube units, cell (a,b,c) modulo (4a,4b,4c), A = even coordinates with sum 0 mod 4, B = A + (1,1,1). A-hole O = (2,0,0); rods v_0 = (0,0,0), v_1 = (4,0,0) of type x; lower bridgehead beta = (1,1,1) of type y; upper bridgehead by form: <code>ng2</code>, (3,-1,1) not of type y, and <code>zg</code>, (3,1,-1) of type z (<code>UPPER</code> of h630). <strong>R as hypothesis:</strong> unit clauses X(v_j) = 1 for v_j = (4j,0,0), every j round the x-circle. <strong>Negation of (V):</strong> some B vertex of the grid x = 1 (relative x = -1) has type x. Type model of h360_lib (one-hot, (T2) on the hexagons all six of whose vertices have relative x in [-3, Q]), windows <code>one</code> only. <strong>Cut:</strong> every hexagon with a vertex on the transverse grid farthest from the rod line (relative y = -2b or z = -2c) dropped; <code>--full</code> keeps every other hexagon of the torus. Every window is one h32_cap child (cap 120 s, models 300 s) with a control (the hypotheses alone, SAT in every row below) and the negation query; UNSAT = the window forces (V). No bond model was run: the type model is the weaker one and the record (rodline Table A) has them agreeing on these cells.</p>
+<h1 id="t1-tables">T1 tables</h1>
+<p><strong>A. One-sided reach [-3, Q] of (V), form <code>ng2</code> (form <code>zg</code> agrees on the first four cells).</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>g</th>
+<th>gcd(a,b), gcd(a,c)</th>
+<th>without R (record 2g+1)</th>
+<th>with R</th>
+<th>with X(v_2) = 1 alone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(12,4,4)</td>
+<td>4</td>
+<td>4, 4</td>
+<td>9</td>
+<td><strong>7</strong></td>
+<td>7</td>
+</tr>
+<tr>
+<td>(10,5,5)</td>
+<td>5</td>
+<td>5, 5</td>
+<td>11</td>
+<td><strong>9</strong></td>
+<td>9</td>
+</tr>
+<tr>
+<td>(12,6,6)</td>
+<td>6</td>
+<td>6, 6</td>
+<td>13</td>
+<td><strong>11</strong></td>
+<td>11</td>
+</tr>
+<tr>
+<td>(12,4,8)</td>
+<td>4</td>
+<td>4, 4</td>
+<td>9</td>
+<td><strong>7</strong></td>
+<td>7</td>
+</tr>
+<tr>
+<td>(12,8,8)</td>
+<td>8</td>
+<td>4, 4</td>
+<td>17</td>
+<td><strong>15</strong></td>
+<td>15</td>
+</tr>
+</tbody>
+</table>
+<p>Every entry is UNSAT at the Q shown and SAT at Q - 1 (the sweep starts at Q = 3 or 5; (12,8,8) was run at Q = 14, 15 with R, 16, 17 without, and 7 to 15 with v_2 alone). So R saves exactly two grids, and v_2 alone saves the same two. Inside [-3, 2g - 1] the rods v_j with j &gt;= 3 lie at relative x = 4j - 2 &gt;= 10 &gt; 2g - 1 for g &lt;= 5, and for g = 6 and 8 the rod v_3 (x = 10) is inside the window but adds nothing to v_2.</p>
+<p><strong>B. Cuts, with R, form <code>ng2</code>.</strong> Windows [-3, Q] up to Q = 23 (19 on (10,5,5)), then the whole cut cylinder.</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>y-cut, windows</th>
+<th>y-cut, full cylinder</th>
+<th>z-cut, windows</th>
+<th>z-cut, full cylinder</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(12,4,4)</td>
+<td>none &lt;= 23</td>
+<td>negation SAT</td>
+<td>none &lt;= 23</td>
+<td>negation SAT</td>
+</tr>
+<tr>
+<td>(10,5,5)</td>
+<td>none &lt;= 19</td>
+<td>negation SAT</td>
+<td>none &lt;= 19</td>
+<td>negation SAT</td>
+</tr>
+<tr>
+<td>(12,6,6)</td>
+<td>none &lt;= 23</td>
+<td>negation SAT</td>
+<td>none &lt;= 23</td>
+<td>negation SAT</td>
+</tr>
+<tr>
+<td>(12,4,8)</td>
+<td>none &lt;= 23</td>
+<td>negation SAT</td>
+<td>none &lt;= 23</td>
+<td>negation SAT</td>
+</tr>
+</tbody>
+</table>
+<p>Rodline’s Table B (no R) has R itself surviving the z-cut; (V) given R survives neither cut, even with every other hexagon of the torus imposed.</p>
+<p><strong>C. Models one grid short of the threshold of A, with R, form <code>ng2</code>,</strong> blocking on the X variables of the B vertices of the window, cap 50, random phases, seed 1.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>window</th>
+<th>models</th>
+<th>complete</th>
+<th>type-x per B grid (all models)</th>
+<th>per A grid</th>
+<th>d-class unions</th>
+<th>s-class unions</th>
+<th>translate of previous grid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(12,4,4)</td>
+<td>[-3,6]</td>
+<td>8</td>
+<td>yes</td>
+<td>8 to 10 (of 32; 2bc/g = 8)</td>
+<td>12 to 18 (sheet: 8)</td>
+<td>0 grids</td>
+<td>0 grids</td>
+<td>none, 8 models x 6 pairs</td>
+</tr>
+<tr>
+<td>(12,4,8)</td>
+<td>[-3,6]</td>
+<td>32</td>
+<td>yes</td>
+<td>16 to 20 (of 64; 2bc/g = 16)</td>
+<td>26 to 36</td>
+<td>0</td>
+<td>0</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>(10,5,5)</td>
+<td>[-3,8]</td>
+<td>50</td>
+<td>capped</td>
+<td>14 to 18 (of 50; 2bc/g = 10)</td>
+<td>20 to 28</td>
+<td>0</td>
+<td>0</td>
+<td>none, 20 models x 8 pairs</td>
+</tr>
+<tr>
+<td>(12,6,6)</td>
+<td>[-3,10]</td>
+<td>50</td>
+<td>capped</td>
+<td>24 to 30 (of 72; 2bc/g = 12)</td>
+<td>31 to 39</td>
+<td>0</td>
+<td>0</td>
+<td>not run</td>
+</tr>
+</tbody>
+</table>
+<p>Lemma 6 holds inside every window (equal counts on all B grids and on all A grids of a model). “d-class unions”: grids of the window on which the type-x set is a union of whole classes of d = y - z mod 4g (the x-chains of family {0,1} on that grid), likewise s = y + z for {2,3}; the sheet of item 7 is one d-class per A grid. “Translate”: whether the type-x set of a grid equals the set of the grid x - 4 shifted by any (dy, dz); none on any pair of grids of any model.</p>
+<p><strong>D. The sets, explicitly: (12,4,4), [-3,6], model 0, type-x set of each B grid as relative (y, z) in [0,16) x [0,16).</strong> Each grid has 32 vertices, four d-classes and four s-classes of 8.</p>
+<table>
+<thead>
+<tr>
+<th>B grid</th>
+<th>type-x set</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-3</td>
+<td>(5,15) (7,1) (7,9) (7,13) (9,3) (9,7) (9,15) (11,1) (11,9)</td>
+</tr>
+<tr>
+<td>-1</td>
+<td>(1,13) (5,1) (7,3) (7,15) (9,1) (9,13) (11,7) (11,15) (15,3)</td>
+</tr>
+<tr>
+<td>+1</td>
+<td>(1,11) (3,1) (5,3) (7,1) (9,15) (11,5) (11,13) (13,15) (15,5)</td>
+</tr>
+<tr>
+<td>+3</td>
+<td>(1,9) (3,3) (5,1) (7,7) (9,9) (11,3) (11,15) (13,13) (15,7)</td>
+</tr>
+<tr>
+<td>+5</td>
+<td>(1,7) (5,7) (7,5) (7,9) (9,7) (9,11) (11,1) (11,9) (15,9)</td>
+</tr>
+</tbody>
+</table>
+<p>On grid -1 (the plane of the lower bridgeheads) the nine vertices fall in three d-classes (4 : 4, 8 : 2, 12 : 3 vertices) and four s-classes; on grid +1 in all four d-classes and all four s-classes. The other seven models are in <code>.tmp/h701_1244_q6.log</code> as class counts.</p>
+<h1 id="lemmas-in-the-heights-for-every-cell">Lemmas, in the heights, for every cell</h1>
+<p>Notation of rodline: h_x = F_x, h_y = F_y + sigma beta, h_z = F_z - sigma alpha, sigma = +1 on A and -1 on B; Y = h_x - h_z, Z = h_y - h_x, X = 1 + h_z - h_y; type x iff the three heights agree. Families: x-chains {0,1} (step (0,2,2), constant y - z) and {2,3} (step (0,2,-2), constant y + z); y-chains {0,2} (step (2,0,2), constant x - z) and {1,3} (step (2,0,-2), constant x + z); z-chains {0,3} (step (2,2,0), constant x - y) and {1,2} (step (2,-2,0), constant x + y). Put g_y = gcd(a,c), g_z = gcd(a,b), g = gcd(b,c). On the B grid x = 1 write A_02(y,z) for the weight of the y-chain of {0,2} through (1,y,z), A_13, B_03, B_12 likewise.</p>
+<p><strong>Lemma S1 (the shear along the rod axis; proved here, no second reader).</strong> For every cell and every m, the four transverse chains through the B vertex (1 + 4m, y, z) are the chains through (1, y, z - 4m) for {0,2}, (1, y, z + 4m) for {1,3}, (1, y - 4m, z) for {0,3} and (1, y + 4m, z) for {1,2}. Hence on the B grid x = 1 + 4m <span class="math display">\[h_y - h_z = A_{02}(y, z - 4m) + A_{13}(y, z + 4m) - B_{03}(y - 4m, z) - B_{12}(y + 4m, z) - (\alpha + \beta),\]</span> and X = 1 + h_z - h_y there. <em>Proof.</em> (1, y, z - 4m) + 2m(2,0,2) = (1 + 4m, y, z), and (2,0,2) is the step of {0,2}; the other three the same with (2,0,-2), (2,2,0), (2,-2,0). The constant is sigma(alpha + beta) with sigma = -1. <span class="math inline">\(\square\)</span> A_02(y, .) is a function of z modulo 4g_y (the label x - z of the chain), so the first term has period g_y in m, and likewise g_y, g_z, g_z for the others. This is the only monodromy in the weights of (C) along the rod axis, and it closes after lcm(g_y, g_z) cubes: after 4 cubes on (12,8,8), after L on a cubic cell.</p>
+<p><strong>Lemma S2 (incidence; proved here, no second reader; computed on seven cells, h702).</strong> A y-chain meets the B grid x = 1 in c/g_y vertices and a z-chain in b/g_z. <em>Proof.</em> The chain of {0,2} through (1,y,z) is {(1 + 2n, y, z + 2n)}; x = 1 mod 4a needs n = 0 mod 2a, and then z runs over z + 4ak mod 4c, which takes 4c/gcd(4a, 4c) = c/g_y values. The other families the same. <span class="math inline">\(\square\)</span></p>
+<p><strong>Lemma S3 ((C) is vacuous on a grid; proved here, no second reader; computed, h702).</strong> If b | a and c | a, each transverse chain meets the B grid x = 1 exactly once, the 8bc chains through the grid are distinct, and the map (f, alpha, beta) -&gt; (h_y - h_z restricted to the grid) is onto. So (C) imposes no linear condition on h_y - h_z, hence on X, on a single grid normal to x. <em>Proof.</em> S2 with g_y = c, g_z = b. Each vertex u of the grid has a chain met by no other vertex of the grid; vary its weight. <span class="math inline">\(\square\)</span> Computed rank: 32 of 32, 50 of 50, 72 of 72, 64 of 64 on (12,4,4), (10,5,5), (12,6,6), (12,4,8), and on (4,4,4), (5,5,5); on (12,8,8), where each chain meets the grid twice, 96 of 128. Two consecutive B grids: rank 60 of 64, 98 of 100, 140 of 144, 108 of 128, 156 of 256; all B grids: 99 of 256 on (4,4,4) and 99 of 768 on (12,4,4) (the number of transverse chains does not depend on a when b, c | a). These small deficiencies are the linear laws between grids that agent moment found and showed cannot carry integrality.</p>
+<p><strong>Corollary (T2(i) refuted on every cell; proved here).</strong> On the B grid x = 1, h_y - h_z is a function of the pair of y-chains through u plus a function of the pair of z-chains through u plus a constant, but the set of attained pairs is never a product: the y-pair determines (y, z mod 4g_y) and the z-pair determines (z, y mod 4g_z), so the pairs number 2bc while the product has 4bc g_y g_z elements (h702: 32 of 1024 on (12,4,4), 128 of 4096 on (12,8,8)). Lemma 8 therefore does not apply to X on a grid normal to x on any cell. The one separable quantity with a product on such a grid pair is h_x in the x-chain labels (Lemma H2), and h_x does not enter X. On the cells of S3 the type-x set of a B grid is unconstrained by (C) altogether, which is the linear statement of T1’s Table C.</p>
+<p><strong>Lemma S4 (which g; proved geometry plus solver).</strong> By S1 the weights of (C) seen from the B grids along the rod axis have period lcm(g_y, g_z) cubes. On (12,8,8) that is 4 cubes, 8 grids; the reach of (V) given R (and given v_2 alone) is 15 = 2 gcd(b,c) - 1 grids (Table A). So the g in the reach law is the modulus of the x-chain labels d = y - z and s = y + z on grids normal to x (the classes are the x-chains, g per family per grid pair), and no monodromy in the weights of (C) along the rod axis is the mechanism of (V) on every cell. (Also: the two rigid models of item 7 are written in those labels, and a label class on a grid is one x-chain, which lives on its own pair of planes and shares no weight of (C) with any other grid.)</p>
+<p><strong>T2(ii), the step.</strong> It has no premise. The step was to say how the label class carrying type x on one B grid determines it on the next; Table C says there is no such class on any grid of any model given R, and no translate rule between consecutive grids. What P^x at O_j gives with R is Lemma R1 of rodline: the number of upper bridgeheads of O_j of type x equals the number of lower ones, a count on four B vertices with value 0, 1 or 2 at every hole of the line. The bridgeheads (4j+1, s, s) and (4j+3, s, -s), s = +-1, of different holes lie on no common transverse chain unless the holes are g_y or g_z cubes apart (S1), so on a cubic cell (C) relates the counts at two holes to nothing; the control bit along the line has no linear carrier. I did not look for another step (stop rule).</p>
+<p><strong>T2(iii), where the circles and integrality enter.</strong> The labels d and s modulo 4g exist on a grid only because 4b and 4c are both multiples of 4g: both transverse circles closed. On a cut cylinder one of y, z is unbounded, the classes are not finite, and (V) given R is false there (Table B, full cylinders), so the closing of both circles is needed and R supplies neither. Integrality is everything: by S3 the real relaxation (C) says nothing on a grid and little between grids, and the small rank deficiencies are the linear laws of the moment report. Lemma 8 would have been the integrality step and has no product to act on (Corollary). Every claim in this section is tagged in its statement; S1 to S3 are checked exactly on seven cells by h702 and S4’s solver part is Table A.</p>
+<h1 id="t3.-the-exact-gap">T3. The exact gap</h1>
+<p>There is no reduction. The one statement that closes (V) given R on every cell is (V) itself with one more literal: <em>with X(v_0) = X(v_1) = X(v_2) = 1, Y(beta) = 1 and the upper literal, on the closed transverse torus with (T2) on the grids [-3, 2g - 1], the B grid x = 1 has no vertex of type x.</em> Solver status: UNSAT on (12,4,4), (10,5,5), (12,6,6), (12,4,8), (12,8,8) at Q = 2g - 1, SAT at Q = 2g - 2 (Table A), SAT on both cut cylinders (Table B). What it needs from the second circle is what (V) needed: the finiteness of the x-chain labels on grids normal to x, which no weight of (C) carries and which R does not touch.</p>
+<h1 id="what-is-left-and-a-stop-rule">What is left and a stop rule</h1>
+<ol type="1">
+<li>Step 2 of the plan, as formulated, is closed: R does not shorten (V) by more than its literal v_2, and the heights of (C) carry no monodromy with the right period. Do not re-run (V) given R on windows, cuts, tubes or other cells, and do not look for a step in the transverse-chain weights along the rod axis.</li>
+<li>The negative is informative about where not to look: on a grid normal to x the real relaxation is vacuous (S3), so any argument must be integral from the first line, and the integral object it must handle is the set of x-chain labels of both families on each grid pair, whose modulus is g = gcd(b,c). Theorems 10 and 11 close round the rod axis through sums over planes; on a cubic cell that route is exactly what S3 says is empty.</li>
+<li>Owed to the record: the facts of Tables A and B (R contributes exactly v_2 to (V) in a window and nothing on a cylinder), which correct the plan’s reading that step 1 feeds step 2; and S3, which is the exact form of rodline’s “on a cubic cell (C) relates no two positions”.</li>
+</ol>
+<h1 id="scripts-and-timings">Scripts and timings</h1>
+<p>All new, in <code>experiments/08_frozen_structure/scratch_h/</code>, none existing modified, nothing committed; logs in <code>.tmp/h700_*.log</code>, <code>.tmp/h701_*.log</code>, <code>.tmp/h702.log</code>, <code>.tmp/h703_*.log</code>.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>script</th>
+<th>purpose</th>
+<th>solver wall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h700_vgivenr.py</code></td>
+<td>reach of (V) given R / without R / given v_2 alone; <code>--cut AX</code>, <code>--full</code>; forms <code>ng2</code>, <code>zg</code></td>
+<td>176 s in all: Table A 25 s on four cells plus 118 s on (12,8,8); cuts 27 s; v_2-only 6 s</td>
+</tr>
+<tr>
+<td><code>h701_rmodels.py</code></td>
+<td>models of the negation given R one grid short, class analysis per grid</td>
+<td>3.5 s</td>
+</tr>
+<tr>
+<td><code>h702_gridlabels.py</code></td>
+<td>S1 to S3 exactly: incidences, label pairs, ranks of (C) on grids (numpy, no solver)</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>h703_rshift.py</code></td>
+<td>the translate test between grids four apart; explicit sets</td>
+<td>1 s</td>
+</tr>
+</tbody>
+</table>
+<p>Solver wall in all: about 3 minutes of the 20 allowed. No batch was killed; the longest single query was 34.5 s ((12,8,8), no R, Q = 17). Every UNSAT has a SAT control on the same clause set without the negated conclusion, in the same child. One solver child at a time; this Mac only; no job over a minute.</p>
+<h1 id="rules-kept-or-broken">Rules kept or broken</h1>
+<p>Kept: the reading list in order; type model of h360_lib through h630’s <code>TypeSetup</code>; every solve through <code>h32_cap.run_batch</code> or the h560 worker under a hard cap; one child at a time; no Sparks, no expq; scripts <code>h700</code> to <code>h703</code> with docstrings and usage lines; no existing script modified; no commits; temporary files in <code>.tmp/</code>; the 20-minute budget (3 minutes used); the closed list (no phases, Fourier coefficients, counts or windings of the types on windows; no (V) on an open torus beyond the cut controls the brief asked for in T1(c); no reach sweeps of R; no U’ certificates; no hunt for a new quantity); status tags on every claim; UK English, no em-dashes; under 400 lines.</p>
+<p>Bent: the brief named four cells; I added (12,8,8) (five queries, 118 s) because the four cells all have gcd(a,b) = gcd(a,c) = gcd(b,c) and cannot tell the period of the weights of (C) from g, and S4 needed a cell that can. I also ran the full cut cylinders (eight queries, 2 s) beyond the windows the brief’s <code>--cut</code> implies, to make Table B a statement about the cylinder and not about a window. T2(ii) was not carried out as a derivation because its premise failed in T1; what P^x gives with R is stated instead. Lemmas S1 to S4 are proved here by me and have no second reader.</p>
+</main>
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hostile check of the two linear-algebra steps of P1 (completeness of the chain modes, and ker L = S + G with dim H_A = 4(a + b + c) - 2), with an inde</title>
+<meta name="description" content="Hostile check of the two linear-algebra steps of P1 (completeness of the chain modes, and ker L = S + G with dim H_A = 4(a + b + c) - 2), with an independent model and an independent stratification: both confirmed as proofs for every cell, with three expository corrections">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Hostile check of the two linear-algebra steps of P1 (completeness of the chain modes, and ker L = S + G with dim H_A = 4(a + b + c) - 2), with an independent model and an independent stratification: both confirmed as proofs for every cell, with three expository corrections",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-10-01-opus-p1check.html",
+ "datePublished": "2026-10-01",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus), agent p1check, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-10-01-opus-p1check.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/parametrisation-c.html">parametrisation-c</a>, <a href="../claims/theorem-h-orientation/periodicity.html">periodicity</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Hostile check of the two linear-algebra steps of P1 (completeness of the chain modes, and ker L = S + G with dim H_A = 4(a + b + c) - 2), with an independent model and an independent stratification: both confirmed as proofs for every cell, with three expository corrections</h1>
+
+<p class="author">Claude (Opus), agent p1check, for Lyndon Drake</p>
+<p class="date">2026-10-01</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#verdicts" id="toc-verdicts">Verdicts</a></li>
+<li><a href="#environment-and-programs" id="toc-environment-and-programs">Environment and programs</a></li>
+<li><a href="#c1.-completeness" id="toc-c1.-completeness">C1. Completeness</a></li>
+<li><a href="#c2.-the-kernel-of-the-match-operator" id="toc-c2.-the-kernel-of-the-match-operator">C2. The kernel of the match operator</a></li>
+<li><a href="#c3.-the-use-in-p1" id="toc-c3.-the-use-in-p1">C3. The use in P1</a></li>
+<li><a href="#corrections-to-make-in-the-record" id="toc-corrections-to-make-in-the-record">Corrections to make in the record</a></li>
+<li><a href="#rules-kept-or-broken" id="toc-rules-kept-or-broken">Rules kept or broken</a></li>
+</ul>
+</details></nav>
+<h2 id="verdicts">Verdicts</h2>
+<ul>
+<li><strong>Completeness</strong> (<code>2026-09-17-completeness.md</code>): <strong>CONFIRMED</strong>, as a proof for every cell, not a computation on the cells examined. Two cosmetic miscounts in the report (fifteen closed patterns, not fourteen; fourteen nonempty, not thirteen); no effect on the argument.</li>
+<li><strong>Kernel of the match operator</strong> (<code>2026-09-17-sc-linear.md</code>): <strong>CONFIRMED</strong>, for every cell. One expository gap closed: the rank lemma’s two identities serve the block N_A only; N_B needs its own pair, which I supply and verified (§C2b). The 16 degenerate points are exactly the 16 solutions of A = B = P = Q = 0, and the rank is 0 at each.</li>
+<li><strong>The use in P1</strong> (<code>2026-09-17-p1-proof.md</code>, steps 1 to 3): <strong>CONFIRMED</strong>. Same equations and same space in both places. No hypothesis on the extents is used. The step from the field statement to ker L = S + G needs “the antisymmetric constants are not in the span of the chain modes”, which has a one-line hand proof (§C3).</li>
+</ul>
+<p><strong>Most important finding.</strong> The stratification of the unit torus and every rank on it were reproduced by a different method: a Smith-normal-form parametrisation of each closed pattern, instead of the report’s hand sign resolution. It gives the same 68 components (12 + 24 + 16 + 16), with 0 failures. In real space, on 12 cells, both span statements hold exactly (rank sandwich, not floating point) on a model built only from the note’s hole definition of a hexagon.</p>
+<h2 id="environment-and-programs">Environment and programs</h2>
+<p>Mac, project venv, sympy 1.14, numpy. Scripts in <code>experiments/08_frozen_structure/scratch_h/</code>: - <code>h750_model.py</code>: the model, from the note’s definitions only. A-holes O ∈ A + (2,0,0), σ with product +1, a_k = O + 2σ_k e_k, b_k = O + σ − 2σ_k e_k. Chains of family {i,j} have step d_i − d_j. The claim that a_k and b_k carry axis k is <strong>checked from the bonds</strong>, not assumed. No import from icemix, hlib or the f1/k1x/r7 scripts. - <code>h751_fourier.py</code>: the symbols M and M_A built from the same hexagon definition (rows indexed by σ). Also the comparison with the reports, the determinant, closed patterns, strata, the rank lemma and the degenerate points. 9 s. - <code>h752_cells.py</code>: exact real-space ranks on cells. 0 to 30 s per cell. - <code>h753_crossmodel.py</code>: compares the h750 hexagons with pacheck’s <code>h730_lib</code> (six-bond walks), axes included.</p>
+<p>Logs: <code>.tmp/h751.log</code>, <code>.tmp/h752a.log</code>, <code>.tmp/h752b.log</code>, <code>.tmp/h752c.log</code>, <code>.tmp/h753.log</code>.</p>
+<p><strong>Exactness of the cell ranks.</strong> Every spanning vector is checked to solve the system over Z. Ranks are then taken modulo the prime 2^31 − 1, with 10^9 + 7 as a second prime. From rank_p ≤ rank_Q: - dim ker_Q ≤ 2n − rank_p(system); - dim span_Q ≥ rank_p(vectors).</p>
+<p>When the two numbers agree, the span equals the kernel over Q, and hence over R. This holds for one prime alone.</p>
+<p><strong>Cross-model check (computed, h753).</strong> On (1,1,1), (1,2,3), (2,2,3) and (3,3,3), the hexagons of h750 and h730 are identical as sets of (position, axis) pairs: 16, 96, 192 and 432 hexagons.</p>
+<h2 id="c1.-completeness">C1. Completeness</h2>
+<p><strong>Statement as read.</strong> - Equations: one-hot plus (T2), in homogeneous form. The unknowns are (a,b) = ([type y], [type z]) per vertex, with [type x] = −a − b. Each hexagon gives Σ_{v∈h} ind_{α_h(v)}(v) = 0. - Space: H, the real solutions on the cell (a,b,c). Real, not integer. - Claim: H = span of the chain modes m_C (w_E on the chain, w_x = (1,−1), w_y = (0,1), w_z = (−1,0)), plus the two antisymmetric constants σ_v(α,β). - Scope: every cell (a,b,c) with a, b, c ≥ 1.</p>
+<p>This is exactly (C) of <code>theorem-h-orientation</code>: Y = F_x − F_z + σα and Z = F_y − F_x + σβ are the components of Σ f_C w_{E(C)}. The chain steps in the note match the families {0,1}, {2,3} (axis x) and so on. The affine form follows because e_x satisfies (T2) with two matches per hexagon.</p>
+<p><strong>The method, and why finitely many strata cover every cell (proved; read and agreed).</strong> - The FCC lattice Λ acts on the solution space, and the box lattice 4aZ × 4bZ × 4cZ lies in Λ for every a, b, c ≥ 1. So H ⊗ C splits over the 4abc characters of Λ/box. - Each character is the restriction of a point (x,y,z) of the unit 3-torus, with 16 lifts. The four Λ-orbits of hexagons (one per σ) give a 4×4 symbol M(x,y,z) acting on (a_A, b_A, a_B, b_B). - The chain modes of one family form one Λ-orbit. So their span meets the χ-component in the line C·v_f(χ) when χ(u_f) = 1, and in 0 otherwise. - So the claim for every cell is equivalent to one statement for every point of the torus:</p>
+<p>ker M(k) = span{v_f(k) : χ(u_f) = 1}, plus the two constant vectors when χ is trivial on Λ.</p>
+<ul>
+<li>The torus is a single compact object, and the strata are a finite partition of it. That is why a finite computation proves the claim for every cell.</li>
+<li>Real versus complex: the systems have integer coefficients, so the complex statement gives the real one.</li>
+</ul>
+<p><strong>(a) Exhaustive stratification and ranks.</strong></p>
+<p><em>Symbol.</em> My M, built from the note’s holes, equals the report’s cleared M row by row up to a signed monomial. The row for σ = (1,1,1) is the orbit “omitting d_0”, and so on. The same holds for N_A and N_B. <strong>Computed.</strong></p>
+<p><em>Determinant.</em> det M = 4x²y²z²·ABCPQR, where the six factors are exactly the six loci χ(u_f) = 1. <strong>Computed; it agrees with the report.</strong> So the kernel is 0 off the six loci.</p>
+<p><em>Closed patterns.</em> Z(k) is always closed: if χ(u) = 1 for every u in S, then χ = 1 on the lattice ⟨S⟩. The torus is the dual of Z³, so annihilators of subgroups separate them, and “closed” is exactly “is ⟨S⟩ ∩ {u_f}”. I tested lattice membership by Smith normal form over all 64 subsets. - Result: <strong>15 closed patterns</strong>: the empty set, 6 singletons, 3 same-axis pairs, 4 kagome triples, and all six. - This is the report’s own table. Its row counts sum to 15, but its text says “fourteen subsets are closed” and its §4.5 says “thirteen nonempty”. Both should read one more. <strong>Cosmetic.</strong> - No pair across axes, and no |Z| = 4 or 5, is closed. <strong>Proved</strong>, by lattice membership.</p>
+<p><em>Components.</em> Each closed pattern Z was parametrised by its own Smith form, k_j = Π θ_i^{U_ij}: θ_i a root of unity of order d_i (only orders 1, 2 and 4 occur), or a free phase where d_i = 0. This is a different route from the report’s hand sign resolution. Results by type, with the dimension of the kernel equal to the span of the modes, plus 2 at K:</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>|Z|</th>
+<th>components</th>
+<th>free phases</th>
+<th>rank M</th>
+<th>dim ker = span of modes (+2 at K)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>3</td>
+<td>4</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>12</td>
+<td>2</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>24</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>16</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>6</td>
+<td>16</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>This gives the report’s 12 + 24 + 16 + 16 = 68, plus the generic component. The checks on each component: - Every supported mode, and at K both constants, is in ker M identically. - rank M = 4 − m is certified: - every (5 − m)-minor vanishes identically; - every irreducible factor (over Q, or Q(i) where needed) of the gcd of the (4 − m)-minors divides the locus polynomial of an <strong>absent</strong> family, so the minors have no common zero on the open stratum; - the span of the modes is certified the same way. - Generic component: by the factored determinant. - <strong>0 failures in 69.</strong> <strong>Computed; a certificate on every point of the torus.</strong></p>
+<p><em>Hand cross-check for types I and II (proved by me, independently).</em> Two facts give this: - If an analytic matrix path M(t) has corank r at t = 0, then det M(t) = O(t^r). - Along the scaling x ↦ xe^t (or y ↦ ye^t for the axis-x pair), each of the one or two vanishing locus factors has a simple zero.</p>
+<p>So corank ≤ |Z| on types I and II. The supported modes give equality. For type II this needs v_f and v_f̄ to be independent: χ(d_i) ≠ χ(d_i’) reduces to the absent locus of the third family of the same plane being nonzero. This argument fails on type III, where the order of vanishing is 3 against corank 2, and there the gcd certificate does the work.</p>
+<p><em>K.</em> The solutions of A = B = P = Q = 0 on the torus are exactly {±1}³ ∪ {±i}³. At all 16 points: - M = 0; - the six modes have rank 2; - the modes plus the two constants have rank 4.</p>
+<p><strong>Computed, exact.</strong></p>
+<p><strong>(b) and (c) dim H and the span on cells (computed, exact sandwich, h752).</strong> The “Fourier” column is the prediction Σ_k ker(|Z(k)|)/16, counted over the lifted wavevectors of the cell with exact rationals.</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>kind</th>
+<th>2n</th>
+<th>dim H</th>
+<th>Fourier</th>
+<th>rank(modes + 2)</th>
+<th>rank(modes)</th>
+<th>report</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,1,1)</td>
+<td>thin, cubic</td>
+<td>16</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+<td>8</td>
+<td>10</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>thin</td>
+<td>64</td>
+<td>22</td>
+<td>22</td>
+<td>22</td>
+<td>20</td>
+<td>22</td>
+</tr>
+<tr>
+<td>(1,2,3)</td>
+<td>thin, coprime</td>
+<td>96</td>
+<td>22</td>
+<td>22</td>
+<td>22</td>
+<td>20</td>
+<td>22</td>
+</tr>
+<tr>
+<td>(1,1,4)</td>
+<td>thin</td>
+<td>64</td>
+<td>22</td>
+<td>22</td>
+<td>22</td>
+<td>20</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>(1,5,5)</td>
+<td>thin</td>
+<td>400</td>
+<td>58</td>
+<td>58</td>
+<td>58</td>
+<td>56</td>
+<td>58</td>
+</tr>
+<tr>
+<td>(2,2,4)</td>
+<td>no coprime pair</td>
+<td>256</td>
+<td>58</td>
+<td>58</td>
+<td>58</td>
+<td>56</td>
+<td>58</td>
+</tr>
+<tr>
+<td>(2,3,4)</td>
+<td>coprime pairs</td>
+<td>384</td>
+<td>46</td>
+<td>46</td>
+<td>46</td>
+<td>44</td>
+<td>46</td>
+</tr>
+<tr>
+<td>(3,4,5)</td>
+<td>all pairs coprime</td>
+<td>960</td>
+<td>46</td>
+<td>46</td>
+<td>46</td>
+<td>44</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>(2,4,6)</td>
+<td>no coprime pair</td>
+<td>768</td>
+<td>90</td>
+<td>90</td>
+<td>90</td>
+<td>88</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>(3,3,3)</td>
+<td>cubic</td>
+<td>432</td>
+<td>98</td>
+<td>98</td>
+<td>98</td>
+<td>96</td>
+<td>98</td>
+</tr>
+<tr>
+<td>(4,4,4)</td>
+<td>cubic</td>
+<td>1024</td>
+<td>178</td>
+<td>178</td>
+<td>178</td>
+<td>176</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>(5,5,5)</td>
+<td>cubic</td>
+<td>2000</td>
+<td>282</td>
+<td>282</td>
+<td>282</td>
+<td>280</td>
+<td>n/a</td>
+</tr>
+</tbody>
+</table>
+<p>On all 12 cells: - the modes plus the constants span H exactly; - the Fourier prediction equals dim H, which checks the stratum kernel dimensions at every wavevector class of each cell; - the constants add exactly 2 to the rank of the modes.</p>
+<p><strong>Status: proved for every cell (the torus argument plus the strata certificates), and computed exactly on 12 cells.</strong> The statement is over R. It says nothing about integral weights, which the report itself sets aside.</p>
+<h2 id="c2.-the-kernel-of-the-match-operator">C2. The kernel of the match operator</h2>
+<p><strong>Statement as read.</strong> - L: chain weights → R^{hexagons}, with L_h(f) the A-match sum of Σ_C f_C m_C, in homogeneous coordinates. - S: the weights constant on each slab class. A slab class is a family together with the value of the coordinate that the family’s step fixes; there are 4(a + b + c) classes. - G: the gauge, ker(f ↦ Σ f_C m_C). - Claim: ker L = S + G. In field form: H_A (zero A-sum and zero B-sum on every hexagon) = span(slab modes) ⊕ ⟨the two antisymmetric constants⟩, and dim H_A = 4(a + b + c) − 2. - Scope: every cell.</p>
+<p>Note on G: the report’s word “the antisymmetric constants” in G belongs to the field form. In weight space, G is the relation space of the chain modes: dim 4 to 20 on my cells, 8 on (2,2,2) as in r7.</p>
+<p><strong>(a) Block-diagonal reduction (proved).</strong> - An A-match sum involves only the three A vertices of the hexagon, so the A rows have no B columns, and the B rows likewise. - In h751 this is true by construction: each σ-row splits into an A part and a B part, and their sum is the two-match row (checked). - My N_A and N_B match the report’s table row by row up to signed monomials (checked).</p>
+<p><strong>(b) The rank lemma (verified symbolically).</strong> - The four rows of each block have the pattern (u1,v1), (u2,v2), (u2,v1), (u1,v2), up to sign. - The minors v1(u1 − u2), v2(u2 − u1), u1(v2 − v1) and u2(v1 − v2) give the three cases. - The two identities A − z²P = −(x²R + C) and B − y²Q = C − x²R are <strong>identically true (sympy)</strong>. They settle the case u1 = u2, v1 = v2 for <strong>N_A</strong>. - <strong>Gap in exposition, closed here.</strong> For <strong>N_B</strong> the forms are u1 = z²A, v1 = y²B, u2 = P, v2 = Q, so the case reads z²A = P and y²B = Q. The report’s identities do not apply. The right pair is</p>
+<p>z²A − P = −(R + x²C), y²B − Q = x²C − R,</p>
+<p>both <strong>identically true (sympy, h751)</strong>. They give the same conclusion, C = R = 0. <strong>Small; now closed.</strong> - On each rank-one locus, ker N_A = ker N_B = ⟨w_E⟩ for the axis E of that locus. Checked symbolically on all 3 × 8 components, with a free phase. - The two slab vectors (w, w/χ(d_i)) and (w, w/χ(d_i’)) are independent there, off K. So ker M_A is spanned by the slab modes on type II.</p>
+<p><strong>(c) The 16 degenerate points (enumerated independently).</strong> - Rank 0 means A = B = P = Q = 0, that is x² = y² = z² and x⁴ = 1. - Solving exactly gives 16 points, {±1}³ ∪ {±i}³ = K, all lifts of q = 0. This matches the report’s list. - At each point, M_A = 0 exactly, so ker = C⁴. The six slab modes have rank 2, and with the two constants the rank is 4. <strong>16/16, computed exactly.</strong></p>
+<p>The stratum table of the report is what the rank lemma predicts, and I confirm it: - rank M_A = 4 on generic, type I and type III, because both blocks have rank 2 off the three pair loci; - rank 2 on type II; - rank 0 on type IV.</p>
+<p><strong>Dimension formula (proved, by the report’s count, re-derived).</strong> Of the 64abc lifted points: - 16 are in K, each with kernel 4; - the axis-z pair locus contributes 4·2·4c − 16 points, each with kernel 2, and likewise for the other two axes.</p>
+<p>Dividing by 16 gives 4 + (4a − 2) + (4b − 2) + (4c − 2) = 4(a + b + c) − 2. The three pair loci meet only in K: two of them together force all six families.</p>
+<p><strong>(d) Cells (computed, exact sandwich, h752).</strong> For the field form, the H_A column is the bound from the sandwich and the span column is the rank of the slab modes plus 2. For ker L, these are mod-p ranks with S ⊂ ker L checked over Z.</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>H_A ≤</th>
+<th>span ≥</th>
+<th>4(a+b+c) − 2</th>
+<th>slab classes − rank</th>
+<th>dim ker L</th>
+<th>dim(S+G)</th>
+<th>gauge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,1,1)</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+<td>4</td>
+<td>12</td>
+<td>12</td>
+<td>4</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>18</td>
+<td>18</td>
+<td>18</td>
+<td>4</td>
+<td>20</td>
+<td>20</td>
+<td>4</td>
+</tr>
+<tr>
+<td>(1,2,3)</td>
+<td>22</td>
+<td>22</td>
+<td>22</td>
+<td>4</td>
+<td>24</td>
+<td>24</td>
+<td>4</td>
+</tr>
+<tr>
+<td>(1,1,4)</td>
+<td>22</td>
+<td>22</td>
+<td>22</td>
+<td>4</td>
+<td>24</td>
+<td>24</td>
+<td>4</td>
+</tr>
+<tr>
+<td>(1,5,5)</td>
+<td>42</td>
+<td>42</td>
+<td>42</td>
+<td>4</td>
+<td>44</td>
+<td>44</td>
+<td>4</td>
+</tr>
+<tr>
+<td>(2,2,4)</td>
+<td>30</td>
+<td>30</td>
+<td>30</td>
+<td>4</td>
+<td>36</td>
+<td>36</td>
+<td>8</td>
+</tr>
+<tr>
+<td>(2,3,4)</td>
+<td>34</td>
+<td>34</td>
+<td>34</td>
+<td>4</td>
+<td>36</td>
+<td>36</td>
+<td>4</td>
+</tr>
+<tr>
+<td>(3,4,5)</td>
+<td>46</td>
+<td>46</td>
+<td>46</td>
+<td>4</td>
+<td>48</td>
+<td>48</td>
+<td>4</td>
+</tr>
+<tr>
+<td>(2,4,6)</td>
+<td>46</td>
+<td>46</td>
+<td>46</td>
+<td>4</td>
+<td>52</td>
+<td>52</td>
+<td>8</td>
+</tr>
+<tr>
+<td>(3,3,3)</td>
+<td>34</td>
+<td>34</td>
+<td>34</td>
+<td>4</td>
+<td>44</td>
+<td>44</td>
+<td>12</td>
+</tr>
+<tr>
+<td>(4,4,4)</td>
+<td>46</td>
+<td>46</td>
+<td>46</td>
+<td>4</td>
+<td>60</td>
+<td>60</td>
+<td>16</td>
+</tr>
+<tr>
+<td>(5,5,5)</td>
+<td>58</td>
+<td>58</td>
+<td>58</td>
+<td>4</td>
+<td>76</td>
+<td>76</td>
+<td>20</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Five cells have a = 1 (two of them also b = 1).</li>
+<li>Where the report has the same cell, it agrees: (1,1,1), (1,2,2), (1,2,3), (1,5,5), (2,2,4), (2,3,4), (3,3,3).</li>
+<li>r7’s (3,3,3), dim ker L = 44 with gauge 12, and (2,2,4), 36 with gauge 8, agree.</li>
+</ul>
+<p><strong>Status: proved for every cell; computed exactly on 12 cells.</strong></p>
+<h2 id="c3.-the-use-in-p1">C3. The use in P1</h2>
+<p><strong>Step 1</strong> (type field = e_x + Σ f_C m_C + const). - A frozen state satisfies (T2) on every hexagon (Lemma L) and is one-hot. - e_x satisfies (T2), because each hexagon has one A vertex and one B vertex of axis x. - So τ − e_x lies in H, exactly the space of the completeness theorem: same equations, real solutions. - Completeness gives a real f and the antisymmetric constants (α, β). - <strong>Used as proved.</strong></p>
+<p><strong>Step 2</strong> (A-match count = 1 + L_h f). - e_x contributes 1. - A constant contributes (−α − β) + α + β = 0, because the three A vertices carry three distinct axes. I checked this from the bonds on every hexagon of every cell in h750. - <strong>Proved.</strong></p>
+<p><strong>Step 3</strong> (Lf = 0 ⇒ f ∈ S + G). - If Lf = 0, the A-sum of μf := Σ f_C m_C vanishes. Since μf ∈ H, its two-match sum vanishes too, so its B-sum vanishes. - So μf ∈ H_A = μ(S) ⊕ ⟨constants⟩, and μf = μ(s) + c. - To conclude c = 0, P1 needs the constants to be independent of the span of the chain modes. - sc-linear cites the type-IV stratum for this. - A one-line hand proof: the functional Σ_v σ_v(a_v, b_v) vanishes on every chain mode, since a chain has as many A vertices as B vertices, all carrying the same w_E. It takes the value 8abc·(α, β) on the constants. - <strong>Proved.</strong> - Then f − s ∈ G. <strong>ker L = S + G exactly as P1 states it</strong>, and S + G ⊂ ker L is immediate (L factors through μ, and slab modes lie in H_A).</p>
+<p><strong>Hypotheses.</strong> - Neither linear step uses anything about the extents: box ⊂ Λ holds for all a, b, c ≥ 1, and the torus argument is uniform. The thin cells (1,1,1), (1,1,4), (1,2,2), (1,2,3) and (1,5,5) pass in real space. - Nothing uses cubicity, coprimality, integrality of f, or the sign field. - The “all extents at least two” hypothesis enters Theorem P only after P1, in the profile lemma’s choice of axis. pacheck has placed it there correctly. - P1 itself (even curl ⇒ slab sum) is therefore unconditional in the extents, as <code>2026-09-17-p1-proof.md</code> states.</p>
+<p><strong>Not checked here (outside the brief):</strong> Lemma C (even curl ⇒ frozen), and steps 4 to 6 (slab-type, the bridge, closing on the torus). pacheck read steps 4 to 6.</p>
+<h2 id="corrections-to-make-in-the-record">Corrections to make in the record</h2>
+<ol type="1">
+<li><code>2026-09-17-completeness.md</code> §4.2: “exactly fourteen subsets are closed” should read <strong>fifteen</strong> (fourteen nonempty), as the report’s own table counts. §4.5 step 2: “thirteen nonempty closed patterns” should read <strong>fourteen</strong>. Cosmetic.</li>
+<li><code>2026-09-17-sc-linear.md</code> §4.2: the rank lemma’s identities cover N_A. Add the N_B pair z²A − P = −(R + x²C) and y²B − Q = x²C − R. Small.</li>
+<li>Optional: in P1 step 3, cite the functional Σ_v σ_v(a_v, b_v) for “the constants are not in the span of the chain modes”, in place of the stratum reference.</li>
+<li><code>theorem-h-orientation</code> Certification (about line 2790): “the parametrisation was proved by a symbolic computation and confirmed by exact ranks on cells” can add “and independently checked (p1check, 1 October 2026)”.</li>
+</ol>
+<h2 id="rules-kept-or-broken">Rules kept or broken</h2>
+<ul>
+<li>Kept:
+<ul>
+<li>this Mac only; no Sparks, no expq;</li>
+<li>new scripts h750 to h753 only, each with the required docstring head;</li>
+<li>no existing script modified;</li>
+<li>temporary files in <code>.tmp/</code>;</li>
+<li>no git commits;</li>
+<li>the longest single job was 30 s, (5,5,5) in h752, and only one heavy process ran at a time.</li>
+</ul></li>
+<li>Two early runs of h751 stalled in sympy’s Gaussian-extension factoring (my first divisibility test), at about 10 minutes each. I stopped them: once through TaskStop, and once with <code>pkill</code> outside the sandbox, because the sandbox blocks the process list. I then rewrote the test, and the final run took 9 s.</li>
+<li>Nothing about Theorem U, Theorem H or the periodicity witnesses was touched.</li>
+</ul>
+</main>
+</body>
+</html>

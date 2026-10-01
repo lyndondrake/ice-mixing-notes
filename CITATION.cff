@@ -1,0 +1,27 @@
+# Citation metadata for this repository.
+# Models are not listed as authors: the claims manifests name, per claim, the
+# language model (and agent) that wrote it and the independent checker that read it,
+# under provenance.written_by and provenance.checked_by.
+cff-version: 1.2.0
+message: "If you use these notes, manifests or certificates, please cite them as below, and cite individual results by claim identifier and note version."
+title: "Ice-mixing notes: contribution notes and claims manifests on pyrochlore spin ice"
+type: dataset
+authors:
+  - family-names: Drake
+    given-names: Lyndon
+repository-code: "https://github.com/lyndondrake/ice-mixing-notes"
+url: "https://lyndondrake.github.io/ice-mixing-notes/"
+license:
+  - CC-BY-4.0
+  - MIT
+  - CC0-1.0
+date-released: "2026-10-01"
+version: "unreleased"
+keywords:
+  - pyrochlore
+  - spin ice
+  - frozen states
+  - Markov chain mixing
+  - SAT certificates
+  - DRAT
+  - claims manifest

@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checker kucheck on kucone's construction: the first step of K_u given orientation is the sum of two Theorem 9 identities</title>
+<meta name="description" content="Checker kucheck on kucone's construction: the first step of K_u given orientation is the sum of two Theorem 9 identities">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Checker kucheck on kucone's construction: the first step of K_u given orientation is the sum of two Theorem 9 identities",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-10-01-opus-kucheck.html",
+ "datePublished": "2026-10-01",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus), agent kucheck, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-10-01-opus-kucheck.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/ku-first-step-hand.html">ku-first-step-hand</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Checker kucheck on kucone’s construction: the first step of K_u given orientation is the sum of two Theorem 9 identities</h1>
+
+<p class="author">Claude (Opus), agent kucheck, for Lyndon Drake</p>
+<p class="date">2026-10-01</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#verdict" id="toc-verdict">Verdict</a></li>
+<li><a href="#c1.-the-construction-by-hand" id="toc-c1.-the-construction-by-hand">C1. The construction, by hand</a></li>
+<li><a href="#c2.-own-code-exact-verification-computed" id="toc-c2.-own-code-exact-verification-computed">C2. Own-code exact verification (computed)</a></li>
+<li><a href="#c3.-h656-delete-settled-computed-lp-floating-point" id="toc-c3.-h656-delete-settled-computed-lp-floating-point">C3. <code>h656 delete</code> settled (computed, LP, floating point)</a></li>
+<li><a href="#c4.-the-hand-lemma" id="toc-c4.-the-hand-lemma">C4. The hand lemma</a></li>
+<li><a href="#scripts-and-timings" id="toc-scripts-and-timings">Scripts and timings</a></li>
+<li><a href="#rules-kept-or-broken" id="toc-rules-kept-or-broken">Rules kept or broken</a></li>
+</ul>
+</details></nav>
+<h1 id="verdict">Verdict</h1>
+<p><strong>CONFIRMED.</strong> The construction is correct as the main loop reconstructed it (<a href="../reports/2026-10-01-kucone-partial.html"><code>docs/reports/2026-10-01-kucone-partial.md</code></a>). C1 holds by hand for general <span class="math inline">\(d \geq 2\)</span>, with the two symmetries. C2: my own code (h720, which imports nothing of kucone’s) reproduces the identity exactly for <span class="math inline">\(d = \pm 2\)</span> to <span class="math inline">\(\pm 12\)</span> in both slabs, and its multipliers are identical, row for row, to kucone’s on every sampled <span class="math inline">\(d\)</span>. C4 is written below. Remarks, none of which changes the statement:</p>
+<ol type="1">
+<li>The proviso in the reconstruction (“provided the star of <span class="math inline">\(t\)</span> meets the first diamond only in its apex hole and the second only in its corner hole”) is true but <strong>not needed</strong>. Neither the identity nor the hand proof uses it, and the same goes for disjointness of the two diamonds (<strong>proved</strong>, below).</li>
+<li>Only <strong>two</strong> vertices of the uniform row are used, <span class="math inline">\(v\)</span> and <span class="math inline">\(v&#39;\)</span> (<strong>proved</strong>; the certificate has exactly two <code>hypD</code> rows).</li>
+<li><code>h656 delete</code> is settled (<strong>computed</strong>). Orientation on the holes of <span class="math inline">\(D_a \cup D_b\)</span> alone is enough at every <span class="math inline">\(d = 2\)</span> to <span class="math inline">\(6\)</span> (slab up). It is <strong>not minimal</strong>. At <span class="math inline">\(d = 2\)</span> the window system is infeasible with no orientation row at all. For <span class="math inline">\(d \geq 3\)</span> some single deletions keep it infeasible: 2 of 4 holes at <span class="math inline">\(d = 3\)</span>, 6 of 12 at <span class="math inline">\(d = 4\)</span>, 12 of 28 at <span class="math inline">\(d = 5\)</span> and 28 of 52 at <span class="math inline">\(d = 6\)</span>.</li>
+<li>The cases <span class="math inline">\(d \in \{0, \pm 1\}\)</span>, which the construction leaves out, follow directly from <span class="math inline">\(D\)</span> and the bond rule (<strong>proved</strong>, below), so the lemma covers every column vertex of both slabs.</li>
+</ol>
+<h1 id="c1.-the-construction-by-hand">C1. The construction, by hand</h1>
+<p><strong>Coordinates (from h650, checked against the note).</strong> <span class="math inline">\(D\)</span> is the row <span class="math inline">\(\{(0, 2j, 2j)\} \cup \{(1, 2j+1, 2j+1)\}\)</span>, a chain of axis <span class="math inline">\(x\)</span> (its two bonds at <span class="math inline">\((0,2j,2j)\)</span> are <span class="math inline">\(d_0\)</span> and <span class="math inline">\(d_1\)</span>, which agree in <span class="math inline">\(x\)</span>), with every vertex of moment <span class="math inline">\(+y\)</span>. Write <span class="math inline">\(u = (y+z)/2\)</span> and <span class="math inline">\(w = (y-z)/2\)</span>. A column (family <span class="math inline">\(\{2,3\}\)</span>, bonds <span class="math inline">\(d_2\)</span> and <span class="math inline">\(d_3\)</span> at A) has fixed <span class="math inline">\(u\)</span> and runs along <span class="math inline">\(w\)</span>. Slab up is the pair of grids <span class="math inline">\(x = 1\)</span> (B) and <span class="math inline">\(x = 2\)</span> (A), and its columns sit at odd <span class="math inline">\(u\)</span>. The translation by <span class="math inline">\((0,2,2) \in A\)</span> preserves both sublattices and <span class="math inline">\(D\)</span>, so the column at <span class="math inline">\(u = 1\)</span> is general. The target is <span class="math inline">\(t = (x_t, 1+d, 1-d)\)</span>, with <span class="math inline">\(x_t = 1\)</span> (B) for even <span class="math inline">\(d\)</span> and <span class="math inline">\(2\)</span> (A) for odd <span class="math inline">\(d\)</span>.</p>
+<p><strong>The sense table (proved).</strong> At <span class="math inline">\(t\)</span> the column bonds are <span class="math inline">\(\pm(1,-1,1)\)</span> and <span class="math inline">\(\pm(1,1,-1)\)</span> (B case) or <span class="math inline">\(d_2\)</span> and <span class="math inline">\(d_3\)</span> (A case). Sense <span class="math inline">\(-w\)</span> means that the bond lowering <span class="math inline">\(w\)</span> is the outgoing one, so the moment <span class="math inline">\(n = \tfrac12 \sum(\text{outgoing})\)</span> is that bond plus one of the two non-column bonds. In both cases this gives <span class="math inline">\(n(t) \in \{+z, -y\}\)</span>, which is kucone’s NEG row <span class="math inline">\(p_z(t) + m_y(t) = 1\)</span>.</p>
+<p><strong>The diamonds, <span class="math inline">\(d \geq 3\)</span>.</strong> <span class="math inline">\(v = (x_t - 1, 2-d, 2-d)\)</span>, <span class="math inline">\(v&#39; = (1,1,1)\)</span>, <span class="math inline">\(w&#39; = (2x_t - 2, 2d, 0)\)</span>.</p>
+<ul>
+<li><span class="math inline">\(v \in D\)</span>: an A vertex <span class="math inline">\((0, 2j, 2j)\)</span> for even <span class="math inline">\(d\)</span> and a B vertex <span class="math inline">\((1, 2j+1, 2j+1)\)</span> for odd <span class="math inline">\(d\)</span>. <span class="math inline">\(v&#39; \in D\)</span> is a B vertex. <span class="math inline">\(w&#39;\)</span> is an A vertex (sum <span class="math inline">\(2d\)</span> or <span class="math inline">\(2 + 2d\)</span>, <span class="math inline">\(\equiv 0 \bmod 4\)</span> for the right parity of <span class="math inline">\(d\)</span>). No hypothesis is placed on <span class="math inline">\(w&#39;\)</span>.</li>
+<li><span class="math inline">\(t - v = (1, 2d-1, -1)\)</span> and <span class="math inline">\(w&#39; - v&#39; = (2x_t - 3, 2d-1, -1)\)</span>. Both pairs have separation <span class="math inline">\(s = 2d - 1 \geq 5\)</span>, odd, along <span class="math inline">\(y\)</span>, with transverse offsets <span class="math inline">\((\pm1, \pm1)\)</span> in <span class="math inline">\((x, z)\)</span>. That is exactly the scope of Theorem 9 and Theorem 3 (offset one, <span class="math inline">\(s \geq 5\)</span>).</li>
+<li><span class="math inline">\(D_a\)</span> is the causal <span class="math inline">\(y\)</span>-diamond from <span class="math inline">\(h_v = v + 2e_y\)</span> to <span class="math inline">\(t - 2e_y\)</span>, and <span class="math inline">\(D_b\)</span> the one from <span class="math inline">\(v&#39; + 2e_y = (1,3,1)\)</span> to <span class="math inline">\(w&#39; - 2e_y\)</span>. Each has <span class="math inline">\(n = 2d - 5\)</span> steps.</li>
+</ul>
+<p><strong><span class="math inline">\(d = 2\)</span>.</strong> <span class="math inline">\(v = (0,-2,-2)\)</span> and <span class="math inline">\(w&#39; = (0,6,2)\)</span>, so <span class="math inline">\(t - v = (1,5,1)\)</span> and <span class="math inline">\(w&#39; - v&#39; = (-1,5,1)\)</span>, both with <span class="math inline">\(s = 5\)</span>. The general formula would give <span class="math inline">\(s = 3\)</span>, outside Theorem 9. Here <span class="math inline">\(D_b = \{(1,3,1), (0,4,2)\}\)</span>, and its <span class="math inline">\(-z\)</span> extreme is its lower apex <span class="math inline">\((1,3,1) = t + 2e_z\)</span>, one hole with two corner roles (see C4).</p>
+<p><strong>Structure of a <span class="math inline">\(y\)</span>-diamond (proved).</strong> A step from an A-hole uses <span class="math inline">\(\tau \in \{\pm1\}^3\)</span> with <span class="math inline">\(\tau_x\tau_y\tau_z = +1\)</span>, and from a B-hole one with product <span class="math inline">\(-1\)</span>. Steps alternate between hole types. With <span class="math inline">\(\tau_y = +1\)</span>, an A-step changes <span class="math inline">\(a = x + z\)</span> by <span class="math inline">\(\pm 2\)</span> and fixes <span class="math inline">\(b = x - z\)</span>, and a B-step does the reverse. So the holes of a diamond at level <span class="math inline">\(j\)</span> form a product of an interval in <span class="math inline">\(a\)</span> and an interval in <span class="math inline">\(b\)</span>. The bounds are <span class="math inline">\(|a - a_{lo}| \leq 2\alpha(j)\)</span> and <span class="math inline">\(|a_{hi} - a| \leq 2(\alpha_{tot} - \alpha(j))\)</span>, and the same for <span class="math inline">\(b\)</span> with <span class="math inline">\(\beta\)</span>, where <span class="math inline">\(\alpha(j)\)</span> and <span class="math inline">\(\beta(j)\)</span> count the A-steps and B-steps among the first <span class="math inline">\(j\)</span>.</p>
+<p><strong>Fact 1: the <span class="math inline">\(-z\)</span> extreme of <span class="math inline">\(D_b\)</span> is unique and equals <span class="math inline">\(c = t + 2e_z\)</span> (proved).</strong> <span class="math inline">\(D_b\)</span> starts at the B-hole <span class="math inline">\((1,3,1)\)</span>, so <span class="math inline">\(a_{lo} = 2\)</span> and <span class="math inline">\(b_{lo} = 0\)</span>, with <span class="math inline">\(\beta_{tot} = d - 2\)</span> and <span class="math inline">\(\alpha_{tot} = d - 3\)</span>. The smallest <span class="math inline">\(z = (a - b)/2\)</span> needs the least <span class="math inline">\(a\)</span> and the greatest <span class="math inline">\(b\)</span> on one level.</p>
+<ul>
+<li>Even <span class="math inline">\(d\)</span> (<span class="math inline">\(a_{hi} = b_{hi} = 0\)</span>). The least <span class="math inline">\(a\)</span> over all levels is <span class="math inline">\(4 - d\)</span>, attained only at <span class="math inline">\(\alpha = d/2 - 1\)</span>. The greatest <span class="math inline">\(b\)</span> is <span class="math inline">\(d - 2\)</span>, attained only at <span class="math inline">\(\beta = d/2 - 1\)</span>.</li>
+<li>Odd <span class="math inline">\(d\)</span> (<span class="math inline">\(a_{hi} = b_{hi} = 2\)</span>). The least <span class="math inline">\(a\)</span> is <span class="math inline">\(5 - d\)</span>, only at <span class="math inline">\(\alpha = (d-3)/2\)</span>. The greatest <span class="math inline">\(b\)</span> is <span class="math inline">\(d - 1\)</span>, only at <span class="math inline">\(\beta = (d-1)/2\)</span>.</li>
+</ul>
+<p>In both cases the two are attained together only at level <span class="math inline">\(j = d - 2\)</span> (which is at most <span class="math inline">\(n\)</span> exactly when <span class="math inline">\(d \geq 3\)</span>). That gives the unique hole <span class="math inline">\((x_t, d+1, 3-d)\)</span>, which is <span class="math inline">\(t + 2e_z\)</span>, a B-hole for even <span class="math inline">\(d\)</span> and an A-hole for odd <span class="math inline">\(d\)</span>, as it must be.</p>
+<p><strong>Fact 2: the star of <span class="math inline">\(t\)</span> (proved, not needed).</strong> <span class="math inline">\(D_a\)</span> lies in the past of <span class="math inline">\(t - 2e_y\)</span>, so every hole of <span class="math inline">\(D_a\)</span> has <span class="math inline">\(y \leq d - 1\)</span>. Every hole of the star of <span class="math inline">\(t\)</span> other than <span class="math inline">\(t - 2e_y\)</span> has <span class="math inline">\(y \geq d\)</span>. Every hole of <span class="math inline">\(D_b\)</span> has <span class="math inline">\(z \geq 3 - d\)</span>. Every hole of the star other than <span class="math inline">\(t + 2e_z\)</span> has <span class="math inline">\(z \leq 2 - d\)</span>.</p>
+<p><strong>Fact 3: <span class="math inline">\(D_a \cap D_b = \emptyset\)</span> (proved, not needed).</strong> A common hole would put <span class="math inline">\(t - 2e_y\)</span> in the causal future of <span class="math inline">\((1,3,1)\)</span>. That needs <span class="math inline">\(|\Delta z| \leq \Delta y\)</span>, but <span class="math inline">\(\Delta z = -d\)</span> and <span class="math inline">\(\Delta y = d - 4\)</span>.</p>
+<p><strong>Theorem 9 without the hypothesis on the upper vertex (proved from the note).</strong> Theorem 9 is an identity in the variables: <span class="math inline">\(\Lambda + (p(v) - 1) + (m(w) - 1) = -1 - \sum_4 \text{lateral corners}\)</span>, where <span class="math inline">\(\Lambda\)</span> is the combination of one-hot, (T2), bond and orientation rows. The hypotheses enter only as the two added rows, and the proof uses them only to cancel <span class="math inline">\(p_z(v)\)</span> and to fix the constant. Moving them across gives <span class="math inline">\(\Lambda = 1 - \sum_6 \text{corners}\)</span>, an identity of the relaxation. Every state satisfying the rows of <span class="math inline">\(\Lambda\)</span> then has exactly one corner variable equal to 1, which is the note’s corner corollary. So using the identity without the hypothesis on <span class="math inline">\(w\)</span> is legitimate. h720 checks <span class="math inline">\(\Lambda = 1 - \sum_6\)</span> directly for every diamond it builds, <span class="math inline">\(s = 5\)</span> included.</p>
+<p><strong>The sum (proved).</strong> With <span class="math inline">\(\Lambda_a = 1 - p_y(v) - m_y(t) - C_a\)</span> and <span class="math inline">\(\Lambda_b = 1 - p_y(v&#39;) - m_y(w&#39;) - p_z(t) - C&#39;_b\)</span> (where <span class="math inline">\(C_a\)</span> is the four lateral corners of <span class="math inline">\(D_a\)</span>, <span class="math inline">\(C&#39;_b\)</span> the three lateral corners of <span class="math inline">\(D_b\)</span> other than <span class="math inline">\(c\)</span>, and <span class="math inline">\(p_z(t)\)</span> the <span class="math inline">\(-z\)</span> corner of <span class="math inline">\(D_b\)</span> by Fact 1): <span class="math display">\[\Lambda_a + (p_y(v)-1) + \Lambda_b + (p_y(v&#39;)-1) + (p_z(t)+m_y(t)-1) =
+-1 - C_a - C&#39;_b - m_y(w&#39;).\]</span> That is <span class="math inline">\(-1\)</span> minus eight variables, which matches the “slack 8” of every h655 row.</p>
+<p><strong>Symmetries (proved).</strong></p>
+<ul>
+<li><strong>Slab down:</strong> <span class="math inline">\(M(x,y,z) = (1-x, y-1, z-1)\)</span>. It exchanges the sublattices, maps <span class="math inline">\(D\)</span> onto <span class="math inline">\(D\)</span>, preserves <span class="math inline">\(w\)</span>, sends <span class="math inline">\(u \mapsto u - 1\)</span> and slab up to slab down, and acts on moments by <span class="math inline">\(n_x \mapsto -n_x\)</span>. So <span class="math inline">\(+y\)</span> on <span class="math inline">\(D\)</span> and the set <span class="math inline">\(\{+z, -y\}\)</span> are invariant, and every row type maps to its own type.</li>
+<li><strong><span class="math inline">\(d &lt; 0\)</span>:</strong> <span class="math inline">\(R(x,y,z) = (x, 2-y, 2-z)\)</span> followed by the global reversal. <span class="math inline">\(R\)</span> preserves the sublattices and <span class="math inline">\(D\)</span>, maps <span class="math inline">\(u = 1\)</span> to itself and <span class="math inline">\(w\)</span> to <span class="math inline">\(-w\)</span>, and the moment of <span class="math inline">\(R\)</span> composed with reversal fixes <span class="math inline">\(+y\)</span> and the set <span class="math inline">\(\{+z, -y\}\)</span>. The reversal takes “out” orientation rows to “in” rows. h654/h720 rewrite these by Law C as <span class="math inline">\(\mathrm{in}(h) = \tfrac12\sum_{4\,\mathrm{hex}} T2 - \tfrac12\sum_{\mathrm{bridgeheads}}
+\text{one-hot} - \mathrm{out}(h)\)</span>, an identity checked exactly in h720. So orientation in the note’s form is all that is used.</li>
+</ul>
+<h1 id="c2.-own-code-exact-verification-computed">C2. Own-code exact verification (computed)</h1>
+<p><code>h720_kucheck.py</code> (own lattice, hexagons from the note’s <span class="math inline">\((O, \sigma)\)</span> definition, diamonds by forward and backward reachability, Theorem 9’s multipliers from the note’s statement, <span class="math inline">\(\nu\)</span> counted from the bonds of the hexagons with both holes in <span class="math inline">\(D\)</span>) checks, in <code>Fraction</code> arithmetic on the infinite lattice, for <span class="math inline">\(d = \pm 2\)</span> to <span class="math inline">\(\pm 12\)</span> in both slabs (44 rows):</p>
+<ul>
+<li><ol type="i">
+<li>for each diamond alone, <span class="math inline">\(\Lambda = 1 - \sum\)</span> of its six corner variables exactly, with the corners computed from the geometry and their extremes asserted unique;</li>
+</ol></li>
+<li>the roles: <span class="math inline">\(p_y(v)\)</span> and <span class="math inline">\(m_y(t)\)</span> are corners of <span class="math inline">\(D_a\)</span>, and <span class="math inline">\(p_y(v&#39;)\)</span> and <span class="math inline">\(p_z(t)\)</span> are corners of <span class="math inline">\(D_b\)</span>;</li>
+<li>(ii) the <span class="math inline">\(K_u\)</span> combination is <span class="math inline">\(-1\)</span> minus a non-negative combination with exactly 8 negative coefficients;</li>
+<li>(iii) Facts 1 to 3.</li>
+</ul>
+<p>All 44 pass, along with the Law C substitution (log <code>.tmp/h720_2_12.log</code>, 3.5 s). Row counts and <span class="math inline">\(L^1\)</span> norms agree with kucone’s logs. For example, <span class="math inline">\(d = 2\)</span> has 48 rows and <span class="math inline">\(L^1\)</span> 25, <span class="math inline">\(d = 12\)</span> has 3,832 and 2,676, and <span class="math inline">\(d = -12\)</span> has 3,239 and 2,284.</p>
+<p><code>h721_compare.py</code> rebuilds kucone’s <span class="math inline">\(\lambda\)</span> through <code>h655_verify.construct</code> and <code>h654_family.substitute_Or</code>, then compares dictionaries. At <span class="math inline">\(d = 2, 3, 5, 8, 12, -2, -3, -7, -12\)</span>, both slabs (18 rows), the multipliers are <strong>identical</strong> and kucone’s check is exact (log <code>.tmp/h721.log</code>, 2 s). A direct re-run of <code>h655_verify.py 2,7,12,-5,-12</code> gave ALL EXACT on 10 rows (<code>.tmp/h655_kucheck_sample.log</code>, 1.7 s). The 30-row sweep was not re-run.</p>
+<h1 id="c3.-h656-delete-settled-computed-lp-floating-point">C3. <code>h656 delete</code> settled (computed, LP, floating point)</h1>
+<p><code>h722_minimal.py</code> is my own version, run through the timeout wrapper <code>h723_run.py</code>. The window is kuwall’s cone about <span class="math inline">\(t\)</span> (grids <span class="math inline">\(-(d+1)\)</span> to <span class="math inline">\(d+3\)</span>, sup-radius <span class="math inline">\(d\)</span> in <span class="math inline">\((u,w)\)</span>), joined with every vertex of every hexagon and every methylene of the holes of <span class="math inline">\(D_a \cup D_b\)</span>, so that each diamond hole is complete. This matters: h656 used the bare cone, where some diamond holes may be incomplete. The rows are one-hot, (T2) and bond everywhere in the window, <span class="math inline">\(p_y = 1\)</span> on every <span class="math inline">\(D\)</span> vertex of the window, NEG, and orientation only at the holes of <span class="math inline">\(D_a \cup D_b\)</span>. Slab up:</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th><span class="math inline">\(d\)</span></th>
+<th>window</th>
+<th>holes of <span class="math inline">\(D_a \cup D_b\)</span></th>
+<th>orientation there only</th>
+<th>single deletions feasible</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>65 v</td>
+<td>4</td>
+<td>INFEAS</td>
+<td>0 of 4 (INFEAS with no orientation at all)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>135 v</td>
+<td>4</td>
+<td>INFEAS</td>
+<td>2 of 4</td>
+</tr>
+<tr>
+<td>4</td>
+<td>259 v</td>
+<td>12</td>
+<td>INFEAS</td>
+<td>6 of 12</td>
+</tr>
+<tr>
+<td>5</td>
+<td>454 v</td>
+<td>28</td>
+<td>INFEAS</td>
+<td>16 of 28</td>
+</tr>
+<tr>
+<td>6</td>
+<td>725 v</td>
+<td>52</td>
+<td>INFEAS</td>
+<td>24 of 52</td>
+</tr>
+</tbody>
+</table>
+<p>With the window padded by 2 the pattern for <span class="math inline">\(d = 2, 3, 4\)</span> is unchanged.</p>
+<ul>
+<li><strong>The holes that can go.</strong> At <span class="math inline">\(d = 3\)</span> they are the two lower apex holes <span class="math inline">\((1,1,-1)\)</span> and <span class="math inline">\((1,3,1)\)</span>, the holes above <span class="math inline">\(v\)</span> and <span class="math inline">\(v&#39;\)</span>. At <span class="math inline">\(d = 4\)</span> they are those two, plus the apex <span class="math inline">\(t - 2e_y\)</span>, the corner <span class="math inline">\(t + 2e_z\)</span>, and <span class="math inline">\((1,1,-1)\)</span> and <span class="math inline">\((0,4,2)\)</span>.</li>
+<li><strong>Greedy irreducible subsets</strong> (<code>h724_greedy.py</code>, order-dependent, not minimum): 0 of 4 at <span class="math inline">\(d = 2\)</span>, 2 of 4 at <span class="math inline">\(d = 3\)</span> (keeping <span class="math inline">\(t - 2e_y\)</span> and <span class="math inline">\(t + 2e_z\)</span>), 7 of 12 at <span class="math inline">\(d = 4\)</span>, 19 of 28 at <span class="math inline">\(d = 5\)</span>.</li>
+<li><strong>One diamond is not enough:</strong> for <span class="math inline">\(d = 3\)</span> to <span class="math inline">\(5\)</span> it is feasible with orientation on <span class="math inline">\(D_a\)</span> alone, <span class="math inline">\(D_b\)</span> alone, or none.</li>
+</ul>
+<p>So the answer to h656’s question:</p>
+<ul>
+<li>Restricting orientation to the two diamonds suffices (<strong>computed</strong> here, and <strong>proved</strong> by the certificate, whose rows lie in that set).</li>
+<li>It is not minimal. The extra rows of the window (the whole row <span class="math inline">\(D\)</span>, and the (T2) and bond rows round the diamonds) make some diamond holes redundant, unlike Theorem 9 alone, where the note records every hole as needed.</li>
+<li>At <span class="math inline">\(d = 2\)</span>, orientation is not needed at all in the relaxation. This agrees with kuwall’s and check6’s “reach 2 with W0 alone”.</li>
+</ul>
+<p>These are finite-window LP statements: feasibility after a deletion shows only that no certificate exists in that window.</p>
+<h1 id="c4.-the-hand-lemma">C4. The hand lemma</h1>
+<p><strong>Lemma (first step of <span class="math inline">\(K_u\)</span> at one vertex).</strong> Let a frozen state on the lattice, or the lift of one on any cell, have two vertices <span class="math inline">\(v, v&#39; \in D\)</span> of moment <span class="math inline">\(+y\)</span>, with <span class="math inline">\(v\)</span> and <span class="math inline">\(v&#39;\)</span> as above for the target <span class="math inline">\(t = (x_t, 1+d, 1-d)\)</span>, <span class="math inline">\(d \geq 2\)</span>, and suppose every hole of the causal diamonds <span class="math inline">\(D_a\)</span> (from <span class="math inline">\(v + 2e_y\)</span> to <span class="math inline">\(t - 2e_y\)</span>) and <span class="math inline">\(D_b\)</span> (from <span class="math inline">\(v&#39; + 2e_y\)</span> to <span class="math inline">\(w&#39; - 2e_y\)</span>) is oriented. Then <span class="math inline">\(n(t) \notin \{+z, -y\}\)</span>: <span class="math inline">\(t\)</span> is a kink or a <span class="math inline">\(+\)</span> pass-through of its column. The same holds in slab down (by <span class="math inline">\(M\)</span>) and for <span class="math inline">\(d \leq -2\)</span> (by <span class="math inline">\(R\)</span> and the global reversal, with the diamonds above <span class="math inline">\(t\)</span>).</p>
+<p><em>Proof.</em></p>
+<ol type="1">
+<li><strong><span class="math inline">\(t\)</span> does not have moment <span class="math inline">\(-y\)</span>.</strong> If <span class="math inline">\(t\)</span> had type <span class="math inline">\(y\)</span>, then <span class="math inline">\(v\)</span> and <span class="math inline">\(t\)</span>, of type <span class="math inline">\(y\)</span> on diagonally neighbouring <span class="math inline">\(y\)</span>-lines with separation <span class="math inline">\(s = 2d - 1 \geq 5\)</span> (5 at <span class="math inline">\(d = 2\)</span>), would have equal signs by Theorem 3, whose diamond is <span class="math inline">\(D_a\)</span>. So <span class="math inline">\(\varepsilon(t) = +1\)</span>. Equivalently, apply the corner law to <span class="math inline">\(D_a\)</span>: its lower-apex corner holds (<span class="math inline">\(p_y(v) = 1\)</span>), so its upper-apex corner <span class="math inline">\(m_y(t)\)</span> fails.</li>
+<li><strong><span class="math inline">\(t\)</span> does not have moment <span class="math inline">\(+z\)</span>.</strong> Apply the corner corollary of Theorem 9 to <span class="math inline">\(D_b\)</span>. Exactly one of its six corner holes has its inward rod on its own axis on the outer side. The lower apex does, since <span class="math inline">\(v&#39;\)</span> has moment <span class="math inline">\(+y\)</span> and points into <span class="math inline">\(v&#39; + 2e_y\)</span>. The <span class="math inline">\(-z\)</span> corner of <span class="math inline">\(D_b\)</span> is the unique hole <span class="math inline">\(c = t + 2e_z\)</span> (Fact 1), and its inward rod on the outer side is <span class="math inline">\(t\)</span> with moment <span class="math inline">\(+z\)</span>. So <span class="math inline">\(p_z(t) = 0\)</span>.</li>
+</ol>
+<p>For <span class="math inline">\(d = 2\)</span> (and <span class="math inline">\(d = 3\)</span> at the upper apex) <span class="math inline">\(c\)</span> is also an apex of <span class="math inline">\(D_b\)</span>. The corner law is still a statement about six distinct variables, and at <span class="math inline">\(d = 2\)</span> orientation of the single hole <span class="math inline">\(c\)</span> already forbids two inward rods, <span class="math inline">\(v&#39;\)</span> and <span class="math inline">\(t\)</span>. <span class="math inline">\(\square\)</span></p>
+<p><strong>The remaining distances (proved).</strong> At <span class="math inline">\(d = 0\)</span> the target is <span class="math inline">\(v&#39;\)</span> itself (slab up) or <span class="math inline">\((0,0,0)\)</span> (slab down), and is a <span class="math inline">\(+\)</span> pass-through. At <span class="math inline">\(d = \pm 1\)</span> the target is bonded to a vertex of <span class="math inline">\(D\)</span>:</p>
+<ul>
+<li>slab up: <span class="math inline">\((2,2,0) = (1,1,1) + (1,1,-1)\)</span>, bond <span class="math inline">\(d_3\)</span>; <span class="math inline">\((2,0,2)\)</span>, bond <span class="math inline">\(d_2\)</span>;</li>
+<li>slab down: <span class="math inline">\((-1,1,-1)\)</span> (<span class="math inline">\(d = 1\)</span>) and <span class="math inline">\((-1,-1,1)\)</span> (<span class="math inline">\(d = -1\)</span>) to <span class="math inline">\((0,0,0)\)</span>, bonds <span class="math inline">\(d_2\)</span> and <span class="math inline">\(d_3\)</span>.</li>
+</ul>
+<p>The bond rule <span class="math inline">\(d \cdot n(a) = d \cdot n(b)\)</span> with <span class="math inline">\(n = +y\)</span> at the <span class="math inline">\(D\)</span> end gives <span class="math inline">\(d_3 \cdot n(t) = -1\)</span> or <span class="math inline">\(d_2 \cdot n(t) = +1\)</span>. Both <span class="math inline">\(+z\)</span> and <span class="math inline">\(-y\)</span> give the opposite value.</p>
+<p><strong>Hypotheses used, and their availability.</strong></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>hypothesis</th>
+<th>where</th>
+<th>available given Theorem U on an odd state?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>one-hot, bond rule</td>
+<td>every vertex and bond of the cages of <span class="math inline">\(D_a\)</span>, <span class="math inline">\(D_b\)</span></td>
+<td>yes, any ice state</td>
+</tr>
+<tr>
+<td>(T2)</td>
+<td>hexagons with a hole in <span class="math inline">\(D_a\)</span> or <span class="math inline">\(D_b\)</span></td>
+<td>yes, any frozen state (Lemma L)</td>
+</tr>
+<tr>
+<td><span class="math inline">\(p_y = 1\)</span> at <span class="math inline">\(v\)</span>, <span class="math inline">\(v&#39;\)</span> only</td>
+<td>two vertices of the uniform chain</td>
+<td>yes, the hypothesis of <span class="math inline">\(K_u\)</span></td>
+</tr>
+<tr>
+<td>orientation</td>
+<td>every hole of <span class="math inline">\(D_a \cup D_b\)</span> (<span class="math inline">\(2d^2\)</span>-order many)</td>
+<td>yes: Theorem U makes every hole oriented; on an even-curl state it is not supplied</td>
+</tr>
+<tr>
+<td>Theorem 9, <span class="math inline">\(s \geq 5\)</span>, offset <span class="math inline">\((\pm1,\pm1)\)</span></td>
+<td>both diamonds</td>
+<td>proved in the note, as already checked</td>
+</tr>
+</tbody>
+</table>
+<p>On a cell: the state lifts to a periodic frozen state on the lattice. Every lifted hole is oriented, and the uniform chain lifts to <span class="math inline">\(D\)</span> and its translates. Any column vertex of the two slabs has a lift at some integer <span class="math inline">\(d\)</span>, so the lemma applies with no condition on the side or on whether the diamonds wrap. With check6’s later steps, <span class="math inline">\(K_u\)</span> given Theorem U then holds for odd frozen states on every cell. That combination is not re-checked here (out of scope).</p>
+<p><strong>What a reader still has to check.</strong> The coordinates of <span class="math inline">\(v\)</span>, <span class="math inline">\(v&#39;\)</span>, <span class="math inline">\(w&#39;\)</span> and the two separations; the <span class="math inline">\(a/b\)</span> product structure of a <span class="math inline">\(y\)</span>-diamond and Fact 1 (the one non-trivial geometric fact); the identification of the corner variables <span class="math inline">\(m_y(t)\)</span> and <span class="math inline">\(p_z(t)\)</span>; the sense table; the symmetries <span class="math inline">\(M\)</span> and <span class="math inline">\(R\)</span> with reversal; and that Theorem 9 and its corollary carry over to <span class="math inline">\(y\)</span>-diamonds and a B lower vertex by the cyclic permutation of axes and the inversion, both of which preserve the system. Theorem 9 itself is not re-proved here.</p>
+<h1 id="scripts-and-timings">Scripts and timings</h1>
+<p>All in <code>experiments/08_frozen_structure/scratch_h/</code>, Mac <code>.venv</code>, about 2.5 min of compute in all. <code>h720_kucheck.py 2:12</code> (own exact check, 44 rows, 3.5 s, <code>.tmp/h720_2_12.log</code>, multipliers in <code>.tmp/h720_lam_*.pkl</code>); <code>h721_compare.py</code> (identical to kucone, 2 s, <code>.tmp/h721.log</code>); <code>h655_verify.py 2,7,12,-5,-12</code> re-run (1.7 s, <code>.tmp/h655_kucheck_sample.log</code>); <code>h722_minimal.py</code> via <code>h723_run.py</code> (<span class="math inline">\(d = 2,3,4\)</span> 2.4 s; <span class="math inline">\(d = 5,6\)</span> 103 s; padded <span class="math inline">\(d = 2,3,4\)</span> about 20 s; <code>.tmp/h722.log</code>); <code>h724_greedy.py</code> via h723 (<span class="math inline">\(d = 2,3,4\)</span> 2.4 s; <span class="math inline">\(d = 5\)</span> 13 s; <code>.tmp/h724.log</code>).</p>
+<h1 id="rules-kept-or-broken">Rules kept or broken</h1>
+<p>Kept: Mac only, no Sparks; one LP process at a time, under <code>subprocess.run(timeout=...)</code> (h723), with h720 and h721 pure arithmetic of seconds in the foreground; no job over ten minutes; new scripts h720 to h724 only, each with its header and usage line, no existing script modified; temporary files in <code>.tmp/</code>; no git commits; the 30-row sweep not re-run; later steps of <span class="math inline">\(K_u\)</span>, Theorem H and Theorem U not touched. Minor: scripts written with zsh heredocs, which worked in this sandbox.</p>
+</main>
+</body>
+</html>

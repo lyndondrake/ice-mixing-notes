@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$if(pagetitle)$$pagetitle$$else$$title$$endif$</title>
+$if(description-meta)$<meta name="description" content="$description-meta$">
+$endif$
+<link rel="stylesheet" href="$root$style.css">
+$for(header-includes)$
+$header-includes$
+$endfor$
+$if(math)$
+$math$
+$endif$
+</head>
+<body>
+$for(include-before)$
+$include-before$
+$endfor$
+<main class="doc">
+$if(title)$
+<header class="doc-head">
+<h1 class="title">$title$</h1>
+$if(subtitle)$<p class="subtitle">$subtitle$</p>$endif$
+$if(author)$<p class="author">$for(author)$$author$$sep$; $endfor$</p>$endif$
+$if(date)$<p class="date">$date$</p>$endif$
+</header>
+$endif$
+$if(abstract)$
+<section class="abstract"><h2>Abstract</h2>
+$abstract$
+</section>
+$endif$
+$if(toc)$
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+$table-of-contents$
+</details></nav>
+$endif$
+$body$
+</main>
+$for(include-after)$
+$include-after$
+$endfor$
+</body>
+</html>

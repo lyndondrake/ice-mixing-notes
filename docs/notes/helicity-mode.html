@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A pseudoscalar slow mode in pyrochlore ice dynamics: the emergent magnetic helicity at a thin cell</title>
+<meta name="description" content="the slow even mode at the thin cell is the emergent magnetic helicity; absent as a slow mode in cubic geometry">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "ScholarlyArticle",
+ "@id": "https://lyndondrake.github.io/ice-mixing-notes/notes/helicity-mode.html",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/notes/helicity-mode.html",
+ "headline": "A pseudoscalar slow mode in pyrochlore ice dynamics: the emergent magnetic helicity at a thin cell",
+ "name": "A pseudoscalar slow mode in pyrochlore ice dynamics: the emergent magnetic helicity at a thin cell",
+ "datePublished": "2026-09-06",
+ "version": "2026-09-06",
+ "author": [
+  {
+   "@type": "Person",
+   "name": "Lyndon Drake"
+  }
+ ],
+ "creditText": "Lyndon Drake, with Claude Code (Anthropic Claude 5 models)",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "inLanguage": "en-GB",
+ "encoding": [
+  {
+   "@type": "MediaObject",
+   "contentUrl": "https://lyndondrake.github.io/ice-mixing-notes/notes/helicity-mode.pdf",
+   "encodingFormat": "application/pdf"
+  }
+ ]
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div class="doc-links" style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0"><p class="small"><a href="helicity-mode.pdf">PDF</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/notes/helicity-mode.md">Markdown source</a></p><p class="small"><strong>Certification, as the notes index states it:</strong> exact spectrum by diagonalisation and symmetry analysis; no formal certificate</p><section class="panel small"><p>This note has no published claims manifest yet; its standing is as the note itself and the <a href="index.html">notes index</a> state it.</p></section></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">A pseudoscalar slow mode in pyrochlore ice dynamics: the emergent magnetic helicity at a thin cell</h1>
+
+<p class="author">Lyndon Drake, with Claude Code (Anthropic Claude 5 models)</p>
+<p class="date">2026-09-06</p>
+</header>
+<section class="abstract"><h2>Abstract</h2>
+<p>At the pyrochlore ice cell <span class="math inline">\((1,2,2)\)</span>, small enough to enumerate exactly, the slowest mode of the single-hexagon-flip chain is even under global arrow reversal and so invisible to the polarisation, the observable on which the chain’s dynamical exponent is measured. This note identifies it. Its character under the cell’s 256-element affine automorphism group is the determinant of the group element, so it is a pseudoscalar, and the natural bilinear pseudoscalar of a divergence-free field is the emergent magnetic helicity <span class="math inline">\(\mathbf q\cdot(\mathbf P^{*}\times\mathbf P)\)</span>. One helicity observable has overlap <span class="math inline">\(0.759\)</span> with the eigenvector and the family spans <span class="math inline">\(0.835\)</span> of it against a total degree-two content of <span class="math inline">\(0.853\)</span>, while every member of the project’s earlier panel has overlap below <span class="math inline">\(10^{-25}\)</span>, a zero forced by symmetry rather than by amplitude. The helicity reaches <span class="math inline">\(\tau_{\exp}=389.45\)</span> attempts against an exact <span class="math inline">\(1/\Delta=389.95\)</span>, where the best earlier member reaches <span class="math inline">\(263.13\)</span>. The effect is geometric: measured in cubic cells at <span class="math inline">\(L=2\)</span> to <span class="math inline">\(16\)</span>, the ratio of helicity to polarisation relaxation times falls monotonically to <span class="math inline">\(0.4988\pm0.0025\)</span>, the two-photon value, so no slow helicity mode survives a third thick direction. The verification is an exact spectrum by diagonalisation of the two parity blocks, symmetry analysis under arrow reversal and the derived point group, exhaustive parity checks on all 221,424 accessible states, and measured autocorrelations in cubic geometry. There is no formal certificate.</p>
+</section>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#the-chain-and-the-cell" id="toc-the-chain-and-the-cell">The chain and the cell</a></li>
+<li><a href="#what-an-observable-can-see" id="toc-what-an-observable-can-see">What an observable can see</a></li>
+<li><a href="#the-exact-spectrum-and-a-pseudoscalar-character" id="toc-the-exact-spectrum-and-a-pseudoscalar-character">The exact spectrum, and a pseudoscalar character</a></li>
+<li><a href="#the-emergent-magnetic-helicity" id="toc-the-emergent-magnetic-helicity">The emergent magnetic helicity</a></li>
+<li><a href="#the-blind-spot-in-relaxation-times" id="toc-the-blind-spot-in-relaxation-times">The blind spot, in relaxation times</a></li>
+<li><a href="#cubic-geometry" id="toc-cubic-geometry">Cubic geometry</a></li>
+<li><a href="#why-the-thin-cell-is-different" id="toc-why-the-thin-cell-is-different">Why the thin cell is different</a></li>
+<li><a href="#what-remains-open" id="toc-what-remains-open">What remains open</a></li>
+<li><a href="#related-work" id="toc-related-work">Related work</a></li>
+<li><a href="#appendix-artefacts" id="toc-appendix-artefacts">Appendix: artefacts</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+</ul>
+</details></nav>
+<h1 id="the-chain-and-the-cell">The chain and the cell</h1>
+<p>Pyrochlore spin ice states are the two-in-two-out configurations of Ising spins on the pyrochlore lattice <span class="citation" data-cites="bramwell-gingras-2001-spin-ice-state">(<a href="#ref-bramwell-gingras-2001-spin-ice-state" role="doc-biblioref">Bramwell and Gingras 2001</a>)</span>, equivalently the Eulerian orientations of the diamond lattice whose bonds carry the spins. The smallest ice-preserving move reverses the six arrows around a hexagonal plaquette, a single spin flip creating a monopole pair instead <span class="citation" data-cites="castelnovo-et-al-2008-magnetic-monopoles-spin-ice">(<a href="#ref-castelnovo-et-al-2008-magnetic-monopoles-spin-ice" role="doc-biblioref">Castelnovo, Moessner, and Sondhi 2008</a>)</span>. The chain studied here picks a hexagon uniformly at random and, if its arrows run head-to-tail, reverses all six with probability <span class="math inline">\(1/2\)</span>. It is reversible with the uniform stationary distribution on each flux sector, and under Henley’s classical-to-quantum correspondence its generator is the ring-exchange Hamiltonian of pyrochlore ice at its Rokhsar–Kivelson point <span class="citation" data-cites="henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid">(<a href="#ref-henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points" role="doc-biblioref">Henley 2004</a>; <a href="#ref-rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas" role="doc-biblioref">Rokhsar and Kivelson 1988</a>; <a href="#ref-hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid" role="doc-biblioref">Hermele, Fisher, and Balents 2004</a>)</span>.</p>
+<p>Cells are blocks of <span class="math inline">\((a,b,c)\)</span> conventional cubic cells with periodic boundaries, holding <span class="math inline">\(16abc\)</span> spins and as many hexagons, the hexagon set derived from the coordinates rather than read off the quotient graph. The winding <span class="math inline">\(\mathbf W\)</span> is conserved and everything below sits at <span class="math inline">\(\mathbf W=0\)</span>, a sector never connected because frozen states exist in it at every size, so the object of study is its dynamically accessible component. At <span class="math inline">\((1,2,2)\)</span>, 64 spins and 64 hexagons give 221,628 zero-winding states in 205 components: a giant component of 221,424 states, whose transition matrix has 2,651,888 nonzeros, and 204 frozen singletons. That component is small enough to diagonalise rather than sample.</p>
+<h1 id="what-an-observable-can-see">What an observable can see</h1>
+<p>Global arrow reversal <span class="math inline">\(R\)</span> complements every arrow bit. It commutes with the transition matrix <span class="math inline">\(P\)</span>, and on the giant component it has no fixed point, so it acts as a free involution with 110,712 two-element orbits. Taking one representative <span class="math inline">\(r_j\)</span> per orbit and its partner <span class="math inline">\(p_j\)</span>, the vectors <span class="math inline">\((e_{r_j}\pm e_{p_j})/\sqrt2\)</span> span the even and odd subspaces, and <span class="math inline">\(P^{\pm}[j,k]=P[r_j,r_k]\pm P[r_j,p_k]\)</span> are two symmetric blocks of size 110,712 whose spectra partition the spectrum of <span class="math inline">\(P\)</span>.</p>
+<p>The autocorrelation of an observable <span class="math inline">\(O\)</span> is <span class="math inline">\(\rho(t)=\langle y,P^ty\rangle/\langle y,y\rangle\)</span> with <span class="math inline">\(y=O-\langle O\rangle\)</span>, a sum of decaying exponentials weighted by the squared overlaps of <span class="math inline">\(y\)</span> on the eigenvectors, so an observable of definite parity has overlap exactly zero on every eigenvector of the opposite parity and its <span class="math inline">\(\tau_{\exp}\)</span> is only a lower bound on <span class="math inline">\(1/\Delta\)</span>. That an observable’s autocorrelation time is not the chain’s is standard <span class="citation" data-cites="sokal-1997-monte-carlo-statistical-mechanics">(<a href="#ref-sokal-1997-monte-carlo-statistical-mechanics" role="doc-biblioref">Sokal 1997</a>)</span>. What is unusual here is that a symmetry makes the shortfall exact, so no series length and no system size closes it.</p>
+<p>The natural observable is the coarse-grained polarisation: with <span class="math inline">\(\sigma_b=2x_b-1\)</span>, <span class="math inline">\(\mathbf d_b\)</span> the bond’s A-to-B displacement and <span class="math inline">\(\mathbf q^{(k)}=(2\pi/4c_k)\,\mathbf e_k\)</span>, <span class="math inline">\(P_j^{(k)}=N^{-1}\sum_b \sigma_b d_{bj}e^{i\mathbf q^{(k)}\cdot\mathbf r_b}\)</span>, whose transverse components <span class="math inline">\(j\neq k\)</span> carry the Coulomb-phase slow mode <span class="citation" data-cites="henley-2010-coulomb-phase-frustrated-systems isakov-et-al-2004-dipolar-spin-correlations-pyrochlore">(<a href="#ref-henley-2010-coulomb-phase-frustrated-systems" role="doc-biblioref">Henley 2010</a>; <a href="#ref-isakov-et-al-2004-dipolar-spin-correlations-pyrochlore" role="doc-biblioref">Isakov et al. 2004</a>)</span>. Every <span class="math inline">\(\sigma_b\)</span> changes sign under <span class="math inline">\(R\)</span>, so <span class="math inline">\(\mathbf P\)</span> is odd, and at <span class="math inline">\((1,2,2)\)</span> the three slowest eigenvectors are even. The project’s response was a panel of both parities at every size, the slowest member taken as the headline and reported as a lower bound. Its three even members were the flippability structure factor <span class="math inline">\(F(\mathbf q)\)</span>, the total flippable count, and <span class="math inline">\(|\mathbf P_\perp|^2\)</span>. None of those sees the slow mode either, for a second reason beyond parity.</p>
+<h1 id="the-exact-spectrum-and-a-pseudoscalar-character">The exact spectrum, and a pseudoscalar character</h1>
+<p>Lanczos on each parity block, <span class="math inline">\(k=14\)</span>, with the uniform vector deflated in the even block, took 930 and 973 matrix-vector products. Merged, the three slowest modes of the chain are even and the fourth is odd. Per attempt <span class="math inline">\(\Delta_{\mathrm{even}}=2.5644358\times10^{-3}\)</span> and <span class="math inline">\(\Delta_{\mathrm{odd}}=4.1225073\times10^{-3}\)</span>, a ratio of <span class="math inline">\(0.622057\)</span>, so <span class="math inline">\(1/\Delta=389.949\)</span> attempts against the <span class="math inline">\(242.571\)</span> the polarisation can reach. The slowest even eigenvector, written <span class="math inline">\(v\)</span> below, is simple, separated from the second even mode by <span class="math inline">\(1.229\times10^{-3}\)</span> in <span class="math inline">\(\lambda\)</span>, so every reading of it is a property of the chain. The slowest odd eigenvalue is fourfold degenerate, which is why the odd readings here are multiplet invariants. Against an independently banked earlier spectrum the maximum difference over the top ten eigenvalues is <span class="math inline">\(5.44\times10^{-15}\)</span>, all ten parities agree, and the lifted eigenvectors satisfy <span class="math inline">\(\lVert Pv-\lambda v\rVert&lt;10^{-14}\)</span>.</p>
+<p>The cell’s affine automorphisms are derived from the coordinates rather than assumed: maps <span class="math inline">\(p\mapsto Mp+t\)</span> modulo the box, with <span class="math inline">\(M\)</span> a signed axis permutation, are accepted only if they permute the site set, carry every bond to a bond, and carry the derived hexagon set to itself, and where the map exchanges the A and B sublattices the arrow bit complements. At <span class="math inline">\((1,1,1)\)</span> the construction returns 192 automorphisms, the number of general positions of <span class="math inline">\(Fd\bar3m\)</span> in one conventional cubic cell, asserted as a test, and at <span class="math inline">\((1,2,2)\)</span> it returns 256, all acting on the giant component and each verified to commute with <span class="math inline">\(P\)</span>. The character <span class="math inline">\(\chi(g)=\langle v,gv\rangle\)</span> is <span class="math inline">\(\pm1\)</span> on every one of them, and</p>
+<p><span class="math display">\[\max_g\;\bigl|\chi(g)-\det M_g\bigr| \;=\; 2.66\times10^{-14}\]</span></p>
+<p>over 128 proper and 128 improper operations. So <span class="math inline">\(v\)</span> transforms in the determinant representation, invariant under every proper operation and sign-reversing under every improper one, with a stabiliser of exactly 128 elements. Under the two transverse translations its character is <span class="math inline">\(1.000000000000\)</span>, so it sits at zero momentum, while the trace characters <span class="math inline">\(0\)</span>, <span class="math inline">\(0\)</span> and <span class="math inline">\(-4\)</span> of the fourfold odd multiplet force those four states to the transverse zone-boundary momenta. An even, zero-momentum, pseudoscalar function of a divergence-free field has a short list of candidates, and the first of them is the helicity.</p>
+<h1 id="the-emergent-magnetic-helicity">The emergent magnetic helicity</h1>
+<p>For a divergence-free field the natural bilinear pseudoscalar is <span class="math inline">\(\mathbf q\cdot(\mathbf P^{*}\times\mathbf P)\)</span>. With <span class="math inline">\(\mathbf q\)</span> along axis <span class="math inline">\(k\)</span> and <span class="math inline">\((i,j,k)\)</span> cyclic, the code computes</p>
+<p><span class="math display">\[h_k(\mathbf q) \;=\; \operatorname{Im}\bigl(P_i(\mathbf q)^{*}P_j(\mathbf q)\bigr)
+   \;=\; \operatorname{Re}P_i\cdot\operatorname{Im}P_j
+       - \operatorname{Im}P_i\cdot\operatorname{Re}P_j ,\]</span></p>
+<p>three multiplies and a subtraction on polarisation components the sampler already records, with <span class="math inline">\(P_i\)</span> and <span class="math inline">\(P_j\)</span> transverse to <span class="math inline">\(\mathbf q\)</span> by construction. The quantity is even under arrow reversal, being a product of two odd factors, and changes sign under every improper lattice operation because the cross product does. In the continuum it is the magnetic helicity <span class="math inline">\(\int\mathbf A\cdot\mathbf B\)</span> of the emergent gauge field. Its parity is measured rather than inferred: over all 221,424 states every helicity column satisfies <span class="math inline">\(h(Rs)=h(s)\)</span> to a relative deviation below <span class="math inline">\(10^{-12}\)</span>, and every non-vanishing polarisation column satisfies <span class="math inline">\(P(Rs)=-P(s)\)</span>. Of 259 named observables whose overlap <span class="math inline">\(\langle v,O\rangle^2/(\lVert v\rVert^2\lVert O\rVert^2)\)</span> with <span class="math inline">\(v\)</span> was computed, the eight largest are all helicities.</p>
+<table>
+<caption>Overlaps of the slowest even eigenvector with the helicity family, with the second even mode as a control.</caption>
+<thead>
+<tr>
+<th>observable</th>
+<th>overlap with <span class="math inline">\(v\)</span></th>
+<th>with the 2nd even mode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(h_y+h_z\)</span> at <span class="math inline">\(q_{\min}\)</span></td>
+<td><strong>0.75859</strong></td>
+<td><span class="math inline">\(2.4\times10^{-26}\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(h_y\)</span>, <span class="math inline">\(h_z\)</span> at <span class="math inline">\(q_{\min}\)</span></td>
+<td>0.43300</td>
+<td><span class="math inline">\(1.8\times10^{-22}\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(h_x+h_y+h_z\)</span> at <span class="math inline">\(q_{\min}\)</span></td>
+<td>0.42149</td>
+<td><span class="math inline">\(1.3\times10^{-26}\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(h_y+h_z\)</span> at <span class="math inline">\(2q_{\min}\)</span></td>
+<td>0.27991</td>
+<td><span class="math inline">\(9.8\times10^{-27}\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(h_y-h_z\)</span> at <span class="math inline">\(q_{\min}\)</span></td>
+<td><span class="math inline">\(2.3\times10^{-27}\)</span></td>
+<td><span class="math inline">\(4.2\times10^{-22}\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(h_x\)</span> at <span class="math inline">\(q_{\min}\)</span> (thin axis)</td>
+<td>0.03464</td>
+<td><span class="math inline">\(1.6\times10^{-27}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The span of the eleven independent helicity columns captures <span class="math inline">\(0.83456\)</span> of <span class="math inline">\(v\)</span>. A least-squares projection onto spin monomials <span class="math inline">\(\sigma_S=\prod_{b\in
+S}\sigma_b\)</span>, done as a genuine Gram solve because the monomials are not orthogonal once restricted to an ice sector, puts the total degree-two content of <span class="math inline">\(v\)</span> at <span class="math inline">\(0.853223\)</span>, identical at rank cutoffs <span class="math inline">\(10^{-8}\)</span>, <span class="math inline">\(10^{-10}\)</span> and <span class="math inline">\(10^{-12}\)</span>. The helicity family therefore accounts for 98 per cent of everything of degree two in the mode, and the best non-helicity overlap is <span class="math inline">\(0.066707\)</span>. Two controls close the identification. The <span class="math inline">\(y\leftrightarrow z\)</span> swap has determinant <span class="math inline">\(-1\)</span>, so it must send <span class="math inline">\(v\)</span> to <span class="math inline">\(-v\)</span>, and geometrically it exchanges <span class="math inline">\(h_y\)</span> with <span class="math inline">\(h_z\)</span> and flips the helicity’s sign, so <span class="math inline">\(h_y+h_z\)</span> is odd under it and matches, while <span class="math inline">\(h_y-h_z\)</span> is even and must be orthogonal, as the measured <span class="math inline">\(2.3\times10^{-27}\)</span> says it is. And the matrix <span class="math inline">\(C_{ij}=\langle v,\sigma_i\sigma_j\rangle\)</span> describing the degree-two content has effective rank <span class="math inline">\(18.35\)</span> with leading eigenvalues in <span class="math inline">\(\pm\)</span> pairs at <span class="math inline">\(\pm0.002933\)</span>, the signature of an antisymmetric pairing rather than of the square of a single bond-linear form, which would give a rank-one <span class="math inline">\(C\)</span> of one sign.</p>
+<h1 id="the-blind-spot-in-relaxation-times">The blind spot, in relaxation times</h1>
+<p>Autocorrelations were computed exactly by 4,000 sparse matrix-vector products, so the numbers below carry no statistical error.</p>
+<table>
+<caption>Exact relaxation times at <span class="math inline">\((1,2,2)\)</span>, against <span class="math inline">\(1/\Delta=389.95\)</span> attempts and <span class="math inline">\(\tau_{\exp}(\lambda_2)=389.45\)</span>.</caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>observable</th>
+<th>parity</th>
+<th><span class="math inline">\(\tau_{\mathrm{int}}\)</span> (att)</th>
+<th><span class="math inline">\(\tau_{\exp}\)</span> (att)</th>
+<th>couples to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(P_\perp(q_{\min})\)</span></td>
+<td>odd</td>
+<td>181.73</td>
+<td>242.07</td>
+<td>slowest odd mode</td>
+</tr>
+<tr>
+<td><span class="math inline">\(F(q_{\min})\)</span></td>
+<td>even</td>
+<td>49.78</td>
+<td>—</td>
+<td>nothing in the top 28</td>
+</tr>
+<tr>
+<td><span class="math inline">\(n_{\mathrm{flippable}}\)</span></td>
+<td>even</td>
+<td>51.69</td>
+<td>176.85</td>
+<td>a fast even mode</td>
+</tr>
+<tr>
+<td><span class="math inline">\(\lvert P_\perp(q_{\min})\rvert^2\)</span></td>
+<td>even</td>
+<td>105.77–124.64</td>
+<td>263.13</td>
+<td>2nd even mode</td>
+</tr>
+<tr>
+<td><span class="math inline">\(h_y+h_z\)</span> at <span class="math inline">\(q_{\min}\)</span></td>
+<td>even</td>
+<td><strong>309.02</strong></td>
+<td><strong>389.45</strong></td>
+<td>the slowest mode</td>
+</tr>
+</tbody>
+</table>
+<p>The helicity’s <span class="math inline">\(\tau_{\exp}\)</span> is the chain’s true relaxation time to the last digit, where the earlier panel tops out at <span class="math inline">\(263.13\)</span>, short of the gap by a factor <span class="math inline">\(1.61\)</span>. Overlaps of the earlier panel’s even members with <span class="math inline">\(v\)</span> are <span class="math inline">\(3.4\times10^{-29}\)</span> and below for the four flippability channels, <span class="math inline">\(7.0\times10^{-30}\)</span> for the flippable count, and <span class="math inline">\(8.9\times10^{-27}\)</span> and below for the four squared-polarisation channels, with last digits that move between runs. Those are symmetry-enforced zeros rather than small numbers, because the observables are true scalars under improper operations and <span class="math inline">\(v\)</span> is a pseudoscalar, which is stronger than suppression by powers of <span class="math inline">\(q_{\min}^2\)</span>. The stochastic estimator sees the mode too, which matters because cubic cells can only be sampled: with 512 replicas and 20,000 samples at 39 attempts it returns <span class="math inline">\(\tau_{\exp}(h_y+h_z)=378.08\pm1.92\)</span> attempts against <span class="math inline">\(377.55\)</span> for the identical fit applied to the exact <span class="math inline">\(\rho(t)\)</span>.</p>
+<h1 id="cubic-geometry">Cubic geometry</h1>
+<p>Exact diagonalisation cannot reach cubic cells: cubic <span class="math inline">\(L=2\)</span> has of the order of <span class="math inline">\(2\times10^{11}\)</span> states at <span class="math inline">\(\mathbf W=0\)</span>. The question went to the Monte Carlo instead, with the helicity added to the production panel as four even families and left off by default so that the earlier panel reproduces bit for bit. With the same seeds, sampling intervals, burn-ins, replica counts and series lengths, <span class="math inline">\(\tau_{\exp}(P_\perp)\)</span> agrees with the banked campaign table to between <span class="math inline">\(8.8\times10^{-9}\)</span> and <span class="math inline">\(1.8\times10^{-6}\)</span> relative at every size, which is the rounding of the six-figure constants compared against, and ice-rule and winding violations were zero throughout. Write <span class="math inline">\(R_h(L)=\tau_{\exp}(h,q_{\min})/\tau_{\exp}(P_\perp,q_{\min})\)</span>.</p>
+<table>
+<caption>Cubic ladder, 1024 replicas (512 at <span class="math inline">\(L=16\)</span>), 6,000 samples per replica, jackknifed over multi-spin-coding blocks.</caption>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th><span class="math inline">\(L\)</span></th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>6</th>
+<th>8</th>
+<th>12</th>
+<th>16</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(R_h\)</span></td>
+<td>0.6813</td>
+<td>0.5417</td>
+<td>0.5131</td>
+<td>0.5048</td>
+<td>0.5026</td>
+<td>0.5010</td>
+<td>0.4988</td>
+</tr>
+<tr>
+<td><span class="math inline">\(\pm\)</span></td>
+<td>0.0051</td>
+<td>0.0023</td>
+<td>0.0018</td>
+<td>0.0017</td>
+<td>0.0019</td>
+<td>0.0015</td>
+<td>0.0025</td>
+</tr>
+<tr>
+<td><span class="math inline">\(\lvert P_\perp\rvert^2/P_\perp\)</span></td>
+<td>0.4608</td>
+<td>0.4687</td>
+<td>0.4847</td>
+<td>0.4928</td>
+<td>0.4958</td>
+<td>0.4992</td>
+<td>0.4972</td>
+</tr>
+<tr>
+<td><span class="math inline">\(\tau_{\exp}(P_\perp)\)</span> (sw)</td>
+<td>1.8031</td>
+<td>3.4722</td>
+<td>5.8044</td>
+<td>12.428</td>
+<td>21.813</td>
+<td>48.424</td>
+<td>85.929</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(R_h\)</span> falls monotonically to one half, approaching from above and crossing to <span class="math inline">\(0.4988\pm0.0025\)</span> at <span class="math inline">\(L=16\)</span>, while the independent control <span class="math inline">\(|P_\perp|^2/P_\perp\)</span> approaches the same value from below, the two meeting by <span class="math inline">\(L=8\)</span>. All four helicity families pass the resolution gate at every size, with fit <span class="math inline">\(r^2\)</span> between <span class="math inline">\(0.9891\)</span> at <span class="math inline">\(L=2\)</span> and <span class="math inline">\(1.0000\)</span> for <span class="math inline">\(L\geq6\)</span>, so no helicity number here is a fit to noise. At the Gaussian fixed point the photons are odd under arrow reversal, so the even sector is the sector of even photon number, whose lowest state is two photons at <span class="math inline">\(\pm q_{\min}\)</span> relaxing at half the odd time. The helicity is a two-photon composite and lands exactly there. It had no obligation to, since it carries a different representation of the cubic point group from <span class="math inline">\(|P_\perp|^2\)</span>, and the two agreeing from opposite sides is better evidence than either alone. In cubic geometry the odd polarisation remains the slowest member of the panel at every size.</p>
+<h1 id="why-the-thin-cell-is-different">Why the thin cell is different</h1>
+<p>Thinness alone is not the cause. Across the cells the enumerator can reach, <span class="math inline">\(\Delta_{\mathrm{even}}/\Delta_{\mathrm{odd}}\)</span> sorts by cross-section rather than by volume.</p>
+<table style="width:100%;">
+<caption><span class="math inline">\(\Delta_{\mathrm{even}}/\Delta_{\mathrm{odd}}\)</span> per attempt on the giant component of each enumerable cell. The <span class="math inline">\((1,1,c)\)</span> cells are quasi-one-dimensional and were excluded from anchoring anything, and at <span class="math inline">\((1,1,4)\)</span> the giant component is not the component the production chain lives in.</caption>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>spins</th>
+<th>giant</th>
+<th>quasi-1D</th>
+<th><span class="math inline">\(1/\Delta\)</span> even</th>
+<th><span class="math inline">\(1/\Delta\)</span> odd</th>
+<th>ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\((1,1,2)\)</span></td>
+<td>32</td>
+<td>160</td>
+<td>yes</td>
+<td>35.67</td>
+<td>132.47</td>
+<td>3.71429</td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,1,3)\)</span></td>
+<td>48</td>
+<td>3,360</td>
+<td>yes</td>
+<td>81.48</td>
+<td>310.56</td>
+<td>3.81136</td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,2,2)\)</span></td>
+<td>64</td>
+<td>221,424</td>
+<td><strong>no</strong></td>
+<td>389.95</td>
+<td>242.57</td>
+<td><strong>0.62206</strong></td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,1,4)\)</span></td>
+<td>64</td>
+<td>43,008</td>
+<td>yes</td>
+<td>161.85</td>
+<td>628.03</td>
+<td>3.88035</td>
+</tr>
+</tbody>
+</table>
+<p>The three quasi-one-dimensional cells sit between <span class="math inline">\(3.7\)</span> and <span class="math inline">\(3.9\)</span> and rise slowly with length. <span class="math inline">\((1,2,2)\)</span> is the only reachable cell with two directions of extent greater than one, and the only one where the even sector is slowest. A helicity needs two independent transverse directions to have a long wavelength, and the measurements say so directly: the helicity about the thin axis has overlap <span class="math inline">\(0.03464\)</span> with <span class="math inline">\(v\)</span> against <span class="math inline">\(0.75859\)</span> for the combination on the two thick axes. Momentum is the other half of the geometry. With <span class="math inline">\(b=c=2\)</span> the smallest nonzero wavevector along a transverse axis is already the zone boundary, where <span class="math inline">\(e^{iq_{\min}a}=-1\)</span>, and that is exactly where the character analysis puts the fourfold odd multiplet while the helicity sits at zero momentum. A cell two units across has no interior to its Brillouin zone, so the ordering of the two sectors is settled by a two-point comparison a larger cell would not make. Adding a third thick direction restores the Gaussian counting, and the cubic ladder shows that happening.</p>
+<h1 id="what-remains-open">What remains open</h1>
+<p>The natural next cell is <span class="math inline">\((1,2,3)\)</span>, which would test whether the helicity stays slowest when one transverse direction is lengthened. Its <span class="math inline">\(\mathbf W=0\)</span> count is known exactly, 196,465,480 states from a frontier dynamic programme in <span class="math inline">\(14.9\)</span> seconds. The diagonalisation is what does not fit, at 31 to 243 hours of wall time, the binding constraints being the binary-search index used to build the adjacency and the unaccelerated Lanczos iteration count. That cell would still be one unit thick, so it would sharpen the thin-cell statement rather than test cubic geometry.</p>
+<p>The cubic result is a measurement supported by a field-theoretic argument, and a panel bounds only what it measures. An eighth family finding nothing slower than the polarisation at seven sizes narrows the space of hidden even modes without emptying it. Nothing here is certified. The spectra are floating-point computations with residual checks and cross-checks against independently banked values, the symmetry statements are numerical characters agreeing with <span class="math inline">\(\det M_g\)</span> to <span class="math inline">\(2.7\times10^{-14}\)</span>, and the cubic result is Monte Carlo with jackknife errors, which is a different epistemic status from the project’s SAT-certified and proof-assistant results.</p>
+<h1 id="related-work">Related work</h1>
+<p>Magnetic helicity entered fluid mechanics as a topological invariant. Woltjer proved the invariance of <span class="math inline">\(\int\mathbf A\cdot\mathbf B\)</span> for a perfectly conducting fluid and its role in characterising force-free fields <span class="citation" data-cites="woltjer-1958-force-free-magnetic-fields-theorem">(<a href="#ref-woltjer-1958-force-free-magnetic-fields-theorem" role="doc-biblioref">Woltjer 1958</a>)</span>; Moffatt showed that the corresponding integral for a vortex field measures the knottedness and linkage of the field lines <span class="citation" data-cites="moffatt-1969-degree-of-knottedness-tangled-vortex-lines">(<a href="#ref-moffatt-1969-degree-of-knottedness-tangled-vortex-lines" role="doc-biblioref">Moffatt 1969</a>)</span>; Berger and Field made the topological reading precise for a magnetic field in a bounded volume <span class="citation" data-cites="berger-field-1984-magnetic-helicity-topology">(<a href="#ref-berger-field-1984-magnetic-helicity-topology" role="doc-biblioref">Berger and Field 1984</a>)</span>. The pseudoscalar character that does the identifying work here is the property that makes helicity a linking number, since a linkage changes sign under reflection.</p>
+<p>The emergent electrodynamics of spin ice is why a helicity exists in this model at all. The ice rule is a lattice divergence-free condition on the coarse-grained field, which puts the classical model in a Coulomb phase with dipolar correlations and pinch points in the structure factor <span class="citation" data-cites="isakov-et-al-2004-dipolar-spin-correlations-pyrochlore henley-2010-coulomb-phase-frustrated-systems">(<a href="#ref-isakov-et-al-2004-dipolar-spin-correlations-pyrochlore" role="doc-biblioref">Isakov et al. 2004</a>; <a href="#ref-henley-2010-coulomb-phase-frustrated-systems" role="doc-biblioref">Henley 2010</a>)</span>, and the excitations above it are deconfined monopoles <span class="citation" data-cites="castelnovo-et-al-2008-magnetic-monopoles-spin-ice castelnovo-et-al-2012-spin-ice-fractionalization-topological-order">(<a href="#ref-castelnovo-et-al-2008-magnetic-monopoles-spin-ice" role="doc-biblioref">Castelnovo, Moessner, and Sondhi 2008</a>, <a href="#ref-castelnovo-et-al-2012-spin-ice-fractionalization-topological-order" role="doc-biblioref">2012</a>)</span>. At the Rokhsar–Kivelson point the quantum model has an emergent photon <span class="citation" data-cites="hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid">(<a href="#ref-hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid" role="doc-biblioref">Hermele, Fisher, and Balents 2004</a>)</span>, and the classical-to-quantum correspondence <span class="citation" data-cites="henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points">(<a href="#ref-henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points" role="doc-biblioref">Henley 2004</a>)</span> makes the chain’s spectrum that Hamiltonian’s spectrum. I have found no previous use of the helicity as an observable in spin-ice Monte Carlo, classical or quantum: a literature search on the emergent gauge field returns work on the transverse projector, on monopoles and on photon signatures, and nothing on pseudoscalar bilinears. That is a negative result from one search rather than a claim of priority.</p>
+<p>The general point that an observable’s autocorrelation time is not the chain’s is old <span class="citation" data-cites="sokal-1997-monte-carlo-statistical-mechanics">(<a href="#ref-sokal-1997-monte-carlo-statistical-mechanics" role="doc-biblioref">Sokal 1997</a>)</span>, and the practical version is familiar in lattice gauge theory, where the topological charge is a slow mode that couples weakly to most observables and so leaves their error estimates too small <span class="citation" data-cites="schaefer-et-al-2011-critical-slowing-down-lattice-qcd">(<a href="#ref-schaefer-et-al-2011-critical-slowing-down-lattice-qcd" role="doc-biblioref">Schaefer, Sommer, and Virotta 2011</a>)</span>. The pyrochlore case is sharper than weak coupling, because the overlap is exactly zero and two symmetries in succession enforce it: arrow reversal removes every odd observable, and the improper operations of the point group remove every even scalar. Where that matters, the alternative to guessing a better observable is to compute the subdominant eigenvalue of the stochastic matrix itself, the route Nightingale and Blöte took for the two-dimensional Ising model <span class="citation" data-cites="nightingale-blote-1996-ising-model-dynamic-exponent">(<a href="#ref-nightingale-blote-1996-ising-model-dynamic-exponent" role="doc-biblioref">Nightingale and Blöte 1996</a>)</span>, and what the diagonalisation here does at the one cell where it is affordable.</p>
+<h1 id="appendix-artefacts">Appendix: artefacts</h1>
+<p>All computation was CPU-only on a single GB10 machine, so no HPC service was used and no acknowledgement is owed. <code>icemix/parity.py</code> supplies the parity blocks, the derived automorphism group, the induced action on states and the monomial projection; <code>icemix/observables.py</code> defines <span class="math inline">\(P_j(\mathbf q)\)</span>; <code>icemix/exact_ac.py</code> computes exact autocorrelations and overlaps; <code>icemix/panel.py</code> carries the panel, the helicity families and <code>helicity_ratio</code>. <code>experiments/05_thin_even/results/results.json</code> is the source of every <span class="math inline">\((1,2,2)\)</span> number here, from a run of 886.9 s at a peak resident set of 4.45 GiB, and <code>experiments/06_helicity_cubic/results/results.json</code> the source of every cubic number, from a run of 3,413.5 s at 8.21 GiB. <code>tests/test_stage4d.py</code> adds 26 tests and <code>tests/test_stage4f.py</code> 17, covering the parity and symmetry machinery from definitions, the panel change and its bit-identity against the pre-change module, and the recorded readings. <a href="../reports/2026-09-04-stage4d.html"><code>docs/reports/2026-09-04-stage4d.md</code></a> and <a href="../reports/2026-09-04-stage4f.html"><code>docs/reports/2026-09-04-stage4f.md</code></a> carry the full working record.</p>
+<h1 class="unnumbered" id="references">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-berger-field-1984-magnetic-helicity-topology" class="csl-entry" role="listitem">
+Berger, Mitchell A., and George B. Field (1984), <span>‘The Topological Properties of Magnetic Helicity’</span>, <em>Journal of Fluid Mechanics</em>, 147: 133–48, <a href="https://doi.org/10.1017/S0022112084002019">https://doi.org/10.1017/S0022112084002019</a>.
+</div>
+<div id="ref-bramwell-gingras-2001-spin-ice-state" class="csl-entry" role="listitem">
+Bramwell, Steven T., and Michel J. P. Gingras (2001), <span>‘Spin Ice State in Frustrated Magnetic Pyrochlore Materials’</span>, <em>Science</em>, 294: 1495–501.
+</div>
+<div id="ref-castelnovo-et-al-2008-magnetic-monopoles-spin-ice" class="csl-entry" role="listitem">
+Castelnovo, Claudio, Roderich Moessner, and Shivaji L. Sondhi (2008), <span>‘Magnetic Monopoles in Spin Ice’</span>, <em>Nature</em>, 451: 42–5.
+</div>
+<div id="ref-castelnovo-et-al-2012-spin-ice-fractionalization-topological-order" class="csl-entry" role="listitem">
+Castelnovo, Claudio, Roderich Moessner, and Shivaji L. Sondhi (2012), <span>‘Spin Ice, Fractionalization, and Topological Order’</span>, <em>Annual Review of Condensed Matter Physics</em>, 3/1: 35–55, <a href="https://doi.org/10.1146/annurev-conmatphys-020911-125058">https://doi.org/10.1146/annurev-conmatphys-020911-125058</a>.
+</div>
+<div id="ref-henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points" class="csl-entry" role="listitem">
+Henley, Christopher L. (2004), <span>‘From Classical to Quantum Dynamics at Rokhsar–Kivelson Points’</span>, <em>Journal of Physics: Condensed Matter</em>, 16: S891–8.
+</div>
+<div id="ref-henley-2010-coulomb-phase-frustrated-systems" class="csl-entry" role="listitem">
+Henley, Christopher L. (2010), <span>‘The <span>“Coulomb Phase”</span> in Frustrated Systems’</span>, <em>Annual Review of Condensed Matter Physics</em>, 1: 179–210, <a href="https://doi.org/10.1146/annurev-conmatphys-070909-104138">https://doi.org/10.1146/annurev-conmatphys-070909-104138</a>.
+</div>
+<div id="ref-hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid" class="csl-entry" role="listitem">
+Hermele, Michael, Matthew P. A. Fisher, and Leon Balents (2004), <span>‘Pyrochlore Photons: The U(1) Spin Liquid in a $S=1/2$ Three-Dimensional Frustrated Magnet’</span>, <em>Physical Review B</em>, 69: 064404.
+</div>
+<div id="ref-isakov-et-al-2004-dipolar-spin-correlations-pyrochlore" class="csl-entry" role="listitem">
+Isakov, S. V., et al. (2004), <span>‘Dipolar Spin Correlations in Classical Pyrochlore Magnets’</span>, <em>Physical Review Letters</em>, 93: 167204, <a href="https://doi.org/10.1103/PhysRevLett.93.167204">https://doi.org/10.1103/PhysRevLett.93.167204</a>.
+</div>
+<div id="ref-moffatt-1969-degree-of-knottedness-tangled-vortex-lines" class="csl-entry" role="listitem">
+Moffatt, H. K. (1969), <span>‘The Degree of Knottedness of Tangled Vortex Lines’</span>, <em>Journal of Fluid Mechanics</em>, 35/1: 117–29, <a href="https://doi.org/10.1017/S0022112069000991">https://doi.org/10.1017/S0022112069000991</a>.
+</div>
+<div id="ref-nightingale-blote-1996-ising-model-dynamic-exponent" class="csl-entry" role="listitem">
+Nightingale, M. P., and H. W. J. Blöte (1996), <span>‘Dynamic Exponent of the Two-Dimensional Ising Model and Monte Carlo Computation of the Subdominant Eigenvalue of the Stochastic Matrix’</span>, <em>Physical Review Letters</em>, 76: 4548–51, <a href="https://doi.org/10.1103/PhysRevLett.76.4548">https://doi.org/10.1103/PhysRevLett.76.4548</a>.
+</div>
+<div id="ref-rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas" class="csl-entry" role="listitem">
+Rokhsar, Daniel S., and Steven A. Kivelson (1988), <span>‘Superconductivity and the Quantum Hard-Core Dimer Gas’</span>, <em>Physical Review Letters</em>, 61: 2376–9.
+</div>
+<div id="ref-schaefer-et-al-2011-critical-slowing-down-lattice-qcd" class="csl-entry" role="listitem">
+Schaefer, Stefan, Rainer Sommer, and Francesco Virotta (2011), <span>‘Critical Slowing down and Error Analysis in Lattice QCD Simulations’</span>, <em>Nuclear Physics B</em>, 845/1: 93–119, <a href="https://doi.org/10.1016/j.nuclphysb.2010.11.020">https://doi.org/10.1016/j.nuclphysb.2010.11.020</a>.
+</div>
+<div id="ref-sokal-1997-monte-carlo-statistical-mechanics" class="csl-entry" role="listitem">
+Sokal, Alan (1997), <span>‘Monte Carlo Methods in Statistical Mechanics: Foundations and New Algorithms’</span>, in <em>Functional Integration: Basics and Applications</em>, NATO ASI Series (Boston, MA), 131–92, <a href="https://doi.org/10.1007/978-1-4899-0319-8_6">https://doi.org/10.1007/978-1-4899-0319-8_6</a>.
+</div>
+<div id="ref-woltjer-1958-force-free-magnetic-fields-theorem" class="csl-entry" role="listitem">
+Woltjer, L. (1958), <span>‘A Theorem on Force-Free Magnetic Fields’</span>, <em>Proceedings of the National Academy of Sciences</em>, 44/6: 489–91, <a href="https://doi.org/10.1073/pnas.44.6.489">https://doi.org/10.1073/pnas.44.6.489</a>.
+</div>
+</div>
+</main>
+</body>
+</html>

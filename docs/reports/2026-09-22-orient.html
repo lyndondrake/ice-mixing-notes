@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oriented loops: in every odd frozen state the moment signs orient the rod loops (one rod in, one out at every hole), and this fails in curl-free state</title>
+<meta name="description" content="Oriented loops: in every odd frozen state the moment signs orient the rod loops (one rod in, one out at every hole), and this fails in curl-free states; the unoriented hole is a type-only pattern (a straight cage with bridgeheads yy/zz), and Theorem U — one such cage forces the o">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Oriented loops: in every odd frozen state the moment signs orient the rod loops (one rod in, one out at every hole), and this fails in curl-free states; the unoriented hole is a type-only pattern (a straight cage with bridgeheads yy/zz), and Theorem U — one such cage forces the opposite sublattice x-free, hence the state curl-free — is solver-true at L = 3, 4, 5 in seconds. Also: the loops report's wall picture withdrawn; corner counts; the sign field is always a function of the type field",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-22-orient.html",
+ "datePublished": "2026-09-22",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Fable 5.1), main loop, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-22-orient.md">Markdown source</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Oriented loops: in every odd frozen state the moment signs orient the rod loops (one rod in, one out at every hole), and this fails in curl-free states; the unoriented hole is a type-only pattern (a straight cage with bridgeheads yy/zz), and Theorem U — one such cage forces the opposite sublattice x-free, hence the state curl-free — is solver-true at L = 3, 4, 5 in seconds. Also: the loops report’s wall picture withdrawn; corner counts; the sign field is always a function of the type field</h1>
+
+<p class="author">Claude (Fable 5.1), main loop, for Lyndon Drake</p>
+<p class="date">2026-09-22</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#corrections-and-small-facts" id="toc-corrections-and-small-facts">1. Corrections and small facts</a></li>
+<li><a href="#lemma-o-the-loops-are-oriented-in-odd-states-only" id="toc-lemma-o-the-loops-are-oriented-in-odd-states-only">2. Lemma O: the loops are oriented — in odd states only</a></li>
+<li><a href="#the-unoriented-hole-is-a-type-only-pattern-proved-computed" id="toc-the-unoriented-hole-is-a-type-only-pattern-proved-computed">3. The unoriented hole is a type-only pattern (proved, computed)</a></li>
+<li><a href="#theorem-u-solver-l-3-4-5-an-unoriented-cage-forces-curl-free" id="toc-theorem-u-solver-l-3-4-5-an-unoriented-cage-forces-curl-free">4. Theorem U (solver, L = 3, 4, 5): an unoriented cage forces curl-free</a></li>
+<li><a href="#what-this-does-for-theorem-h" id="toc-what-this-does-for-theorem-h">5. What this does for Theorem H</a></li>
+<li><a href="#a.-later-the-same-session-the-sign-half-of-h-is-type-only-in-odd-states-computed" id="toc-a.-later-the-same-session-the-sign-half-of-h-is-type-only-in-odd-states-computed">5a. Later the same session: the sign half of H is type-only in odd states (computed)</a></li>
+<li><a href="#computations-run" id="toc-computations-run">6. Computations run</a></li>
+</ul>
+</details></nav>
+<p>Status tags as in the note: <strong>proved</strong>, <strong>computed</strong>, <strong>solver</strong>, <strong>conjecture</strong>. Scripts <code>scratch_h/h80</code>–<code>h102</code> (main loop). Sequence date 2026-09-22 (wall clock 19 Sep). Builds on <code>2026-09-21-loops.md</code> (rod loops), <code>-laws.md</code> (cage theorem), <code>-sheetcore.md</code> (M′), <code>-sheetcurl.md</code> ((B), Lemma S1).</p>
+<h2 id="corrections-and-small-facts">1. Corrections and small facts</h2>
+<p><strong>The wall picture of the loops report §2 is withdrawn (computed, <code>h80_diamonds.py</code>).</strong> Only the hole-centred half of the projected unit squares carries a cage law; the A-site-centred squares take every value in [−2, 2] on the odd corpus (516/537 at ±2 at L = 3). A mixed-difference constraint on a checkerboard of squares has a large kernel (an isolated 2 × 2 block at the right parity satisfies it), so there is no wall system and §5 item 2 of that report is void. The correction is written into the report itself.</p>
+<p><strong>Corner counts (computed, <code>h80</code>, <code>h81</code>, <code>h82</code>).</strong> On every odd state #corners_A = #corners_B = #odd hexagons / 2 (as the cage picture predicts: a corner cage has one A-odd and one B-odd hexagon). The minimum is 4L per sublattice (12 at L = 3, 16 at L = 4). The minimal states are two-type states: all A-corners in one z-layer of A-holes with x/y legs (two winding loops of six corners each), all B-corners in the adjacent layer; type z absent, so H’s hypothesis fails trivially. Two-axis states have corner counts that are multiples of 4L; three-axis states start at 22 and are irregular. Corners do not come in lines along the third axis (<code>h81</code>, ~40 %).</p>
+<p><strong>The sign field is a function of the type field (computed, <code>h94_signcount.py</code>).</strong> For every type field tested — odd, curl-free, and the counterexample below — the number of bond states with that type field (ice + frozen) is exactly 2 (global reversal). This is the Z₂ chain-sense system: one sense bit per x-chain, one equation per vertex, connected incidence graph; every sign statement below is therefore secretly type-only, and the solver’s <code>add_sign_field</code> is that system.</p>
+<h2 id="lemma-o-the-loops-are-oriented-in-odd-states-only">2. Lemma O: the loops are oriented — in odd states only</h2>
+<p>Orient each rod by its vertex’s moment (the in-pair). At a hole O with rods at O ± 2e_k, a rod points <em>away</em> from O iff its sign equals its side.</p>
+<p><strong>Computed (<code>h83_orient.py</code>, <code>h93</code>, <code>h95</code>).</strong> On the 132 sign-carrying corpus states (32 at L = 3, 100 at L = 4, all odd) every hole of both sublattices has exactly one rod pointing away: 0 exceptions in 58 112 holes. On diversified random frozen samples (random assumptions on 12 bond bits, two seeds, 77 samples): every odd sample (62) obeys it with 0 bad holes; every curl-free sample (14) violates it, with 48 or 72 bad holes at L = 3.</p>
+<p><strong>Solver.</strong> On the (3,3,3) torus (bond model, ice + non-flippable, <code>h85</code>, <code>h91</code>): “β = 0” and “β = 4” at one hole are SAT (β = number of radial cage bonds directed A→B; β = 2 is the oriented case, and β odd is UNSAT already on the cage by the ice count a = β/2). The model is a genuine frozen state (432 hexagons with two matches) and is curl-free, with 48 + 12 bad holes. With “some hexagon odd” added (<code>h96</code>), β = 0 and β = 4 are <strong>UNSAT</strong> (192 s, 261 s; control SAT). So:</p>
+<p><strong>Lemma O (solver, L = 3; computed on 194 odd states at L = 3, 4).</strong> <em>In an odd frozen state every hole has one rod pointing toward it and one away; the rod loops of both sublattices are oriented closed curves.</em> Consequences (proved from the lemma): each loop’s winding vector is canonical; Σ_loops w = M_S / L for each sublattice; and M_A = M_B in every ice state (proved directly: along any chain, sources and sinks alternate and lie on alternating sublattices).</p>
+<p><strong>Proved by hand: the corner case.</strong> At a corner cage the two rods lie in one hexagon, which is odd with both matches on the rods; a hexagon’s two flow reversals are one source and one sink, so one rod points toward O and one away. The whole content of Lemma O is therefore the straight case: <strong>consecutive kinks v, v + 4e_k on a k-line have equal moment sign</strong> (a straight x-cage is oriented iff m(v) = m(v′), by the radial count).</p>
+<p><strong>Stronger, with gaps (computed, <code>h89</code>).</strong> On all 132 corpus states every k-line’s type-k sites share one moment sign, gaps included (0 mixed lines among 10 000+ with ≥ 2 kinks at L = 4); on the curl-free samples 24 or 36 lines per state are mixed, each with exactly two sign changes. Bonded-kink adjacency does not explain it (<code>h90</code>: the kinks of a line lie in one component of the bonded-kink graph in only 84 % of lines).</p>
+<h2 id="the-unoriented-hole-is-a-type-only-pattern-proved-computed">3. The unoriented hole is a type-only pattern (proved, computed)</h2>
+<p>Bit calculus (proved): bit(e) = 1 iff bond e is directed A→B; along a path, at a vertex u entered by e and left by e′, bit(e′) = bit(e) ⊕ [τ(u) ≠ axis(e, e′)] (the two hexagon bonds of a match carry equal bits). For the straight x-cage with rods v = w_x^−, v′ = w_x^+, lower bridgeheads β, β′ (grid g+1, v’s row-neighbours) and upper γ, γ′ (grid g+3, v′’s column-neighbours), a path v–b–w–b′–v′ gives m(v) = m(v′) iff q = [τ(b) = axis_b] + [τ(w) = axis_w] + [τ(b′) = axis_b′] is even.</p>
+<p><strong>Computed (<code>h97_cage_orient.py</code>, all 3⁸ assignments of the cage under (T2) on its four hexagons, 144 patterns; the four paths agree on every one).</strong> The straight x-cage is <strong>unoriented iff its bridgehead pattern is yy/zz or zz/yy</strong>: both lower bridgeheads of one transverse type and both upper of the other. Every other (T2) pattern (xx/xx, yy/yy, zz/zz, xy/yx, yx/xy, xz/xz, zx/zx) is oriented. A hand-built yy/zz cage satisfies ice + (T2) on its four hexagons, and the solver keeps it SAT on balls of radius 6 (<code>h84</code>, <code>h87</code>): the lemma is not cage-local.</p>
+<h2 id="theorem-u-solver-l-3-4-5-an-unoriented-cage-forces-curl-free">4. Theorem U (solver, L = 3, 4, 5): an unoriented cage forces curl-free</h2>
+<p>Type-only model (one-hot + (T2)), the cage at O fixed, <code>h98_unoriented.py</code>:</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>query</th>
+<th>L = 3</th>
+<th>L = 4</th>
+<th>L = 5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>yy/zz + some hexagon odd</td>
+<td>UNSAT 0.2 s</td>
+<td>UNSAT 2.8 s</td>
+<td>UNSAT 13.9 s</td>
+</tr>
+<tr>
+<td>zz/yy + some hexagon odd</td>
+<td>UNSAT 0.1 s</td>
+<td>UNSAT 1.3 s</td>
+<td>UNSAT 5.0 s</td>
+</tr>
+<tr>
+<td>yy/zz alone; yy/yy + odd; straight cage + odd (controls)</td>
+<td>SAT</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Theorem U (solver).</strong> <em>A frozen state containing a straight cage with an unoriented bridgehead pattern is curl-free.</em> With §3 and the corner case, Lemma O for odd states follows: odd ⇒ no unoriented cage ⇒ every hole oriented.</p>
+<p><strong>What the pattern forces (computed, backbone <code>h99</code>, enumeration <code>h102</code>).</strong> Under yy/zz at one A-cage on the (3,3,3) and (4,4,4) tori: the whole A x-line through v is type x; the entire B-grid g+1 is type y and the entire B-grid g+3 is type z; <strong>every B-site of the torus is non-x</strong>; nothing else on A is forced. The full family at L = 3 has 1008 type fields: in every one all six B-grids are monochromatic (y or z), B is x-free, A is x plus one of y, z, and there are no corners — the n_B = 0 curl-free world. So U factors as</p>
+<p>yy/zz ⇒ (V) B-grid g+1 is x-free ⇒ (grid-count identity) B has no type x ⇒ (sublattice mirror of M′, with the A-kink v; proved) curl-free,</p>
+<p>and the new content is (V), equivalently “yy/zz ⇒ B-grid g+1 is a complete type-y plane” (Lemma S1 then gives B x-free directly).</p>
+<p><strong>(V) is x-global (computed, <code>h100</code>, <code>h101</code>).</strong> On transverse boxes of radius up to 9 with x-extent up to ±6, yy/zz forces nothing beyond the cage’s own six methylene exclusions. On x-slabs with the full transverse torus, “some B-site on grid g+1 is type x” (and “not y”, and the g+3 mirror) is SAT up to |dx| ≤ 2L−3 and UNSAT from |dx| ≤ 2L−2 at both L = 4 and L = 5: the slab must contain all hexagons except those meeting a three-grid gap at the antipode. (The “light cone” seen in <code>h100</code> at RX = 5, RT = 10 on L = 5 is a closed-transverse-torus effect — RT = 10 is the whole plane there; agent uhand shows nothing at all is forced until every transverse plane is present, and agent ucore that (V) needs the closed three-torus: no window, no tube, no bounded-x step, and no linear certificate. See <code>2026-09-22-ucore.md</code>, <code>-uhand.md</code>.)</p>
+<h2 id="what-this-does-for-theorem-h">5. What this does for Theorem H</h2>
+<p>Not a proof. What changes:</p>
+<ul>
+<li>H ⟺ [odd ⇒ some direction missing]. By U (solver) and the hand corner case, <strong>every odd state has oriented loops</strong>, so the missing step is: <em>oriented loops + a corner ⇒ some direction missing</em>, i.e. some axis k on which every k-rod of both sublattices points the same way. On the fair samples every odd state does miss a direction, three-axis states miss at most one sign per axis; every curl-free sample has all six directions and unoriented holes. (An earlier version of this sentence claimed the absent set is the same on A and B; on the full corpus it differs in 38/637 and 32/720 odd states — agent extremal — so that claim is withdrawn.)</li>
+<li>In an odd state the winding vector of each loop is an invariant, and the line-sign law (§2) says each k-line carries one sign. H’s contrapositive is then: some axis has all its lines of one sign. That is a statement about the type→sign function, which the linear calculus does not see; it is the global object the loops report asked for.</li>
+<li>Theorem U is a rigidity theorem of M′’s kind (one local pattern ⇒ a sheet), solver-true in seconds where H takes hours, so it is the natural next hand target: a proof of (V) on the x-circle would be the first hand proof of an x-global statement in this project.</li>
+</ul>
+<h2 id="a.-later-the-same-session-the-sign-half-of-h-is-type-only-in-odd-states-computed">5a. Later the same session: the sign half of H is type-only in odd states (computed)</h2>
+<ul>
+<li><strong>α_k ⟺ one-way (computed, <code>h104_alpha.py</code>, 132 odd sign states, 0 exceptions).</strong> Say axis k satisfies α_k when on every k-chain consecutive kinks (type-k sites with no type-k site between them along the chain) lie on opposite sublattices. One-way ⇒ α_k is proved (an A-kink is +k iff it is a source of its chain, a B-kink +k iff a sink, and sources and sinks alternate). On every odd state the converse holds too: α_k with type k present ⟺ every k-rod has one sign. On a curl-free state it fails (one case). On the type corpus every odd state with all three types present has an α axis (396 + 116 of 637 at L = 3; the 125 without are two-type states).</li>
+<li>So, modulo “α ⇒ one-way in odd states”, <strong>H ⟺ H_α: all three types present ∧ every axis has a chain with two consecutive same-sublattice kinks ⇒ curl-free</strong> — a type-only statement. Solver (<code>h105_halpha.py</code>, type-only, L = 3): the negation did not finish in 600 s; H_α is H-hard, as it must be, so this is a reformulation, not a cheaper target.</li>
+<li><strong>Adjacent uniform chains agree (computed, <code>h106_chainpairs.py</code>).</strong> In odd states, two kinked chains of one family joined by a bond (rows in slabs g and g+2 sharing a column bond), each uniformly signed, always agree: 0 exceptions in 2 968 + 15 922 pairs. Another coherence law of Lemma O’s kind, and the mechanism behind α ⇒ one-way.</li>
+<li><strong>Negative (computed, <code>h103</code>, <code>h107</code>, <code>h108</code>).</strong> One-way is not bond-connectivity of the type-k set (one-way axes with up to 21 components; two-way with 2). One-way is not “no loop turns back in k”: two-way axes with no turn-back loop exist (12 / 40 cases), so the disagreement lives across loops. The relative sign of a two-way axis’s kink against a one-way axis’s direction is not a radius-1 local function of the types (85–90 % of kinks in sign-determining neighbour patterns, the rest mixed).</li>
+</ul>
+<p><strong>Reading.</strong> In odd states every sign relation examined (adjacent kinks on a line, a whole line, adjacent chains, α ⇒ one-way) is coherent, and every one fails in curl-free states. Theorem U is the first of these turned into a type-only rigidity theorem. H’s sign half is the same phenomenon at the scale of a whole axis: for some k the coherence covers every k-kink.</p>
+<h2 id="computations-run">6. Computations run</h2>
+<p>All from <code>scratch_h</code> with the project <code>.venv</code>, <code>PYTHONPATH=&lt;repo&gt;:&lt;repo&gt;/experiments/08_frozen_structure</code>, <code>TMPDIR=.tmp</code>; every solve in an <code>h32_cap</code> child (SIGKILL at the cap).</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>script</th>
+<th>what</th>
+<th>verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h80_diamonds.py 3/4</code></td>
+<td>hole- vs A-site-centred diamond sums; corner counts</td>
+<td>law exact at holes; A-site sums in [−2, 2]; #corners equal, min 4L</td>
+</tr>
+<tr>
+<td><code>h81_cornerlines.py</code>, <code>h82_axes.py</code></td>
+<td>corner lines; axis patterns; minimal states</td>
+<td>no lines; two-axis counts multiples of 4L</td>
+</tr>
+<tr>
+<td><code>h83_orient.py 3/4</code></td>
+<td>Lemma O on the sign corpus</td>
+<td>0 exceptions, 58 112 holes</td>
+</tr>
+<tr>
+<td><code>h84</code>, <code>h86</code>, <code>h87</code> (L = 5, R ≤ 6)</td>
+<td>window versions (non-flippable; then (T2))</td>
+<td>β = 0, 4 SAT; β odd UNSAT on the cage; non-flippable windows admit 4- and 6-match hexagons</td>
+</tr>
+<tr>
+<td><code>h85_orient_torus.py 3</code></td>
+<td>torus, ice + frozen, any/zero flux</td>
+<td>β = 0, 4 SAT (1 s); β = 1 UNSAT (313 s); rest capped</td>
+</tr>
+<tr>
+<td><code>h91</code>, <code>h92</code></td>
+<td>the SAT model</td>
+<td>genuine frozen, curl-free, 48 + 12 bad holes</td>
+</tr>
+<tr>
+<td><code>h93</code>, <code>h95</code> (L = 3, 77 samples)</td>
+<td>diversified samples</td>
+<td>odd: 0 bad holes, 0 mixed lines, a direction missing; curl-free: 48/72 bad, 24/36 mixed, all six directions</td>
+</tr>
+<tr>
+<td><code>h94_signcount.py 3</code></td>
+<td>sign fields per type field</td>
+<td>2 for all 22 type fields</td>
+</tr>
+<tr>
+<td><code>h96_odd_orient.py 3</code></td>
+<td>odd ∧ β ∈ {0, 4}</td>
+<td>UNSAT 192 s / 261 s; control SAT</td>
+</tr>
+<tr>
+<td><code>h97_cage_orient.py</code></td>
+<td>cage enumeration, path parities</td>
+<td>144 patterns; unoriented iff yy/zz, zz/yy</td>
+</tr>
+<tr>
+<td><code>h98_unoriented.py 3/4/5</code></td>
+<td>Theorem U</td>
+<td>UNSAT 0.2 / 2.8 / 13.9 s (yy/zz), 0.1 / 1.3 / 5.0 s (zz/yy); controls SAT</td>
+</tr>
+<tr>
+<td><code>h99_backbone.py 3/4</code></td>
+<td>forced literals under yy/zz</td>
+<td>x-line; B-grids g±1 mono; B non-x</td>
+</tr>
+<tr>
+<td><code>h100_spread.py</code> (L = 5, 6)</td>
+<td>transverse boxes</td>
+<td>nothing beyond the cage; light cone on slabs</td>
+</tr>
+<tr>
+<td><code>h101_slab.py 4/5</code></td>
+<td>x-slab threshold for (V)</td>
+<td>UNSAT from</td>
+</tr>
+<tr>
+<td><code>h102_unoriented_family.py 3</code></td>
+<td>all models with yy/zz</td>
+<td>1008; all B-grids mono, no corners</td>
+</tr>
+<tr>
+<td><code>h103</code>–<code>h108</code></td>
+<td>one-way vs connectivity; α_k; H_α (600 s cap); chain pairs; turn-backs; local rule</td>
+<td>see §5a</td>
+</tr>
+</tbody>
+</table>
+</main>
+</body>
+</html>

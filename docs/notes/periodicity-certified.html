@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frozen zero-flux states of pyrochlore ice are periodic at L = 2 and L = 3</title>
+<meta name="description" content="every frozen zero-flux state of cubic L = 2 and L = 3 is periodic; L = 4 incomplete">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "ScholarlyArticle",
+ "@id": "https://lyndondrake.github.io/ice-mixing-notes/notes/periodicity-certified.html",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/notes/periodicity-certified.html",
+ "headline": "Frozen zero-flux states of pyrochlore ice are periodic at L = 2 and L = 3",
+ "name": "Frozen zero-flux states of pyrochlore ice are periodic at L = 2 and L = 3",
+ "datePublished": "2026-09-06",
+ "version": "2026-09-06",
+ "author": [
+  {
+   "@type": "Person",
+   "name": "Lyndon Drake"
+  }
+ ],
+ "creditText": "Lyndon Drake, with Claude Code (Anthropic Claude 5 models)",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "inLanguage": "en-GB",
+ "encoding": [
+  {
+   "@type": "MediaObject",
+   "contentUrl": "https://lyndondrake.github.io/ice-mixing-notes/notes/periodicity-certified.pdf",
+   "encodingFormat": "application/pdf"
+  }
+ ]
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div class="doc-links" style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0"><p class="small"><a href="periodicity-certified.pdf">PDF</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/notes/periodicity-certified.md">Markdown source</a></p><p class="small"><strong>Certification, as the notes index states it:</strong> two-method census at L = 2; cube-and-conquer with per-leaf LRAT and a DRAT cover proof at L = 3, with a manifest and an independent checker</p><section class="panel small"><p>This note has no published claims manifest yet; its standing is as the note itself and the <a href="index.html">notes index</a> state it.</p></section></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Frozen zero-flux states of pyrochlore ice are periodic at <span class="math inline">\(L = 2\)</span> and <span class="math inline">\(L = 3\)</span></h1>
+<p class="subtitle">A certified census and a certified cube-and-conquer refutation, with the <span class="math inline">\(L = 4\)</span> computation left incomplete</p>
+<p class="author">Lyndon Drake, with Claude Code (Anthropic Claude 5 models)</p>
+<p class="date">2026-09-06</p>
+</header>
+<section class="abstract"><h2>Abstract</h2>
+<p>Every frozen zero-flux state of the cubic cells <span class="math inline">\(L = 2\)</span> and <span class="math inline">\(L = 3\)</span> of pyrochlore ice is invariant under a nonzero FCC translation of the torus. At <span class="math inline">\(L = 2\)</span> the statement is read off an exhaustive census of all 612 frozen zero-flux states, a count established by two methods, an exhaustive SAT enumeration and a checked knowledge-compilation proof. The same statement is also refuted as an existence query, with a DRAT proof that <code>drat-trim</code> accepts. At <span class="math inline">\(L = 3\)</span> the cell carries 432 spins, out of reach of enumeration and out of reach of two solvers given two hours each, and the answer comes instead from a cube-and-conquer refutation certified in two halves: a standalone LRAT proof for each of 9,222 leaf cubes, every one accepted by <code>lrat-check</code>, together with a DRAT proof accepted by <code>drat-trim</code> that the leaves cover every assignment. A manifest records the hash of the formula, of the leaf set and of every retained proof, and a standard-library-only re-checker in the repository re-verifies the whole certificate from those hashes in 832 s. The same construction at <span class="math inline">\(L = 4\)</span> is incomplete and the result there is not proved: 22,746 of 23,153 leaf cubes are refuted with checked proofs, 407 are not, and no leaf anywhere was satisfiable.</p>
+</section>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#the-model-and-the-question" id="toc-the-model-and-the-question">The model and the question</a></li>
+<li><a href="#the-encoding" id="toc-the-encoding">The encoding</a></li>
+<li><a href="#the-first-cubic-cell" id="toc-the-first-cubic-cell">The first cubic cell</a></li>
+<li><a href="#the-second-cubic-cell" id="toc-the-second-cubic-cell">The second cubic cell</a>
+<ul>
+<li><a href="#why-direct-solving-failed" id="toc-why-direct-solving-failed">Why direct solving failed</a></li>
+<li><a href="#the-scheme" id="toc-the-scheme">The scheme</a></li>
+<li><a href="#the-run" id="toc-the-run">The run</a></li>
+<li><a href="#the-manifest-the-checker-and-how-to-re-verify" id="toc-the-manifest-the-checker-and-how-to-re-verify">The manifest, the checker, and how to re-verify</a></li>
+</ul></li>
+<li><a href="#the-third-cubic-cell-and-what-it-does-not-establish" id="toc-the-third-cubic-cell-and-what-it-does-not-establish">The third cubic cell, and what it does not establish</a></li>
+<li><a href="#the-thin-cells-for-contrast" id="toc-the-thin-cells-for-contrast">The thin cells, for contrast</a></li>
+<li><a href="#related-work" id="toc-related-work">Related work</a></li>
+<li><a href="#appendix-artefacts" id="toc-appendix-artefacts">Appendix: Artefacts</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+</ul>
+</details></nav>
+<h1 id="the-model-and-the-question">The model and the question</h1>
+<p>Pyrochlore ice is the six-vertex constraint on the pyrochlore lattice. Take the diamond lattice, put a spin on every bond, and read the spin as an arrow along that bond. The pyrochlore sites are the bonds, and the tetrahedra are the diamond vertices. The ice rule asks that exactly two of the four arrows at every vertex point in. Positions are integers in units of <span class="math inline">\(a/4\)</span>, a quarter of the conventional cubic edge, so a conventional cell is four units on a side and an <span class="math inline">\((a,b,c)\)</span> block of cells is a torus with box <span class="math inline">\((4a, 4b, 4c)\)</span> holding <span class="math inline">\(8abc\)</span> vertices and <span class="math inline">\(16abc\)</span> spins. The physics behind the model is standard <span class="citation" data-cites="bramwell-gingras-2001-spin-ice-state castelnovo-et-al-2008-magnetic-monopoles-spin-ice">(<a href="#ref-bramwell-gingras-2001-spin-ice-state" role="doc-biblioref">Bramwell and Gingras 2001</a>; <a href="#ref-castelnovo-et-al-2008-magnetic-monopoles-spin-ice" role="doc-biblioref">Castelnovo, Moessner, and Sondhi 2008</a>)</span>, and what follows is a finite, combinatorial question about it.</p>
+<p>The elementary move on the ice manifold reverses the arrows around a hexagonal plaquette of the diamond lattice, which is legal exactly when the six arrows already circulate head to tail. A hexagon on which they do is <em>flippable</em>, and a state with no flippable hexagon is <strong>frozen</strong>: an isolated point of the flip dynamics, and in the Rokhsar–Kivelson reading an exact zero-energy eigenstate that is not the uniform superposition <span class="citation" data-cites="rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas">(<a href="#ref-rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas" role="doc-biblioref">Rokhsar and Kivelson 1988</a>)</span>. Hexagons are derived rather than tabulated, as closed non-backtracking six-walks of zero unwrapped displacement, because the quotient graph of a small torus also contains six-cycles that wind and whose reversal would change the flux sector.</p>
+<p>Flux is the net arrow current through the three coordinate cut planes, written <span class="math inline">\(W = (W_x, W_y, W_z)\)</span>, and it is conserved by hexagon flips. This note is about the zero-flux sector alone.</p>
+<p>The torus carries an abelian group of FCC translations, generated by <span class="math inline">\((0,2,2)\)</span>, <span class="math inline">\((2,0,2)\)</span> and <span class="math inline">\((2,2,0)\)</span> modulo the box, of order <span class="math inline">\(4abc\)</span>: 32 elements at <span class="math inline">\(L = 2\)</span>, 108 at <span class="math inline">\(L = 3\)</span>, 256 at <span class="math inline">\(L = 4\)</span>. Each translation permutes the bonds, hence acts on states. The <strong>stabiliser</strong> of a state is the subgroup fixing it, and a state whose stabiliser is trivial is <strong>aperiodic</strong>. The question is whether a frozen zero-flux state of a cubic cell can be aperiodic.</p>
+<p>At the thin cells the answer is plainly yes, and often. At the first cubic cell it is no, and the census below says so exhaustively. The result of this note is that it is also no at the second cubic cell, where no enumeration is possible, and that the same computation at the third cubic cell did not finish. Why the phenomenon should hold at every <span class="math inline">\(L\)</span> is a separate question, partly answered by an analytic reduction of the conjecture to a statement about dipole types that is not about cubic cells at all. That work is recorded in <code>docs/frozen-structure-2026-09-05.md</code> and is not covered here.</p>
+<h1 id="the-encoding">The encoding</h1>
+<p>One CNF encoding serves every claim in this note, and its variables are the arrow bits themselves: bond <span class="math inline">\(e\)</span> is DIMACS variable <span class="math inline">\(e + 1\)</span>, true when the arrow points from the A-sublattice end of the bond to the B end. Auxiliary variables are allocated above the bond variables and are never projected on, so a model restricted to the bond variables is a state and nothing else.</p>
+<p><strong>Ice rule.</strong> At either sublattice the condition “exactly two of the four incident arrows point in” reduces to “exactly two of the four incident bits are set”, and exactly-two-of-four over four literals is eight clauses with no auxiliaries: forbid any three true, forbid any three false.</p>
+<p><strong>Zero flux.</strong> Because flux is conserved, one cut plane per axis is enough. The plane <span class="math inline">\(x_j = 1/2\)</span> is a good choice, since A-sites have even coordinates, so the only bond segments crossing it leave an A-site at <span class="math inline">\(x_j = 0\)</span> with <span class="math inline">\(\mathrm{sgn}(d_j) = +1\)</span>. There are exactly <span class="math inline">\(4abc/\text{cells}_j\)</span> of them and every one carries <span class="math inline">\(+1\)</span>, so <span class="math inline">\(W_j = 2\,\mathrm{popcount} - n_{\text{cross}}\)</span> and the constraint <span class="math inline">\(W_j = 0\)</span> is the single cardinality condition that exactly half of the crossing bits are set, encoded with a sequential counter. That this cut-plane flux agrees bit for bit with the project’s own winding function is checked over every ice state of three cells rather than assumed.</p>
+<p><strong>Frozen.</strong> Walking a hexagon in cycle order, the traversal alternates with respect to each bond’s own A-to-B orientation, so flippability is the statement that the six bits alternate: positions 0, 2, 4 all equal to <span class="math inline">\(b\)</span> and positions 1, 3, 5 all equal to <span class="math inline">\(1 - b\)</span>. Blocking both patterns is two six-clauses per hexagon, with no auxiliaries at all, which is why the frozen formula stays small and prunes hard. The encoding was cross-checked against a reference implementation written directly from the definition, over every hexagon of three cells, with no mismatches.</p>
+<p><strong>Aperiodicity.</strong> A state is aperiodic exactly when, for every nontrivial translation <span class="math inline">\(t\)</span>, some bond disagrees with its image. That is a disjunction of disequalities, so it needs one auxiliary per moved bond per translation: <span class="math inline">\(d_{t,e}\)</span> with the two clauses <span class="math inline">\((\neg d \vee x_e \vee x_f)\)</span> and <span class="math inline">\((\neg d \vee \neg x_e \vee \neg x_f)\)</span>, where <span class="math inline">\(f = \pi_t(e)\)</span>, together with one long clause <span class="math inline">\((d_{t,e_1} \vee \cdots \vee d_{t,e_m})\)</span> per translation. The definition is one-directional because only one witness per translation is wanted, which halves the clause count, and bonds fixed by <span class="math inline">\(t\)</span> are skipped because their auxiliary could never satisfy the disjunction.</p>
+<p>This block dominates the formula. At <span class="math inline">\(L = 3\)</span> it is 92,555 of the 99,035 clauses, and it is what makes the instance hard: the base formula <span class="math inline">\(\text{ice} \wedge W = 0 \wedge \text{frozen}\)</span> at <span class="math inline">\(L = 3\)</span> is satisfiable in 1.81 s, whereas requiring 107 simultaneous disagreements is not settled in two hours.</p>
+<p><strong>The Cauchy reduction.</strong> The stabiliser is a subgroup of a finite abelian group, so if it is nontrivial it contains an element of prime order. Excluding invariance under the prime-order translations alone is therefore equivalent to excluding it under all of them, and the two encodings have the same models rather than merely the same satisfiability. The saving depends on the group. At <span class="math inline">\(L = 3\)</span> the group of order 108 has 3 elements of order 2, 26 of order 3 and 78 of order 6, so 29 of the 107 nontrivial translations are of prime order and the formula falls from 48,600 variables and 99,035 clauses to 14,904 and 31,565. At <span class="math inline">\(L = 4\)</span> the group of order 256 is a 2-group, only its seven involutions have prime order, and the reduction is larger still: 268,288 variables and 540,927 clauses become 14,336 and 32,775.</p>
+<p>The reduction is gated rather than trusted. At <span class="math inline">\((1,1,2)\)</span>, <span class="math inline">\((1,2,2)\)</span> and <span class="math inline">\((1,2,3)\)</span> the models of the full and reduced encodings were enumerated separately and compared as sets, not as counts, and both were compared with a third, solver-free method: a stabiliser census of the whole frozen zero-flux set. All three agree, at 16, 64 and 336 aperiodic states respectively. A further test checks the group-theoretic step state by state, with no solver at all, over each of the 968 frozen zero-flux states of <span class="math inline">\((1,2,3)\)</span>.</p>
+<h1 id="the-first-cubic-cell">The first cubic cell</h1>
+<p>At <span class="math inline">\(L = 2\)</span> the cell has 128 spins and 128 hexagons, beyond the project’s 64-bit enumerator, but the frozen constraint prunes the SAT search so sharply that the whole set can be listed. Blocking on bond variables only, the search exhausts in 4.2 s and returns <strong>612 frozen zero-flux states</strong> from a formula of 512 variables and 1,536 clauses. Every one of the 612 was then re-verified independently by the project’s ice-rule and winding predicates and by the C flip kernel, with no failures.</p>
+<p>Two methods agree on the number, since the project’s own depth-first enumerator cannot reach this cell. The SAT enumeration gives 612, and a certified model count gives 612, obtained by compiling the formula with <code>d4</code> and checking the compilation with <code>cpog-check</code>, whose own line <code>Regular model count = 612</code> is what is treated as certified. The same pipeline certifies 968 at <span class="math inline">\((1,2,3)\)</span> and reproduces the smaller counts that the enumerator and a frontier dynamic program already knew: 90, 3,618 and 181,122 ice states, 12, 388 and 15,024 zero-flux states, and 12, 68, 528 and 204 frozen states across four cells. So the encoding is known to agree with the enumerator wherever both can run, before the counts it alone can reach are believed.</p>
+<p>The census answers the question directly. Under the 32 FCC translations the stabiliser orders of the 612 states are distributed as follows.</p>
+<table>
+<thead>
+<tr>
+<th>stabiliser order</th>
+<th>2</th>
+<th>4</th>
+<th>8</th>
+<th>16</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>states</td>
+<td>192</td>
+<td>288</td>
+<td>120</td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+<p>The minimum is 2. <strong>No frozen zero-flux state of <span class="math inline">\((2,2,2)\)</span> is aperiodic.</strong></p>
+<p>The same statement was then put to a solver as an existence query, so that it carries a proof object rather than an enumeration. The formula <span class="math inline">\(\text{ice} \wedge W = 0 \wedge \text{frozen} \wedge \text{aperiodic}\)</span> at <span class="math inline">\((2,2,2)\)</span> has 4,480 variables and 9,503 clauses, CaDiCaL refutes it in 3.08 s, and the 5,278,492-byte DRAT proof is accepted by <code>drat-trim</code> in 2.24 s. The prime-order form of the same query is smaller (1,408 variables, 3,335 clauses), is refuted in 1.482 s, and its 5,245,914-byte proof is accepted in 1.073 s. An in-process solver agrees with both. The negative control drops only the frozen clauses and becomes satisfiable, and its witness is an aperiodic zero-flux ice state with 22 flippable hexagons, so the certificate is capable of failing.</p>
+<p>The breakdown matters downstream. Of the 612, 108 belong to the translation-invariant family that the project’s second frozen-state theorem constructs and 420 are tilings of frozen states of a proper sub-cell, the family sitting inside the tilings, which leaves <strong>192 in neither class</strong>, every one of stabiliser order exactly 4. Read through the dipole classification of the companion note the same 612 split as 312 states in which all three dipole axes occur, all of them carrying a whole-cube coordinate period, and 300 with an axis missing, of which 108 have such a period and 192 do not. Both routes count 420 states with a whole-cube period, as they must, since that set is the tilings by definition.</p>
+<h1 id="the-second-cubic-cell">The second cubic cell</h1>
+<h2 id="why-direct-solving-failed">Why direct solving failed</h2>
+<p>At <span class="math inline">\(L = 3\)</span> the cell has 432 spins, 432 hexagons and a translation group of order 108. Enumeration is out of the question — the blocking-clause search was abandoned after twenty minutes without reaching a 3,000-model cap, and <code>d4</code> hit a 900 s wall compiling the frozen formula, so the number of frozen zero-flux states at <span class="math inline">\(L = 3\)</span> is still unknown. The existence query is a different matter, and it is the one that has to be asked.</p>
+<p>Plain CaDiCaL <span class="citation" data-cites="biere-et-al-2020-sat-competition-2020-solvers-cadical-kissat-paracooba-plingeling">(<a href="#ref-biere-et-al-2020-sat-competition-2020-solvers-cadical-kissat-paracooba-plingeling" role="doc-biblioref">Biere et al. 2020</a>)</span> on the full 107-translation formula (48,600 variables, 99,035 clauses) reached its two-hour cap with no verdict, having logged 12,156,776 conflicts and 386,339 restarts while leaving 47,106 of 48,600 variables unassigned at the root. That last figure is the informative one, because after twelve million conflicts the search had fixed almost nothing at level zero. On the reduced formula, given the same two hours each, CaDiCaL and Kissat both timed out as well, writing 3.88 GB and 2.88 GB of partial proof that certify nothing. A 3.26-fold reduction in formula size does not put this instance inside a single-core budget.</p>
+<p>Two facts locate the difficulty. The base formula without the aperiodicity block is satisfiable in 1.81 s. The weaker query that excludes only the 26 whole-cell shifts, asking for a frozen zero-flux state that tiles no proper sub-torus, is satisfiable in 15.29 s, and its model is a genuine frozen state whose entire symmetry is the single half-box diagonal <span class="math inline">\((0,6,6)\)</span>. So the hardness is created by the simultaneous exclusion of every translation at once, and by nothing else.</p>
+<h2 id="the-scheme">The scheme</h2>
+<p>Cube and conquer splits an instance into many easier ones by a lookahead cuber and refutes each with a CDCL solver <span class="citation" data-cites="heule-et-al-2012-cube-and-conquer">(<a href="#ref-heule-et-al-2012-cube-and-conquer" role="doc-biblioref">Heule et al. 2012</a>)</span>. Here <code>march_cu</code> at depth 12 produced 3,777 cubes in 112.7 s, of which 117 were already refuted during cubing. Those cubes were sharded eight at a time across twelve workers with a one-hour cap per shard: 468 shards came back UNSAT, five hit the cap, none was satisfiable, and the refuted shards consumed 42,769 core-seconds (mean 91.4 s, maximum 2,450.9 s) in 7,138 s of wall clock.</p>
+<p>The five unfinished shards hold forty cubes, and they turned out not to be hard at all. Re-solved with the cube’s literals written into the formula as unit clauses rather than passed through the incremental assumption interface, all forty were refuted with a mean of 48.8 s and a maximum of 276.9 s. Preprocessing is the whole difference, because probing, elimination and vivification act on unit clauses and not on assumptions. Those forty cubes were nonetheless split further, by <code>march_cu</code> at depth 8, into 5,485 sub-cubes, so that the leaf set handed to the certifying pass was uniformly easy. The final leaf set is therefore <span class="math inline">\(3{,}777 - 40 + 5{,}485 = 9{,}222\)</span> cubes, and it partitions the search space exactly as the original cube set did.</p>
+<p>That settled the answer. Certifying it is a separate problem, and the obvious route fails. Composing one DRAT proof of the whole refutation requires a serial incremental pass, because it is the sequence of learned clauses that makes the concatenation a proof. A four-hour attempt reached 11.9 GB without finishing, on the way to an object that backward DRAT checking could not have processed in any reasonable time.</p>
+<p>The route that works replaces one monolith by 9,222 independent objects. Write <span class="math inline">\(F\)</span> for the reduced formula and <span class="math inline">\(c_1, \dots, c_{9222}\)</span> for the leaf cubes. The certificate has two halves.</p>
+<ol type="A">
+<li><p><em>Every leaf is refuted.</em> For each <span class="math inline">\(c_i\)</span>, the CNF <span class="math inline">\(F\)</span> with the cube’s literals appended as unit clauses is unsatisfiable, with a standalone LRAT proof that <code>lrat-check</code> accepts on its own. No proof depends on any other, there is no shared solver state and no ordering.</p></li>
+<li><p><em>The leaves are exhaustive.</em> The CNF whose 9,222 clauses are the negations of the leaf cubes is unsatisfiable, with a DRAT proof that <code>drat-trim</code> accepts. This says more than is needed, since it rules out any assignment escaping every leaf, not merely any model of <span class="math inline">\(F\)</span>.</p></li>
+</ol>
+<p>Together they force <span class="math inline">\(F\)</span> unsatisfiable. Suppose <span class="math inline">\(M\)</span> satisfied <span class="math inline">\(F\)</span>. By (B), <span class="math inline">\(M\)</span> satisfies some <span class="math inline">\(c_i\)</span>; then <span class="math inline">\(M\)</span> satisfies <span class="math inline">\(F \wedge c_i\)</span>, which (A) refutes.</p>
+<p>Two details are where such schemes usually go wrong. The cover proof is taken over the negated cubes alone, with no reference to <span class="math inline">\(F\)</span>. Had the cuber dropped leaves it refuted during cubing, that CNF would have come back satisfiable and the fallback would have been the weaker <span class="math inline">\(F \wedge \neg c_1 \wedge \cdots \wedge \neg c_{9222}\)</span>. It did not, and <code>drat-trim</code> reports 9,222 of 9,222 clauses in the core, so every leaf is used and none is missing. And each leaf proof is checked against the leaf CNF regenerated deterministically from <span class="math inline">\(F\)</span> and the cube, rather than against a stored copy, so the binding between cube and proof is real.</p>
+<h2 id="the-run">The run</h2>
+<table>
+<tbody>
+<tr>
+<td>formula <span class="math inline">\(F\)</span></td>
+<td>14,904 variables, 31,565 clauses, 595,623 B</td>
+</tr>
+<tr>
+<td>leaves</td>
+<td>9,222</td>
+</tr>
+<tr>
+<td>solver verdicts</td>
+<td>UNSAT 9,222, SAT 0, TIMEOUT 0</td>
+</tr>
+<tr>
+<td>checker verdicts</td>
+<td>VERIFIED 9,222, FAILED 0</td>
+</tr>
+<tr>
+<td>solver core-seconds</td>
+<td>10,509.8 (mean 1.14, max 101.49)</td>
+</tr>
+<tr>
+<td>checker core-seconds</td>
+<td>2,030.4 (mean 0.22, max 5.70)</td>
+</tr>
+<tr>
+<td>wall clock</td>
+<td>1,139.1 s on 12 workers</td>
+</tr>
+<tr>
+<td>proof bytes written</td>
+<td>18,569,991,562 (mean 2.0 MB, max 267.5 MB)</td>
+</tr>
+<tr>
+<td>proofs retained at the 5 MB threshold</td>
+<td>8,588 (6.67 GB); 634 deleted</td>
+</tr>
+</tbody>
+</table>
+<p>A pre-flight on 24 leaves drawn uniformly at random projected 0.12 h of wall clock, low by a factor of about 2.5 on solver time, because the per-leaf cost is heavy tailed and 24 samples do not see the tail. Checking was cheap throughout: <code>lrat-check</code> ran at 19 % of the solving time, and even the 267 MB worst case took 5.7 s to check against 101 s to solve.</p>
+<p>The cover proof is cheaper still. Its CNF is 9,222 clauses over 14,904 variables in 593,545 B, CaDiCaL refutes it in 0.078 s, the DRAT proof is 3,449,033 B, and <code>drat-trim</code> accepts it in 0.165 s with all 9,222 clauses in the core. Both files are small enough to live in the repository, so that half of the certificate needs no external storage.</p>
+<p>The result:</p>
+<blockquote>
+<p><strong>No frozen zero-flux ice state of the cubic cell <span class="math inline">\((3,3,3)\)</span> has trivial stabiliser under the FCC translation group of the torus.</strong> Equivalently, every frozen zero-flux state of <span class="math inline">\((3,3,3)\)</span> is invariant under some nonzero FCC translation.</p>
+</blockquote>
+<h2 id="the-manifest-the-checker-and-how-to-re-verify">The manifest, the checker, and how to re-verify</h2>
+<p><code>results/aperiodic3/manifest.json</code> (5.4 MB, schema <code>ice-mixing/aperiodic3-cnc-certificate/1</code>) states the claim and the scheme in prose and then records the formula’s path, sha256 and size; the reduction parameters, including the 29 of 108 translations used; the leaves file with its sha256, count and provenance; the retention policy; tool versions and source commits, namely CaDiCaL 3.0.1 at <code>c6073042</code> and <code>drat-trim</code>/<code>lrat-check</code> at <code>2e3b2dc0</code>; the aggregate timings; the cover-proof hashes and verdict; and one record per leaf, carrying its cube, both verdicts, both timings, the proof’s format, size and sha256, and, where retained, its path.</p>
+<p><code>experiments/07_certificates/verify_cnc_certificate.py</code> re-checks all of it and imports nothing outside the Python standard library, so it can be handed to someone who has neither the project nor its dependencies. Given <code>cadical</code>, <code>lrat-check</code> and <code>drat-trim</code> on the path and the proof directory in place,</p>
+<pre><code>python3 experiments/07_certificates/verify_cnc_certificate.py</code></pre>
+<p>hashes the formula and the leaves against the manifest, rebuilds the cover CNF from the leaves and re-checks its DRAT proof, then re-checks all 9,222 leaf proofs, taking retained proofs as stored and regenerating deleted ones first. A regenerated proof is a fresh object whose hash need not match the recorded one, and the verifier says so when it takes that path. A hash mismatch on a <em>retained</em> proof means tampering, and the verifier fails on it. The full pass reports <code>PASS</code> in 832.1 s on twelve workers, with 8,588 proofs checked as stored and 634 regenerated. Cheaper variants exist: <code>--sample 20 --kept-only</code> is about a second, and <code>--sample 300</code> exercises the regeneration path in about a minute.</p>
+<p>The verifier can fail, which was established rather than assumed. Checking leaf <span class="math inline">\(i\)</span>’s proof against leaf <span class="math inline">\(j\)</span>’s CNF gives <code>c NOT VERIFIED</code>; the same proof against its own CNF gives <code>c VERIFIED</code>; a deliberately wrong sha256 in the manifest is rejected before any checking; and the cover CNF with a single leaf’s clause dropped comes back satisfiable, so exhaustiveness is a real constraint and not a tautology of the encoding.</p>
+<p>Two limits should be stated. The certificate covers the prime-order reduced formula, and the equivalence of that formula with the full 107-translation encoding is established by tests and by the two-method gate rather than by a proof object. Every leaf proof was produced by CaDiCaL and checked by <code>lrat-check</code>, and only the cover proof uses the second checker, so there is no cross-implementation confidence at the leaf level, and no formally verified checker was used at all.</p>
+<h1 id="the-third-cubic-cell-and-what-it-does-not-establish">The third cubic cell, and what it does not establish</h1>
+<p>At <span class="math inline">\(L = 4\)</span> the cell has 1,024 spins and the translation group has order 256. Being a 2-group it has only seven prime-order elements, the nonzero half-box shifts, so the Cauchy reduction is 18.7-fold on variables and the reduced formula is <em>smaller</em> than the one at <span class="math inline">\(L = 3\)</span>: 14,336 variables and 32,775 clauses against 14,904 and 31,565. On formula size alone <span class="math inline">\(L = 4\)</span> looks cheaper than <span class="math inline">\(L = 3\)</span>.</p>
+<p>It is not. Both CaDiCaL and Kissat time out on the reduced formula at a 15-minute cap. <code>march_cu</code> aborts on it at every depth and under every option combination tried, with an assertion failure in its bookkeeping of big clauses that have shrunk to binary. The seven aperiodicity clauses of length 1,024 are what trips it, and a ternary ladder over fresh variables, used for cubing only, works around it. Nothing downstream trusts the cuber: the cubes mention only original variables, so each leaf is solved against the original formula, and the exhaustiveness half of the certificate checks the cube set on its own.</p>
+<p>Cubing at depth 20 gave 18,149 cubes, 7,473 of them refuted during cubing. Of the 18,149, some 18,115 were refuted with an <code>lrat-check</code>-verified proof inside a 900 s cap and 34 were not, in 5,565 s of wall clock on twelve workers. Splitting those 34 by <code>march_cu</code> at depth 8 produced 5,038 sub-cubes, of which 4,631 were refuted and <strong>407 were not</strong>. The final leaf set is <span class="math inline">\(18{,}149 - 34 + 5{,}038 = 23{,}153\)</span> cubes, with 22,746 refuted under a checked proof against 407 unrefuted. The cover proof over that leaf set verifies: CaDiCaL refutes it in 0.532 s, <code>drat-trim</code> accepts the 15,130,254-byte proof in 1.157 s, and all 23,153 clauses are in the core. The manifest records <code>conclusion: INCOMPLETE</code>, marks its claim text <code>PARTIAL</code>, and lists the 407 unrefuted leaves by index. The verifier passes 17,658 stored leaf proofs with none failing in 215.1 s, reporting <code>PASS (partial run)</code>, and a further 120-leaf sample exercising the regeneration path passes as well.</p>
+<p>What that establishes is precise. The leaves partition the assignment space, which the cover proof certifies and which summing <span class="math inline">\(2^{-|c|}\)</span> over them confirms at exactly 1; the same sum over the 407 unrefuted leaves is <span class="math inline">\(1.516 \times 10^{-6}\)</span>. So no frozen aperiodic state exists anywhere in 99.99985 % of the search space, one part in 659,547 remaining, and <strong>no leaf anywhere at any level was satisfiable</strong>. What it does not establish is the theorem. One unrefuted leaf would be enough to leave the question open, and there are 407.</p>
+<p>The residue resists splitting, which is the substantive finding of the stage. The 34 level-one cubes represented about 30,600 unresolved core-seconds, their 5,038 children consumed roughly 146,000 core-seconds and 407 remain. A depth-6 split of those 407 produces 17,149 sub-leaves, of which a 96-leaf uniform sample still had 11.5 % failing to close inside 300 s, projecting 767,006 solver core-seconds, or 18.2 h on twelve workers, and it would leave a residue of its own. That level was not launched. Across every level the run consumed 200,581 solver core-seconds and 9,214.9 checker core-seconds and wrote 124.6 GB of proof, the largest single proof being 2.60 GB.</p>
+<p>The 407 are a small, named object, descending from 29 of the 34 level-one cubes with the worst single parent contributing 46, and they are isolated on disk. Finishing by brute force is affordable and unattractive, since splitting has so far increased total work rather than reduced it. A different cuber, or a hand-chosen split on the bond variables of one sub-cell rather than a lookahead choice, is the cheaper thing to try, as is understanding what makes those cubes hard, which is where the structural work of the companion note bears.</p>
+<h1 id="the-thin-cells-for-contrast">The thin cells, for contrast</h1>
+<p>Aperiodic frozen zero-flux states are not rare in general. They are common whenever some extent of the cell is 1, and they are absent from every cell enumerated so far whose three extents are all at least 2.</p>
+<table>
+<thead>
+<tr>
+<th>cell</th>
+<th>spins</th>
+<th>frozen <span class="math inline">\(W = 0\)</span></th>
+<th>aperiodic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\((1,1,2)\)</span></td>
+<td>32</td>
+<td>68</td>
+<td>16</td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,2,2)\)</span></td>
+<td>64</td>
+<td>204</td>
+<td>64</td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,2,3)\)</span></td>
+<td>96</td>
+<td>968</td>
+<td>336</td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,3,3)\)</span></td>
+<td>144</td>
+<td>2,880</td>
+<td>1,584</td>
+</tr>
+<tr>
+<td><span class="math inline">\((2,2,2)\)</span></td>
+<td>128</td>
+<td>612</td>
+<td>0</td>
+</tr>
+<tr>
+<td><span class="math inline">\((2,2,3)\)</span></td>
+<td>192</td>
+<td>4,368</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>At <span class="math inline">\((1,3,3)\)</span> more than half the frozen zero-flux states are aperiodic. The contrast is sharp enough to say that the periodicity phenomenon is a fact about cells thick in every direction rather than about cubic cells as such, and the <span class="math inline">\((2,2,3)\)</span> row, an exhaustive enumeration of 4,368 states, is the cheapest evidence for that reading. It also rules out the lazy reading under which aperiodic frozen states are merely too rare to find at larger sizes. They exist in quantity, and only the thickness of the cell suppresses them.</p>
+<h1 id="related-work">Related work</h1>
+<p>Cube and conquer was introduced to make lookahead and CDCL solvers cooperate on instances that neither settles alone, the cuber splitting the problem into many cubes and the CDCL solver refuting each <span class="citation" data-cites="heule-et-al-2012-cube-and-conquer">(<a href="#ref-heule-et-al-2012-cube-and-conquer" role="doc-biblioref">Heule et al. 2012</a>)</span>. It is what carried the two best-known combinatorial refutations of the last decade, the Boolean Pythagorean triples problem <span class="citation" data-cites="heule-et-al-2016-boolean-pythagorean-triples-cube-and-conquer">(<a href="#ref-heule-et-al-2016-boolean-pythagorean-triples-cube-and-conquer" role="doc-biblioref">Heule, Kullmann, and Marek 2016</a>)</span> and Schur number five <span class="citation" data-cites="heule-2018-schur-number-five">(<a href="#ref-heule-2018-schur-number-five" role="doc-biblioref">Heule 2018</a>)</span>. In both the answer and the certificate came out of the same machinery and the certificate was the harder half. The general argument for that style of result, and for taking the proof object as the unit of trust, is Heule and Kullmann’s <span class="citation" data-cites="heule-kullmann-2017-science-of-brute-force">(<a href="#ref-heule-kullmann-2017-science-of-brute-force" role="doc-biblioref">Heule and Kullmann 2017</a>)</span>. Keller’s conjecture is the other standard example <span class="citation" data-cites="brakensiek-et-al-2020-keller-conjecture-resolution">(<a href="#ref-brakensiek-et-al-2020-keller-conjecture-resolution" role="doc-biblioref">Brakensiek et al. 2020</a>)</span>.</p>
+<p>Clausal proof formats are what make such results checkable. DRAT is the format solvers emit, and <code>drat-trim</code> checks it by backward resolution and trims it to a core <span class="citation" data-cites="wetzler-et-al-2014-drat-trim">(<a href="#ref-wetzler-et-al-2014-drat-trim" role="doc-biblioref">Wetzler, Heule, and Hunt 2014</a>)</span>. Backward checking is expensive, often as expensive as solving, and LRAT removes that cost by carrying antecedent hints in the proof so that a checker verifies in one forward linear pass <span class="citation" data-cites="cruz-filipe-et-al-2017-efficient-certified-rat-verification">(<a href="#ref-cruz-filipe-et-al-2017-efficient-certified-rat-verification" role="doc-biblioref">Cruz-Filipe et al. 2017</a>)</span>. That difference is what the <span class="math inline">\(L = 3\)</span> certificate turns on. Here 9,222 LRAT proofs check in 19 % of the time it took to find them, where one composed DRAT proof of the same refutation was not checkable at any size that could be produced. LRAT also makes a formally verified checker reachable, <code>cake_lpr</code> being one verified in CakeML down to its machine code <span class="citation" data-cites="tan-et-al-2021-verified-propagation-redundancy-checking">(<a href="#ref-tan-et-al-2021-verified-propagation-redundancy-checking" role="doc-biblioref">Tan, Heule, and Myreen 2021</a>)</span>. Nothing here uses one, and that is the next rung. The certified model count at <span class="math inline">\(L = 2\)</span> uses the CPOG toolchain, which produces a checkable proof of a knowledge-compilation result and hence of a model count <span class="citation" data-cites="bryant-et-al-2023-certified-knowledge-compilation">(<a href="#ref-bryant-et-al-2023-certified-knowledge-compilation" role="doc-biblioref">Bryant et al. 2023</a>)</span>.</p>
+<p>On the physics side the ice-rule manifold has been studied since Pauling’s residual-entropy argument <span class="citation" data-cites="pauling-1935-ice-structure-entropy">(<a href="#ref-pauling-1935-ice-structure-entropy" role="doc-biblioref">Pauling 1935</a>)</span> and Anderson’s identification of the pyrochlore Ising ground-state condition with the ice rule <span class="citation" data-cites="anderson-1956-ordering-antiferromagnetism-ferrites">(<a href="#ref-anderson-1956-ordering-antiferromagnetism-ferrites" role="doc-biblioref">Anderson 1956</a>)</span>, with the two-dimensional case solved exactly by Lieb <span class="citation" data-cites="lieb-1967-square-ice-residual-entropy">(<a href="#ref-lieb-1967-square-ice-residual-entropy" role="doc-biblioref">Lieb 1967</a>)</span> and the pyrochlore spin-ice realisation established experimentally by Harris and co-workers <span class="citation" data-cites="harris-et-al-1997-geometrical-frustration-ho2ti2o7">(<a href="#ref-harris-et-al-1997-geometrical-frustration-ho2ti2o7" role="doc-biblioref">Harris et al. 1997</a>)</span>. The manifold carries an emergent gauge structure <span class="citation" data-cites="hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid">(<a href="#ref-hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid" role="doc-biblioref">Hermele, Fisher, and Balents 2004</a>)</span>, and adding dipolar interactions selects an ordered, periodic ground state out of it <span class="citation" data-cites="melko-et-al-2001-long-range-order-dipolar-spin-ice">(<a href="#ref-melko-et-al-2001-long-range-order-dipolar-spin-ice" role="doc-biblioref">Melko, den Hertog, and Gingras 2001</a>)</span>. The statement in this note is transverse to all of that. It concerns the states the local dynamics cannot leave rather than the states it visits, and the frozen set is where the standard height or flux description gives no purchase, because these states are isolated points and not typical members of a sector. The dimer literature has an analogous separation, its variational and limit-shape theory describing typical tilings <span class="citation" data-cites="cohn-et-al-2001-variational-principle-domino-tilings kenyon-et-al-2006-dimers-and-amoebae sheffield-2005-random-surfaces">(<a href="#ref-cohn-et-al-2001-variational-principle-domino-tilings" role="doc-biblioref">Cohn, Kenyon, and Propp 2001</a>; <a href="#ref-kenyon-et-al-2006-dimers-and-amoebae" role="doc-biblioref">Kenyon, Okounkov, and Sheffield 2006</a>; <a href="#ref-sheffield-2005-random-surfaces" role="doc-biblioref">Sheffield 2005</a>)</span> while frozen or rigid configurations sit outside it. I am not aware of a prior statement, for ice on the pyrochlore lattice, that the frozen states of a periodic cell must themselves be periodic, and what is offered here is finite evidence for one at the two smallest cubic cells rather than a proof in general.</p>
+<h1 id="appendix-artefacts">Appendix: Artefacts</h1>
+<p>All paths are relative to the repository root.</p>
+<p><strong>Encoding and group theory.</strong> <code>icemix/cnf.py</code> — <code>ice_clauses</code>, <code>zero_flux_clauses</code>, <code>frozen_clauses</code>, <code>aperiodic_clauses</code>, <code>translation_order</code>, <code>prime_order_translations</code>, <code>whole_cell_shifts</code>, <code>build_cnf</code>, <code>stabiliser_census_int</code>. <code>icemix/frozen.py</code> — <code>fcc_translations</code>, <code>translation_perm</code>, <code>stabiliser_census</code>. <code>icemix/lattice.py</code> — the lattice and the derived hexagon set. Tests in <code>tests/test_cnf.py</code>, including the prime-order equivalence as model sets and the state-by-state Cauchy check.</p>
+<p><strong><span class="math inline">\(L = 2\)</span>.</strong> <code>experiments/07_certificates/results/part_D.json</code> — the 612 states, the stabiliser histogram, the family and tiling breakdown. <code>.../part_C.json</code> — the certified model counts. <code>.../results/aperiodic/gate.json</code> — the <span class="math inline">\((2,2,2)\)</span> refutation, its DRAT verdict and its negative control; artefacts under <code>.../results/aperiodic/certificates/</code>. <code>.../results/aperiodic2/gate.json</code> — the prime-order form of the same. <code>experiments/08_frozen_structure/results/census.json</code> — the dipole-type crosstabulation.</p>
+<p><strong><span class="math inline">\(L = 3\)</span>.</strong> <code>.../results/aperiodic2/build.json</code> — formula sizes and the translation-order histogram. <code>.../cnc.json</code>, <code>.../cnc_refine_pass1.json</code> — the cube-and-conquer run. <code>.../solvers.json</code> — the two timed-out direct solvers. <code>.../results/aperiodic3/manifest.json</code> — the certificate manifest. <code>.../results/aperiodic3/cover.cnf</code>, <code>.../cover.drat</code>, <code>.../cover.json</code> — the exhaustiveness half. <code>.../results/aperiodic3/leaves.icnf</code>, <code>.../leaves.json</code>, <code>.../verify_full.log</code> — the leaves and the independent pass. Leaf proofs live outside the repository under <code>~/.local/state/ice-mixing-proofs/aperiodic3/</code>.</p>
+<p><strong><span class="math inline">\(L = 4\)</span>.</strong> <code>.../results/aperiodic2/preflight_444/</code> — formula, ladder variant, direct-solver probes, cubing. <code>.../results/aperiodic3-444/manifest.json</code> — the partial manifest, with <code>conclusion: INCOMPLETE</code> and the 407 unrefuted leaves listed. <code>.../aperiodic3-444/leaves_l1.json</code>, <code>.../leaves_l2b.json</code>, <code>.../cover.json</code>.</p>
+<p><strong>Runners and the checker.</strong> <code>experiments/07_certificates/run_aperiodic.py</code>, <code>run_aperiodic2.py</code>, <code>run_aperiodic3.py</code>, <code>verify_cnc_certificate.py</code>; <code>experiments/08_frozen_structure/run_structure.py</code>.</p>
+<p><strong>Companion note.</strong> <code>docs/frozen-structure-2026-09-05.md</code> — the dipole classification, Lemma A, and the reduction of the general conjecture.</p>
+<h1 class="unnumbered" id="references">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-anderson-1956-ordering-antiferromagnetism-ferrites" class="csl-entry" role="listitem">
+Anderson, P. W. (1956), <span>‘Ordering and Antiferromagnetism in Ferrites’</span>, <em>Physical Review</em>, 102: 1008–13, <a href="https://doi.org/10.1103/PhysRev.102.1008">https://doi.org/10.1103/PhysRev.102.1008</a>.
+</div>
+<div id="ref-biere-et-al-2020-sat-competition-2020-solvers-cadical-kissat-paracooba-plingeling" class="csl-entry" role="listitem">
+Biere, Armin, et al. (2020), <span>‘CaDiCaL, Kissat, Paracooba, Plingeling and Treengeling Entering the SAT Competition 2020’</span>, in Tomá\v s Balyo et al., eds, <em>Proceedings of SAT Competition 2020: Solver and Benchmark Descriptions</em>, Department of Computer Science Series of Publications B, Report B-2020-1 (n.p.), 50–3.
+</div>
+<div id="ref-brakensiek-et-al-2020-keller-conjecture-resolution" class="csl-entry" role="listitem">
+Brakensiek, Joshua, et al. (2020), <span>‘The Resolution of Keller’s Conjecture’</span>, <em>Automated Reasoning (IJCAR 2020)</em>, Lecture Notes in Computer Science, 12166: 48–65, <a href="https://doi.org/10.1007/978-3-030-51074-9_4">https://doi.org/10.1007/978-3-030-51074-9_4</a>.
+</div>
+<div id="ref-bramwell-gingras-2001-spin-ice-state" class="csl-entry" role="listitem">
+Bramwell, Steven T., and Michel J. P. Gingras (2001), <span>‘Spin Ice State in Frustrated Magnetic Pyrochlore Materials’</span>, <em>Science</em>, 294: 1495–501.
+</div>
+<div id="ref-bryant-et-al-2023-certified-knowledge-compilation" class="csl-entry" role="listitem">
+Bryant, Randal E., et al. (2023), <span>‘Certified Knowledge Compilation with Application to Verified Model Counting’</span>, <em>26th International Conference on Theory and Applications of Satisfiability Testing (SAT 2023)</em>, Leibniz International Proceedings in Informatics (LIPIcs), 271: 6:1–20, <a href="https://doi.org/10.4230/LIPIcs.SAT.2023.6">https://doi.org/10.4230/LIPIcs.SAT.2023.6</a>.
+</div>
+<div id="ref-castelnovo-et-al-2008-magnetic-monopoles-spin-ice" class="csl-entry" role="listitem">
+Castelnovo, Claudio, Roderich Moessner, and Shivaji L. Sondhi (2008), <span>‘Magnetic Monopoles in Spin Ice’</span>, <em>Nature</em>, 451: 42–5.
+</div>
+<div id="ref-cohn-et-al-2001-variational-principle-domino-tilings" class="csl-entry" role="listitem">
+Cohn, Henry, Richard Kenyon, and James Propp (2001), <span>‘A Variational Principle for Domino Tilings’</span>, <em>Journal of the American Mathematical Society</em>, 14/2: 297–346, <a href="https://doi.org/10.1090/S0894-0347-00-00355-6">https://doi.org/10.1090/S0894-0347-00-00355-6</a>.
+</div>
+<div id="ref-cruz-filipe-et-al-2017-efficient-certified-rat-verification" class="csl-entry" role="listitem">
+Cruz-Filipe, Luís, et al. (2017), <span>‘Efficient Certified RAT Verification’</span>, <em>Automated Deduction — CADE 26</em>, Lecture Notes in Computer Science, 10395: 220–36, <a href="https://doi.org/10.1007/978-3-319-63046-5_14">https://doi.org/10.1007/978-3-319-63046-5_14</a>.
+</div>
+<div id="ref-harris-et-al-1997-geometrical-frustration-ho2ti2o7" class="csl-entry" role="listitem">
+Harris, M. J., et al. (1997), <span>‘Geometrical Frustration in the Ferromagnetic Pyrochlore Ho$_2$Ti$_2$O$_7$’</span>, <em>Physical Review Letters</em>, 79: 2554–7, <a href="https://doi.org/10.1103/PhysRevLett.79.2554">https://doi.org/10.1103/PhysRevLett.79.2554</a>.
+</div>
+<div id="ref-hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid" class="csl-entry" role="listitem">
+Hermele, Michael, Matthew P. A. Fisher, and Leon Balents (2004), <span>‘Pyrochlore Photons: The U(1) Spin Liquid in a $S=1/2$ Three-Dimensional Frustrated Magnet’</span>, <em>Physical Review B</em>, 69: 064404.
+</div>
+<div id="ref-heule-2018-schur-number-five" class="csl-entry" role="listitem">
+Heule, Marijn J. H. (2018), <span>‘Schur Number Five’</span>, <em>Proceedings of the AAAI Conference on Artificial Intelligence</em>, 32, <a href="https://doi.org/10.1609/aaai.v32i1.12209">https://doi.org/10.1609/aaai.v32i1.12209</a>.
+</div>
+<div id="ref-heule-kullmann-2017-science-of-brute-force" class="csl-entry" role="listitem">
+Heule, Marijn J. H., and Oliver Kullmann (2017), <span>‘The Science of Brute Force’</span>, <em>Communications of the ACM</em>, 60/8: 70–9, <a href="https://doi.org/10.1145/3107239">https://doi.org/10.1145/3107239</a>.
+</div>
+<div id="ref-heule-et-al-2016-boolean-pythagorean-triples-cube-and-conquer" class="csl-entry" role="listitem">
+Heule, Marijn J. H., Oliver Kullmann, and Victor W. Marek (2016), <span>‘Solving and Verifying the Boolean Pythagorean Triples Problem via Cube-and-Conquer’</span>, <em>Theory and Applications of Satisfiability Testing (SAT 2016)</em>, Lecture Notes in Computer Science, 9710: 228–45, <a href="https://doi.org/10.1007/978-3-319-40970-2_15">https://doi.org/10.1007/978-3-319-40970-2_15</a>.
+</div>
+<div id="ref-heule-et-al-2012-cube-and-conquer" class="csl-entry" role="listitem">
+Heule, Marijn J. H., et al. (2012), <span>‘Cube and Conquer: Guiding CDCL SAT Solvers by Lookaheads’</span>, <em>Hardware and Software: Verification and Testing (HVC 2011)</em>, Lecture Notes in Computer Science, 7261: 50–65, <a href="https://doi.org/10.1007/978-3-642-34188-5_8">https://doi.org/10.1007/978-3-642-34188-5_8</a>.
+</div>
+<div id="ref-kenyon-et-al-2006-dimers-and-amoebae" class="csl-entry" role="listitem">
+Kenyon, Richard, Andrei Okounkov, and Scott Sheffield (2006), <span>‘Dimers and Amoebae’</span>, <em>Annals of Mathematics</em>, 163/3: 1019–56, <a href="https://doi.org/10.4007/annals.2006.163.1019">https://doi.org/10.4007/annals.2006.163.1019</a>.
+</div>
+<div id="ref-lieb-1967-square-ice-residual-entropy" class="csl-entry" role="listitem">
+Lieb, Elliott H. (1967), <span>‘Residual Entropy of Square Ice’</span>, <em>Physical Review</em>, 162/1: 162–72, <a href="https://doi.org/10.1103/PhysRev.162.162">https://doi.org/10.1103/PhysRev.162.162</a>.
+</div>
+<div id="ref-melko-et-al-2001-long-range-order-dipolar-spin-ice" class="csl-entry" role="listitem">
+Melko, Roger G., Byron C. den Hertog, and Michel J. P. Gingras (2001), <span>‘Long-Range Order at Low Temperatures in Dipolar Spin Ice’</span>, <em>Physical Review Letters</em>, 87: 067203, <a href="https://doi.org/10.1103/PhysRevLett.87.067203">https://doi.org/10.1103/PhysRevLett.87.067203</a>.
+</div>
+<div id="ref-pauling-1935-ice-structure-entropy" class="csl-entry" role="listitem">
+Pauling, Linus (1935), <span>‘The Structure and Entropy of Ice and of Other Crystals with Some Randomness of Atomic Arrangement’</span>, <em>Journal of the American Chemical Society</em>, 57/12: 2680–4, <a href="https://doi.org/10.1021/ja01315a102">https://doi.org/10.1021/ja01315a102</a>.
+</div>
+<div id="ref-rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas" class="csl-entry" role="listitem">
+Rokhsar, Daniel S., and Steven A. Kivelson (1988), <span>‘Superconductivity and the Quantum Hard-Core Dimer Gas’</span>, <em>Physical Review Letters</em>, 61: 2376–9.
+</div>
+<div id="ref-sheffield-2005-random-surfaces" class="csl-entry" role="listitem">
+Sheffield, Scott (2005), <span>‘Random Surfaces’</span>, <em>Astérisque</em>, 304, <a href="https://doi.org/10.24033/ast.697">https://doi.org/10.24033/ast.697</a>.
+</div>
+<div id="ref-tan-et-al-2021-verified-propagation-redundancy-checking" class="csl-entry" role="listitem">
+Tan, Yong Kiam, Marijn J. H. Heule, and Magnus O. Myreen (2021), <span>‘Cake_lpr: Verified Propagation Redundancy Checking in CakeML’</span>, <em>Tools and Algorithms for the Construction and Analysis of Systems (TACAS 2021)</em>, Lecture Notes in Computer Science, 12652: 223–41, <a href="https://doi.org/10.1007/978-3-030-72013-1_12">https://doi.org/10.1007/978-3-030-72013-1_12</a>.
+</div>
+<div id="ref-wetzler-et-al-2014-drat-trim" class="csl-entry" role="listitem">
+Wetzler, Nathan, Marijn J. H. Heule, and Warren A. Hunt (2014), <span>‘DRAT-Trim: Efficient Checking and Trimming Using Expressive Clausal Proofs’</span>, <em>Theory and Applications of Satisfiability Testing — SAT 2014</em>, Lecture Notes in Computer Science, 8561: 422–9, <a href="https://doi.org/10.1007/978-3-319-09284-3_31">https://doi.org/10.1007/978-3-319-09284-3_31</a>.
+</div>
+</div>
+</main>
+</body>
+</html>

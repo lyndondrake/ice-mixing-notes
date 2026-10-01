@@ -1,0 +1,2625 @@
+[
+  {
+    "author" : [
+      {
+        "family" : "Anari",
+        "given" : "Nima"
+      },
+      {
+        "family" : "Oveis Gharan",
+        "given" : "Shayan"
+      },
+      {
+        "family" : "Vinzant",
+        "given" : "Cynthia"
+      }
+    ],
+    "citation-key" : "anari-et-al-2021-log-concave-polynomials-entropy-matroids",
+    "container-title" : "Duke Mathematical Journal",
+    "DOI" : "10.1215\/00127094-2020-0091",
+    "id" : "anari-et-al-2021-log-concave-polynomials-entropy-matroids",
+    "issue" : "16",
+    "issued" : {
+      "date-parts" : [
+        [
+          2021
+        ]
+      ]
+    },
+    "title" : "Log-concave polynomials I: entropy and a deterministic approximation algorithm for counting bases of matroids",
+    "type" : "article-journal",
+    "volume" : "170"
+  },
+  {
+    "annote" : "Conference version: STOC 2019, DOI 10.1145\/3313276.3316385.",
+    "author" : [
+      {
+        "family" : "Anari",
+        "given" : "Nima"
+      },
+      {
+        "family" : "Liu",
+        "given" : "Kuikui"
+      },
+      {
+        "family" : "Oveis Gharan",
+        "given" : "Shayan"
+      },
+      {
+        "family" : "Vinzant",
+        "given" : "Cynthia"
+      }
+    ],
+    "citation-key" : "anari-et-al-2024-log-concave-polynomials-high-dimensional-walks",
+    "container-title" : "Annals of Mathematics",
+    "DOI" : "10.4007\/annals.2024.199.1.4",
+    "id" : "anari-et-al-2024-log-concave-polynomials-high-dimensional-walks",
+    "issue" : "1",
+    "issued" : {
+      "date-parts" : [
+        [
+          2024
+        ]
+      ]
+    },
+    "page" : "259–299",
+    "title" : "Log-concave polynomials II: high-dimensional walks and an FPRAS for counting bases of a matroid",
+    "type" : "article-journal",
+    "volume" : "199"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Anderson",
+        "given" : "P. W."
+      }
+    ],
+    "citation-key" : "anderson-1956-ordering-antiferromagnetism-ferrites",
+    "container-title" : "Physical Review",
+    "DOI" : "10.1103\/PhysRev.102.1008",
+    "id" : "anderson-1956-ordering-antiferromagnetism-ferrites",
+    "issued" : {
+      "date-parts" : [
+        [
+          1956
+        ]
+      ]
+    },
+    "page" : "1008–1013",
+    "title" : "Ordering and Antiferromagnetism in Ferrites",
+    "type" : "article-journal",
+    "volume" : "102"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Barkema",
+        "given" : "G. T."
+      },
+      {
+        "family" : "Newman",
+        "given" : "M. E. J."
+      }
+    ],
+    "citation-key" : "barkema-newman-1998-monte-carlo-ice-models",
+    "container-title" : "Physical Review E",
+    "id" : "barkema-newman-1998-monte-carlo-ice-models",
+    "issued" : {
+      "date-parts" : [
+        [
+          1998
+        ]
+      ]
+    },
+    "page" : "1155–1166",
+    "title" : "Monte Carlo simulation of ice models",
+    "type" : "article-journal",
+    "volume" : "57"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Benton",
+        "given" : "Owen"
+      },
+      {
+        "family" : "Sikora",
+        "given" : "Olga"
+      },
+      {
+        "family" : "Shannon",
+        "given" : "Nic"
+      }
+    ],
+    "citation-key" : "benton-et-al-2012-emergent-electromagnetism-quantum-spin-ice",
+    "container-title" : "Physical Review B",
+    "id" : "benton-et-al-2012-emergent-electromagnetism-quantum-spin-ice",
+    "issued" : {
+      "date-parts" : [
+        [
+          2012
+        ]
+      ]
+    },
+    "page" : "075154",
+    "title" : "Seeing the light: experimental signatures of emergent electromagnetism in a quantum spin ice",
+    "type" : "article-journal",
+    "volume" : "86"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Berger",
+        "given" : "Mitchell A."
+      },
+      {
+        "family" : "Field",
+        "given" : "George B."
+      }
+    ],
+    "citation-key" : "berger-field-1984-magnetic-helicity-topology",
+    "container-title" : "Journal of Fluid Mechanics",
+    "DOI" : "10.1017\/S0022112084002019",
+    "id" : "berger-field-1984-magnetic-helicity-topology",
+    "issued" : {
+      "date-parts" : [
+        [
+          1984
+        ]
+      ]
+    },
+    "page" : "133–148",
+    "title" : "The topological properties of magnetic helicity",
+    "type" : "article-journal",
+    "volume" : "147"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Biere",
+        "given" : "Armin"
+      },
+      {
+        "family" : "Fazekas",
+        "given" : "Katalin"
+      },
+      {
+        "family" : "Fleury",
+        "given" : "Mathias"
+      },
+      {
+        "family" : "Heisinger",
+        "given" : "Max"
+      }
+    ],
+    "citation-key" : "biere-et-al-2020-sat-competition-2020-solvers-cadical-kissat-paracooba-plingeling",
+    "collection-title" : "Department of Computer Science Series of Publications B, Report B-2020-1",
+    "container-title" : "Proceedings of SAT Competition 2020: Solver and Benchmark Descriptions",
+    "editor" : [
+      {
+        "family" : "Balyo",
+        "given" : "Tomá\\v s"
+      },
+      {
+        "family" : "Froleyks",
+        "given" : "Nils"
+      },
+      {
+        "family" : "Heule",
+        "given" : "Marijn J. H."
+      },
+      {
+        "family" : "Iser",
+        "given" : "Markus"
+      },
+      {
+        "family" : "Järvisalo",
+        "given" : "Matti"
+      },
+      {
+        "family" : "Suda",
+        "given" : "Martin"
+      }
+    ],
+    "id" : "biere-et-al-2020-sat-competition-2020-solvers-cadical-kissat-paracooba-plingeling",
+    "issued" : {
+      "date-parts" : [
+        [
+          2020
+        ]
+      ]
+    },
+    "page" : "50–53",
+    "publisher" : "University of Helsinki",
+    "title" : "CaDiCaL, Kissat, Paracooba, Plingeling and Treengeling Entering the SAT Competition 2020",
+    "type" : "paper-conference"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Borcea",
+        "given" : "Julius"
+      },
+      {
+        "family" : "Brändén",
+        "given" : "Petter"
+      },
+      {
+        "family" : "Liggett",
+        "given" : "Thomas M."
+      }
+    ],
+    "citation-key" : "borcea-et-al-2009-negative-dependence-polynomial-geometry",
+    "container-title" : "Journal of the American Mathematical Society",
+    "DOI" : "10.1090\/S0894-0347-08-00618-8",
+    "id" : "borcea-et-al-2009-negative-dependence-polynomial-geometry",
+    "issue" : "2",
+    "issued" : {
+      "date-parts" : [
+        [
+          2009
+        ]
+      ]
+    },
+    "page" : "521–567",
+    "title" : "Negative dependence and the geometry of polynomials",
+    "type" : "article-journal",
+    "volume" : "22"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Brakensiek",
+        "given" : "Joshua"
+      },
+      {
+        "family" : "Heule",
+        "given" : "Marijn"
+      },
+      {
+        "family" : "Mackey",
+        "given" : "John"
+      },
+      {
+        "family" : "Narváez",
+        "given" : "David"
+      }
+    ],
+    "citation-key" : "brakensiek-et-al-2020-keller-conjecture-resolution",
+    "collection-title" : "Lecture Notes in Computer Science",
+    "container-title" : "Automated Reasoning (IJCAR 2020)",
+    "DOI" : "10.1007\/978-3-030-51074-9_4",
+    "id" : "brakensiek-et-al-2020-keller-conjecture-resolution",
+    "issued" : {
+      "date-parts" : [
+        [
+          2020
+        ]
+      ]
+    },
+    "page" : "48–65",
+    "publisher" : "Springer",
+    "title" : "The Resolution of Keller's Conjecture",
+    "type" : "paper-conference",
+    "volume" : "12166"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Bramwell",
+        "given" : "Steven T."
+      },
+      {
+        "family" : "Gingras",
+        "given" : "Michel J. P."
+      }
+    ],
+    "citation-key" : "bramwell-gingras-2001-spin-ice-state",
+    "container-title" : "Science",
+    "id" : "bramwell-gingras-2001-spin-ice-state",
+    "issued" : {
+      "date-parts" : [
+        [
+          2001
+        ]
+      ]
+    },
+    "page" : "1495–1501",
+    "title" : "Spin ice state in frustrated magnetic pyrochlore materials",
+    "type" : "article-journal",
+    "volume" : "294"
+  },
+  {
+    "annote" : "Chapter prepared for the Handbook of Enumerative Combinatorics, CRC Press",
+    "author" : [
+      {
+        "family" : "Brändén",
+        "given" : "Petter"
+      }
+    ],
+    "citation-key" : "branden-2014-unimodality-log-concavity-real-rootedness",
+    "id" : "branden-2014-unimodality-log-concavity-real-rootedness",
+    "issued" : {
+      "date-parts" : [
+        [
+          2014
+        ]
+      ]
+    },
+    "title" : "Unimodality, log-concavity, real-rootedness and beyond",
+    "type" : "misc"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Brändén",
+        "given" : "Petter"
+      },
+      {
+        "family" : "Huh",
+        "given" : "June"
+      }
+    ],
+    "citation-key" : "branden-huh-2020-lorentzian-polynomials",
+    "container-title" : "Annals of Mathematics",
+    "DOI" : "10.4007\/annals.2020.192.3.4",
+    "id" : "branden-huh-2020-lorentzian-polynomials",
+    "issue" : "3",
+    "issued" : {
+      "date-parts" : [
+        [
+          2020
+        ]
+      ]
+    },
+    "page" : "821–891",
+    "title" : "Lorentzian polynomials",
+    "type" : "article-journal",
+    "volume" : "192"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Brenti",
+        "given" : "Francesco"
+      }
+    ],
+    "citation-key" : "brenti-1994-log-concave-unimodal-sequences-update",
+    "collection-title" : "Contemporary Mathematics",
+    "container-title" : "Jerusalem Combinatorics '93",
+    "DOI" : "10.1090\/conm\/178\/01893",
+    "id" : "brenti-1994-log-concave-unimodal-sequences-update",
+    "issued" : {
+      "date-parts" : [
+        [
+          1994
+        ]
+      ]
+    },
+    "page" : "71–89",
+    "publisher" : "American Mathematical Society",
+    "publisher-place" : "Providence, RI",
+    "title" : "Log-concave and unimodal sequences in algebra, combinatorics, and geometry: an update",
+    "type" : "chapter",
+    "volume" : "178"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Bryant",
+        "given" : "Randal E."
+      },
+      {
+        "family" : "Nawrocki",
+        "given" : "Wojciech"
+      },
+      {
+        "family" : "Avigad",
+        "given" : "Jeremy"
+      },
+      {
+        "family" : "Heule",
+        "given" : "Marijn J. H."
+      }
+    ],
+    "citation-key" : "bryant-et-al-2023-certified-knowledge-compilation",
+    "collection-title" : "Leibniz International Proceedings in Informatics (LIPIcs)",
+    "container-title" : "26th International Conference on Theory and Applications of Satisfiability Testing (SAT 2023)",
+    "DOI" : "10.4230\/LIPIcs.SAT.2023.6",
+    "id" : "bryant-et-al-2023-certified-knowledge-compilation",
+    "issued" : {
+      "date-parts" : [
+        [
+          2023
+        ]
+      ]
+    },
+    "page" : "6:1–6:20",
+    "publisher" : "Schloss Dagstuhl – Leibniz-Zentrum für Informatik",
+    "title" : "Certified Knowledge Compilation with Application to Verified Model Counting",
+    "type" : "paper-conference",
+    "volume" : "271"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Bryant",
+        "given" : "Randal E."
+      },
+      {
+        "family" : "Nawrocki",
+        "given" : "Wojciech"
+      },
+      {
+        "family" : "Avigad",
+        "given" : "Jeremy"
+      },
+      {
+        "family" : "Heule",
+        "given" : "Marijn J. H."
+      }
+    ],
+    "citation-key" : "bryant-et-al-2025-certified-knowledge-compilation",
+    "container-title" : "Journal of Artificial Intelligence Research",
+    "DOI" : "10.1613\/jair.1.15958",
+    "id" : "bryant-et-al-2025-certified-knowledge-compilation",
+    "issued" : {
+      "date-parts" : [
+        [
+          2025
+        ]
+      ]
+    },
+    "title" : "Certified knowledge compilation with application to formally verified model counting",
+    "type" : "article-journal",
+    "volume" : "82"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Castelnovo",
+        "given" : "Claudio"
+      },
+      {
+        "family" : "Chamon",
+        "given" : "Claudio"
+      },
+      {
+        "family" : "Mudry",
+        "given" : "Christopher"
+      },
+      {
+        "family" : "Pujol",
+        "given" : "Pierre"
+      }
+    ],
+    "citation-key" : "castelnovo-et-al-2005-generalized-rokhsar-kivelson-stochastic-matrix",
+    "container-title" : "Annals of Physics",
+    "DOI" : "10.1016\/j.aop.2005.01.006",
+    "id" : "castelnovo-et-al-2005-generalized-rokhsar-kivelson-stochastic-matrix",
+    "issue" : "2",
+    "issued" : {
+      "date-parts" : [
+        [
+          2005
+        ]
+      ]
+    },
+    "page" : "316–344",
+    "title" : "From quantum mechanics to classical statistical physics: generalized Rokhsar–Kivelson Hamiltonians and the `stochastic matrix form' decomposition",
+    "type" : "article-journal",
+    "volume" : "318"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Castelnovo",
+        "given" : "Claudio"
+      },
+      {
+        "family" : "Moessner",
+        "given" : "Roderich"
+      },
+      {
+        "family" : "Sondhi",
+        "given" : "Shivaji L."
+      }
+    ],
+    "citation-key" : "castelnovo-et-al-2008-magnetic-monopoles-spin-ice",
+    "container-title" : "Nature",
+    "id" : "castelnovo-et-al-2008-magnetic-monopoles-spin-ice",
+    "issued" : {
+      "date-parts" : [
+        [
+          2008
+        ]
+      ]
+    },
+    "page" : "42–45",
+    "title" : "Magnetic monopoles in spin ice",
+    "type" : "article-journal",
+    "volume" : "451"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Castelnovo",
+        "given" : "Claudio"
+      },
+      {
+        "family" : "Moessner",
+        "given" : "Roderich"
+      },
+      {
+        "family" : "Sondhi",
+        "given" : "Shivaji L."
+      }
+    ],
+    "citation-key" : "castelnovo-et-al-2012-spin-ice-fractionalization-topological-order",
+    "container-title" : "Annual Review of Condensed Matter Physics",
+    "DOI" : "10.1146\/annurev-conmatphys-020911-125058",
+    "id" : "castelnovo-et-al-2012-spin-ice-fractionalization-topological-order",
+    "issue" : "1",
+    "issued" : {
+      "date-parts" : [
+        [
+          2012
+        ]
+      ]
+    },
+    "page" : "35–55",
+    "title" : "Spin ice, fractionalization, and topological order",
+    "type" : "article-journal",
+    "volume" : "3"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Cohn",
+        "given" : "Henry"
+      },
+      {
+        "family" : "Kenyon",
+        "given" : "Richard"
+      },
+      {
+        "family" : "Propp",
+        "given" : "James"
+      }
+    ],
+    "citation-key" : "cohn-et-al-2001-variational-principle-domino-tilings",
+    "container-title" : "Journal of the American Mathematical Society",
+    "DOI" : "10.1090\/S0894-0347-00-00355-6",
+    "id" : "cohn-et-al-2001-variational-principle-domino-tilings",
+    "issue" : "2",
+    "issued" : {
+      "date-parts" : [
+        [
+          2001
+        ]
+      ]
+    },
+    "page" : "297–346",
+    "title" : "A Variational Principle for Domino Tilings",
+    "type" : "article-journal",
+    "volume" : "14"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Creed",
+        "given" : "Páidí"
+      }
+    ],
+    "citation-key" : "creed-2009-sampling-eulerian-orientations",
+    "container-title" : "Journal of Discrete Algorithms",
+    "DOI" : "10.1016\/j.jda.2008.09.006",
+    "id" : "creed-2009-sampling-eulerian-orientations",
+    "issue" : "2",
+    "issued" : {
+      "date-parts" : [
+        [
+          2009
+        ]
+      ]
+    },
+    "page" : "168–180",
+    "title" : "Sampling Eulerian orientations of triangular lattice graphs",
+    "type" : "article-journal",
+    "volume" : "7"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Cruz-Filipe",
+        "given" : "Luís"
+      },
+      {
+        "family" : "Heule",
+        "given" : "Marijn J. H."
+      },
+      {
+        "family" : "Hunt",
+        "given" : "Warren A."
+      },
+      {
+        "family" : "Kaufmann",
+        "given" : "Matt"
+      },
+      {
+        "family" : "Schneider-Kamp",
+        "given" : "Peter"
+      }
+    ],
+    "citation-key" : "cruz-filipe-et-al-2017-efficient-certified-rat-verification",
+    "collection-title" : "Lecture Notes in Computer Science",
+    "container-title" : "Automated Deduction — CADE 26",
+    "DOI" : "10.1007\/978-3-319-63046-5_14",
+    "id" : "cruz-filipe-et-al-2017-efficient-certified-rat-verification",
+    "issued" : {
+      "date-parts" : [
+        [
+          2017
+        ]
+      ]
+    },
+    "page" : "220–236",
+    "publisher" : "Springer",
+    "title" : "Efficient certified RAT verification",
+    "type" : "paper-conference",
+    "volume" : "10395"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Moura",
+        "given" : "Leonardo",
+        "non-dropping-particle" : "de"
+      },
+      {
+        "family" : "Ullrich",
+        "given" : "Sebastian"
+      }
+    ],
+    "citation-key" : "de-moura-ullrich-2021-lean4-theorem-prover",
+    "collection-title" : "Lecture Notes in Computer Science",
+    "container-title" : "Automated Deduction – CADE 28",
+    "DOI" : "10.1007\/978-3-030-79876-5_37",
+    "id" : "de-moura-ullrich-2021-lean4-theorem-prover",
+    "issued" : {
+      "date-parts" : [
+        [
+          2021
+        ]
+      ]
+    },
+    "page" : "625–635",
+    "publisher" : "Springer",
+    "publisher-place" : "Cham",
+    "title" : "The Lean 4 Theorem Prover and Programming Language",
+    "type" : "paper-conference",
+    "volume" : "12699"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Duminil-Copin",
+        "given" : "Hugo"
+      },
+      {
+        "family" : "Karrila",
+        "given" : "Alex"
+      },
+      {
+        "family" : "Manolescu",
+        "given" : "Ioan"
+      },
+      {
+        "family" : "Oulamara",
+        "given" : "Mendes"
+      }
+    ],
+    "citation-key" : "duminil-copin-et-al-2024-six-vertex-height-delocalization",
+    "container-title" : "Journal of the European Mathematical Society",
+    "id" : "duminil-copin-et-al-2024-six-vertex-height-delocalization",
+    "issue" : "11",
+    "issued" : {
+      "date-parts" : [
+        [
+          2024
+        ]
+      ]
+    },
+    "page" : "4131–4190",
+    "title" : "Delocalization of the height function of the six-vertex model",
+    "type" : "article-journal",
+    "volume" : "26"
+  },
+  {
+    "annote" : "Formal proof development, https:\/\/isa-afp.org\/entries\/Sturm_Sequences.html",
+    "author" : [
+      {
+        "family" : "Eberl",
+        "given" : "Manuel"
+      }
+    ],
+    "citation-key" : "eberl-2014-sturms-theorem",
+    "container-title" : "Archive of Formal Proofs",
+    "id" : "eberl-2014-sturms-theorem",
+    "issued" : {
+      "date-parts" : [
+        [
+          2014,
+          1
+        ]
+      ]
+    },
+    "title" : "Sturm's theorem",
+    "type" : "article-journal"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Eberl",
+        "given" : "Manuel"
+      }
+    ],
+    "citation-key" : "eberl-2015-univariate-real-polynomials-decision-procedure",
+    "container-title" : "Proceedings of the 2015 Conference on Certified Programs and Proofs",
+    "DOI" : "10.1145\/2676724.2693166",
+    "id" : "eberl-2015-univariate-real-polynomials-decision-procedure",
+    "issued" : {
+      "date-parts" : [
+        [
+          2015
+        ]
+      ]
+    },
+    "page" : "75–83",
+    "publisher" : "ACM",
+    "title" : "A decision procedure for univariate real polynomials in Isabelle\/HOL",
+    "type" : "paper-conference"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Elkies",
+        "given" : "Noam"
+      },
+      {
+        "family" : "Kuperberg",
+        "given" : "Greg"
+      },
+      {
+        "family" : "Larsen",
+        "given" : "Michael"
+      },
+      {
+        "family" : "Propp",
+        "given" : "James"
+      }
+    ],
+    "citation-key" : "elkies-et-al-1992-alternating-sign-matrices-domino-tilings",
+    "container-title" : "Journal of Algebraic Combinatorics",
+    "id" : "elkies-et-al-1992-alternating-sign-matrices-domino-tilings",
+    "issued" : {
+      "date-parts" : [
+        [
+          1992
+        ]
+      ]
+    },
+    "page" : "111–132, 219–234",
+    "title" : "Alternating sign matrices and domino tilings",
+    "type" : "article-journal",
+    "volume" : "1"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Fahrbach",
+        "given" : "Matthew"
+      },
+      {
+        "family" : "Randall",
+        "given" : "Dana"
+      }
+    ],
+    "citation-key" : "fahrbach-randall-2019-slow-mixing-glauber-dynamics-six-vertex-model",
+    "container-title" : "Approximation, Randomization, and Combinatorial Optimization. Algorithms and Techniques (APPROX\/RANDOM 2019)",
+    "id" : "fahrbach-randall-2019-slow-mixing-glauber-dynamics-six-vertex-model",
+    "issued" : {
+      "date-parts" : [
+        [
+          2019
+        ]
+      ]
+    },
+    "title" : "Slow mixing of Glauber dynamics for the six-vertex model in the ordered phases",
+    "type" : "paper-conference"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Feder",
+        "given" : "Tomás"
+      },
+      {
+        "family" : "Mihail",
+        "given" : "Milena"
+      }
+    ],
+    "citation-key" : "feder-mihail-1992-balanced-matroids",
+    "container-title" : "Proceedings of the Twenty-Fourth Annual ACM Symposium on Theory of Computing (STOC '92)",
+    "DOI" : "10.1145\/129712.129716",
+    "id" : "feder-mihail-1992-balanced-matroids",
+    "issued" : {
+      "date-parts" : [
+        [
+          1992
+        ]
+      ]
+    },
+    "page" : "26–38",
+    "publisher" : "ACM Press",
+    "title" : "Balanced matroids",
+    "type" : "paper-conference"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Fennell",
+        "given" : "T."
+      },
+      {
+        "family" : "Bramwell",
+        "given" : "S. T."
+      },
+      {
+        "family" : "McMorrow",
+        "given" : "D. F."
+      },
+      {
+        "family" : "Manuel",
+        "given" : "P."
+      },
+      {
+        "family" : "Wildes",
+        "given" : "A. R."
+      }
+    ],
+    "citation-key" : "fennell-et-al-2007-pinch-points-kasteleyn-transitions-kagome-ice",
+    "container-title" : "Nature Physics",
+    "id" : "fennell-et-al-2007-pinch-points-kasteleyn-transitions-kagome-ice",
+    "issued" : {
+      "date-parts" : [
+        [
+          2007
+        ]
+      ]
+    },
+    "page" : "566–572",
+    "title" : "Pinch points and Kasteleyn transitions in kagome ice",
+    "type" : "article-journal",
+    "volume" : "3"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Freire",
+        "given" : "Juliana"
+      },
+      {
+        "family" : "Klivans",
+        "given" : "Caroline J."
+      },
+      {
+        "family" : "Milet",
+        "given" : "Pedro H."
+      },
+      {
+        "family" : "Saldanha",
+        "given" : "Nicolau C."
+      }
+    ],
+    "citation-key" : "freire-et-al-2022-connectivity-3d-domino-tilings",
+    "container-title" : "Transactions of the American Mathematical Society",
+    "DOI" : "10.1090\/tran\/8532",
+    "id" : "freire-et-al-2022-connectivity-3d-domino-tilings",
+    "issue" : "3",
+    "issued" : {
+      "date-parts" : [
+        [
+          2022
+        ]
+      ]
+    },
+    "page" : "1579–1605",
+    "title" : "On the connectivity of spaces of three-dimensional domino tilings",
+    "type" : "article-journal",
+    "volume" : "375"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Gioan",
+        "given" : "Emeric"
+      }
+    ],
+    "citation-key" : "gioan-2007-enumerating-degree-sequences-digraphs",
+    "container-title" : "European Journal of Combinatorics",
+    "DOI" : "10.1016\/j.ejc.2005.11.006",
+    "id" : "gioan-2007-enumerating-degree-sequences-digraphs",
+    "issue" : "4",
+    "issued" : {
+      "date-parts" : [
+        [
+          2007
+        ]
+      ]
+    },
+    "page" : "1351–1366",
+    "title" : "Enumerating degree sequences in digraphs and a cycle–cocycle reversing system",
+    "type" : "article-journal",
+    "volume" : "28"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Grimmett",
+        "given" : "Geoffrey R."
+      },
+      {
+        "family" : "Winkler",
+        "given" : "Svante N."
+      }
+    ],
+    "citation-key" : "grimmett-winkler-2004-negative-association-uniform-forests",
+    "container-title" : "Random Structures & Algorithms",
+    "DOI" : "10.1002\/rsa.20012",
+    "id" : "grimmett-winkler-2004-negative-association-uniform-forests",
+    "issue" : "4",
+    "issued" : {
+      "date-parts" : [
+        [
+          2004
+        ]
+      ]
+    },
+    "page" : "444–460",
+    "title" : "Negative association in uniform forests and connected graphs",
+    "type" : "article-journal",
+    "volume" : "24"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Harris",
+        "given" : "M. J."
+      },
+      {
+        "family" : "Bramwell",
+        "given" : "S. T."
+      },
+      {
+        "family" : "McMorrow",
+        "given" : "D. F."
+      },
+      {
+        "family" : "Zeiske",
+        "given" : "T."
+      },
+      {
+        "family" : "Godfrey",
+        "given" : "K. W."
+      }
+    ],
+    "citation-key" : "harris-et-al-1997-geometrical-frustration-ho2ti2o7",
+    "container-title" : "Physical Review Letters",
+    "DOI" : "10.1103\/PhysRevLett.79.2554",
+    "id" : "harris-et-al-1997-geometrical-frustration-ho2ti2o7",
+    "issued" : {
+      "date-parts" : [
+        [
+          1997
+        ]
+      ]
+    },
+    "page" : "2554–2557",
+    "title" : "Geometrical Frustration in the Ferromagnetic Pyrochlore Ho$_2$Ti$_2$O$_7$",
+    "type" : "article-journal",
+    "volume" : "79"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Hartarsky",
+        "given" : "Ivailo"
+      },
+      {
+        "family" : "Lichev",
+        "given" : "Lyuben"
+      },
+      {
+        "family" : "Toninelli",
+        "given" : "Fabio Lucio"
+      }
+    ],
+    "citation-key" : "hartarsky-et-al-2024-local-dimer-dynamics-higher-dimensions",
+    "container-title" : "Annales de l'Institut Henri Poincaré D, Combinatorics, Physics and their Interactions",
+    "DOI" : "10.4171\/aihpd\/200",
+    "id" : "hartarsky-et-al-2024-local-dimer-dynamics-higher-dimensions",
+    "issue" : "4",
+    "issued" : {
+      "date-parts" : [
+        [
+          2024
+        ]
+      ]
+    },
+    "page" : "625–645",
+    "title" : "Local dimer dynamics in higher dimensions",
+    "type" : "article-journal",
+    "volume" : "13"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Henley",
+        "given" : "Christopher L."
+      }
+    ],
+    "citation-key" : "henley-1997-dimer-covering-relaxation-time",
+    "container-title" : "Journal of Statistical Physics",
+    "id" : "henley-1997-dimer-covering-relaxation-time",
+    "issued" : {
+      "date-parts" : [
+        [
+          1997
+        ]
+      ]
+    },
+    "page" : "483–507",
+    "title" : "Relaxation time for a dimer covering with height representation",
+    "type" : "article-journal",
+    "volume" : "89"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Henley",
+        "given" : "Christopher L."
+      }
+    ],
+    "citation-key" : "henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points",
+    "container-title" : "Journal of Physics: Condensed Matter",
+    "id" : "henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points",
+    "issued" : {
+      "date-parts" : [
+        [
+          2004
+        ]
+      ]
+    },
+    "page" : "S891–S898",
+    "title" : "From classical to quantum dynamics at Rokhsar–Kivelson points",
+    "type" : "article-journal",
+    "volume" : "16"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Henley",
+        "given" : "Christopher L."
+      }
+    ],
+    "citation-key" : "henley-2010-coulomb-phase-frustrated-systems",
+    "container-title" : "Annual Review of Condensed Matter Physics",
+    "DOI" : "10.1146\/annurev-conmatphys-070909-104138",
+    "id" : "henley-2010-coulomb-phase-frustrated-systems",
+    "issued" : {
+      "date-parts" : [
+        [
+          2010
+        ]
+      ]
+    },
+    "page" : "179–210",
+    "title" : "The 'Coulomb phase' in frustrated systems",
+    "type" : "article-journal",
+    "volume" : "1"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Hermele",
+        "given" : "Michael"
+      },
+      {
+        "family" : "Fisher",
+        "given" : "Matthew P. A."
+      },
+      {
+        "family" : "Balents",
+        "given" : "Leon"
+      }
+    ],
+    "citation-key" : "hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid",
+    "container-title" : "Physical Review B",
+    "id" : "hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid",
+    "issued" : {
+      "date-parts" : [
+        [
+          2004
+        ]
+      ]
+    },
+    "page" : "064404",
+    "title" : "Pyrochlore photons: the U(1) spin liquid in a $S=1\/2$ three-dimensional frustrated magnet",
+    "type" : "article-journal",
+    "volume" : "69"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Heule",
+        "given" : "Marijn J. H."
+      }
+    ],
+    "citation-key" : "heule-2018-schur-number-five",
+    "collection-number" : "1",
+    "container-title" : "Proceedings of the AAAI Conference on Artificial Intelligence",
+    "DOI" : "10.1609\/aaai.v32i1.12209",
+    "id" : "heule-2018-schur-number-five",
+    "issued" : {
+      "date-parts" : [
+        [
+          2018
+        ]
+      ]
+    },
+    "title" : "Schur Number Five",
+    "type" : "paper-conference",
+    "volume" : "32"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Heule",
+        "given" : "Marijn J. H."
+      },
+      {
+        "family" : "Kullmann",
+        "given" : "Oliver"
+      },
+      {
+        "family" : "Wieringa",
+        "given" : "Siert"
+      },
+      {
+        "family" : "Biere",
+        "given" : "Armin"
+      }
+    ],
+    "citation-key" : "heule-et-al-2012-cube-and-conquer",
+    "collection-title" : "Lecture Notes in Computer Science",
+    "container-title" : "Hardware and Software: Verification and Testing (HVC 2011)",
+    "DOI" : "10.1007\/978-3-642-34188-5_8",
+    "id" : "heule-et-al-2012-cube-and-conquer",
+    "issued" : {
+      "date-parts" : [
+        [
+          2012
+        ]
+      ]
+    },
+    "page" : "50–65",
+    "publisher" : "Springer",
+    "title" : "Cube and Conquer: Guiding CDCL SAT Solvers by Lookaheads",
+    "type" : "paper-conference",
+    "volume" : "7261"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Heule",
+        "given" : "Marijn J. H."
+      },
+      {
+        "family" : "Kullmann",
+        "given" : "Oliver"
+      },
+      {
+        "family" : "Marek",
+        "given" : "Victor W."
+      }
+    ],
+    "citation-key" : "heule-et-al-2016-boolean-pythagorean-triples-cube-and-conquer",
+    "collection-title" : "Lecture Notes in Computer Science",
+    "container-title" : "Theory and Applications of Satisfiability Testing (SAT 2016)",
+    "DOI" : "10.1007\/978-3-319-40970-2_15",
+    "id" : "heule-et-al-2016-boolean-pythagorean-triples-cube-and-conquer",
+    "issued" : {
+      "date-parts" : [
+        [
+          2016
+        ]
+      ]
+    },
+    "page" : "228–245",
+    "publisher" : "Springer",
+    "title" : "Solving and Verifying the Boolean Pythagorean Triples Problem via Cube-and-Conquer",
+    "type" : "paper-conference",
+    "volume" : "9710"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Heule",
+        "given" : "Marijn J. H."
+      },
+      {
+        "family" : "Kullmann",
+        "given" : "Oliver"
+      }
+    ],
+    "citation-key" : "heule-kullmann-2017-science-of-brute-force",
+    "container-title" : "Communications of the ACM",
+    "DOI" : "10.1145\/3107239",
+    "id" : "heule-kullmann-2017-science-of-brute-force",
+    "issue" : "8",
+    "issued" : {
+      "date-parts" : [
+        [
+          2017
+        ]
+      ]
+    },
+    "page" : "70–79",
+    "title" : "The Science of Brute Force",
+    "type" : "article-journal",
+    "volume" : "60"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Huse",
+        "given" : "David A."
+      },
+      {
+        "family" : "Krauth",
+        "given" : "Werner"
+      },
+      {
+        "family" : "Moessner",
+        "given" : "Roderich"
+      },
+      {
+        "family" : "Sondhi",
+        "given" : "Shivaji L."
+      }
+    ],
+    "citation-key" : "huse-et-al-2003-coulomb-liquid-dimer-models-3d",
+    "container-title" : "Physical Review Letters",
+    "DOI" : "10.1103\/PhysRevLett.91.167004",
+    "id" : "huse-et-al-2003-coulomb-liquid-dimer-models-3d",
+    "issued" : {
+      "date-parts" : [
+        [
+          2003
+        ]
+      ]
+    },
+    "page" : "167004",
+    "title" : "Coulomb and liquid dimer models in three dimensions",
+    "type" : "article-journal",
+    "volume" : "91"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Isakov",
+        "given" : "S. V."
+      },
+      {
+        "family" : "Gregor",
+        "given" : "K."
+      },
+      {
+        "family" : "Moessner",
+        "given" : "R."
+      },
+      {
+        "family" : "Sondhi",
+        "given" : "S. L."
+      }
+    ],
+    "citation-key" : "isakov-et-al-2004-dipolar-spin-correlations-pyrochlore",
+    "container-title" : "Physical Review Letters",
+    "DOI" : "10.1103\/PhysRevLett.93.167204",
+    "id" : "isakov-et-al-2004-dipolar-spin-correlations-pyrochlore",
+    "issued" : {
+      "date-parts" : [
+        [
+          2004
+        ]
+      ]
+    },
+    "page" : "167204",
+    "title" : "Dipolar spin correlations in classical pyrochlore magnets",
+    "type" : "article-journal",
+    "volume" : "93"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Isakov",
+        "given" : "Sergei V."
+      },
+      {
+        "family" : "Fendley",
+        "given" : "Paul"
+      },
+      {
+        "family" : "Ludwig",
+        "given" : "Andreas W. W."
+      },
+      {
+        "family" : "Trebst",
+        "given" : "Simon"
+      },
+      {
+        "family" : "Troyer",
+        "given" : "Matthias"
+      }
+    ],
+    "citation-key" : "isakov-et-al-2011-dynamics-conformal-quantum-critical-points",
+    "container-title" : "Physical Review B",
+    "id" : "isakov-et-al-2011-dynamics-conformal-quantum-critical-points",
+    "issued" : {
+      "date-parts" : [
+        [
+          2011
+        ]
+      ]
+    },
+    "page" : "125114",
+    "title" : "Dynamics at and near conformal quantum critical points",
+    "type" : "article-journal",
+    "volume" : "83"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Ivanov",
+        "given" : "Dmitri A."
+      }
+    ],
+    "citation-key" : "ivanov-2004-roksar-kivelson-dimer-model-vision-gap",
+    "container-title" : "Physical Review B",
+    "id" : "ivanov-2004-roksar-kivelson-dimer-model-vision-gap",
+    "issued" : {
+      "date-parts" : [
+        [
+          2004
+        ]
+      ]
+    },
+    "page" : "094430",
+    "title" : "Vison gap in the Rokhsar–Kivelson dimer model on the triangular lattice",
+    "type" : "article-journal",
+    "volume" : "70"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Jaubert",
+        "given" : "Ludovic D. C."
+      },
+      {
+        "family" : "Chalker",
+        "given" : "J. T."
+      },
+      {
+        "family" : "Holdsworth",
+        "given" : "Peter C. W."
+      },
+      {
+        "family" : "Moessner",
+        "given" : "R."
+      }
+    ],
+    "citation-key" : "jaubert-et-al-2008-three-dimensional-kasteleyn-transition-spin-ice",
+    "container-title" : "Physical Review Letters",
+    "id" : "jaubert-et-al-2008-three-dimensional-kasteleyn-transition-spin-ice",
+    "issued" : {
+      "date-parts" : [
+        [
+          2008
+        ]
+      ]
+    },
+    "page" : "067207",
+    "title" : "A Three-Dimensional Kasteleyn Transition: Spin Ice in a [100] Field",
+    "type" : "article-journal",
+    "volume" : "100"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Jaubert",
+        "given" : "L. D. C."
+      },
+      {
+        "family" : "Harris",
+        "given" : "M. J."
+      },
+      {
+        "family" : "Fennell",
+        "given" : "T."
+      },
+      {
+        "family" : "Melko",
+        "given" : "R. G."
+      },
+      {
+        "family" : "Bramwell",
+        "given" : "S. T."
+      },
+      {
+        "family" : "Holdsworth",
+        "given" : "P. C. W."
+      }
+    ],
+    "citation-key" : "jaubert-et-al-2013-spin-ice-curie-law-crossover",
+    "container-title" : "Physical Review X",
+    "DOI" : "10.1103\/PhysRevX.3.011014",
+    "id" : "jaubert-et-al-2013-spin-ice-curie-law-crossover",
+    "issue" : "1",
+    "issued" : {
+      "date-parts" : [
+        [
+          2013
+        ]
+      ]
+    },
+    "page" : "011014",
+    "title" : "Topological-sector fluctuations and Curie-law crossover in spin ice",
+    "type" : "article-journal",
+    "volume" : "3"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Jaubert",
+        "given" : "Ludovic D. C."
+      },
+      {
+        "family" : "Holdsworth",
+        "given" : "Peter C. W."
+      }
+    ],
+    "citation-key" : "jaubert-holdsworth-2009-magnetic-monopole-signature-spin-ice",
+    "container-title" : "Nature Physics",
+    "id" : "jaubert-holdsworth-2009-magnetic-monopole-signature-spin-ice",
+    "issued" : {
+      "date-parts" : [
+        [
+          2009
+        ]
+      ]
+    },
+    "page" : "258–261",
+    "title" : "Signature of magnetic monopole and Dirac string dynamics in spin ice",
+    "type" : "article-journal",
+    "volume" : "5"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Kasteleyn",
+        "given" : "P. W."
+      }
+    ],
+    "citation-key" : "kasteleyn-1963-dimer-statistics-phase-transitions",
+    "container-title" : "Journal of Mathematical Physics",
+    "id" : "kasteleyn-1963-dimer-statistics-phase-transitions",
+    "issue" : "2",
+    "issued" : {
+      "date-parts" : [
+        [
+          1963
+        ]
+      ]
+    },
+    "page" : "287–293",
+    "title" : "Dimer Statistics and Phase Transitions",
+    "type" : "article-journal",
+    "volume" : "4"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Kenyon",
+        "given" : "Richard"
+      }
+    ],
+    "citation-key" : "kenyon-1997-local-statistics-lattice-dimers",
+    "container-title" : "Annales de l'Institut Henri Poincaré (B) Probabilités et Statistiques",
+    "id" : "kenyon-1997-local-statistics-lattice-dimers",
+    "issue" : "5",
+    "issued" : {
+      "date-parts" : [
+        [
+          1997
+        ]
+      ]
+    },
+    "page" : "591–618",
+    "title" : "Local statistics of lattice dimers",
+    "type" : "article-journal",
+    "volume" : "33"
+  },
+  {
+    "annote" : "Park City Mathematics Institute lecture notes, summer 2007",
+    "author" : [
+      {
+        "family" : "Kenyon",
+        "given" : "Richard"
+      }
+    ],
+    "citation-key" : "kenyon-2009-lectures-on-dimers",
+    "id" : "kenyon-2009-lectures-on-dimers",
+    "issued" : {
+      "date-parts" : [
+        [
+          2009
+        ]
+      ]
+    },
+    "title" : "Lectures on dimers",
+    "type" : "misc"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Kenyon",
+        "given" : "Richard"
+      },
+      {
+        "family" : "Okounkov",
+        "given" : "Andrei"
+      },
+      {
+        "family" : "Sheffield",
+        "given" : "Scott"
+      }
+    ],
+    "citation-key" : "kenyon-et-al-2006-dimers-and-amoebae",
+    "container-title" : "Annals of Mathematics",
+    "DOI" : "10.4007\/annals.2006.163.1019",
+    "id" : "kenyon-et-al-2006-dimers-and-amoebae",
+    "issue" : "3",
+    "issued" : {
+      "date-parts" : [
+        [
+          2006
+        ]
+      ]
+    },
+    "page" : "1019–1056",
+    "title" : "Dimers and amoebae",
+    "type" : "article-journal",
+    "volume" : "163"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Khemani",
+        "given" : "Vedika"
+      },
+      {
+        "family" : "Hermele",
+        "given" : "Michael"
+      },
+      {
+        "family" : "Nandkishore",
+        "given" : "Rahul"
+      }
+    ],
+    "citation-key" : "khemani-et-al-2020-hilbert-space-shattering-localization",
+    "container-title" : "Physical Review B",
+    "DOI" : "10.1103\/PhysRevB.101.174204",
+    "id" : "khemani-et-al-2020-hilbert-space-shattering-localization",
+    "issued" : {
+      "date-parts" : [
+        [
+          2020
+        ]
+      ]
+    },
+    "page" : "174204",
+    "title" : "Localization from Hilbert space shattering: from theory to physical realizations",
+    "type" : "article-journal",
+    "volume" : "101"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Klivans",
+        "given" : "Caroline J."
+      },
+      {
+        "family" : "Saldanha",
+        "given" : "Nicolau C."
+      }
+    ],
+    "citation-key" : "klivans-saldanha-2025-domino-tilings-beyond-2d",
+    "DOI" : "10.48550\/arXiv.2507.22625",
+    "id" : "klivans-saldanha-2025-domino-tilings-beyond-2d",
+    "issued" : {
+      "date-parts" : [
+        [
+          2025
+        ]
+      ]
+    },
+    "title" : "Domino tilings beyond 2D",
+    "type" : "misc"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Kownacki",
+        "given" : "J.-P."
+      }
+    ],
+    "citation-key" : "kownacki-2004-freezing-triangulations",
+    "container-title" : "The European Physical Journal B",
+    "id" : "kownacki-2004-freezing-triangulations",
+    "issued" : {
+      "date-parts" : [
+        [
+          2004
+        ]
+      ]
+    },
+    "page" : "485–494",
+    "title" : "Freezing of triangulations",
+    "type" : "article-journal",
+    "volume" : "38"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Lagniez",
+        "given" : "Jean-Marie"
+      },
+      {
+        "family" : "Marquis",
+        "given" : "Pierre"
+      }
+    ],
+    "citation-key" : "lagniez-marquis-2017-improved-decision-dnnf-compiler",
+    "container-title" : "Proceedings of the Twenty-Sixth International Joint Conference on Artificial Intelligence",
+    "DOI" : "10.24963\/ijcai.2017\/93",
+    "id" : "lagniez-marquis-2017-improved-decision-dnnf-compiler",
+    "issued" : {
+      "date-parts" : [
+        [
+          2017
+        ]
+      ]
+    },
+    "page" : "667–673",
+    "publisher" : "IJCAI",
+    "title" : "An improved decision-DNNF compiler",
+    "type" : "paper-conference"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Läuchli",
+        "given" : "Andreas M."
+      },
+      {
+        "family" : "Capponi",
+        "given" : "Sylvain"
+      },
+      {
+        "family" : "Assaad",
+        "given" : "Fakher F."
+      }
+    ],
+    "citation-key" : "lauchli-et-al-2008-dynamical-dimer-correlations-at-rk-points",
+    "container-title" : "Journal of Statistical Mechanics: Theory and Experiment",
+    "id" : "lauchli-et-al-2008-dynamical-dimer-correlations-at-rk-points",
+    "issued" : {
+      "date-parts" : [
+        [
+          2008
+        ]
+      ]
+    },
+    "page" : "P01010",
+    "title" : "Dynamical dimer correlations at bipartite and non-bipartite Rokhsar–Kivelson points",
+    "type" : "article-journal"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Lieb",
+        "given" : "Elliott H."
+      }
+    ],
+    "citation-key" : "lieb-1967-square-ice-residual-entropy",
+    "container-title" : "Physical Review",
+    "DOI" : "10.1103\/PhysRev.162.162",
+    "id" : "lieb-1967-square-ice-residual-entropy",
+    "issue" : "1",
+    "issued" : {
+      "date-parts" : [
+        [
+          1967
+        ]
+      ]
+    },
+    "page" : "162–172",
+    "title" : "Residual entropy of square ice",
+    "type" : "article-journal",
+    "volume" : "162"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Liu",
+        "given" : "Tianyu"
+      }
+    ],
+    "citation-key" : "liu-2018-torpid-mixing-six-vertex-model",
+    "collection-title" : "Leibniz International Proceedings in Informatics (LIPIcs)",
+    "container-title" : "Approximation, Randomization, and Combinatorial Optimization. Algorithms and Techniques (APPROX\/RANDOM 2018)",
+    "DOI" : "10.4230\/LIPIcs.APPROX-RANDOM.2018.52",
+    "id" : "liu-2018-torpid-mixing-six-vertex-model",
+    "issued" : {
+      "date-parts" : [
+        [
+          2018
+        ]
+      ]
+    },
+    "page" : "52:1–52:15",
+    "publisher" : "Schloss Dagstuhl – Leibniz-Zentrum für Informatik",
+    "title" : "Torpid mixing of Markov chains for the six-vertex model on $Z^2$",
+    "type" : "paper-conference",
+    "volume" : "116"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Masaoka",
+        "given" : "Rintaro"
+      },
+      {
+        "family" : "Soejima",
+        "given" : "Tomohiro"
+      },
+      {
+        "family" : "Watanabe",
+        "given" : "Haruki"
+      }
+    ],
+    "citation-key" : "masaoka-et-al-2025-ising-dynamical-critical-exponent-bound",
+    "container-title" : "Journal of Statistical Physics",
+    "id" : "masaoka-et-al-2025-ising-dynamical-critical-exponent-bound",
+    "issued" : {
+      "date-parts" : [
+        [
+          2025
+        ]
+      ]
+    },
+    "page" : "76",
+    "title" : "Rigorous lower bound of the dynamical critical exponent of the Ising model",
+    "type" : "article-journal",
+    "volume" : "192"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Masaoka",
+        "given" : "Rintaro"
+      },
+      {
+        "family" : "Soejima",
+        "given" : "Tomohiro"
+      },
+      {
+        "family" : "Watanabe",
+        "given" : "Haruki"
+      }
+    ],
+    "citation-key" : "masaoka-et-al-2025-rigorous-lower-bound-dynamical-exponents-gapless-frustration-free-systems",
+    "container-title" : "Physical Review X",
+    "id" : "masaoka-et-al-2025-rigorous-lower-bound-dynamical-exponents-gapless-frustration-free-systems",
+    "issued" : {
+      "date-parts" : [
+        [
+          2025
+        ]
+      ]
+    },
+    "page" : "041050",
+    "title" : "Rigorous lower bound on dynamical exponents in gapless frustration-free systems",
+    "type" : "article-journal",
+    "volume" : "15"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Melko",
+        "given" : "Roger G."
+      },
+      {
+        "family" : "Hertog",
+        "given" : "Byron C.",
+        "non-dropping-particle" : "den"
+      },
+      {
+        "family" : "Gingras",
+        "given" : "Michel J. P."
+      }
+    ],
+    "citation-key" : "melko-et-al-2001-long-range-order-dipolar-spin-ice",
+    "container-title" : "Physical Review Letters",
+    "DOI" : "10.1103\/PhysRevLett.87.067203",
+    "id" : "melko-et-al-2001-long-range-order-dipolar-spin-ice",
+    "issued" : {
+      "date-parts" : [
+        [
+          2001
+        ]
+      ]
+    },
+    "page" : "067203",
+    "title" : "Long-Range Order at Low Temperatures in Dipolar Spin Ice",
+    "type" : "article-journal",
+    "volume" : "87"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Melko",
+        "given" : "Roger G."
+      },
+      {
+        "family" : "Gingras",
+        "given" : "Michel J. P."
+      }
+    ],
+    "citation-key" : "melko-gingras-2004-dipolar-spin-ice-monte-carlo",
+    "container-title" : "Journal of Physics: Condensed Matter",
+    "DOI" : "10.1088\/0953-8984\/16\/43\/R02",
+    "id" : "melko-gingras-2004-dipolar-spin-ice-monte-carlo",
+    "issue" : "43",
+    "issued" : {
+      "date-parts" : [
+        [
+          2004
+        ]
+      ]
+    },
+    "page" : "R1277–R1319",
+    "title" : "Monte Carlo studies of the dipolar spin ice model",
+    "type" : "article-journal",
+    "volume" : "16"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Mihail",
+        "given" : "Milena"
+      },
+      {
+        "family" : "Winkler",
+        "given" : "Peter"
+      }
+    ],
+    "citation-key" : "mihail-winkler-1996-eulerian-orientations-count",
+    "container-title" : "Algorithmica",
+    "id" : "mihail-winkler-1996-eulerian-orientations-count",
+    "issued" : {
+      "date-parts" : [
+        [
+          1996
+        ]
+      ]
+    },
+    "page" : "402–414",
+    "title" : "On the number of Eulerian orientations of a graph",
+    "type" : "article-journal",
+    "volume" : "16"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Moessner",
+        "given" : "Roderich"
+      },
+      {
+        "family" : "Raman",
+        "given" : "Kumar S."
+      }
+    ],
+    "citation-key" : "moessner-raman-2010-quantum-dimer-models",
+    "collection-title" : "Springer Series in Solid-State Sciences",
+    "container-title" : "Introduction to Frustrated Magnetism",
+    "DOI" : "10.1007\/978-3-642-10589-0_17",
+    "id" : "moessner-raman-2010-quantum-dimer-models",
+    "issued" : {
+      "date-parts" : [
+        [
+          2010
+        ]
+      ]
+    },
+    "page" : "437–479",
+    "publisher" : "Springer",
+    "publisher-place" : "Berlin",
+    "title" : "Quantum dimer models",
+    "type" : "chapter"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Moessner",
+        "given" : "R."
+      },
+      {
+        "family" : "Sondhi",
+        "given" : "S. L."
+      }
+    ],
+    "citation-key" : "moessner-sondhi-2003-spin-ice-111-magnetization-plateau",
+    "container-title" : "Physical Review B",
+    "id" : "moessner-sondhi-2003-spin-ice-111-magnetization-plateau",
+    "issued" : {
+      "date-parts" : [
+        [
+          2003
+        ]
+      ]
+    },
+    "page" : "064411",
+    "title" : "Theory of the [111] magnetization plateau in spin ice",
+    "type" : "article-journal",
+    "volume" : "68"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Moffatt",
+        "given" : "H. K."
+      }
+    ],
+    "citation-key" : "moffatt-1969-degree-of-knottedness-tangled-vortex-lines",
+    "container-title" : "Journal of Fluid Mechanics",
+    "DOI" : "10.1017\/S0022112069000991",
+    "id" : "moffatt-1969-degree-of-knottedness-tangled-vortex-lines",
+    "issue" : "1",
+    "issued" : {
+      "date-parts" : [
+        [
+          1969
+        ]
+      ]
+    },
+    "page" : "117–129",
+    "title" : "The degree of knottedness of tangled vortex lines",
+    "type" : "article-journal",
+    "volume" : "35"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Nightingale",
+        "given" : "M. P."
+      },
+      {
+        "family" : "Blöte",
+        "given" : "H. W. J."
+      }
+    ],
+    "citation-key" : "nightingale-blote-1996-ising-model-dynamic-exponent",
+    "container-title" : "Physical Review Letters",
+    "DOI" : "10.1103\/PhysRevLett.76.4548",
+    "id" : "nightingale-blote-1996-ising-model-dynamic-exponent",
+    "issued" : {
+      "date-parts" : [
+        [
+          1996
+        ]
+      ]
+    },
+    "page" : "4548–4551",
+    "title" : "Dynamic exponent of the two-dimensional Ising model and Monte Carlo computation of the subdominant eigenvalue of the stochastic matrix",
+    "type" : "article-journal",
+    "volume" : "76"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Otsuka",
+        "given" : "Hiromi"
+      }
+    ],
+    "citation-key" : "otsuka-2014-cluster-algorithm-spin-ice",
+    "container-title" : "Physical Review B",
+    "id" : "otsuka-2014-cluster-algorithm-spin-ice",
+    "issued" : {
+      "date-parts" : [
+        [
+          2014
+        ]
+      ]
+    },
+    "page" : "220406(R)",
+    "title" : "Cluster algorithm for Monte Carlo simulations of spin ice",
+    "type" : "article-journal",
+    "volume" : "90"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Pauling",
+        "given" : "Linus"
+      }
+    ],
+    "citation-key" : "pauling-1935-ice-structure-entropy",
+    "container-title" : "Journal of the American Chemical Society",
+    "DOI" : "10.1021\/ja01315a102",
+    "id" : "pauling-1935-ice-structure-entropy",
+    "issue" : "12",
+    "issued" : {
+      "date-parts" : [
+        [
+          1935
+        ]
+      ]
+    },
+    "page" : "2680–2684",
+    "title" : "The structure and entropy of ice and of other crystals with some randomness of atomic arrangement",
+    "type" : "article-journal",
+    "volume" : "57"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Pemantle",
+        "given" : "Robin"
+      }
+    ],
+    "citation-key" : "pemantle-2000-theory-of-negative-dependence",
+    "container-title" : "Journal of Mathematical Physics",
+    "DOI" : "10.1063\/1.533200",
+    "id" : "pemantle-2000-theory-of-negative-dependence",
+    "issue" : "3",
+    "issued" : {
+      "date-parts" : [
+        [
+          2000
+        ]
+      ]
+    },
+    "page" : "1371–1390",
+    "title" : "Towards a theory of negative dependence",
+    "type" : "article-journal",
+    "volume" : "41"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Peng",
+        "given" : "Y."
+      },
+      {
+        "family" : "Yan",
+        "given" : "Z."
+      },
+      {
+        "family" : "Yin",
+        "given" : "S."
+      }
+    ],
+    "citation-key" : "peng-et-al-2026-short-time-critical-dynamics-cubic-dimer",
+    "container-title" : "Communications in Theoretical Physics",
+    "DOI" : "10.1088\/1572-9494\/ae5941",
+    "id" : "peng-et-al-2026-short-time-critical-dynamics-cubic-dimer",
+    "issue" : "7",
+    "issued" : {
+      "date-parts" : [
+        [
+          2026
+        ]
+      ]
+    },
+    "title" : "Short-time critical dynamics in the classical cubic dimer model",
+    "type" : "article-journal",
+    "volume" : "78"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Randall",
+        "given" : "Dana"
+      },
+      {
+        "family" : "Tetali",
+        "given" : "Prasad"
+      }
+    ],
+    "citation-key" : "randall-tetali-2000-glauber-dynamics-markov-chain-comparison",
+    "container-title" : "Journal of Mathematical Physics",
+    "DOI" : "10.1063\/1.533199",
+    "id" : "randall-tetali-2000-glauber-dynamics-markov-chain-comparison",
+    "issue" : "3",
+    "issued" : {
+      "date-parts" : [
+        [
+          2000
+        ]
+      ]
+    },
+    "page" : "1598–1615",
+    "title" : "Analyzing Glauber dynamics by comparison of Markov chains",
+    "type" : "article-journal",
+    "volume" : "41"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Rokhsar",
+        "given" : "Daniel S."
+      },
+      {
+        "family" : "Kivelson",
+        "given" : "Steven A."
+      }
+    ],
+    "citation-key" : "rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas",
+    "container-title" : "Physical Review Letters",
+    "id" : "rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas",
+    "issued" : {
+      "date-parts" : [
+        [
+          1988
+        ]
+      ]
+    },
+    "page" : "2376–2379",
+    "title" : "Superconductivity and the quantum hard-core dimer gas",
+    "type" : "article-journal",
+    "volume" : "61"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Saccone",
+        "given" : "Michael"
+      },
+      {
+        "family" : "Caravelli",
+        "given" : "Francesco"
+      },
+      {
+        "family" : "Hofhuis",
+        "given" : "Kevin"
+      },
+      {
+        "family" : "Dhuey",
+        "given" : "Scott"
+      },
+      {
+        "family" : "Scholl",
+        "given" : "Andreas"
+      },
+      {
+        "family" : "Nisoli",
+        "given" : "Cristiano"
+      },
+      {
+        "family" : "Farhan",
+        "given" : "Alan"
+      }
+    ],
+    "citation-key" : "saccone-et-al-2023-real-space-ergodicity-spin-ice",
+    "container-title" : "Nature Communications",
+    "DOI" : "10.1038\/s41467-023-41235-4",
+    "id" : "saccone-et-al-2023-real-space-ergodicity-spin-ice",
+    "issued" : {
+      "date-parts" : [
+        [
+          2023
+        ]
+      ]
+    },
+    "page" : "5674",
+    "title" : "Real-space observation of ergodicity transitions in artificial spin ice",
+    "type" : "article-journal",
+    "volume" : "14"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Sala",
+        "given" : "Pablo"
+      },
+      {
+        "family" : "Rakovszky",
+        "given" : "Tibor"
+      },
+      {
+        "family" : "Verresen",
+        "given" : "Ruben"
+      },
+      {
+        "family" : "Knap",
+        "given" : "Michael"
+      },
+      {
+        "family" : "Pollmann",
+        "given" : "Frank"
+      }
+    ],
+    "citation-key" : "sala-et-al-2020-hilbert-space-fragmentation-dipole-conserving",
+    "container-title" : "Physical Review X",
+    "DOI" : "10.1103\/PhysRevX.10.011047",
+    "id" : "sala-et-al-2020-hilbert-space-fragmentation-dipole-conserving",
+    "issued" : {
+      "date-parts" : [
+        [
+          2020
+        ]
+      ]
+    },
+    "page" : "011047",
+    "title" : "Ergodicity breaking arising from Hilbert space fragmentation in dipole-conserving Hamiltonians",
+    "type" : "article-journal",
+    "volume" : "10"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Saldanha",
+        "given" : "Nicolau C."
+      },
+      {
+        "family" : "Tomei",
+        "given" : "Carlos"
+      },
+      {
+        "family" : "Casarin",
+        "given" : "Mario A."
+      },
+      {
+        "family" : "Romualdo",
+        "given" : "Domingos"
+      }
+    ],
+    "citation-key" : "saldanha-et-al-1995-domino-tiling-spaces",
+    "container-title" : "Discrete & Computational Geometry",
+    "id" : "saldanha-et-al-1995-domino-tiling-spaces",
+    "issue" : "2",
+    "issued" : {
+      "date-parts" : [
+        [
+          1995
+        ]
+      ]
+    },
+    "page" : "207–233",
+    "title" : "Spaces of domino tilings",
+    "type" : "article-journal",
+    "volume" : "14"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Schaefer",
+        "given" : "Stefan"
+      },
+      {
+        "family" : "Sommer",
+        "given" : "Rainer"
+      },
+      {
+        "family" : "Virotta",
+        "given" : "Francesco"
+      }
+    ],
+    "citation-key" : "schaefer-et-al-2011-critical-slowing-down-lattice-qcd",
+    "container-title" : "Nuclear Physics B",
+    "DOI" : "10.1016\/j.nuclphysb.2010.11.020",
+    "id" : "schaefer-et-al-2011-critical-slowing-down-lattice-qcd",
+    "issue" : "1",
+    "issued" : {
+      "date-parts" : [
+        [
+          2011
+        ]
+      ]
+    },
+    "page" : "93–119",
+    "title" : "Critical slowing down and error analysis in lattice QCD simulations",
+    "type" : "article-journal",
+    "volume" : "845"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Shannon",
+        "given" : "Nic"
+      },
+      {
+        "family" : "Sikora",
+        "given" : "Olga"
+      },
+      {
+        "family" : "Pollmann",
+        "given" : "Frank"
+      },
+      {
+        "family" : "Penc",
+        "given" : "Karlo"
+      },
+      {
+        "family" : "Fulde",
+        "given" : "Peter"
+      }
+    ],
+    "citation-key" : "shannon-et-al-2012-quantum-ice-monte-carlo",
+    "container-title" : "Physical Review Letters",
+    "id" : "shannon-et-al-2012-quantum-ice-monte-carlo",
+    "issued" : {
+      "date-parts" : [
+        [
+          2012
+        ]
+      ]
+    },
+    "page" : "067204",
+    "title" : "Quantum ice: a quantum Monte Carlo study",
+    "type" : "article-journal",
+    "volume" : "108"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Sheffield",
+        "given" : "Scott"
+      }
+    ],
+    "citation-key" : "sheffield-2005-random-surfaces",
+    "container-title" : "Astérisque",
+    "DOI" : "10.24033\/ast.697",
+    "id" : "sheffield-2005-random-surfaces",
+    "issued" : {
+      "date-parts" : [
+        [
+          2005
+        ]
+      ]
+    },
+    "title" : "Random Surfaces",
+    "type" : "article-journal",
+    "volume" : "304"
+  },
+  {
+    "annote" : "ISSP Supercomputer Centre activity report 2010",
+    "author" : [
+      {
+        "family" : "Shinaoka",
+        "given" : "Hiroshi"
+      }
+    ],
+    "citation-key" : "shinaoka-2011-pyrochlore-heisenberg-spin-ice-loop-algorithm",
+    "id" : "shinaoka-2011-pyrochlore-heisenberg-spin-ice-loop-algorithm",
+    "issued" : {
+      "date-parts" : [
+        [
+          2011
+        ]
+      ]
+    },
+    "title" : "Extended loop algorithm for pyrochlore Heisenberg spin models with spin-ice type degeneracy",
+    "type" : "misc"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Sokal",
+        "given" : "Alan"
+      }
+    ],
+    "citation-key" : "sokal-1997-monte-carlo-statistical-mechanics",
+    "collection-title" : "NATO ASI Series",
+    "container-title" : "Functional Integration: Basics and Applications",
+    "DOI" : "10.1007\/978-1-4899-0319-8_6",
+    "id" : "sokal-1997-monte-carlo-statistical-mechanics",
+    "issued" : {
+      "date-parts" : [
+        [
+          1997
+        ]
+      ]
+    },
+    "page" : "131–192",
+    "publisher" : "Springer US",
+    "publisher-place" : "Boston, MA",
+    "title" : "Monte Carlo methods in statistical mechanics: foundations and new algorithms",
+    "type" : "chapter"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Stanley",
+        "given" : "Richard P."
+      }
+    ],
+    "citation-key" : "stanley-1989-log-concave-unimodal-sequences",
+    "container-title" : "Annals of the New York Academy of Sciences",
+    "DOI" : "10.1111\/j.1749-6632.1989.tb16434.x",
+    "id" : "stanley-1989-log-concave-unimodal-sequences",
+    "issue" : "1",
+    "issued" : {
+      "date-parts" : [
+        [
+          1989
+        ]
+      ]
+    },
+    "page" : "500–535",
+    "title" : "Log-concave and unimodal sequences in algebra, combinatorics, and geometry",
+    "type" : "article-journal",
+    "volume" : "576"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Tan",
+        "given" : "Yong Kiam"
+      },
+      {
+        "family" : "Heule",
+        "given" : "Marijn J. H."
+      },
+      {
+        "family" : "Myreen",
+        "given" : "Magnus O."
+      }
+    ],
+    "citation-key" : "tan-et-al-2021-verified-propagation-redundancy-checking",
+    "collection-title" : "Lecture Notes in Computer Science",
+    "container-title" : "Tools and Algorithms for the Construction and Analysis of Systems (TACAS 2021)",
+    "DOI" : "10.1007\/978-3-030-72013-1_12",
+    "id" : "tan-et-al-2021-verified-propagation-redundancy-checking",
+    "issued" : {
+      "date-parts" : [
+        [
+          2021
+        ]
+      ]
+    },
+    "page" : "223–241",
+    "publisher" : "Springer",
+    "title" : "cake_lpr: Verified Propagation Redundancy Checking in CakeML",
+    "type" : "paper-conference",
+    "volume" : "12652"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Wegner",
+        "given" : "Franz J."
+      }
+    ],
+    "citation-key" : "wegner-1971-duality-generalized-ising-models",
+    "container-title" : "Journal of Mathematical Physics",
+    "id" : "wegner-1971-duality-generalized-ising-models",
+    "issue" : "10",
+    "issued" : {
+      "date-parts" : [
+        [
+          1971
+        ]
+      ]
+    },
+    "page" : "2259–2272",
+    "title" : "Duality in Generalized Ising Models and Phase Transitions without Local Order Parameters",
+    "type" : "article-journal",
+    "volume" : "12"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Wetzler",
+        "given" : "Nathan"
+      },
+      {
+        "family" : "Heule",
+        "given" : "Marijn J. H."
+      },
+      {
+        "family" : "Hunt",
+        "given" : "Warren A."
+      }
+    ],
+    "citation-key" : "wetzler-et-al-2014-drat-trim",
+    "collection-title" : "Lecture Notes in Computer Science",
+    "container-title" : "Theory and Applications of Satisfiability Testing — SAT 2014",
+    "DOI" : "10.1007\/978-3-319-09284-3_31",
+    "id" : "wetzler-et-al-2014-drat-trim",
+    "issued" : {
+      "date-parts" : [
+        [
+          2014
+        ]
+      ]
+    },
+    "page" : "422–429",
+    "publisher" : "Springer",
+    "title" : "DRAT-trim: efficient checking and trimming using expressive clausal proofs",
+    "type" : "paper-conference",
+    "volume" : "8561"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Woltjer",
+        "given" : "L."
+      }
+    ],
+    "citation-key" : "woltjer-1958-force-free-magnetic-fields-theorem",
+    "container-title" : "Proceedings of the National Academy of Sciences",
+    "DOI" : "10.1073\/pnas.44.6.489",
+    "id" : "woltjer-1958-force-free-magnetic-fields-theorem",
+    "issue" : "6",
+    "issued" : {
+      "date-parts" : [
+        [
+          1958
+        ]
+      ]
+    },
+    "page" : "489–491",
+    "title" : "A theorem on force-free magnetic fields",
+    "type" : "article-journal",
+    "volume" : "44"
+  },
+  {
+    "author" : [
+      {
+        "family" : "Youngblood",
+        "given" : "R. W."
+      },
+      {
+        "family" : "Axe",
+        "given" : "J. D."
+      }
+    ],
+    "citation-key" : "youngblood-axe-1981-polarization-fluctuations-ferroelectric-models",
+    "container-title" : "Physical Review B",
+    "id" : "youngblood-axe-1981-polarization-fluctuations-ferroelectric-models",
+    "issued" : {
+      "date-parts" : [
+        [
+          1981
+        ]
+      ]
+    },
+    "page" : "232–238",
+    "title" : "Polarization fluctuations in ferroelectric models",
+    "type" : "article-journal",
+    "volume" : "23"
+  }
+]

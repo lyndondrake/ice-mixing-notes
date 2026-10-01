@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DRAT certificates for Theorem U′, (R⁺) and (S≥1) on the (L,L,L) torus at L = 4, 5 and 6, with controls, an independent encoding and a corpus check; Th</title>
+<meta name="description" content="DRAT certificates for Theorem U′, (R⁺) and (S≥1) on the (L,L,L) torus at L = 4, 5 and 6, with controls, an independent encoding and a corpus check; Theorem H at L = 4, 5, 6 modulo the 2026-09-27 reduction and K_u">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "DRAT certificates for Theorem U′, (R⁺) and (S≥1) on the (L,L,L) torus at L = 4, 5 and 6, with controls, an independent encoding and a corpus check; Theorem H at L = 4, 5, 6 modulo the 2026-09-27 reduction and K_u",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-27-opus-cert.html",
+ "datePublished": "2026-09-27",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus), agent cert, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-27-opus-cert.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/u-prime-certificates-2026-09-27.html">u-prime-certificates-2026-09-27</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">DRAT certificates for Theorem U′, (R⁺) and (S≥1) on the (L,L,L) torus at L = 4, 5 and 6, with controls, an independent encoding and a corpus check; Theorem H at L = 4, 5, 6 modulo the 2026-09-27 reduction and K_u</h1>
+
+<p class="author">Claude (Opus), agent cert, for Lyndon Drake</p>
+<p class="date">2026-09-27</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#verdict-table" id="toc-verdict-table">1. Verdict table</a></li>
+<li><a href="#what-each-certificate-proves" id="toc-what-each-certificate-proves">2. What each certificate proves</a></li>
+<li><a href="#symmetries-relied-on" id="toc-symmetries-relied-on">3. Symmetries relied on</a></li>
+<li><a href="#independent-encoding-check-corpus" id="toc-independent-encoding-check-corpus">4. Independent encoding check (corpus)</a></li>
+<li><a href="#is-t2-part-of-the-model-and-are-the-solutions-exactly-the-frozen-states" id="toc-is-t2-part-of-the-model-and-are-the-solutions-exactly-the-frozen-states">5. Is (T2) part of the model, and are the solutions exactly the frozen states?</a></li>
+<li><a href="#what-can-now-be-written-about-theorem-h" id="toc-what-can-now-be-written-about-theorem-h">6. What can now be written about Theorem H</a></li>
+<li><a href="#what-was-not-reached" id="toc-what-was-not-reached">7. What was not reached</a></li>
+</ul>
+</details></nav>
+<p>Status tags as in the note. <strong>certified</strong> means: the CNF is written to a file, cadical 3.0.1 refutes it with a DRAT proof, drat-trim prints <code>s VERIFIED</code>, and the control CNF is SAT with its witness decoded and re-checked by arithmetic. All computation ran on the primary Mac in the project <code>.venv</code>, one solver or checker process at a time, each a child process with a hard <code>subprocess.run</code> timeout. No Spark was used, nothing was committed, and no tracked file was edited. New scripts are <code>scratch_h/h280_certlib.py</code>, <code>h281_cagecheck.py</code>, <code>h282_certify.py</code>, <code>h283_symcheck.py</code>, <code>h284_corpus.py</code> and <code>h285_summary.py</code>. Certificates are in <code>scratch_h/certs/h282_*</code>, with results in <code>certs/h28x_results.jsonl</code> and SHA-256 sums in <code>certs/h28x_sha256_2026-09-27.txt</code>.</p>
+<p><em>Notes by the main loop (2026-09-27).</em> (i) The independent check of the reduction has since landed (<code>2026-09-27-opus-check.md</code>: confirmed, no gap), so the first caveat of §6 is met. (ii) Lemma A in §6 (iii) is not needed for H: a state with a type absent has an empty axis. (iii) Main-loop verification of these certificates: drat-trim re-run on two kept proofs (U′ at L = 4, (R⁺) at L = 6, separation 11), <code>s VERIFIED</code>; one proof that was not kept (U′ at L = 5) regenerated with cadical, its SHA-256 equal to the recorded one, <code>s VERIFIED</code> in 4.1 s, its control SAT. (iv) The <code>h282_*</code> files are not committed (738 MB); the hashes and the verdict file are.</p>
+<h2 id="verdict-table">1. Verdict table</h2>
+<p>Each row covers every query of that statement at that L. Times are wall-clock per query (maximum over the row). Proof sizes are in bytes.</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>statement</th>
+<th>L</th>
+<th>queries</th>
+<th>verdict</th>
+<th>solve (max)</th>
+<th>proof size</th>
+<th>drat-trim</th>
+<th>control</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Theorem U′</td>
+<td>4</td>
+<td>16</td>
+<td>16 × UNSAT</td>
+<td>2.4 s</td>
+<td>36.1–44.9 MB</td>
+<td>16 × <code>s VERIFIED</code> (≤ 1.8 s)</td>
+<td>16 × SAT, witness ok</td>
+</tr>
+<tr>
+<td>Theorem U′</td>
+<td>5</td>
+<td>16</td>
+<td>16 × UNSAT</td>
+<td>9.5 s</td>
+<td>114–147 MB (not kept)</td>
+<td>16 × <code>s VERIFIED</code> (≤ 5.5 s)</td>
+<td>16 × SAT, witness ok</td>
+</tr>
+<tr>
+<td>Theorem U′</td>
+<td>6</td>
+<td>4</td>
+<td>4 × UNSAT</td>
+<td>22.2 s</td>
+<td>315–385 MB (not kept)</td>
+<td>4 × <code>s VERIFIED</code> (≤ 12.2 s)</td>
+<td>4 × SAT, witness ok</td>
+</tr>
+<tr>
+<td>(R⁺)</td>
+<td>4</td>
+<td>16</td>
+<td>16 × UNSAT</td>
+<td>0.15 s</td>
+<td>22 B – 0.24 MB</td>
+<td>16 × <code>s VERIFIED</code></td>
+<td>16 × SAT, witness ok</td>
+</tr>
+<tr>
+<td>(R⁺)</td>
+<td>5</td>
+<td>20</td>
+<td>20 × UNSAT</td>
+<td>0.9 s</td>
+<td>22 B – 1.9 MB</td>
+<td>20 × <code>s VERIFIED</code></td>
+<td>20 × SAT, witness ok</td>
+</tr>
+<tr>
+<td>(R⁺)</td>
+<td>6</td>
+<td>24</td>
+<td>24 × UNSAT</td>
+<td>6.6 s</td>
+<td>22 B – 12.2 MB</td>
+<td>24 × <code>s VERIFIED</code></td>
+<td>24 × SAT, witness ok</td>
+</tr>
+<tr>
+<td>(S≥1)</td>
+<td>4</td>
+<td>4 (gaps 1–2, A and B)</td>
+<td>4 × UNSAT</td>
+<td>0.1 s</td>
+<td>26–141 kB</td>
+<td>4 × <code>s VERIFIED</code></td>
+<td>4 × SAT, witness ok</td>
+</tr>
+<tr>
+<td>(S≥1)</td>
+<td>5</td>
+<td>6 (gaps 1–3, A and B)</td>
+<td>6 × UNSAT</td>
+<td>0.6 s</td>
+<td>89 kB – 1.1 MB</td>
+<td>6 × <code>s VERIFIED</code></td>
+<td>6 × SAT, witness ok</td>
+</tr>
+<tr>
+<td>(S≥1)</td>
+<td>6</td>
+<td>8 (gaps 1–4, A and B)</td>
+<td>8 × UNSAT</td>
+<td>3.8 s</td>
+<td>0.67–6.7 MB</td>
+<td>8 × <code>s VERIFIED</code></td>
+<td>8 × SAT, witness ok</td>
+</tr>
+</tbody>
+</table>
+<p>All 114 certificates are listed individually in <code>certs/h28x_results.jsonl</code>. The finite side facts were also checked:</p>
+<ul>
+<li>The cage table (§2.1) is correct on all six cages (A and B, axes x, y, z), at both L = 3 and L = 4.</li>
+<li>Every symmetry used (§3) preserves the base CNF, checked as a clause-set identity at L = 4, 5 and 6.</li>
+<li>The corpus check (§4) found 0 failures on the odd corpus at L = 3 (637 states) and L = 4 (720 states).</li>
+</ul>
+<p><strong>Timing estimates made before each batch</strong> (brief’s rule):</p>
+<ul>
+<li>U′: one query at L = 4 took about 5 s including drat-trim, so 16 queries ≈ 1.5 min (actual 80 s). One query at L = 5 took 12 s, so 15 more ≈ 3.3 min (actual about 3.5 min). One query at L = 6 took 32 s, which is under the two-minute threshold for L = 6, so 3 more ≈ 1.7 min (actual 1.8 min).</li>
+<li>(R⁺) and (S≥1): under 10 s per query at every L, so each batch was under 2 min.</li>
+</ul>
+<p>Every batch ran in the foreground, and nothing went to the queue.</p>
+<p><strong>Proofs not kept.</strong> 20 proofs are larger than 50 MB: U′ at L = 5 (16 proofs) and at L = 6 (4 proofs). Each was deleted after drat-trim verified it. Its SHA-256 and size are recorded, and its CNF is kept.</p>
+<p><code>certs/h282_*</code> is large: 437 MB of CNFs and 301 MB of kept proofs. Of the proofs, 152 MB are the four U′ proofs at L = 4 and most of the rest are (R⁺) at L = 6. Everything is regenerable with <code>h282_certify.py</code>. Before committing, decide whether to commit the files, gzip them, or keep only the hash file and results.</p>
+<h2 id="what-each-certificate-proves">2. What each certificate proves</h2>
+<p><strong>Models.</strong> The encoding is <code>h280_certlib.Model</code>. It was written from the definitions in rods §1, not from <code>a4_typemodel</code> or <code>h213</code>, and has no auxiliary variables.</p>
+<ul>
+<li><strong>Type-only model 𝒯.</strong> One-hot types. (T2) on every hexagon: at most two of the six match literals are true (every triple is forbidden), and at least two are true (every five-subset contains a true literal). The match literal of v in h is t(v, a), where a is the one coordinate in which the displacements from v to its two hexagon neighbours agree. It is computed from positions.</li>
+<li><strong>Sign model 𝒮.</strong> 𝒯 plus one sign variable per vertex, with the bond rule d_{τ(a)} ε(a) = d_{τ(b)} ε(b) on every bond (d = b − a). The rule is written as 18 clauses per bond, one pair for each (τ(a), τ(b)).</li>
+<li><strong>“Some hexagon odd”.</strong> Each hexagon has a selector s(h). s(h) forbids a match on A together with a match on B, so with (T2) it forces both matches onto one sublattice, which means odd curl (A-count form, rods §1). The clause ⋁_h s(h) is the negated conclusion of U′.</li>
+</ul>
+<p><strong>Theorem U′ (certified at L = 4, 5, 6).</strong> Setting: the (L,L,L) torus. Let:</p>
+<ul>
+<li>O be a hole of either sublattice;</li>
+<li>k be an axis, and {a, b} the other two axes, in either order;</li>
+<li>v = O − 2e_k and v′ = O + 2e_k both have type k;</li>
+<li>one bridgehead O + s with s_k = −1 has type a, and one bridgehead with s_k = +1 has type b.</li>
+</ul>
+<p>Then no type field of 𝒯 has an odd hexagon. The same therefore holds for every frozen state (§5).</p>
+<ul>
+<li><strong>At L = 4 and 5:</strong> all 16 hypotheses at the base hole with k = x were refuted directly. That is 2 sublattices × 2 orders (lower y and upper z, or lower z and upper y) × 2 choices of lower bridgehead × 2 choices of upper bridgehead.</li>
+<li><strong>At L = 6:</strong> 4 were refuted directly (sublattice × order, lower₀/upper₀). The other 12 follow from the orbit result of §3: all 16 hypotheses form one orbit.</li>
+</ul>
+<p><strong>Cage table (finite, re-derived in <code>h281_cagecheck.py</code>).</strong> This is the check behind Lemma O at straight holes.</p>
+<ul>
+<li>Every cage with both rods of type k has 144 (T2) patterns on its 4 hexagons.</li>
+<li>In every pattern, the bond rule on the 12 cage bonds is consistent.</li>
+<li>The hole is unoriented (ε(v) ≠ ε(v′), so both rods point in or both point out) exactly when the bridgeheads are aa/bb or bb/aa, where {a, b} are the transverse axes. That is 32 patterns per cage (96 over three axes, matching Lemma sP).</li>
+<li>This was checked directly on all six cages (A and B, k = x, y, z), at L = 3 and L = 4. It agrees with <code>h97</code> and is independent of it: orientation is read here from the solved sign field, not from h97’s bit calculus.</li>
+</ul>
+<p><strong>Lemma O at straight holes.</strong> An unoriented straight hole carries the full pattern aa/bb or bb/aa. That pattern contains the four literals of U′ for any choice of bridgeheads, so the state has no odd hexagon. Only the trivial direction “full pattern ⇒ four literals” is used; the converse, Lemma U0, is not needed.</p>
+<p><strong>(R⁺) (certified at L = 4, 5, 6).</strong> In 𝒮: take u ∈ A and w ∈ B with w − u = (s, e₁, e₂) along (k, k+1, k+2), where e₁, e₂ = ±1 and s is odd. There are L residues of s mod 4L per (e₁, e₂), fixed by s + e₁ + e₂ ≡ 3 (mod 4). These are every k-separation that occurs on the torus. Then τ(u) = τ(w) = k together with ε(u) ≠ ε(w) is UNSAT.</p>
+<ul>
+<li>All 4L offsets were certified directly for k = x: 16, 20 and 24 queries.</li>
+<li>Every pair at transverse offset (±1, ±1) is an A–B pair, so taking u ∈ A loses nothing.</li>
+<li>Separation ±1 is the same-type bond (the proof is 22 bytes) and ±3 is Lemma R. At L = 6 the new separations are ±5, ±7, ±9 and ±11.</li>
+</ul>
+<p><strong>(S≥1) (certified at L = 4, 5, 6).</strong> In 𝒮, no oddness: take v of either sublattice and w = v + 4(g+1)e_k with 1 ≤ g ≤ L − 2. These are all the gaps that occur: g = L − 1 would give w = v. Then τ(v) = τ(w) = k, together with τ(v + 4r e_k) ≠ k for 1 ≤ r ≤ g, and ε(v) ≠ ε(w), is UNSAT.</p>
+<ul>
+<li>Only the arc of g vertices is constrained. The other arc, of L − 2 − g vertices, is free.</li>
+<li>Both sublattices and all gaps were certified directly for k = x.</li>
+</ul>
+<p><strong>Controls.</strong> Each control is the query without its negated conclusion (U′), or with the conclusion asserted, ε(u) = ε(w) (R⁺ and S≥1). All 114 are SAT. Each witness was decoded and re-checked by arithmetic, not by the CNF: one-hot, (T2) counted per hexagon, the bond rule from positions, and the hypothesis literals. The U′ control witnesses have 0 odd hexagons, as they must. Earlier runs agree with these verdicts: h119 (U′, L = 3, 4, 5), extremal §9 (R⁺, L = 3, 4, 5) and rphand row 14 (S≥1, L = 4, 5). L = 6 is new for all three.</p>
+<h2 id="symmetries-relied-on">3. Symmetries relied on</h2>
+<p>A literal permutation σ with σ(F) = F gives: F ∧ H is UNSAT ⟺ F ∧ σ(H) is UNSAT. <code>h283_symcheck.py</code> checks σ(F) = F as a clause-set identity on the full base CNF at L = 4, 5 and 6. The generators are:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>generator</th>
+<th>type + sign</th>
+<th>type-only + odd</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>translations (2,2,0), (2,0,2), (0,2,2)</td>
+<td>ok</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>cyclic permutation C: e_x → e_y → e_z</td>
+<td>ok</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>transposition y ↔︎ z</td>
+<td>ok</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>inversion p ↦ (1,1,1) − p (A ↔︎ B; negates ε in 𝒮)</td>
+<td>ok</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>global sign flip ε ↦ −ε</td>
+<td>ok</td>
+<td>–</td>
+</tr>
+<tr>
+<td>rotation (x, y, z) ↦ (−x, −y, z)</td>
+<td>not a literal map on ε (control: fails, as it should)</td>
+<td>ok</td>
+</tr>
+</tbody>
+</table>
+<p>A deliberate non-symmetry was used as a control and is rejected at every L.</p>
+<p><strong>What the certificates cover, and which arguments they rest on:</strong></p>
+<ul>
+<li><strong>Every position:</strong> the FCC translations, which act transitively on A and on B.</li>
+<li><strong>Every axis:</strong> C.</li>
+<li><strong>The opposite sign polarity</strong> in (R⁺) and (S≥1): the global flip.</li>
+</ul>
+<p>Nothing else is needed at L = 4 and 5, because both sublattices, both orders and every bridgehead choice (U′), every offset (R⁺), and every gap on both sublattices (S≥1) were certified directly.</p>
+<p>At L = 6, U′ also uses the orbit computation. All 32 cage-preserving lattice maps were each checked to be automorphisms of the type-only CNF, and they join the 16 U′ hypotheses into one orbit at every L tested (4, 5, 6). So a single certificate would suffice at each L. The 4 direct certificates at L = 6, one per sublattice and order, are redundant on that argument.</p>
+<h2 id="independent-encoding-check-corpus">4. Independent encoding check (corpus)</h2>
+<p><code>h284_corpus.py</code> ran on the whole odd corpus (<code>h38_lib.load_odd_corpus</code>). For every state:</p>
+<ol type="1">
+<li>Signs were obtained from the types by BFS on the bond rule. They were always consistent.</li>
+<li>Both full base CNFs were evaluated clause by clause, with s(h) = [h odd]. Nothing was falsified, and the clause “some hexagon odd” held.</li>
+<li>Every occurrence of each hypothesis, at every position and on every axis, was counted, and the conclusion was checked on it.</li>
+<li>For the first occurrence per (state, query, axis), the state was carried by a translation composed with a power of C, plus the flip if needed, so that the occurrence sits at the certificate’s base vertex. The certificate’s own clause sets were then evaluated on the image: the hypothesis-only CNF and the control CNF must be satisfied, and the query CNF must be falsified.</li>
+</ol>
+<p>U′’s full pattern cannot occur in an odd state. So for U′ the sub-patterns “rods + one lower a” and “rods + one upper b” (plus “some hexagon odd”) were placed at the base cage and evaluated instead. This checks the rod and bridgehead geometry of the encoding.</p>
+<p>An evaluator control (one type changed, or one sign changed) is caught (10, 8 and 4 clauses falsified).</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>check</th>
+<th>L = 3 (637 states)</th>
+<th>L = 4 (720 states)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>base CNFs satisfied; some hexagon odd</td>
+<td>637 / 637</td>
+<td>720 / 720</td>
+</tr>
+<tr>
+<td>(R⁺) occurrences / conclusion fails</td>
+<td>388 728 / 0</td>
+<td>1 533 656 / 0</td>
+</tr>
+<tr>
+<td>(R⁺) placed and evaluated / hyp-only, control, query wrong</td>
+<td>15 831 / 0, 0, 0</td>
+<td>23 535 / 0, 0, 0</td>
+</tr>
+<tr>
+<td>(S≥1) occurrences / conclusion fails</td>
+<td>25 758 / 0</td>
+<td>99 524 / 0</td>
+</tr>
+<tr>
+<td>(S≥1) placed and evaluated / wrong</td>
+<td>2 232 / 0</td>
+<td>4 768 / 0</td>
+</tr>
+<tr>
+<td>straight cages; U′ pattern occurrences</td>
+<td>60 258; 0</td>
+<td>190 470; 0</td>
+</tr>
+<tr>
+<td>U′ sub-patterns placed and evaluated / CNF falsified</td>
+<td>5 878 / 0</td>
+<td>7 360 / 0</td>
+</tr>
+</tbody>
+</table>
+<p>So no UNSAT verdict can come from an over-constrained base or hypothesis encoding: real frozen states satisfy every hypothesis-only CNF, and every control CNF, wherever the pattern occurs.</p>
+<h2 id="is-t2-part-of-the-model-and-are-the-solutions-exactly-the-frozen-states">5. Is (T2) part of the model, and are the solutions exactly the frozen states?</h2>
+<p><strong>(T2) is legitimately part of the model.</strong> It is a theorem of frozen states on the torus (Lemma L; the note’s source–sink form, line 588). A match is a vertex where the hexagon’s two bonds are both in or both out, so the matches are the hexagon’s sources and sinks. A non-flippable hexagon has at least one source. Every vertex is the source of exactly two hexagons, so Σ_h #sources = 2|V| = |Hex|, and each hexagon has exactly one source and one sink, hence exactly two matches.</p>
+<p><strong>The solutions of 𝒮 are exactly the frozen ice states</strong> (rods §1):</p>
+<ul>
+<li>The six two-in-two-out arrangements at a vertex correspond one to one to the moments ε e_τ.</li>
+<li>The arrows of a bond agree from both ends ⟺ the bond rule holds.</li>
+<li>Given the ice rule, (T2) means every hexagon has two matches. A directed hexagon has none, so (T2) excludes every flippable hexagon: (T2) ⇒ frozen. Lemma L gives the converse.</li>
+</ul>
+<p><strong>𝒯 is a strict superset</strong> of the frozen type fields (there is no cocycle condition), so the U′ certificates prove more than Lemma O needs.</p>
+<p><strong>“Some hexagon odd”</strong> in the certificates is exactly “not curl-free”, by the A-count form κ_h ≡ 1 + #A-rev(h) (mod 2).</p>
+<h2 id="what-can-now-be-written-about-theorem-h">6. What can now be written about Theorem H</h2>
+<blockquote>
+<p><strong>Theorem H holds on the (L,L,L) torus for L = 4, 5 and 6:</strong> in every frozen state in which all six dipole directions occur, every hexagon has even curl. This rests on the following.</p>
+<ul>
+<li><strong>(i) The certificates of this report at that L:</strong>
+<ul>
+<li>Theorem U′: h282_U_L{L}_*. With the cage table (h281), it gives Lemma O at straight holes.</li>
+<li>(R⁺) at every k-separation: h282_R_L{L}_*.</li>
+<li>(S≥1) at every gap: h282_S_L{L}_*.</li>
+<li>The symmetry reduction: translations, the cyclic permutation and the sign flip, verified as CNF automorphisms at that L (h283).</li>
+</ul></li>
+<li><strong>(ii) K_u</strong>, as recorded in the note (Status of 2026-09-11, and “P1 and Theorem P proved for every cell”, 2026-09-17), with its window certificates (seven grids × five transverse steps, so every cell with 4a ≥ 7 and 2b, 2c ≥ 5) and the Lemma S automaton. The synthesis records K_u’s scope as (L,L,L) with L ≥ 4. I did not re-audit that scope.</li>
+<li><strong>(iii) The reduction H ⇐ K_u + Lemma O + (R⁺) + (S≥1)</strong> (rphand §§1–4, audited by the main loop in synthesis §1), with the hand-proved results it uses:
+<ul>
+<li>Lemma O at corner holes;</li>
+<li>law C and law Pᵏ;</li>
+<li>Lemma sP (cage check), Theorem sLC, the two-product lemma, the stripe theorem, Theorem W and Lemma E;</li>
+<li>Theorem D, Theorem LC, Lemma S1, Theorem M′, and Lemma A (two-type states).</li>
+</ul></li>
+<li><strong>(iv) Lemma L</strong> ((T2) in frozen states; proved by hand).</li>
+</ul>
+</blockquote>
+<p><strong>Caveats to state with it:</strong></p>
+<ul>
+<li>The reduction (iii) has been audited once and has no independent checker yet. The synthesis asks for one.</li>
+<li>The theorem is certified per L. Nothing here is uniform in L.</li>
+<li>At L = 3, K_u’s certificates are not claimed to apply, and no certificate was produced here at L = 3.</li>
+</ul>
+<h2 id="what-was-not-reached">7. What was not reached</h2>
+<ul>
+<li><strong>L ≥ 7</strong> was not attempted. At L = 6, U′ takes about 20 s and 350 MB of proof per query, so L = 7 looks feasible if wanted.</li>
+<li><strong>U′ at L = 6:</strong> 4 of the 16 hypotheses were certified directly; the other 12 rest on the verified single orbit (§3).</li>
+<li><strong>Proof files over 50 MB</strong> (U′ at L = 5 and 6) are not kept, and drat-trim was run on them once, here. The main loop has not re-run drat-trim on them, as it did for the 2026-09-11 certificates. Re-running needs regeneration (cadical 3.0.1; compare hashes).</li>
+<li><strong>Not revisited:</strong> Lemma U0 (not needed; §2) and K_u’s certificates.</li>
+<li><strong>Not attempted:</strong> the hand residue (V), the uniform-in-L forms of (R⁺) and (S≥1), and the independent checker of the reduction.</li>
+</ul>
+<p>Reproduce, from scratch_h with the brief’s environment line:</p>
+<ul>
+<li><code>h282_certify.py U|R|S L all</code></li>
+<li><code>h283_symcheck.py L</code></li>
+<li><code>h281_cagecheck.py L</code></li>
+<li><code>h284_corpus.py L</code></li>
+<li><code>h285_summary.py</code></li>
+</ul>
+<p>(U′ at L = 6 was run as <code>h282_certify.py U 6 0,yz,0,0 0,zy,0,0 1,yz,0,0 1,zy,0,0</code>.)</p>
+</main>
+</body>
+</html>

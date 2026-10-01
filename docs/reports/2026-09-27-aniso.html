@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>(V) on non-cubic cells: the reach along the rod axis is set by the gcd of the two transverse extents and not by the length of the rod axis, so (V) doe</title>
+<meta name="description" content="(V) on non-cubic cells: the reach along the rod axis is set by the gcd of the two transverse extents and not by the length of the rod axis, so (V) does not need the x-circle; on cells with coprime transverse extents (V) is a counting statement. A critique of the six ideas for The">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "(V) on non-cubic cells: the reach along the rod axis is set by the gcd of the two transverse extents and not by the length of the rod axis, so (V) does not need the x-circle; on cells with coprime transverse extents (V) is a counting statement. A critique of the six ideas for Theorem U in the light of this, and a proposal for the next round",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-27-aniso.html",
+ "datePublished": "2026-09-27",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Fable 5.1), main loop, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-27-aniso.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/v-reach-law.html">v-reach-law</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">(V) on non-cubic cells: the reach along the rod axis is set by the gcd of the two transverse extents and not by the length of the rod axis, so (V) does not need the x-circle; on cells with coprime transverse extents (V) is a counting statement. A critique of the six ideas for Theorem U in the light of this, and a proposal for the next round</h1>
+
+<p class="author">Claude (Fable 5.1), main loop, for Lyndon Drake</p>
+<p class="date">2026-09-27</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#corrections-after-the-independent-check-added-the-same-day" id="toc-corrections-after-the-independent-check-added-the-same-day">0. Corrections after the independent check (added the same day)</a></li>
+<li><a href="#why-this-was-run" id="toc-why-this-was-run">1. Why this was run</a></li>
+<li><a href="#results" id="toc-results">2. Results</a></li>
+<li><a href="#what-this-changes" id="toc-what-this-changes">3. What this changes</a></li>
+<li><a href="#the-six-ideas-of-the-note" id="toc-the-six-ideas-of-the-note">4. The six ideas of the note</a></li>
+<li><a href="#proposal-for-the-round" id="toc-proposal-for-the-round">5. Proposal for the round</a></li>
+<li><a href="#computations-run" id="toc-computations-run">6. Computations run</a></li>
+</ul>
+</details></nav>
+<p>Status tags as in the note: <strong>proved</strong>, <strong>computed</strong>, <strong>solver</strong>, <strong>conjecture</strong>. Scripts <code>scratch_h/h330_aniso.py</code> and <code>h331_aniso_lp.py</code> (main loop, new). All compute on the primary Mac, one process at a time, every SAT solve through <code>h32_cap</code>; the longest single run was an LP of 117 s. Written before the next round of work on Theorem U, at Lyndon’s request for a critique of the ideas in the note <code>theorem-h-orientation</code>.</p>
+<h2 id="corrections-after-the-independent-check-added-the-same-day">0. Corrections after the independent check (added the same day)</h2>
+<p>Agent check3 (Opus; <code>2026-09-27-opus-check3.md</code>, scripts <code>h360</code>–<code>h367</code>, its own lattice and encoders, none of the scripts below) re-ran twenty of the verdicts of §2 and confirmed every one. It corrected the description in six places. The main loop re-ran a sample of each correction and agrees. The text below is left as written; read it with these.</p>
+<ol type="1">
+<li><strong>The windows are one-sided (§2.2, §3.1).</strong> The symmetric value <span class="math inline">\(2g - 2\)</span> is the middle corner of a frontier. The least windows <span class="math inline">\([-p, q]\)</span> that force (V) have corners <span class="math inline">\((3, 2g+1)\)</span>, <span class="math inline">\((2g-2, 2g-2)\)</span>, <span class="math inline">\((2g+1, 3)\)</span> for <span class="math inline">\(g = 4\)</span> to 7, and <span class="math inline">\((3,7)\)</span>, <span class="math inline">\((4,5)\)</span>, <span class="math inline">\((5,4)\)</span>, <span class="math inline">\((7,3)\)</span> at <span class="math inline">\(g = 3\)</span>, where <span class="math inline">\((4,4)\)</span> is satisfiable; that is the reason for the value 5 there, and parity has nothing to do with it. The least slab has <span class="math inline">\(2g + 5\)</span> grids for <span class="math inline">\(g \ge 4\)</span>, 10 at <span class="math inline">\(g = 3\)</span> and 7 for <span class="math inline">\(g \le 2\)</span>. ‘<span class="math inline">\(4g - 3\)</span> grids’ in §3.1 is wrong. ucore verdict 3 had these corners on the cubic cells of side 4 and 5, and this report should have cited them.</li>
+<li><strong>The note’s first closed route misleads on cubic cells too.</strong> The window <span class="math inline">\([-3, 2L+1]\)</span> forces (V) on the cubic cells of side 5, 6, 7, which is 15 of 20, 17 of 24 and 19 of 28 grids.</li>
+<li><strong>The band-height law of the record</strong> is <span class="math inline">\(\max(\gcd - 4, 8)\)</span> on nested cells, with a floor of 10 on others, in quarter-cube units with <span class="math inline">\(\gcd = 4g\)</span>. §1 quotes the superseded form. It agrees with (V) for <span class="math inline">\(g \ge 4\)</span> only.</li>
+<li><strong>The linear certificate at <span class="math inline">\(g = 1\)</span> is not local along the rod axis (§2.4, §3.3).</strong> On the cylinder the first slab with optimum 0 has <span class="math inline">\(R = 3, 7, 9, 13\)</span> for the tori (3,4), (4,5), (5,6), (7,8), and grows with the torus. On a short cell the <span class="math inline">\(x\)</span>-circle does the work: (2,4,5) has optimum exactly 0 on 8 grids. So ‘the statement is linear at <span class="math inline">\(g = 1\)</span>’ is true of whole cells and of long slabs, and ‘does not need the <span class="math inline">\(x\)</span>-circle’ is true for the solver and not for the linear programme. The optimum 0 is now verified in exact arithmetic on (6,3,4), (6,4,5) and (2,4,5), and the value on (6,2,2) is exactly <span class="math inline">\(12/5\)</span>. No coprime torus with a positive optimum on the whole cell was found among 22.</li>
+<li><strong>One sentence of §2.5 is false.</strong> Along <span class="math inline">\(y\)</span>, removing the hexagons through a single odd grid other than <span class="math inline">\(\pm 1\)</span> leaves W_r forced (on (4,8,5), 14 of the 16 odd positions). The test in §2.5 removed only the far, even grid.</li>
+<li><strong>The law of W_r is not a gcd law.</strong> Its reach along its normal is <span class="math inline">\(2b\)</span>, half the <span class="math inline">\(y\)</span>-circle, whatever <span class="math inline">\(a\)</span> and whatever the gcd, and <span class="math inline">\(2b - 2\)</span> with the sign field. So W_r has no easy members, on a cubic cell it needs the whole circle of its normal, and for it, unlike (V), the sign field shortens the window. §4’s reason for promoting the fifth idea (‘the same shape of reach’) does not stand, and package C of §5 is answered: there is no arithmetic condition under which W_r becomes short.</li>
+</ol>
+<p>Also: the ‘(V)’ of this report is the form on one grid (no type <span class="math inline">\(x\)</span> on the B-grid of the lower bridgeheads); in §4, idea 2, vsign §6 does give a conditional propagation along a line of holes; and in idea 3, the degree-two lift of 17 September was infeasible for the statement <span class="math inline">\(z_2\)</span> itself on (3,3,3), and feasible only for another form on the (4,4,4) band.</p>
+<h2 id="why-this-was-run">1. Why this was run</h2>
+<p>Every test of (V) since 22 September (orient, ucore, uhand, uwall, vsign) was made on a cubic cell. There the length of the rod axis and the size of the transverse torus are one number, so a threshold of <span class="math inline">\(2L - 2\)</span> layers out of <span class="math inline">\(2L\)</span> reads as ‘almost the whole circle’ whichever of the two it depends on. The project’s earlier work on the statement U_Z had separated them (antipodal report, 16 September; small-r report, 17 September) and found a band height of <span class="math inline">\(\gcd(P_y, P_z) - 4\)</span> grids, independent of the stack length. That result was not carried over when the problem was restated in terms of holes and rods. This report carries it over.</p>
+<p>Setting: cell <span class="math inline">\((a, b, c)\)</span>, rod axis <span class="math inline">\(x\)</span> of length <span class="math inline">\(a\)</span>, transverse torus <span class="math inline">\((b, c)\)</span>, <span class="math inline">\(g = \gcd(b, c)\)</span>. Type-only model. Pattern: the four literals of Theorem U′ at an A-hole. (V): no vertex of type <span class="math inline">\(x\)</span> on the B-grid of the lower bridgeheads.</p>
+<h2 id="results">2. Results</h2>
+<p><strong>2.1 Theorem U′ and (V) hold on every non-cubic cell tested (solver).</strong> Thirteen shapes, both orders of the two bridgehead types, 26 runs: (6,4,4), (8,4,4), (4,6,4), (4,4,6), (4,6,6), (6,6,4), (4,5,6), (5,4,6), (3,4,4), (2,4,4), (4,4,2), (4,3,4), (4,4,3). Every control (the pattern alone) is satisfiable. The baseline (4,4,4) reproduces the record (U′ in 2.4 s).</p>
+<p><strong>2.2 The reach along the rod axis depends on <span class="math inline">\(g\)</span> alone (solver).</strong> (T2) imposed only on the hexagons with <span class="math inline">\(|dx| \le R\)</span>, the transverse torus complete, the rest of the cell unconstrained. First <span class="math inline">\(R\)</span> at which (V) is forced, on cells with <span class="math inline">\(a = 12\)</span> (48 grids, so no window below wraps):</p>
+<table>
+<thead>
+<tr>
+<th><span class="math inline">\(g\)</span></th>
+<th>transverse tori tested</th>
+<th>first <span class="math inline">\(R\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>(2,3), (3,5), (3,4), (5,6)</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>(2,2), (2,4), (4,6), (6,10)</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>(3,3), (3,6), (6,9)</td>
+<td>5</td>
+</tr>
+<tr>
+<td>4</td>
+<td>(4,4), (4,8), (4,12), (8,12)</td>
+<td>6</td>
+</tr>
+<tr>
+<td>5</td>
+<td>(5,5), (5,10)</td>
+<td>8</td>
+</tr>
+<tr>
+<td>6</td>
+<td>(6,6)</td>
+<td>10</td>
+</tr>
+<tr>
+<td>7</td>
+<td>(7,7), with <span class="math inline">\(a = 14\)</span></td>
+<td>12</td>
+</tr>
+<tr>
+<td>8</td>
+<td>(8,8)</td>
+<td>14</td>
+</tr>
+</tbody>
+</table>
+<p>So <span class="math inline">\(R = 2g - 2\)</span> for <span class="math inline">\(g \ge 4\)</span>, with a floor of 3 (the cage and one grid beyond) and the value 5 at <span class="math inline">\(g = 3\)</span>. It does not depend on <span class="math inline">\(a\)</span>: the threshold is 6 on (4,4,4), (6,4,4), (8,4,4), (12,4,4), 10 on (6,6,6), (8,6,6), (12,6,6), and 8 on (8,5,5), (12,5,5). It does not depend on the larger transverse extent. This is the band-height law of 16 and 17 September (<span class="math inline">\(\max(\gcd - 4, 8)\)</span> grids in units of a quarter cube, for U_Z), found again for (V).</p>
+<p><strong>2.3 Both transverse circles are needed in full, on every shape (solver).</strong> With the <span class="math inline">\(x\)</span>-circle closed and (T2) cut at <span class="math inline">\(|dy| \le R\)</span> or <span class="math inline">\(|dz| \le R\)</span>, (V) is forced only when the cut is the whole circle: (8,4,4), (8,4,6), (8,5,6), (8,6,10), (8,4,8). On the cubic cells of side 4, 5, 6 the same holds for strips along the diagonals <span class="math inline">\(y + z\)</span> and <span class="math inline">\(y - z\)</span>, which keep the transverse chains whole. This agrees with ucore and uhand.</p>
+<p><strong>2.4 On cells with coprime transverse extents (V) is a counting statement (computed, floating point).</strong> The linear programme of uhand (one-hot, (T2), <span class="math inline">\(t \ge 0\)</span>, the four literals; maximise the amount of type <span class="math inline">\(x\)</span> on the B-grid) reproduces <span class="math inline">\(26/3\)</span> and <span class="math inline">\(178/9\)</span> on the cubic cells of side 3 and 4. Its optimum is 0 on every coprime torus tested: (2,3), (3,4), (3,5), (4,5), (5,6) with <span class="math inline">\(a = 6\)</span>, and (2,5), (2,7), (3,7), (3,8), (4,7), (5,7), (6,7) with <span class="math inline">\(a = 12\)</span>; on (7,8) the slabs <span class="math inline">\(R = 15\)</span> and <span class="math inline">\(R = 19\)</span> give 0 and the whole cell did not finish in 200 s. With <span class="math inline">\(g = 2\)</span> the optimum is positive: 2.4 on (2,2), 4.8 on (2,4), 15.56 on (4,6). The optima are HiGHS values and were not rationalised.</p>
+<p>The linear certificate needs more room along <span class="math inline">\(x\)</span> than the solver does. The first slab on which the optimum is 0: <span class="math inline">\(R \le 3\)</span> for (2,3), (3,4), (3,5); <span class="math inline">\(5 &lt; R \le 7\)</span> for (4,5); <span class="math inline">\(7 &lt; R \le 9\)</span> for (5,6); <span class="math inline">\(11 &lt; R \le 13\)</span> for (5,7); <span class="math inline">\(11 &lt; R \le 15\)</span> for (7,8). Inside the seven grids that suffice for the solver, integrality is still needed.</p>
+<p><strong>2.5 W_r behaves in the same way, with the roles of the axes changed (solver).</strong> W_r (rphand: a rod of type <span class="math inline">\(x\)</span> with its two bridgeheads of type <span class="math inline">\(y\)</span> forces the A-plane of normal <span class="math inline">\(z\)</span> through the hole to have no vertex of type <span class="math inline">\(y\)</span>; no oddness) holds on (6,4,5), (5,6,4), (4,5,6). Its reach along the normal <span class="math inline">\(z\)</span> is bounded (8, 10, 8 on the in-plane tori (4,4), (4,5), (5,4), with <span class="math inline">\(c = 12\)</span>), and every proper cut along either in-plane axis leaves its negation satisfiable (cuts one layer short of the circle, on eight cells with that axis of length 12). Its law in the in-plane extents was not determined.</p>
+<h2 id="what-this-changes">3. What this changes</h2>
+<ol type="1">
+<li><strong>(V) is not a statement about the closed three-torus.</strong> It is a statement about a slab of about <span class="math inline">\(4g - 3\)</span> grids over the closed transverse torus, with open ends along the rod axis. It holds on the infinite cylinder. The sentences ‘needs the <span class="math inline">\(x\)</span>-circle’ (ucore verdict 2), ‘the support is the circle minus a short arc’ (ucore verdict 3) and the first closed route of the note (‘nothing until <span class="math inline">\(R = 2L - 2\)</span> of the <span class="math inline">\(2L\)</span> available’) are true of cubic cells and misleading as descriptions of the statement. The handover’s ‘do not re-run slabs’ should read: on cubic cells.</li>
+<li><strong>One slab certificate serves every length of the rod axis.</strong> By the project’s rule for windows, a DRAT proof of (V) on the slab over the torus <span class="math inline">\((b, c)\)</span> proves it on every cell <span class="math inline">\((a, b, c)\)</span> whose rod axis leaves two grids outside the slab.</li>
+<li><strong>The non-linearity of (V) is tied to <span class="math inline">\(g \ge 2\)</span>.</strong> At <span class="math inline">\(g = 1\)</span> each <span class="math inline">\(x\)</span>-slab holds one chain of each family (r1-lemma report, ingredient 2) and the statement is linear. The cubic cell of side <span class="math inline">\(L\)</span> is the case <span class="math inline">\(g = L\)</span>, in which the length of the slab, the number of chain classes and the depth of the case split (at most 6 and 9 vertices at <span class="math inline">\(L = 3\)</span>, 4, uhand) all grow together.</li>
+<li><strong>The family to study is <span class="math inline">\((a, b, c)\)</span> with <span class="math inline">\(a\)</span> large, indexed by <span class="math inline">\(g\)</span></strong>, and the cubic cells are its hardest diagonal. The small-r report (residual 2) proposed a transverse induction on <span class="math inline">\(g\)</span> for U_Z and it was not pursued. For (V) the statement is cleaner and the base of the induction is a linear programme.</li>
+</ol>
+<p>Nothing here proves (V) on a cubic cell. A state on a cubic cell lifts only to cells whose extents are multiples of <span class="math inline">\(L\)</span>, so <span class="math inline">\(g\)</span> cannot be lowered by passing to a cover.</p>
+<h2 id="the-six-ideas-of-the-note">4. The six ideas of the note</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>idea</th>
+<th>verdict</th>
+<th>reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Closed form for the branch certificates</td>
+<td>keep, on a different family</td>
+<td>On cubic cells there are two usable data points (<span class="math inline">\(L = 3\)</span> is known to mislead), the greedy branching sets are not stable from one <span class="math inline">\(L\)</span> to the next, and the number of branches grows about tenfold per unit of <span class="math inline">\(L\)</span>. The cone proof succeeded on a linear statement with bounded support. Coprime tori give the same situation for (V): no branching, one Farkas certificate per torus, and a two-parameter family of them.</td>
+</tr>
+<tr>
+<td>2. Induction along one line</td>
+<td>keep as the organising question, change the variable</td>
+<td>ucore and vsign show that nothing propagates along a line of holes. The measurements above say the quantity that grows by one at each step is the number of chain classes reached, one per two grids along <span class="math inline">\(x\)</span>.</td>
+</tr>
+<tr>
+<td>3. A quadratic identity between corners and charges</td>
+<td>test once, cheaply, then probably drop</td>
+<td>The experiment as written (the largest product of two relaxed counts) is a bilinear programme whose optimum proves nothing either way. The precise form is infeasibility of the degree-two Sherali–Adams lift, which was feasible for the neighbouring statement on 17 September. If the depth of integrality grows with <span class="math inline">\(g\)</span>, no identity of fixed degree exists on cubic cells. Cells with <span class="math inline">\(g = 2\)</span> and 3 are small enough to decide this.</td>
+</tr>
+<tr>
+<td>4. The weaker statement with all three axes two-way</td>
+<td>drop</td>
+<td>Given Theorem 1 and <span class="math inline">\(K_u\)</span> the weaker statement is equivalent to H, since its hypothesis is what H says cannot happen. And the question it ends on is answered in the note’s own section on Theorem U: states of even curl with unoriented holes and all six directions exist.</td>
+</tr>
+<tr>
+<td>5. The relatives without oddness</td>
+<td>keep, and promote W_r</td>
+<td>Three literals, no oddness, a plane as conclusion, and the same shape of reach (§2.5). It is the simplest statement of the class and vsign §6 reduces (V) to it and a transfer step.</td>
+</tr>
+<tr>
+<td>6. Further cubic cells</td>
+<td>low priority</td>
+<td>Extends Theorem 2 and proves nothing uniform. The same compute spent on slab certificates gives (V) on infinitely many cells each. Whether H follows on those cells depends on Theorem 1 for non-cubic cells, which has not been checked (Theorem <span class="math inline">\(M&#39;\)</span> is proved for cubic cells only).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="proposal-for-the-round">5. Proposal for the round</h2>
+<p>Four packages for Opus agents, and one that needs no proof work. The first two do not depend on each other.</p>
+<p><strong>A. The coprime certificate.</strong> For coprime <span class="math inline">\((b, c)\)</span> compute the exact Farkas certificate of (V) on the slab, make it canonical as the cone agent did (<span class="math inline">\(L^1\)</span> minimum, symmetries of the pattern imposed), and tabulate the multipliers against position along the single chain of each slab. Start with (3,4), (3,5), (4,5), (5,6), (5,7). Target: a closed form, or a hand proof of (V) at <span class="math inline">\(g = 1\)</span> from Lemma T and the heights, on the model of Theorem R1. Stop if the multipliers show no regularity on five tori.</p>
+<p><strong>B. The case <span class="math inline">\(g = 2\)</span>.</strong> The smallest cells on which integrality is needed: seven grids, tori (2,2), (2,4), (4,6), (6,10). Find the thinnest integral family and the smallest case split, by uwall’s method, and read the branches. The question is whether the split is on the choice between the two chain classes. Include the degree-two lift of idea 3 on (2,2), (2,4) and (3,3): one verdict each.</p>
+<p><strong>C. W_r on the same footing.</strong> Its reach law in the in-plane extents, its linear programme on non-cubic cells, and whether some arithmetic condition makes it linear.</p>
+<p><strong>D. Independent check</strong> of §2 of this report by an agent with its own implementation, including exact rational verification of two of the optima of §2.4.</p>
+<p><strong>E. The literature search on fully packed loops</strong>, which is owed before any claim of novelty and depends on nothing else.</p>
+<p>Not proposed: further windows on cubic cells, certificates at <span class="math inline">\(L = 7\)</span> to 10, idea 4.</p>
+<h2 id="computations-run">6. Computations run</h2>
+<p>From <code>scratch_h</code>, project <code>.venv</code>, <code>PYTHONPATH=&lt;repo&gt;:&lt;repo&gt;/experiments/08_frozen_structure</code>, <code>TMPDIR=&lt;repo&gt;/.tmp</code>.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>command</th>
+<th>what</th>
+<th>verdict</th>
+<th>wall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h330_aniso.py 4,4,4 full</code></td>
+<td>baseline</td>
+<td>control SAT, (V) UNSAT, U′ UNSAT 2.4 s</td>
+<td>3 s</td>
+</tr>
+<tr>
+<td><code>h330_aniso.py CELL full [--zy]</code>, 13 shapes</td>
+<td>U′ and (V)</td>
+<td>all UNSAT, controls SAT</td>
+<td>0.2–18 s each</td>
+</tr>
+<tr>
+<td><code>h330_aniso.py CELL slab RMAX</code>, 16 shapes</td>
+<td>reach along <span class="math inline">\(x\)</span>, first runs</td>
+<td>§2.2</td>
+<td>&lt; 3 s per window</td>
+</tr>
+<tr>
+<td><code>h330_aniso.py 12,b,c reach x 23</code>, 17 tori</td>
+<td>reach along <span class="math inline">\(x\)</span></td>
+<td>§2.2 table</td>
+<td>&lt; 1 min each</td>
+</tr>
+<tr>
+<td><code>h330_aniso.py 14,7,7 slab 26</code></td>
+<td><span class="math inline">\(g = 7\)</span></td>
+<td>12</td>
+<td>≈ 1 min</td>
+</tr>
+<tr>
+<td><code>h330_aniso.py CELL reach y\|z 24</code>, 5 shapes</td>
+<td>transverse cuts</td>
+<td>whole circle in every case</td>
+<td>&lt; 1 min each</td>
+</tr>
+<tr>
+<td><code>h330_aniso.py L,L,L reach u\|w</code>, <span class="math inline">\(L\)</span> = 4, 5, 6</td>
+<td>diagonal strips</td>
+<td>whole circle</td>
+<td>&lt; 1 min each</td>
+</tr>
+<tr>
+<td><code>h330_aniso.py CELL full\|reach --wr</code>, 15 runs</td>
+<td>W_r</td>
+<td>§2.5</td>
+<td>&lt; 1 min each</td>
+</tr>
+<tr>
+<td><code>h331_aniso_lp.py 3,3,3 --six</code>, <code>4,4,4 --six</code></td>
+<td>validation against uhand</td>
+<td>8.6667, 19.7778</td>
+<td>&lt; 1 s</td>
+</tr>
+<tr>
+<td><code>h331_aniso_lp.py 6,b,c [3]</code>, 8 tori</td>
+<td>LP on the cell and on the slab <span class="math inline">\(R = 3\)</span></td>
+<td>§2.4</td>
+<td>&lt; 6 s each</td>
+</tr>
+<tr>
+<td><code>h331_aniso_lp.py 12,b,c [R]</code>, 10 tori</td>
+<td>LP by slab and on the cell</td>
+<td>§2.4</td>
+<td>0.1–117 s; (12,7,8) whole cell stopped at its 200 s limit without a verdict</td>
+</tr>
+</tbody>
+</table>
+</main>
+</body>
+</html>

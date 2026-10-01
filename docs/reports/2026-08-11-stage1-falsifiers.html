@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subagent report: stage-1 falsifiers (2026-08-11)</title>
+<meta name="description" content="Subagent report: stage-1 falsifiers (2026-08-11)">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Subagent report: stage-1 falsifiers (2026-08-11)",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-08-11-stage1-falsifiers.html",
+ "datePublished": "2026-08-11",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "inLanguage": "en-GB"
+}</script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-08-11-stage1-falsifiers.md">Markdown source</a></p></div>
+<main class="doc">
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#subagent-report-stage-1-falsifiers-2026-08-11" id="toc-subagent-report-stage-1-falsifiers-2026-08-11">Subagent report: stage-1 falsifiers (2026-08-11)</a>
+<ul>
+<li><a href="#report-stage-1-falsifiers-ice-mixing" id="toc-report-stage-1-falsifiers-ice-mixing">Report — Stage 1 falsifiers, ice-mixing</a></li>
+</ul></li>
+</ul>
+</details></nav>
+<h1 id="subagent-report-stage-1-falsifiers-2026-08-11">Subagent report: stage-1 falsifiers (2026-08-11)</h1>
+<p>Provenance: Claude Opus subagent, dispatched for stage 1 only (census, exact-gap ladder, invariant suite) per SPEC-addendum. Report reproduced verbatim below. Fable review: construction validated (100/100 tests, crystallographic anchor, two-to-three-method exact count agreement, the quotient-graph trap caught and closed); the census finding — frozen states in W=0 at every cell, persisting to arbitrary size by tiling — is REAL and changes the project’s framing: all gap/τ quantities are giant-component quantities from here on. Also corrects the SPEC-addendum’s ladder estimates (bulk-entropy Pauling estimates undercount thin-cell sectors by 3.5–49×).</p>
+<hr />
+<p>Verified to 12 significant figures. Stage 1 is complete.</p>
+<h2 id="report-stage-1-falsifiers-ice-mixing">Report — Stage 1 falsifiers, ice-mixing</h2>
+<p><strong>Bottom line: no falsifier fired against the construction, but the census found a real and permanent obstruction — the chain is reducible on the full <code>W=0</code> sector at every system size.</strong> All artefacts are at <code>~/repo/project/ice-mixing/</code>. Git untouched; no venv needed (numpy 1.26.4 / scipy 1.17.1 / pytest 9.0.2 already present).</p>
+<h3 id="file-inventory">File inventory</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>path</th>
+<th>contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>icemix/lattice.py</code> (385)</td>
+<td>diamond cell (a,b,c), derived hexagon set, winding signs, translation + tiling maps, naive quotient-graph 6-cycles</td>
+</tr>
+<tr>
+<td><code>icemix/bits.py</code> (37)</td>
+<td>popcount (numpy 1.26 has no <code>bitwise_count</code>)</td>
+</tr>
+<tr>
+<td><code>icemix/enumerate.py</code> (396)</td>
+<td>DFS enumerator, frontier-DP counter, brute force, winding by polarisation and by explicit cut-plane</td>
+</tr>
+<tr>
+<td><code>icemix/chain.py</code> (220)</td>
+<td>hexagon masks, fast + reference flippable predicates, sparse <code>P</code>, components</td>
+</tr>
+<tr>
+<td><code>icemix/spectrum.py</code> (104)</td>
+<td>dense <code>eigh</code> and deflated Lanczos gap</td>
+</tr>
+<tr>
+<td><code>icemix/crystal.py</code> (216)</td>
+<td>independent Fd-3m <code>16d</code> Wyckoff build + constructive isomorphism</td>
+</tr>
+<tr>
+<td><code>icemix/invariants.py</code> (244)</td>
+<td>ice rule, winding, involution, reversibility, uniformity, detailed balance</td>
+</tr>
+<tr>
+<td><code>experiments/01_falsifiers/run_falsifiers.py</code> (649)</td>
+<td>the run (283 s, heartbeat <code>progress.json</code>)</td>
+</tr>
+<tr>
+<td><code>experiments/01_falsifiers/make_summary.py</code> (462)</td>
+<td>renders <code>summary.md</code> from <code>results.json</code></td>
+</tr>
+<tr>
+<td><code>experiments/01_falsifiers/results/{results.json,summary.md,progress.json}</code></td>
+<td>64 KB / 233 lines</td>
+</tr>
+<tr>
+<td><code>tests/</code> (7 files, 704 lines)</td>
+<td><strong>100 tests, all passing, 184 s</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="actual-vs-estimated-sector-sizes-measured-first-as-required">Actual vs estimated sector sizes (measured first, as required)</h3>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>spins</th>
+<th>ice states (exact)</th>
+<th>Pauling est.</th>
+<th>ratio</th>
+<th>s/spin</th>
+<th><code>W=0</code></th>
+<th>methods</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,1,1)</td>
+<td>16</td>
+<td>90</td>
+<td>26</td>
+<td>3.5</td>
+<td>0.2812</td>
+<td>12</td>
+<td>3</td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>32</td>
+<td>3,618</td>
+<td>656</td>
+<td>5.5</td>
+<td>0.2561</td>
+<td>388</td>
+<td>2</td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td>48</td>
+<td>181,122</td>
+<td>16,808</td>
+<td>10.8</td>
+<td>0.2522</td>
+<td>15,024</td>
+<td>2</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>64</td>
+<td>2,891,562</td>
+<td>430,542</td>
+<td>6.7</td>
+<td>0.2325</td>
+<td>221,628</td>
+<td>2</td>
+</tr>
+<tr>
+<td>(1,1,4)</td>
+<td>64</td>
+<td>9,765,378</td>
+<td>430,542</td>
+<td>22.7</td>
+<td>0.2515</td>
+<td>637,988</td>
+<td>2</td>
+</tr>
+<tr>
+<td>(1,1,5)</td>
+<td>80</td>
+<td>538,851,330</td>
+<td>1.10e7</td>
+<td>48.9</td>
+<td>0.2513</td>
+<td>28,686,512</td>
+<td>DP only</td>
+</tr>
+<tr>
+<td>(1,2,3)</td>
+<td>96</td>
+<td>3,076,306,362</td>
+<td>2.83e8</td>
+<td>10.9</td>
+<td>0.2276</td>
+<td>196,465,480</td>
+<td>DP only</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The addendum’s ladder estimates are substantially too low</strong> — thin cells carry far more entropy per spin than the bulk 0.2027, and the excess grows as the cell thins. Independent methods: DFS enumeration, frontier/transfer-matrix DP (counts <em>and</em> the joint winding histogram, never materialising a state), and brute-force <code>2^16</code> at the smallest cell. All agree <strong>exactly</strong>, including full joint W-histograms. External anchor: (1,1,1) reduces to <code>K(4,4)</code>, whose ice states are the 4×4 zero-one matrices with row/column sums 2 — the classical <strong>90</strong>, reproduced. Axis permutations (1,1,3)↔︎(3,1,1) and (1,2,2)↔︎(2,2,1) agree. <code>(2,2,2)</code> skipped with reason (DP blows past 10.5M frontier keys; ~2e11 states).</p>
+<h3 id="census-flag-this-prominently">Census — flag this prominently</h3>
+<table>
+<thead>
+<tr>
+<th>cell</th>
+<th><code>W=0</code></th>
+<th>components</th>
+<th>giant</th>
+<th>giant frac</th>
+<th>frozen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,1,1)</td>
+<td>12</td>
+<td>12</td>
+<td>1</td>
+<td>8.3%</td>
+<td><strong>12 (all)</strong></td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>388</td>
+<td>70</td>
+<td>160</td>
+<td>41.2%</td>
+<td>68</td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td>15,024</td>
+<td>540</td>
+<td>3,360</td>
+<td>22.4%</td>
+<td>528</td>
+</tr>
+<tr>
+<td><strong>(1,2,2)</strong></td>
+<td>221,628</td>
+<td>205</td>
+<td><strong>221,424</strong></td>
+<td><strong>99.91%</strong></td>
+<td>204</td>
+</tr>
+<tr>
+<td>(1,1,4)</td>
+<td>637,988</td>
+<td>5,492</td>
+<td>43,008</td>
+<td>6.7%</td>
+<td>5,412</td>
+</tr>
+</tbody>
+</table>
+<ol type="1">
+<li><strong>Frozen states exist in <code>W=0</code> at every cell examined, and they persist to arbitrarily large cells.</strong> Periodically tiling a small-cell frozen state gives, verified from scratch in the target cell’s own hexagon set, a frozen <code>W=0</code> ice state of (2,2,2), (2,2,4), (1,2,4) and the 432-spin (3,3,3) — 10/10 cases. So the full <code>W=0</code> sector is <strong>never</strong> connected, <code>Δ=0</code> on it at every <code>L</code>, and every gap/τ in this project is a giant-component quantity. Density falls with size (0.092% at (1,2,2)), so it is measure-zero asymptotically but real at finite <code>L</code>.</li>
+<li><strong>Disconnection is an aspect-ratio effect, not a chain defect.</strong> Quasi-1D <code>(1,1,c)</code> cells shatter; the one cell with a 2-D cross-section, (1,2,2), has a 99.91% giant component with <em>only isolated frozen states</em> outside it.</li>
+<li>Singleton components are exactly the frozen states in every case; no component ever straddles two winding sectors (checked over all 25/69/137 sectors at the three smallest cells). Global arrow reversal acts as a permutation of components and explains the equal-size component pairs.</li>
+<li><strong>Caveat:</strong> (1,2,2) is the <em>only</em> non-quasi-1D cell reachable by enumeration. Stage 1 says nothing about connectivity in the cubic geometry stage 3 will use.</li>
+</ol>
+<h3 id="exact-gaps-all-restricted-to-the-giant-component-stated-loudly">Exact gaps (all restricted to the giant component — stated loudly)</h3>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>hexagons</th>
+<th>states</th>
+<th>λ₂</th>
+<th>Δ (per attempt)</th>
+<th>1/Δ</th>
+<th>Δ·n_hex</th>
+<th>method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,1,1)</td>
+<td>16</td>
+<td>1</td>
+<td>—</td>
+<td>no gap: sector wholly frozen</td>
+<td></td>
+<td></td>
+<td>—</td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>32</td>
+<td>160</td>
+<td>0.992451</td>
+<td>7.5488e-3</td>
+<td>132.5</td>
+<td>0.2416</td>
+<td>dense</td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td>48</td>
+<td>3,360</td>
+<td>0.996780</td>
+<td>3.2200e-3</td>
+<td>310.6</td>
+<td>0.1546</td>
+<td>Lanczos</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>64</td>
+<td>221,424</td>
+<td>0.997436</td>
+<td>2.5644e-3</td>
+<td>389.9</td>
+<td>0.1641</td>
+<td>Lanczos</td>
+</tr>
+<tr>
+<td>(1,1,4)</td>
+<td>64</td>
+<td>43,008</td>
+<td>0.998408</td>
+<td>1.5923e-3</td>
+<td>628.0</td>
+<td>0.1019</td>
+<td>Lanczos</td>
+</tr>
+</tbody>
+</table>
+<p>Sanity <code>Δ&gt;0</code> iff connected: holds at all five cells (full-sector Δ = 0 to machine precision everywhere). Lanczos vs dense agree to 0 in double precision where both ran; the (1,2,2) headline was re-verified by 60,000 power iterations on the deflated operator — <strong>agrees to 12 significant figures</strong>. (1,2,3) and (1,1,5): counted but not enumerated (≈4 h / 40 min DFS plus tens of GB), no gap — skipped with reason. These anisotropic anchors are <strong>not</strong> a <code>z</code> measurement.</p>
+<h3 id="invariants-all-clean">Invariants — all clean</h3>
+<ul>
+<li>Ice rule + winding after <strong>4,369,925</strong> applied moves across five cells: 0 failures (64-spin cells capped at the first 200k states for budget).</li>
+<li>Flip is an involution preserving its hexagon’s flippability: 0 failures. Fast 6-bit predicate vs a definition-level reference walk: 0 mismatches.</li>
+<li><code>P</code> exactly symmetric and doubly stochastic at all five cells ⇒ exact detailed balance w.r.t. uniform. Empirical χ² on samples thinned by 20 exact relaxation times: p = 0.250 / 0.632 / 0.518; detailed-balance max |z| = 1.75 / 2.59 / 2.89.</li>
+<li>Trajectory at (1,2,2): 100k attempts, 8,678 moves, 0 ice/winding failures.</li>
+</ul>
+<h3 id="anomalies-worth-the-supervisors-attention">Anomalies worth the supervisor’s attention</h3>
+<ol type="1">
+<li><strong>The quotient-graph trap.</strong> Enumerating “hexagons” as 6-cycles of the periodic quotient graph is wrong on small cells: at (1,1,1) that graph is <code>K(4,4)</code> with <strong>96</strong> 6-cycles versus <strong>16</strong> real hexagons. All 80 extras are non-contractible, stay within the ice rule, and change <code>W</code> in <strong>80/80</strong> tested cases — exactly the silent flux-sector corruption the brief warned about. The implementation derives hexagons from adjacency <em>plus displacement</em>, and the derived counts (6 per bond, 12 per site, <code>n_hex = n_bonds = 16abc</code>) are asserted in tests alongside the hand derivation.</li>
+<li><strong>(1,1,1)’s <code>W=0</code> sector is entirely frozen</strong> (12 states, 12 components). Not a bug; the connected components at that cell all live in <code>W=±2</code> sectors.</li>
+<li>Crystallographic anchor passed on four shapes ((1,1,1), (1,1,2), (1,2,2), (2,2,2)): constructive bijection, identical edge sets, degree 6, tetrahedra = diamond sites, matching adjacency spectra. A deliberate single-bond corruption is confirmed to break it.</li>
+</ol>
+<h3 id="timings">Timings</h3>
+<p>Full run 283 s wall (CPU only). Slowest items: DFS at (1,2,2) 32 s and (1,1,4) 45 s; axis-permutation DP checks 145 s; Lanczos ≤ 3 s. Test suite 184 s. Nothing exceeded the 10-minute per-computation budget.</p>
+<h3 id="recommendations-for-stage-2-not-started-per-the-gate">Recommendations for stage 2 (not started, per the gate)</h3>
+<ol type="1">
+<li>Start every chain <strong>inside the giant component</strong> and record the convention — a uniformly drawn <code>W=0</code> state is unreachable 93% of the time at (1,1,4).</li>
+<li>Measure the giant-component fraction at cubic <code>L=2</code> empirically before the campaign; enumeration cannot reach it.</li>
+<li>Do not use the <code>(1,1,c)</code> gaps as <code>z</code> anchors.</li>
+<li>Carry Δ in explicit units — attempt vs sweep differs by <code>n_hex = 16abc</code>.</li>
+</ol>
+</main>
+</body>
+</html>

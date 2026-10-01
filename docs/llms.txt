@@ -1,0 +1,36 @@
+# Ice-mixing notes
+
+> Results of a research project on pyrochlore spin ice (the hexagon-flip dynamics, frozen states, and the periodicity of frozen zero-flux states), published as stand-alone contribution notes with machine-readable claims manifests. Each claim records its statement, status, scope, dependencies, artefacts with hashes and regenerate commands, and provenance (which model wrote it, which independent checker read it, whether a person has).
+
+Statuses are from a fixed vocabulary: proved: a written argument read by an independent checker with its own programs; proved-unchecked: a written argument with no second reader; certified: a machine-checked proof object (DRAT, LRAT, a CPOG-certified count, Lean, Isabelle) on the cells named in scope; solver: a SAT or LP verdict on named cells without a checked proof object; computed: an exact computation with no solver verdict; explored: floating-point or sampled evidence only; conjecture: believed, with evidence named; open: a target with no verdict; closed-route: a method shown not to reach the target; corrected: a statement of an earlier version repaired here; refuted: shown false, with a witness.
+
+Read a claim's status_detail and scope before using it: many results hold on named cells only. Claim identifiers are stable across revisions of a note.
+
+## Claims manifests
+
+- [theorem-h-orientation](https://lyndondrake.github.io/ice-mixing-notes/manifests/theorem-h-orientation.json): 32 claims, version 2026-10-01; Theorem H for frozen pyrochlore ice: proofs on the cells with a coprime pair of extents and on the cells with two chains in every pair of planes, a reduction to Theorem U alone on every cell, and the cubic cells of side one to eight
+
+## Full text for machines
+
+- [llms-full.txt](https://lyndondrake.github.io/ice-mixing-notes/llms-full.txt): every published manifest serialised as JSON, one after another, with a header per note
+- [manifest schema](https://lyndondrake.github.io/ice-mixing-notes/schema/manifest.schema.json): JSON Schema (2020-12) of a claims manifest, with the status and kind vocabularies
+
+## Notes
+
+- [Theorem H for frozen pyrochlore ice: proofs on the cells with a coprime pair of extents and on the cells with two chains in every pair of planes, a reduction to Theorem U alone on every cell, and the cubic cells of side one to eight](https://lyndondrake.github.io/ice-mixing-notes/notes/theorem-h-orientation.html): Theorem H proved by hand on every cell with a coprime pair of extents and on the cells with two chains in every pair of planes; reduced to Theorem U alone on every cell (30 September; K_u no longer a step); by certificates on the cubic cells of side one to eight and on four cells that are not cubic (1 October); the signed moments as currents along the chains; where the method stops at three chains; what is known about Theorem U; PDF https://lyndondrake.github.io/ice-mixing-notes/notes/theorem-h-orientation.pdf
+- [A sign-gauge obstruction to negative association in pyrochlore ice](https://lyndondrake.github.io/ice-mixing-notes/notes/sign-gauge-obstruction.html): no sign gauge makes the bond correlations negatively associated: the three-bond certificate; PDF https://lyndondrake.github.io/ice-mixing-notes/notes/sign-gauge-obstruction.pdf
+- [Flux sectors of pyrochlore ice: log-concave counts, an octahedral winding support, and a certified failure of real-rootedness](https://lyndondrake.github.io/ice-mixing-notes/notes/sector-logconcavity.html): flux-sector counts are log-concave, the support is the even lattice in an octahedron, the marginals are not real-rooted at high degree; PDF https://lyndondrake.github.io/ice-mixing-notes/notes/sector-logconcavity.pdf
+- [Frozen zero-flux states of pyrochlore ice are periodic at L = 2 and L = 3](https://lyndondrake.github.io/ice-mixing-notes/notes/periodicity-certified.html): every frozen zero-flux state of cubic L = 2 and L = 3 is periodic; L = 4 incomplete; PDF https://lyndondrake.github.io/ice-mixing-notes/notes/periodicity-certified.pdf
+- [How the work was done: the method of a language-model research programme on pyrochlore ice, and what it produced beyond its results](https://lyndondrake.github.io/ice-mixing-notes/notes/method.html): how the work was done: pre-registration and stage gates, the status vocabulary, the two-method gate, the certification ladder, the division of labour, the record; what the method caught and missed; generalisable findings; PDF https://lyndondrake.github.io/ice-mixing-notes/notes/method.pdf
+- [The dynamical exponent of the single-hexagon-flip chain on pyrochlore spin ice](https://lyndondrake.github.io/ice-mixing-notes/notes/measurement-z.html): the exponent, z = 2.004 ± 0.060 over thirteen sizes to 221,184 spins, the 1/L² correction, the fixed-size test; PDF https://lyndondrake.github.io/ice-mixing-notes/notes/measurement-z.pdf
+- [A pseudoscalar slow mode in pyrochlore ice dynamics: the emergent magnetic helicity at a thin cell](https://lyndondrake.github.io/ice-mixing-notes/notes/helicity-mode.html): the slow even mode at the thin cell is the emergent magnetic helicity; absent as a slow mode in cubic geometry; PDF https://lyndondrake.github.io/ice-mixing-notes/notes/helicity-mode.pdf
+- [The giant-component conjecture for the hexagon-flip graph of pyrochlore ice](https://lyndondrake.github.io/ice-mixing-notes/notes/giant-component.html): the giant-component conjecture with exact censuses and 27,000 certified flip paths; PDF https://lyndondrake.github.io/ice-mixing-notes/notes/giant-component.pdf
+- [Two frozen-state theorems for pyrochlore spin ice under hexagon flips](https://lyndondrake.github.io/ice-mixing-notes/notes/frozen-theorems.html): frozen states exist at every size: Theorem 1 (the smallest cell is frozen) and Theorem 2 (the translation-frozen family, C(2c,c)² and the 16^L bound); PDF https://lyndondrake.github.io/ice-mixing-notes/notes/frozen-theorems.pdf
+- [Frozen pyrochlore ice and the Z_2 curl: a reduction of the periodicity conjecture, with proofs in one dimension and two and certificates in three](https://lyndondrake.github.io/ice-mixing-notes/notes/curl-reduction.html): the periodicity conjecture reduced to a parity statement: Lemmas A and L, Theorem 2D and the profile lemma proved; Theorems H and P certified; slab sums; PDF https://lyndondrake.github.io/ice-mixing-notes/notes/curl-reduction.pdf
+
+## Optional
+
+- [Dependency graph](https://lyndondrake.github.io/ice-mixing-notes/graph.html): the claims as a graph, coloured by status (the same data as the manifests)
+- [Reports](https://lyndondrake.github.io/ice-mixing-notes/reports/index.html): the checker and agent reports cited as artefacts
+- [Certificate ledgers](https://lyndondrake.github.io/ice-mixing-notes/certificates/index.html): SAT queries, DRAT proofs and drat-trim verdicts, with raw JSON-lines files
+- [Repository](https://github.com/lyndondrake/ice-mixing-notes): sources, manifests in YAML, scripts

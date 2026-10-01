@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two frozen-state theorems for pyrochlore spin ice under hexagon flips</title>
+<meta name="description" content="frozen states exist at every size: Theorem 1 (the smallest cell is frozen) and Theorem 2 (the translation-frozen family, C(2c,c)² and the 16^L bound)">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "ScholarlyArticle",
+ "@id": "https://lyndondrake.github.io/ice-mixing-notes/notes/frozen-theorems.html",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/notes/frozen-theorems.html",
+ "headline": "Two frozen-state theorems for pyrochlore spin ice under hexagon flips",
+ "name": "Two frozen-state theorems for pyrochlore spin ice under hexagon flips",
+ "datePublished": "2026-09-06",
+ "version": "2026-09-06",
+ "author": [
+  {
+   "@type": "Person",
+   "name": "Lyndon Drake"
+  }
+ ],
+ "creditText": "Lyndon Drake, with Claude Code (Anthropic Claude 5 models)",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "inLanguage": "en-GB",
+ "encoding": [
+  {
+   "@type": "MediaObject",
+   "contentUrl": "https://lyndondrake.github.io/ice-mixing-notes/notes/frozen-theorems.pdf",
+   "encodingFormat": "application/pdf"
+  }
+ ]
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div class="doc-links" style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0"><p class="small"><a href="frozen-theorems.pdf">PDF</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/notes/frozen-theorems.md">Markdown source</a></p><p class="small"><strong>Certification, as the notes index states it:</strong> Lean 4 (both theorems, with the bridge to the simulation&#x27;s hexagons), DRAT, CPOG-certified counts</p><section class="panel small"><p>This note has no published claims manifest yet; its standing is as the note itself and the <a href="index.html">notes index</a> state it.</p></section></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Two frozen-state theorems for pyrochlore spin ice under hexagon flips</h1>
+
+<p class="author">Lyndon Drake, with Claude Code (Anthropic Claude 5 models)</p>
+<p class="date">2026-09-06</p>
+</header>
+<section class="abstract"><h2>Abstract</h2>
+<p>The local ice-preserving dynamics of pyrochlore spin ice picks a hexagon of the diamond lattice and reverses its six arrows when they run head to tail. A configuration with no flippable hexagon is <em>frozen</em>: the chain can neither leave it nor reach it, and under the Rokhsar–Kivelson correspondence it is an exact zero-energy eigenstate of the ring-exchange Hamiltonian whose generator the chain is. Two theorems put such states in every cell. Theorem 1 states that all twelve zero-flux ice states of the single conventional cubic cell are frozen, so periodic tiling carries frozen zero-flux states to every larger cell. Theorem 2 states that an ice state invariant under the two half-diagonal translations perpendicular to a cubic axis is frozen in every flux sector, and that its zero-flux members number exactly <span class="math inline">\(\binom{2c}{c}^{2}\)</span> for a cell of extent <span class="math inline">\(c\)</span> along that axis, the three axis families being disjoint; an <span class="math inline">\(L\times L\times L\)</span> cell therefore holds at least <span class="math inline">\(3\binom{2L}{L}^{2}\)</span> frozen zero-flux states, a lower bound growing like <span class="math inline">\(16^{L}\)</span>. Three certifications are reported: a Lean 4 formalisation of both theorems from the kernel’s axioms alone, whose hexagons are proved to be the closed non-backtracking six-walks of zero displacement by which the simulation derives them and whose exported hexagon tables the simulation is tested against; DRAT unsatisfiability certificates accepted by drat-trim, at <span class="math inline">\((1,1,1)\)</span> for the first theorem and at five cells up to <span class="math inline">\((4,4,4)\)</span> for the second, with negative controls that become satisfiable; and certified model counts verified by <code>cpog-check</code>, including 612 frozen zero-flux states at the first cubic cell. For the dynamics the consequence is that the zero-flux sector is never connected and its spectral gap is exactly zero at every size, so every mixing statement attaches to a component rather than to the sector.</p>
+</section>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#the-model-and-its-conventions" id="toc-the-model-and-its-conventions">The model and its conventions</a></li>
+<li><a href="#the-smallest-cell-is-frozen" id="toc-the-smallest-cell-is-frozen">The smallest cell is frozen</a></li>
+<li><a href="#translation-frozen-states-and-how-many-there-are" id="toc-translation-frozen-states-and-how-many-there-are">Translation-frozen states, and how many there are</a></li>
+<li><a href="#what-the-frozen-set-does-to-the-dynamics" id="toc-what-the-frozen-set-does-to-the-dynamics">What the frozen set does to the dynamics</a></li>
+<li><a href="#certification" id="toc-certification">Certification</a>
+<ul>
+<li><a href="#the-lean-4-developments" id="toc-the-lean-4-developments">The Lean 4 developments</a></li>
+<li><a href="#unsatisfiability-certificates" id="toc-unsatisfiability-certificates">Unsatisfiability certificates</a></li>
+<li><a href="#certified-counting" id="toc-certified-counting">Certified counting</a></li>
+<li><a href="#re-checking-from-the-repository" id="toc-re-checking-from-the-repository">Re-checking from the repository</a></li>
+</ul></li>
+<li><a href="#related-work" id="toc-related-work">Related work</a></li>
+<li><a href="#appendix-artefacts" id="toc-appendix-artefacts">Appendix: artefacts</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+</ul>
+</details></nav>
+<h1 id="the-model-and-its-conventions">The model and its conventions</h1>
+<p>Pyrochlore spin ice states are the two-in–two-out configurations of Ising spins on the pyrochlore lattice <span class="citation" data-cites="bramwell-gingras-2001-spin-ice-state">(<a href="#ref-bramwell-gingras-2001-spin-ice-state" role="doc-biblioref">Bramwell and Gingras 2001</a>)</span>, equivalently the Eulerian orientations of the diamond lattice whose bonds carry the spins and whose sites are the tetrahedron centres. Everything below uses that second picture and the conventions of <code>icemix/lattice.py</code>.</p>
+<p>Positions are integers in units of <span class="math inline">\(a/4\)</span>, a quarter of the conventional cubic edge. The A sublattice is generated by the face-centred cosets <span class="math inline">\((0,0,0)\)</span>, <span class="math inline">\((0,2,2)\)</span>, <span class="math inline">\((2,0,2)\)</span> and <span class="math inline">\((2,2,0)\)</span>, and the B sublattice is that set translated by <span class="math inline">\((1,1,1)\)</span>. The four displacements from an A site to its B neighbours are <span class="math inline">\(d_0 = (1,1,1)\)</span>, <span class="math inline">\(d_1 = (1,-1,-1)\)</span>, <span class="math inline">\(d_2 = (-1,1,-1)\)</span> and <span class="math inline">\(d_3 = (-1,-1,1)\)</span>, which sum to zero. An <span class="math inline">\((a,b,c)\)</span> block of conventional cubic cells with periodic boundaries has box <span class="math inline">\((4a,4b,4c)\)</span> and holds <span class="math inline">\(8abc\)</span> sites and <span class="math inline">\(16abc\)</span> bonds. A state assigns one bit to each bond, and the bit is <span class="math inline">\(1\)</span> exactly when the arrow runs from the A end to the B end. The ice rule is that exactly two of the four arrows at each site point in, which in this encoding reduces at both sublattices to ‘exactly two of the four incident bits are set’. An ice state’s arrow field is divergence-free, so the net flux through each coordinate cut plane is conserved by any ice-preserving move; that triple is the winding <span class="math inline">\(\mathbf{W} = (W_x, W_y, W_z)\)</span>, and <span class="math inline">\(\mathbf{W} = 0\)</span> is the largest sector and the one at issue here.</p>
+<p>Hexagons are derived rather than hardcoded, as the closed non-backtracking six-walks whose unwrapped vector displacement is exactly zero. The displacement condition is not pedantry: on a small periodic cell the quotient graph carries six-cycles that wind round the torus instead of bounding a face, and flipping one changes the winding. At <span class="math inline">\((1,1,1)\)</span> the quotient graph is <span class="math inline">\(K_{4,4}\)</span>, which has 96 six-cycles where the lattice has 16 hexagons. Each hexagon visits three A sites and three B sites, so its six bonds fall into a class of three traversed from A to B and a class of three traversed from B to A, alternating in cycle order. There are <span class="math inline">\(16abc\)</span> hexagons, six through every bond and twelve through every A site.</p>
+<p>A hexagon is flippable when its arrows run head to tail, which says that one traversal class carries all ones and the other all zeros. The chain picks a hexagon uniformly at random and reverses it with probability <span class="math inline">\(1/2\)</span> if it is flippable. Every flip preserves the ice rule and the winding, and the chain is reversible with the uniform stationary distribution on each flux sector; its generator is, up to normalisation, the ring-exchange Hamiltonian of pyrochlore spin ice at its Rokhsar–Kivelson point <span class="citation" data-cites="rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid">(<a href="#ref-rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas" role="doc-biblioref">Rokhsar and Kivelson 1988</a>; <a href="#ref-henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points" role="doc-biblioref">Henley 2004</a>; <a href="#ref-hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid" role="doc-biblioref">Hermele, Fisher, and Balents 2004</a>)</span>. A state with no flippable hexagon is <strong>frozen</strong>: absorbing and unreachable at once, a singleton component of the flip graph, and an exact zero-energy eigenstate of that Hamiltonian, degenerate with the equal-weight superposition over its sector. Whether frozen states exist at every size is therefore a question about the ground-space degeneracy.</p>
+<h1 id="the-smallest-cell-is-frozen">The smallest cell is frozen</h1>
+<p>The single conventional cubic cell <span class="math inline">\((1,1,1)\)</span> has sixteen bonds, eight sites and sixteen hexagons. Write a state as a <span class="math inline">\(4\times4\)</span> zero-one matrix <span class="math inline">\(M[g][k]\)</span> whose rows are the four A-site cosets and whose columns are the four directions, and label the B end of the bond <span class="math inline">\((g,k)\)</span> by <span class="math inline">\(g \oplus k\)</span>; the labelling is exact because the differences of the four directions realise the Klein four-group on the cosets. The ice rule at the A sites is then ‘row sums are 2’, the ice rule at the B sites is ‘B-label sums are 2’, and <span class="math inline">\(\mathbf{W} = 0\)</span> is ‘column sums are 2’. The first two conditions alone admit the classical 90 matrices with row and column sums two, the <span class="math inline">\(K_{4,4}\)</span> count; all three admit exactly 12.</p>
+<p><strong>Theorem 1.</strong> <em>Every <span class="math inline">\(\mathbf{W} = 0\)</span> ice state of the <span class="math inline">\((1,1,1)\)</span> cell is frozen.</em></p>
+<p><em>Proof.</em> A hexagon runs through the A sites <span class="math inline">\(g\)</span>, <span class="math inline">\(A_2 = g \oplus i \oplus j\)</span> and <span class="math inline">\(A_3 = g \oplus j \oplus k\)</span> for a triple <span class="math inline">\((i,j,k)\)</span> of distinct directions, and carries two bonds of each of those directions, one in each traversal class. Head-to-tail circulation forces the two bonds of each direction to carry opposite bits. Let <span class="math inline">\(l\)</span> be the fourth direction and <span class="math inline">\(A_4 = g \oplus i \oplus k\)</span> the fourth A site, and take the three matrix cells <span class="math inline">\((A_3,k)\)</span>, <span class="math inline">\((A_3,l)\)</span> and <span class="math inline">\((A_4,k)\)</span>, none of which lies on the hexagon. They pairwise share a line: the first two share the row <span class="math inline">\(A_3\)</span>, the first and third share the column <span class="math inline">\(k\)</span>, and the last two share the B-label <span class="math inline">\(g \oplus i\)</span>, because <span class="math inline">\(A_4 \oplus k = A_3 \oplus l = g \oplus i\)</span>. Each of those lines already carries two hexagon cells, one from each traversal class and so of opposite bit, namely <span class="math inline">\((A_3,j)\)</span> and <span class="math inline">\((A_3,i)\)</span> in the row, <span class="math inline">\((A_2,k)\)</span> and <span class="math inline">\((g,k)\)</span> in the column, and <span class="math inline">\((g,i)\)</span> and <span class="math inline">\((A_2,j)\)</span> in the B-label. Each line sums to two, by the A-site ice rule, zero flux and the B-site ice rule respectively, so its two remaining cells sum to one. The three off-hexagon cells would then pairwise sum to one, which three zero-one numbers cannot do. <span class="math inline">\(\square\)</span></p>
+<p>Periodic tiling lifts this to arbitrary size. Identify bonds of a large cell by their A-site position reduced modulo the small box together with their direction, and repeat a state of the small cell across the large one. The ice rule is local and so is inherited; each winding component is multiplied by the tiling factor in the two transverse directions, so a zero-flux state tiles to a zero-flux state; and a hexagon of the large cell is a translate of a hexagon of the small one, so frozenness is inherited too. That was checked from scratch in each target cell’s own derived hexagon set for ten source-target pairs, with targets <span class="math inline">\((2,2,2)\)</span>, <span class="math inline">\((2,2,4)\)</span>, <span class="math inline">\((1,2,4)\)</span> and the 432-spin <span class="math inline">\((3,3,3)\)</span>, all ten frozen with the ice rule and zero winding intact. The <span class="math inline">\(\mathbf{W} = 0\)</span> sector of every cell therefore contains frozen states.</p>
+<h1 id="translation-frozen-states-and-how-many-there-are">Translation-frozen states, and how many there are</h1>
+<p>The second construction is independent of the first and carries an exact count. For the <span class="math inline">\(z\)</span> axis the relevant translations are the two half-diagonals perpendicular to it, <span class="math inline">\((2,2,0)\)</span> and <span class="math inline">\((2,-2,0)\)</span> in <span class="math inline">\(a/4\)</span> units; the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> axes take <span class="math inline">\((0,2,2)\)</span>, <span class="math inline">\((0,2,-2)\)</span> and <span class="math inline">\((2,0,2)\)</span>, <span class="math inline">\((2,0,-2)\)</span>.</p>
+<p><strong>Theorem 2.</strong> <em>In any cell, an ice state invariant under the two half-diagonal translations perpendicular to an axis is frozen, in every flux sector. Its <span class="math inline">\(\mathbf{W} = 0\)</span> members number exactly <span class="math inline">\(\binom{2c}{c}^{2}\)</span>, where <span class="math inline">\(c\)</span> is the cell’s extent along that axis, and the three axis families are disjoint.</em></p>
+<p><em>Proof.</em> On a hexagon with directions <span class="math inline">\((i,j,k)\)</span> and A sites <span class="math inline">\(A_1, A_2, A_3\)</span>, the two bonds of direction <span class="math inline">\(i\)</span> sit at <span class="math inline">\(A_1\)</span> and <span class="math inline">\(A_3 = A_1 + (d_k - d_j)\)</span>, those of direction <span class="math inline">\(j\)</span> at <span class="math inline">\(A_3\)</span> and <span class="math inline">\(A_2 = A_3 + (d_i - d_k)\)</span>, and those of direction <span class="math inline">\(k\)</span> at <span class="math inline">\(A_2\)</span> and <span class="math inline">\(A_1 = A_2 + (d_j - d_i)\)</span>, so each direction’s pair is separated by the difference of the other two. The four directions split by the sign of their <span class="math inline">\(z\)</span> component into <span class="math inline">\(\{d_0, d_3\}\)</span> and <span class="math inline">\(\{d_1, d_2\}\)</span>, so any three of them contain a pair from one class, and for such a pair the difference has zero <span class="math inline">\(z\)</span> component and equals <span class="math inline">\(\pm(d_0 - d_3) = \pm(2,2,0)\)</span> or <span class="math inline">\(\pm(d_1 - d_2) = \pm(2,-2,0)\)</span>. One of the three directions therefore has its two bonds identified by a translation the state is invariant under, so they carry equal bits, where flippability requires them opposite. No hexagon is flippable, and neither the ice rule nor any flux condition entered the argument.</p>
+<p>For the count, quotient by the two translations. The A sites collapse to the <span class="math inline">\(2c\)</span> distinct coordinates along the axis and the quotient is a ring of <span class="math inline">\(4c\)</span> sites joined by double bonds. Write <span class="math inline">\(a(z)\)</span> for the number of A-to-B arrows among the two directions with positive axis component in layer <span class="math inline">\(z\)</span>, and <span class="math inline">\(b(z)\)</span> for the same among the two with negative component. The A-site rule gives <span class="math inline">\(a(z) + b(z) = 2\)</span> and the B-site rule gives <span class="math inline">\(a(z) + b(z{+}2) = 2\)</span>, which together force only that <span class="math inline">\(b\)</span> is 2-periodic; the fully polarised state satisfies both and has <span class="math inline">\(a \equiv 2\)</span>. It is zero flux along the axis, not the ice rule, that forces one arrow up and one down on every double bond. Given that balance, the state is fixed by one sign per layer for the upward pair and one for the downward pair, and the two transverse fluxes vanish exactly when each of those two sequences of length <span class="math inline">\(2c\)</span> is balanced. There are <span class="math inline">\(\binom{2c}{c}\)</span> balanced sequences of each kind. A state in two of the three axis families is invariant under the whole face-centred lattice, hence a <span class="math inline">\(q = 0\)</span> state, which has <span class="math inline">\(\mathbf{W} \neq 0\)</span>, so the families are disjoint at zero flux. <span class="math inline">\(\square\)</span></p>
+<p>The corollary is a lower bound: an <span class="math inline">\(L \times L \times L\)</span> cell holds at least <span class="math inline">\(3\binom{2L}{L}^{2}\)</span> frozen <span class="math inline">\(\mathbf{W} = 0\)</span> states, which grows like <span class="math inline">\(16^{L}\)</span> up to a polynomial factor. The frozen set is exponentially large, and still negligible against a sector whose size grows like <span class="math inline">\(e^{\kappa L^{3}}\)</span>.</p>
+<p>Both halves are checked numerically. The family is constructed and every member verified for the ice rule, zero flux and zero flippable hexagons at <span class="math inline">\((1,1,2)\)</span>, <span class="math inline">\((1,2,2)\)</span>, <span class="math inline">\((2,2,2)\)</span> and <span class="math inline">\((3,3,3)\)</span>, the three axis families disjoint at each; and where the whole frozen set is available by enumeration the number of <span class="math inline">\((2,2,0)\)</span>-invariant frozen states is exactly <span class="math inline">\(\binom{2c}{c}^{2}\)</span>, namely 36 at <span class="math inline">\((1,1,2)\)</span>, 400 at <span class="math inline">\((1,1,3)\)</span> and 4,900 at <span class="math inline">\((1,1,4)\)</span>, the last by SAT enumeration (<code>experiments/07_certificates/results/translation_family.json</code>, which also records 5,412 frozen zero-flux states in all at <span class="math inline">\((1,1,4)\)</span>). Neither theorem exhausts the frozen set: only four of the twelve <span class="math inline">\((1,1,1)\)</span> states belong to Theorem 2’s family, and frozen states with no translation symmetry at all exist on the thin cells.</p>
+<table>
+<caption>Frozen zero-flux states by cell, from <code>experiments/07_certificates/results/summary.md</code>. ‘Tilings of smaller’ counts the periodic lifts of frozen zero-flux states of proper sub-cells; ‘aperiodic’ counts the states fixed by no nontrivial translation of the torus.</caption>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th style="text-align: right;">bonds</th>
+<th style="text-align: right;">frozen <span class="math inline">\(\mathbf{W}=0\)</span></th>
+<th style="text-align: right;">Theorem 2 family</th>
+<th style="text-align: right;">tilings of smaller</th>
+<th style="text-align: right;">in neither</th>
+<th style="text-align: right;">aperiodic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\((1,1,2)\)</span></td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,2,2)\)</span></td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">204</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">124</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">64</td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,2,3)\)</span></td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">968</td>
+<td style="text-align: right;">440</td>
+<td style="text-align: right;">584</td>
+<td style="text-align: right;">384</td>
+<td style="text-align: right;">336</td>
+</tr>
+<tr>
+<td><span class="math inline">\((2,2,2)\)</span></td>
+<td style="text-align: right;">128</td>
+<td style="text-align: right;">612</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">420</td>
+<td style="text-align: right;">192</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p>Two features of the <span class="math inline">\((2,2,2)\)</span> row are worth separating. At the smallest cubic cell 192 of the 612 frozen zero-flux states, a little under a third, are neither members of Theorem 2’s family nor tilings of anything smaller, so the two theorems and tiling together still miss a substantial part of the frozen set. And every frozen zero-flux state of <span class="math inline">\((2,2,2)\)</span> is periodic: the stabiliser-order histogram under the 32 face-centred translations is <span class="math inline">\(\{2\!:\!192,\ 4\!:\!288,\ 8\!:\!120,\ 16\!:\!12\}\)</span>, minimum order two. That is a qualitative difference from the thin cells, where aperiodic frozen states are common, and it is a fact about <span class="math inline">\(L = 2\)</span> rather than about cubic cells in general.</p>
+<h1 id="what-the-frozen-set-does-to-the-dynamics">What the frozen set does to the dynamics</h1>
+<p>Because frozen states exist in the <span class="math inline">\(\mathbf{W} = 0\)</span> sector of every cell, that sector is never connected under hexagon flips and its spectral gap is exactly zero at every size. Every statement about relaxation, mixing or the Rokhsar–Kivelson gap must therefore attach to a connected component of the flip graph rather than to the sector, and any future rapid-mixing theorem must carry the same restriction. The natural component is the one containing the chain’s start state, and it should not be assumed to be the largest: at <span class="math inline">\((1,1,4)\)</span> the canonical start sits in a component of 42,240 states while the giant component has 43,008, and reading the gap off the wrong one misstates it by a factor of 3.6.</p>
+<h1 id="certification">Certification</h1>
+<p>Each theorem is checked by machine in two independent ways, and the counts above in a third. The three artefacts answer different questions and have different trust boundaries.</p>
+<h2 id="the-lean-4-developments">The Lean 4 developments</h2>
+<p>Both theorems are formalised in Lean 4 <span class="citation" data-cites="de-moura-ullrich-2021-lean4-theorem-prover">(<a href="#ref-de-moura-ullrich-2021-lean4-theorem-prover" role="doc-biblioref">de Moura and Ullrich 2021</a>)</span>, each as a standalone Lake project with no dependencies: core Lean only, no Mathlib, no network fetch, toolchain pinned to <code>leanprover/lean4:v4.33.1</code>.</p>
+<p><code>formal/theorem1/</code> proves Theorem 1 about the <span class="math inline">\(4\times4\)</span> matrix model. The structured proof follows the argument above, with the three line lemmas as separate named theorems and the contradiction as one <code>omega</code> step over their equations; an independent brute force over all <span class="math inline">\(2^{16}\)</span> matrices proves the same statement, evaluated by the Lean kernel through <code>decide +kernel</code> rather than by the compiler. The counts 90 and 12 are theorems rather than evaluations: for each list of states there is a length, a soundness, a distinctness and a completeness theorem quantified over all matrices, which together constitute a cardinality in a setting with no <code>Fintype</code> or <code>Finset</code>.</p>
+<p><code>formal/theorem2/</code> proves Theorem 2 on the infinite lattice, in a form stronger than the statement above in four respects. The site set is all of <span class="math inline">\(\mathbb{Z}^3\)</span> rather than the face-centred sublattice; there is no periodic cell and no modular arithmetic; no ice rule is assumed, which is why ‘in every flux sector’ costs nothing; and all three axes come from one lemma parameterised by the axis. Sharpness is formalised, by a state invariant under one of the two translations with a flippable hexagon. The translation-frozen family is formalised as far as core Lean allows: invariance, the ice rule at both sublattices, freezing, faithfulness of the parameterisation by two sign sequences, and the converse that invariance forces layer-constancy and that layer-constancy with ice and balance forces the two-sign-sequence form. The count <span class="math inline">\(\binom{2c}{c}^{2}\)</span> is <em>not</em> formalised and cannot be without Mathlib, since core Lean has neither <code>Nat.choose</code> nor <code>Finset</code>; nor are the torus quotient, the flux argument or the disjointness corollary. It was the formalisation that caught an error in an earlier derivation of the count, the claim that the ice rule alone forces one arrow up and one down on each double bond; the counterexample is formalised as <code>allUp</code>.</p>
+<p>The gap between the formal model and the simulation is closed in both directions. <code>Theorem2/Walk.lean</code> defines a hexagon as the simulation does and proves by exhaustion over all <span class="math inline">\(4^6 = 4096\)</span> direction sequences that the closed non-backtracking six-walks of zero displacement are exactly the recipe hexagons <span class="math inline">\((i,j,k,i,j,k)\)</span> with <span class="math inline">\(i\)</span>, <span class="math inline">\(j\)</span>, <span class="math inline">\(k\)</span> distinct; it identifies the two traversal classes as lists in cycle order and restates Theorem 2 for walks. <code>Theorem2/Count.lean</code> proves the incidence counts, twelve hexagons through every A site and six through every bond, for every point of <span class="math inline">\(\mathbb{Z}^3\)</span>. <code>Export.lean</code> reverses the direction of trust: <code>lake exe hexexport</code> computes the hexagon table of a periodic cell from the Lean definitions and nothing else, and <code>tests/test_lean_bridge.py</code> checks the simulation against those tables at <span class="math inline">\((1,1,1)\)</span>, <span class="math inline">\((1,1,2)\)</span>, <span class="math inline">\((1,2,2)\)</span> and <span class="math inline">\((2,2,2)\)</span>, comparing the hexagon sets, the cycle order up to rotation and reflection, the traversal partition, and the flippability verdict against the reference predicate on all 90 ice states of <span class="math inline">\((1,1,1)\)</span>.</p>
+<p>The axiom audits are the reason to call these machine-checked rather than machine-assisted. <code>formal/theorem1/Axioms.lean</code> and <code>formal/theorem2/Check.lean</code> print <code>#print axioms</code> for 20 and 78 theorems respectively, and every line shows only <code>propext</code>, <code>Quot.sound</code>, or no axioms at all. <code>Classical.choice</code> appears nowhere, so both developments are constructive; <code>sorryAx</code> appears nowhere, so nothing is admitted; and <code>Lean.ofReduceBool</code> appears nowhere, so <code>native_decide</code> is unused and every finite check is carried out by the kernel. What remains unverified is one transcription: some thirty lines of Lean definitions, covering the coordinates, directions, hexagon sites, traversal classes, flippability and the exporter’s box and wrapping, have to be read against the conventions of <code>icemix/lattice.py</code>, and if one of those is wrong both sides are wrong together. The exporter is also a program rather than a proof, built from the same definitions as <code>Count.lean</code> but not verified against them.</p>
+<h2 id="unsatisfiability-certificates">Unsatisfiability certificates</h2>
+<p>The second check re-derives each theorem’s finite instances by a route sharing no code with the first. <code>icemix/cnf.py</code> encodes the model in conjunctive normal form with the arrow bits as the Boolean variables. The ice rule is ‘exactly two of four’ at every site, eight clauses with no auxiliaries. Zero flux uses one cut plane per axis, which suffices because flux is conserved, and <span class="math inline">\(W_j = 0\)</span> becomes a single cardinality constraint; that this cut-plane flux equals the project’s winding function bit for bit is checked over every ice state at three cells rather than assumed. Flippability is ‘the six bits alternate in cycle order’, so ‘frozen’ is two six-clauses per hexagon and ‘some hexagon is flippable’ is a selector per hexagon plus one clause. Translation invariance is two clauses per bond.</p>
+<p>Each theorem becomes an unsatisfiability claim. For Theorem 1 the formula is ‘ice rule, and <span class="math inline">\(\mathbf{W} = 0\)</span>, and some hexagon is flippable’ at <span class="math inline">\((1,1,1)\)</span>; for Theorem 2 it is ‘ice rule, and invariant under both half-diagonals perpendicular to the axis, and some hexagon is flippable’, with no zero-flux constraint at all, which is what makes the certificate establish the theorem in its ‘every flux sector’ form. CaDiCaL rel-3.0.1 refutes each and writes a DRAT proof, and <code>drat-trim</code> <span class="citation" data-cites="wetzler-et-al-2014-drat-trim">(<a href="#ref-wetzler-et-al-2014-drat-trim" role="doc-biblioref">Wetzler, Heule, and Hunt 2014</a>)</span> checks it and must print <code>s VERIFIED</code>. The guarantee is proof-theoretic rather than a claim about the solver: the proof is a sequence of clause additions, each independently confirmed by the checker to preserve satisfiability, ending in the empty clause. The solver’s reasoning, heuristics and correctness are out of the trusted base; only the checker and the CNF file are in it, and the CNF file is small enough to read. The Theorem 1 formula and three Theorem 2 formulas were also given LRAT proofs and accepted by the independent <code>lrat-check</code> <span class="citation" data-cites="cruz-filipe-et-al-2017-efficient-certified-rat-verification">(<a href="#ref-cruz-filipe-et-al-2017-efficient-certified-rat-verification" role="doc-biblioref">Cruz-Filipe et al. 2017</a>)</span>, so no single checker carries the result.</p>
+<table>
+<caption>The sixteen DRAT certificates, from <code>experiments/07_certificates/results/summary.md</code>. Every formula was refuted in under 0.11 s and checked in under 0.33 s. The <span class="math inline">\((1,1,2)\)</span> <span class="math inline">\(z\)</span>-axis formula has 737 clauses rather than 801 because the two half-diagonals coincide modulo the box whenever the transverse extent is one, so it imposes a single translation.</caption>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th>claim</th>
+<th>cell</th>
+<th style="text-align: right;">variables</th>
+<th style="text-align: right;">clauses</th>
+<th style="text-align: right;">largest DRAT proof</th>
+<th>verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Theorem 1</td>
+<td><span class="math inline">\((1,1,1)\)</span></td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">385</td>
+<td style="text-align: right;">996 B</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>Theorem 2, three axes</td>
+<td><span class="math inline">\((1,1,2)\)</span></td>
+<td style="text-align: right;">128</td>
+<td style="text-align: right;">737–801</td>
+<td style="text-align: right;">667 B</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>Theorem 2, three axes</td>
+<td><span class="math inline">\((1,2,2)\)</span></td>
+<td style="text-align: right;">256</td>
+<td style="text-align: right;">1,601</td>
+<td style="text-align: right;">1,377 B</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>Theorem 2, three axes</td>
+<td><span class="math inline">\((2,2,2)\)</span></td>
+<td style="text-align: right;">512</td>
+<td style="text-align: right;">3,201</td>
+<td style="text-align: right;">2,776 B</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>Theorem 2, three axes</td>
+<td><span class="math inline">\((3,3,3)\)</span></td>
+<td style="text-align: right;">1,728</td>
+<td style="text-align: right;">10,801</td>
+<td style="text-align: right;">9,897 B</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>Theorem 2, three axes</td>
+<td><span class="math inline">\((4,4,4)\)</span></td>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: right;">25,601</td>
+<td style="text-align: right;">24,672 B</td>
+<td>VERIFIED</td>
+</tr>
+</tbody>
+</table>
+<p>A certificate that cannot fail certifies nothing, so four negative controls drop one hypothesis each and must return satisfiable with a witness that the simulation and the C flip kernel independently confirm to be a flippable ice state. Dropping <span class="math inline">\(\mathbf{W} = 0\)</span> from the Theorem 1 formula yields a state with four flippable hexagons and winding <span class="math inline">\((0,0,-2)\)</span>, which shows the refutation is about the flux constraint rather than an artefact of the encoding. Dropping the frozen clauses at <span class="math inline">\((1,1,2)\)</span> yields a zero-flux state with eight flippable hexagons. Dropping one of the two half-diagonals yields 32 flippable hexagons at <span class="math inline">\((2,2,2)\)</span> and 60 at <span class="math inline">\((3,3,3)\)</span>, which is where those controls had to be placed, since at a cell of transverse extent one the dropped translation is redundant and the control would have been vacuous.</p>
+<h2 id="certified-counting">Certified counting</h2>
+<p>A count has no short proof of the DRAT kind, so counting takes a different route, certified knowledge compilation <span class="citation" data-cites="bryant-et-al-2025-certified-knowledge-compilation">(<a href="#ref-bryant-et-al-2025-certified-knowledge-compilation" role="doc-biblioref">Bryant et al. 2025</a>)</span>. The formula is compiled to a decision-DNNF representation by <code>d4</code> <span class="citation" data-cites="lagniez-marquis-2017-improved-decision-dnnf-compiler">(<a href="#ref-lagniez-marquis-2017-improved-decision-dnnf-compiler" role="doc-biblioref">Lagniez and Marquis 2017</a>)</span>; <code>cpog-gen</code> turns that representation into a CPOG proof object asserting both that the representation implies the formula and that the formula implies the representation; and <code>cpog-check</code> verifies the proof object against the original CNF and prints its own model count. Only <code>cpog-check</code>’s number is treated as certified, and the compiler’s raw number is recorded separately and required to agree.</p>
+<p>Nineteen of twenty formulas were certified, the exception a compiler timeout at <span class="math inline">\((3,3,3)\)</span> rather than a disagreement. The certified counts are 90, 12 and 12 at <span class="math inline">\((1,1,1)\)</span> for ice states, zero-flux states and frozen zero-flux states; 3,618, 388 and 68 at <span class="math inline">\((1,1,2)\)</span>; 181,122, 15,024 and 528 at <span class="math inline">\((1,1,3)\)</span>; 204 for the frozen zero-flux states of <span class="math inline">\((1,2,2)\)</span>; and, at two cells the project’s 64-bit enumerator cannot reach, <strong>612</strong> frozen zero-flux states at <span class="math inline">\((2,2,2)\)</span> and <strong>968</strong> at <span class="math inline">\((1,2,3)\)</span>. Seven further certified counts at <span class="math inline">\((1,1,1)\)</span> underwrite an unrelated three-bond obstruction. Every count already known by two other methods came back equal to it.</p>
+<p>One caveat is structural. A model count runs over all variables of the formula, auxiliaries included, so a certified count is a count of the encoding and agrees with the count of ice states only if every auxiliary is functionally determined by the bond variables. That it is, for the cardinality encoding used here, is checked rather than assumed: the ten rows whose certified count equals a count known independently span three constraint sets and four cells, and the 612 and 968 use the same encoding shape and are each equal to a projected enumeration whose blocking clauses were placed on the bond variables alone. Every state of both censuses was also re-verified individually by the ice-rule and winding predicates and by the C flip kernel. The CPOG proof objects run to hundreds of megabytes each and are not kept in the repository, so re-checking a count means recompiling; the DRAT and LRAT proofs are all under 25 kB and are committed.</p>
+<h2 id="re-checking-from-the-repository">Re-checking from the repository</h2>
+<p>From the repository root, with <code>elan</code> on the path:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> formal/theorem1 <span class="kw">&amp;&amp;</span> <span class="ex">lake</span> build <span class="kw">&amp;&amp;</span> <span class="ex">lake</span> env lean Axioms.lean</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> formal/theorem2 <span class="kw">&amp;&amp;</span> <span class="ex">lake</span> build <span class="kw">&amp;&amp;</span> <span class="ex">lake</span> env lean Check.lean <span class="kw">&amp;&amp;</span> <span class="ex">lake</span> exe hexexport export</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> pytest tests/test_lean_bridge.py tests/test_frozen.py tests/test_cnf.py</span></code></pre></div>
+<p>Each <code>lake build</code> must end with <code>Build completed successfully</code> and no warnings, and the two audits must show only <code>propext</code> and <code>Quot.sound</code>. The unsatisfiability certificates need no project code: in <code>experiments/07_certificates/results/certificates/</code> each claim has a <code>.cnf</code>, a <code>.drat</code> and the checker’s recorded output, so <code>drat-trim thm1_111_drat.cnf thm1_111_drat.drat</code> reproduces the Theorem 1 verdict, and likewise for the fifteen <code>thm2_&lt;axis&gt;_&lt;cell&gt;_drat</code> triples and the four LRAT pairs. Regenerating everything including the counts is <code>run_certificates.py --items A,B,C,D</code>, which needs <code>cadical</code>, <code>drat-trim</code>, <code>lrat-check</code>, <code>d4</code>, <code>cpog-gen</code> and <code>cpog-check</code> on the path.</p>
+<h1 id="related-work">Related work</h1>
+<p>Configurations with no flippable plaquette are a familiar feature of the dimer models pyrochlore ice sits alongside; in quantum dimer models they are the staggered configurations at the extreme of the flux range, isolated under local plaquette dynamics and hence exact eigenstates at the Rokhsar–Kivelson point <span class="citation" data-cites="rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas moessner-raman-2010-quantum-dimer-models">(<a href="#ref-rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas" role="doc-biblioref">Rokhsar and Kivelson 1988</a>; <a href="#ref-moessner-raman-2010-quantum-dimer-models" role="doc-biblioref">Moessner and Raman 2010</a>)</span>. The closest three-dimensional bipartite case, the cubic-lattice dimer model, has been studied by Monte Carlo in its Coulomb phase <span class="citation" data-cites="huse-et-al-2003-coulomb-liquid-dimer-models-3d">(<a href="#ref-huse-et-al-2003-coulomb-liquid-dimer-models-3d" role="doc-biblioref">Huse et al. 2003</a>)</span> and its Rokhsar–Kivelson relaxation examined at a single size <span class="citation" data-cites="lauchli-et-al-2008-dynamical-dimer-correlations-at-rk-points">(<a href="#ref-lauchli-et-al-2008-dynamical-dimer-correlations-at-rk-points" role="doc-biblioref">Läuchli, Capponi, and Assaad 2008</a>)</span>; the corresponding exponent was measured on the square lattice <span class="citation" data-cites="isakov-et-al-2011-dynamics-conformal-quantum-critical-points">(<a href="#ref-isakov-et-al-2011-dynamics-conformal-quantum-critical-points" role="doc-biblioref">Isakov et al. 2011</a>)</span>. For spin ice the practical response to local dynamics that moves between ice states too slowly has been to replace it, the loop algorithm of Barkema and Newman <span class="citation" data-cites="barkema-newman-1998-monte-carlo-ice-models">(<a href="#ref-barkema-newman-1998-monte-carlo-ice-models" role="doc-biblioref">Barkema and Newman 1998</a>)</span> being adapted to the pyrochlore lattice by Melko and Gingras <span class="citation" data-cites="melko-gingras-2004-dipolar-spin-ice-monte-carlo">(<a href="#ref-melko-gingras-2004-dipolar-spin-ice-monte-carlo" role="doc-biblioref">Melko and Gingras 2004</a>)</span> with cluster variants following <span class="citation" data-cites="otsuka-2014-cluster-algorithm-spin-ice shinaoka-2011-pyrochlore-heisenberg-spin-ice-loop-algorithm">(<a href="#ref-otsuka-2014-cluster-algorithm-spin-ice" role="doc-biblioref">Otsuka 2014</a>; <a href="#ref-shinaoka-2011-pyrochlore-heisenberg-spin-ice-loop-algorithm" role="doc-biblioref">Shinaoka 2011</a>)</span>. The present work runs the local chain deliberately and asks what its frozen set is, which is the question those algorithms were designed to make irrelevant.</p>
+<p>The link to the quantum problem is the Rokhsar–Kivelson correspondence <span class="citation" data-cites="rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points">(<a href="#ref-rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas" role="doc-biblioref">Rokhsar and Kivelson 1988</a>; <a href="#ref-henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points" role="doc-biblioref">Henley 2004</a>)</span>, sharpened by Castelnovo and co-workers into the observation that a Hamiltonian at such a point admits a stochastic-matrix-form decomposition, so that its ground-state phase diagram is an equilibrium partition function and its excitation spectrum a set of classical relaxation rates <span class="citation" data-cites="castelnovo-et-al-2005-generalized-rokhsar-kivelson-stochastic-matrix">(<a href="#ref-castelnovo-et-al-2005-generalized-rokhsar-kivelson-stochastic-matrix" role="doc-biblioref">Castelnovo et al. 2005</a>)</span>. Under that correspondence the generator of the hexagon-flip chain is the ring-exchange Hamiltonian of pyrochlore spin ice at its Rokhsar–Kivelson point <span class="citation" data-cites="hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid shannon-et-al-2012-quantum-ice-monte-carlo">(<a href="#ref-hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid" role="doc-biblioref">Hermele, Fisher, and Balents 2004</a>; <a href="#ref-shannon-et-al-2012-quantum-ice-monte-carlo" role="doc-biblioref">Shannon et al. 2012</a>)</span>, so Theorem 2’s <span class="math inline">\(3\binom{2L}{L}^{2}\)</span> is a lower bound on the ground-space degeneracy at zero flux. An exponentially large set of states inert under a local constraint-preserving dynamics is what the recent literature calls Hilbert space fragmentation, or shattering, a frozen state in the present sense being a one-dimensional Krylov sector <span class="citation" data-cites="sala-et-al-2020-hilbert-space-fragmentation-dipole-conserving khemani-et-al-2020-hilbert-space-shattering-localization">(<a href="#ref-sala-et-al-2020-hilbert-space-fragmentation-dipole-conserving" role="doc-biblioref">Sala et al. 2020</a>; <a href="#ref-khemani-et-al-2020-hilbert-space-shattering-localization" role="doc-biblioref">Khemani, Hermele, and Nandkishore 2020</a>)</span>; there the mechanism is usually a set of local constraints or a conserved dipole moment, where here it is the ice rule together with the geometry of the hexagon, explicit enough to be counted exactly. The consequence for sampling is a bottleneck of the sort turned into slow-mixing theorems elsewhere, as for Glauber dynamics of the six-vertex model in its ordered phases <span class="citation" data-cites="fahrbach-randall-2019-slow-mixing-glauber-dynamics-six-vertex-model">(<a href="#ref-fahrbach-randall-2019-slow-mixing-glauber-dynamics-six-vertex-model" role="doc-biblioref">Fahrbach and Randall 2019</a>)</span>, although the states counted here are isolated points rather than a barrier between two large regions, so what they support is disconnection rather than slow mixing.</p>
+<h1 id="appendix-artefacts">Appendix: artefacts</h1>
+<p>All paths are relative to the repository root.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>path</th>
+<th>contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>icemix/lattice.py</code></td>
+<td>the lattice construction and conventions, the derived hexagon set, <code>tile_state</code>, and the quotient six-cycles kept for comparison</td>
+</tr>
+<tr>
+<td><code>icemix/frozen.py</code></td>
+<td>both theorems in the module docstring; the matrix model, the hexagon and obstruction cells, the translation-frozen family and its count, the stabiliser census</td>
+</tr>
+<tr>
+<td><code>icemix/cnf.py</code></td>
+<td>the CNF encoding, the certificate helpers, and the big-integer stabiliser census used beyond 64 bonds</td>
+</tr>
+<tr>
+<td><code>formal/theorem1/</code></td>
+<td>Theorem 1 in Lean 4: <code>Basic</code>, <code>Structured</code>, <code>Decide</code>, <code>Brute</code>, <code>Counts</code>, <code>Axioms.lean</code></td>
+</tr>
+<tr>
+<td><code>formal/theorem2/</code></td>
+<td>Theorem 2 in Lean 4: <code>Basic</code>, <code>Frozen</code>, <code>Layered</code>, <code>Walk</code>, <code>Count</code>, <code>Export.lean</code>, <code>Check.lean</code>, <code>xcheck.py</code>, and <code>export/</code> with the four exported hexagon tables</td>
+</tr>
+<tr>
+<td><code>experiments/07_certificates/</code></td>
+<td><code>run_certificates.py</code>; under <code>results/</code>, the DRAT and LRAT certificates with their CNF files and checker output, the <code>cpog/</code> CNF files and verdicts, and <code>summary.md</code>, the source of every number in the tables above</td>
+</tr>
+<tr>
+<td><code>experiments/01_falsifiers/results/results.json</code></td>
+<td>the tiling verification, ten source-target pairs</td>
+</tr>
+<tr>
+<td><code>tests/</code></td>
+<td><code>test_frozen.py</code> and <code>test_tiling.py</code> (the matrix model against the lattice, the family, the exact counts, the stabiliser census, tiling); <code>test_lean_bridge.py</code> (the simulation against Lean’s exported tables); <code>test_cnf.py</code> (the encoding gates and both theorems in process)</td>
+</tr>
+</tbody>
+</table>
+<h1 class="unnumbered" id="references">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-barkema-newman-1998-monte-carlo-ice-models" class="csl-entry" role="listitem">
+Barkema, G. T., and M. E. J. Newman (1998), <span>‘Monte Carlo Simulation of Ice Models’</span>, <em>Physical Review E</em>, 57: 1155–66.
+</div>
+<div id="ref-bramwell-gingras-2001-spin-ice-state" class="csl-entry" role="listitem">
+Bramwell, Steven T., and Michel J. P. Gingras (2001), <span>‘Spin Ice State in Frustrated Magnetic Pyrochlore Materials’</span>, <em>Science</em>, 294: 1495–501.
+</div>
+<div id="ref-bryant-et-al-2025-certified-knowledge-compilation" class="csl-entry" role="listitem">
+Bryant, Randal E., et al. (2025), <span>‘Certified Knowledge Compilation with Application to Formally Verified Model Counting’</span>, <em>Journal of Artificial Intelligence Research</em>, 82, <a href="https://doi.org/10.1613/jair.1.15958">https://doi.org/10.1613/jair.1.15958</a>.
+</div>
+<div id="ref-castelnovo-et-al-2005-generalized-rokhsar-kivelson-stochastic-matrix" class="csl-entry" role="listitem">
+Castelnovo, Claudio, et al. (2005), <span>‘From Quantum Mechanics to Classical Statistical Physics: Generalized Rokhsar–Kivelson Hamiltonians and the `Stochastic Matrix Form’ Decomposition’</span>, <em>Annals of Physics</em>, 318/2: 316–44, <a href="https://doi.org/10.1016/j.aop.2005.01.006">https://doi.org/10.1016/j.aop.2005.01.006</a>.
+</div>
+<div id="ref-cruz-filipe-et-al-2017-efficient-certified-rat-verification" class="csl-entry" role="listitem">
+Cruz-Filipe, Luís, et al. (2017), <span>‘Efficient Certified RAT Verification’</span>, <em>Automated Deduction — CADE 26</em>, Lecture Notes in Computer Science, 10395: 220–36, <a href="https://doi.org/10.1007/978-3-319-63046-5_14">https://doi.org/10.1007/978-3-319-63046-5_14</a>.
+</div>
+<div id="ref-fahrbach-randall-2019-slow-mixing-glauber-dynamics-six-vertex-model" class="csl-entry" role="listitem">
+Fahrbach, Matthew, and Dana Randall (2019), <span>‘Slow Mixing of Glauber Dynamics for the Six-Vertex Model in the Ordered Phases’</span>, <em>Approximation, Randomization, and Combinatorial Optimization. Algorithms and Techniques (APPROX/RANDOM 2019)</em>.
+</div>
+<div id="ref-henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points" class="csl-entry" role="listitem">
+Henley, Christopher L. (2004), <span>‘From Classical to Quantum Dynamics at Rokhsar–Kivelson Points’</span>, <em>Journal of Physics: Condensed Matter</em>, 16: S891–8.
+</div>
+<div id="ref-hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid" class="csl-entry" role="listitem">
+Hermele, Michael, Matthew P. A. Fisher, and Leon Balents (2004), <span>‘Pyrochlore Photons: The U(1) Spin Liquid in a $S=1/2$ Three-Dimensional Frustrated Magnet’</span>, <em>Physical Review B</em>, 69: 064404.
+</div>
+<div id="ref-huse-et-al-2003-coulomb-liquid-dimer-models-3d" class="csl-entry" role="listitem">
+Huse, David A., et al. (2003), <span>‘Coulomb and Liquid Dimer Models in Three Dimensions’</span>, <em>Physical Review Letters</em>, 91: 167004, <a href="https://doi.org/10.1103/PhysRevLett.91.167004">https://doi.org/10.1103/PhysRevLett.91.167004</a>.
+</div>
+<div id="ref-isakov-et-al-2011-dynamics-conformal-quantum-critical-points" class="csl-entry" role="listitem">
+Isakov, Sergei V., et al. (2011), <span>‘Dynamics at and Near Conformal Quantum Critical Points’</span>, <em>Physical Review B</em>, 83: 125114.
+</div>
+<div id="ref-khemani-et-al-2020-hilbert-space-shattering-localization" class="csl-entry" role="listitem">
+Khemani, Vedika, Michael Hermele, and Rahul Nandkishore (2020), <span>‘Localization from Hilbert Space Shattering: From Theory to Physical Realizations’</span>, <em>Physical Review B</em>, 101: 174204, <a href="https://doi.org/10.1103/PhysRevB.101.174204">https://doi.org/10.1103/PhysRevB.101.174204</a>.
+</div>
+<div id="ref-lagniez-marquis-2017-improved-decision-dnnf-compiler" class="csl-entry" role="listitem">
+Lagniez, Jean-Marie, and Pierre Marquis (2017), <span>‘An Improved Decision-DNNF Compiler’</span>, <em>Proceedings of the Twenty-Sixth International Joint Conference on Artificial Intelligence</em> 667–73, <a href="https://doi.org/10.24963/ijcai.2017/93">https://doi.org/10.24963/ijcai.2017/93</a>.
+</div>
+<div id="ref-lauchli-et-al-2008-dynamical-dimer-correlations-at-rk-points" class="csl-entry" role="listitem">
+Läuchli, Andreas M., Sylvain Capponi, and Fakher F. Assaad (2008), <span>‘Dynamical Dimer Correlations at Bipartite and Non-Bipartite Rokhsar–Kivelson Points’</span>, <em>Journal of Statistical Mechanics: Theory and Experiment</em> P01010.
+</div>
+<div id="ref-melko-gingras-2004-dipolar-spin-ice-monte-carlo" class="csl-entry" role="listitem">
+Melko, Roger G., and Michel J. P. Gingras (2004), <span>‘Monte Carlo Studies of the Dipolar Spin Ice Model’</span>, <em>Journal of Physics: Condensed Matter</em>, 16/43: R1277–319, <a href="https://doi.org/10.1088/0953-8984/16/43/R02">https://doi.org/10.1088/0953-8984/16/43/R02</a>.
+</div>
+<div id="ref-moessner-raman-2010-quantum-dimer-models" class="csl-entry" role="listitem">
+Moessner, Roderich, and Kumar S. Raman (2010), <span>‘Quantum Dimer Models’</span>, in <em>Introduction to Frustrated Magnetism</em>, Springer Series in Solid-State Sciences (Berlin), 437–79, <a href="https://doi.org/10.1007/978-3-642-10589-0_17">https://doi.org/10.1007/978-3-642-10589-0_17</a>.
+</div>
+<div id="ref-de-moura-ullrich-2021-lean4-theorem-prover" class="csl-entry" role="listitem">
+Moura, Leonardo de, and Sebastian Ullrich (2021), <span>‘The Lean 4 Theorem Prover and Programming Language’</span>, <em>Automated Deduction – CADE 28</em> (Cham), Lecture Notes in Computer Science, 12699: 625–35, <a href="https://doi.org/10.1007/978-3-030-79876-5_37">https://doi.org/10.1007/978-3-030-79876-5_37</a>.
+</div>
+<div id="ref-otsuka-2014-cluster-algorithm-spin-ice" class="csl-entry" role="listitem">
+Otsuka, Hiromi (2014), <span>‘Cluster Algorithm for Monte Carlo Simulations of Spin Ice’</span>, <em>Physical Review B</em>, 90: 220406(R).
+</div>
+<div id="ref-rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas" class="csl-entry" role="listitem">
+Rokhsar, Daniel S., and Steven A. Kivelson (1988), <span>‘Superconductivity and the Quantum Hard-Core Dimer Gas’</span>, <em>Physical Review Letters</em>, 61: 2376–9.
+</div>
+<div id="ref-sala-et-al-2020-hilbert-space-fragmentation-dipole-conserving" class="csl-entry" role="listitem">
+Sala, Pablo, et al. (2020), <span>‘Ergodicity Breaking Arising from Hilbert Space Fragmentation in Dipole-Conserving Hamiltonians’</span>, <em>Physical Review X</em>, 10: 011047, <a href="https://doi.org/10.1103/PhysRevX.10.011047">https://doi.org/10.1103/PhysRevX.10.011047</a>.
+</div>
+<div id="ref-shannon-et-al-2012-quantum-ice-monte-carlo" class="csl-entry" role="listitem">
+Shannon, Nic, et al. (2012), <span>‘Quantum Ice: A Quantum Monte Carlo Study’</span>, <em>Physical Review Letters</em>, 108: 067204.
+</div>
+<div id="ref-shinaoka-2011-pyrochlore-heisenberg-spin-ice-loop-algorithm" class="csl-entry" role="listitem">
+Shinaoka, Hiroshi (2011), <em>Extended Loop Algorithm for Pyrochlore Heisenberg Spin Models with Spin-Ice Type Degeneracy</em>.
+</div>
+<div id="ref-wetzler-et-al-2014-drat-trim" class="csl-entry" role="listitem">
+Wetzler, Nathan, Marijn J. H. Heule, and Warren A. Hunt (2014), <span>‘DRAT-Trim: Efficient Checking and Trimming Using Expressive Clausal Proofs’</span>, <em>Theory and Applications of Satisfiability Testing — SAT 2014</em>, Lecture Notes in Computer Science, 8561: 422–9, <a href="https://doi.org/10.1007/978-3-319-09284-3_31">https://doi.org/10.1007/978-3-319-09284-3_31</a>.
+</div>
+</div>
+</main>
+</body>
+</html>

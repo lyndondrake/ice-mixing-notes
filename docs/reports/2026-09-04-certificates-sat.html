@@ -1,0 +1,1199 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Machine-checkable certificates for the finite results, and the frozen census at the first cubic cell</title>
+<meta name="description" content="Machine-checkable certificates for the finite results, and the frozen census at the first cubic cell">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Machine-checkable certificates for the finite results, and the frozen census at the first cubic cell",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-04-certificates-sat.html",
+ "datePublished": "2026-09-04",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "inLanguage": "en-GB"
+}</script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-04-certificates-sat.md">Markdown source</a></p></div>
+<main class="doc">
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#subagent-report-certificates-sat-and-certified-counting-2026-09-04" id="toc-subagent-report-certificates-sat-and-certified-counting-2026-09-04">Subagent report: certificates, SAT and certified counting (2026-09-04)</a>
+<ul>
+<li><a href="#bottom-line" id="toc-bottom-line">0. Bottom line</a></li>
+<li><a href="#pre-flight-measured-then-multiplied-out" id="toc-pre-flight-measured-then-multiplied-out">1. Pre-flight (measured, then multiplied out)</a></li>
+<li><a href="#the-encoding-icemixcnf.py" id="toc-the-encoding-icemixcnf.py">2. The encoding (<code>icemix/cnf.py</code>)</a></li>
+<li><a href="#item-a-the-two-method-count-gate" id="toc-item-a-the-two-method-count-gate">3. Item A — the two-method count gate</a></li>
+<li><a href="#item-b-unsat-certificates" id="toc-item-b-unsat-certificates">4. Item B — UNSAT certificates</a></li>
+<li><a href="#item-c-certified-model-counting-cpog-on-aarch64" id="toc-item-c-certified-model-counting-cpog-on-aarch64">5. Item C — certified model counting (CPOG on aarch64)</a></li>
+<li><a href="#item-d-the-frozen-w-0-census-including-the-first-cubic-cell" id="toc-item-d-the-frozen-w-0-census-including-the-first-cubic-cell">6. Item D — the frozen <code>W = 0</code> census, including the first cubic cell</a></li>
+<li><a href="#tests-added" id="toc-tests-added">8. Tests added</a></li>
+<li><a href="#run-ledger-every-launch-and-its-feed-card" id="toc-run-ledger-every-launch-and-its-feed-card">9. Run ledger — every launch and its feed card</a></li>
+<li><a href="#what-was-not-done-and-why" id="toc-what-was-not-done-and-why">10. What was NOT done, and why</a></li>
+<li><a href="#what-a-reader-should-take-from-this" id="toc-what-a-reader-should-take-from-this">11. What a reader should take from this</a></li>
+</ul></li>
+</ul>
+</details></nav>
+<table>
+<tbody>
+<tr>
+<td>title: “Machine-checkable certificates for the finite results, and the frozen census at the first cubic cell”</td>
+</tr>
+<tr>
+<td>date: 2026-09-04</td>
+</tr>
+</tbody>
+</table>
+<h1 id="subagent-report-certificates-sat-and-certified-counting-2026-09-04">Subagent report: certificates, SAT and certified counting (2026-09-04)</h1>
+<p><strong>Provenance.</strong> Written by an implementation/numerics subagent (Claude Fable 5.1, high effort), dispatched by the Fable main loop on 2026-09-04. All compute was local, on <code>spark-709c</code> (GB10, aarch64, 20 cores); no ARC or Isambard time was used, so no HPC acknowledgement is owed. Every number in this report is read from <code>experiments/07_certificates/results/results.json</code> (rendered as <code>results/summary.md</code> by <code>make_summary.py</code>); nothing is quoted from memory and no number is recomputed in prose.</p>
+<p><strong>Files added.</strong> <code>icemix/cnf.py</code> (the encoding and the certificate helpers), <code>experiments/07_certificates/run_certificates.py</code> and <code>make_summary.py</code>, <code>tests/test_cnf.py</code>, and this report. Nothing existing was edited.</p>
+<hr />
+<h2 id="bottom-line">0. Bottom line</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>claim</th>
+<th>status</th>
+<th>what establishes it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>The CNF encoding reproduces the project’s counts exactly</td>
+<td><strong>PASS</strong></td>
+<td>SAT enumeration vs <code>icemix.enumerate</code> (DFS) vs the frontier DP: 90 / 3,618 / 181,122 ice, 12 / 388 / 15,024 <code>W = 0</code>, 12 / 68 / 528 frozen, plus 221,628 and 204 at (1,2,2) — and the <em>state sets</em>, not merely the counts, are identical</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Theorem 1</strong> — every <code>W = 0</code> state of (1,1,1) is frozen</td>
+<td><strong>CERTIFIED</strong></td>
+<td>CaDiCaL says UNSAT; the DRAT proof (996 bytes) is accepted by <code>drat-trim</code>, and an LRAT proof by <code>lrat-check</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Theorem 2</strong> — translation-invariance forces frozen</td>
+<td><strong>CERTIFIED at 5 cells × 3 axes</strong></td>
+<td>15 UNSAT DRAT proofs, all <code>s VERIFIED</code> by <code>drat-trim</code>, at (1,1,2), (1,2,2), (2,2,2), (3,3,3) and (4,4,4); no <code>W = 0</code> constraint is used, so this certifies the “in every flux sector” form</td>
+</tr>
+<tr>
+<td>4</td>
+<td>The certificates are falsifiable</td>
+<td><strong>PASS</strong></td>
+<td>4 negative controls, each dropping one constraint, all SAT with a model that icemix and the C flip kernel both certify as a <em>flippable</em> ice state</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Certified model counts</td>
+<td><strong>19 of 20 formulas CERTIFIED</strong></td>
+<td>CPOG builds on aarch64 (recipe in §5.2, one real patch needed); <code>cpog-check</code> certifies 90 / 12 / 12, 3,618 / 388 / 68, 181,122 / 15,024 / 528, 204, and — new — <strong>612</strong> at (2,2,2) and <strong>968</strong> at (1,2,3). The one failure is a <code>d4</code> timeout at (3,3,3), not a disagreement</td>
+</tr>
+<tr>
+<td>5b</td>
+<td>The stage-4b three-bond obstruction rests on certified counts</td>
+<td><strong>NEW</strong></td>
+<td><code>N = 90</code>, <code>n_i = 45</code>, <code>n_{15,0} = 15</code>, <code>n_{0,1} = 15</code>, <code>n_{1,15} = 25</code>, each a certified model count, reproducing stage 4b §3.3 exactly</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Frozen <code>W = 0</code> census at the first cubic cell (2,2,2), 128 bonds</td>
+<td><strong>NEW: 612 states</strong></td>
+<td>frozen-constrained SAT enumeration, every state re-verified by icemix and the C kernel, and the count independently <strong>certified</strong> by CPOG</td>
+</tr>
+<tr>
+<td>7</td>
+<td>(2,2,2) has <strong>no aperiodic</strong> frozen <code>W = 0</code> state</td>
+<td><strong>NEW</strong></td>
+<td>minimum stabiliser order 2 under the 32 FCC translations — in contrast with (1,1,2) (16 of 68 aperiodic) and (1,2,3) (336 of 968)</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Neither theorem, nor tiling, exhausts the frozen set at (2,2,2)</td>
+<td><strong>NEW</strong></td>
+<td>108 in the Theorem 2 family, 420 are tilings of smaller frozen states, and <strong>192 are neither</strong></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Frozen <code>W = 0</code> census at (1,2,3), 96 bonds</td>
+<td><strong>NEW: 968 states</strong></td>
+<td>same route; 440 in the family, 584 tilings, 384 neither, 336 aperiodic</td>
+</tr>
+</tbody>
+</table>
+<p>Nothing here changes the measurement or any headline of the note. Items 2 and 3 upgrade the two frozen-state theorems from “hand proof, checked numerically” to “hand proof, plus a proof object a third party can check without running any of this code”. Items 6–9 are new facts about the frozen set at the smallest cubic cell, previously out of reach because <code>icemix.enumerate</code> is capped at 64 spins and (2,2,2) has 128.</p>
+<hr />
+<h2 id="pre-flight-measured-then-multiplied-out">1. Pre-flight (measured, then multiplied out)</h2>
+<p>Every launch was timed on one unit first, as the operating rules require.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>work</th>
+<th>unit timing</th>
+<th>projection</th>
+<th>actual</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SAT enumeration, (1,1,2) ice</td>
+<td>3,618 models in 0.07 s</td>
+<td>≈ 50 k models/s</td>
+<td>(1,1,3) ice 181,122 in 21.5 s</td>
+</tr>
+<tr>
+<td>SAT enumeration, (1,2,2) <code>W = 0</code></td>
+<td>scaled from the above</td>
+<td>≈ 30 s</td>
+<td>54.3 s</td>
+</tr>
+<tr>
+<td>(2,2,2) frozen census</td>
+<td>612 models in 2.1 s (probe, exhausted the search)</td>
+<td>seconds</td>
+<td>4.2 s</td>
+</tr>
+<tr>
+<td>(1,2,3) frozen census</td>
+<td>968 models in 0.2 s (probe)</td>
+<td>seconds</td>
+<td>0.3 s</td>
+</tr>
+<tr>
+<td>Theorem 2 certificate, (3,3,3)</td>
+<td>probe: solve 0.012 s, check 0.13 s</td>
+<td>seconds</td>
+<td>0.05 s / 0.29 s</td>
+</tr>
+<tr>
+<td>Theorem 2 certificate, (4,4,4)</td>
+<td>probe: 1,024 bonds, 25,601 clauses</td>
+<td>seconds</td>
+<td>solve 0.10 s, check 0.32 s</td>
+</tr>
+</tbody>
+</table>
+<p>Two probes were <em>stopped</em> on the pre-flight rule rather than run to completion; both are recorded in §7 as things not done. Nothing was launched without a timing first, and the two runs that exceeded a minute (<code>certABD</code>, <code>certCD</code>) went into named <code>tmux</code> sessions with canonical exptop feeds (§8).</p>
+<hr />
+<h2 id="the-encoding-icemixcnf.py">2. The encoding (<code>icemix/cnf.py</code>)</h2>
+<p>One CNF encoding serves all four items. The Boolean variables <strong>are</strong> the arrow bits: bond <code>e</code> is DIMACS variable <code>e + 1</code>, true iff the arrow points from the A-end to the B-end (<code>icemix.lattice</code>’s convention). Auxiliary variables live above <code>n_bonds</code> and are never projected on.</p>
+<p><strong>(1) Ice rule.</strong> <code>icemix.enumerate</code>’s docstring proves that “exactly 2 of the 4 incident arrows point in” reduces at <em>both</em> sublattices to “exactly 2 of the 4 incident bits are set”. Exactly-2-of-4 is 8 clauses with no auxiliaries: forbid any three true, forbid any three false. <code>test_exactly_two_of_four_is_eight_clauses_and_correct</code> checks all 16 assignments.</p>
+<p><strong>(2) <code>W = 0</code>.</strong> Flux is conserved, so one cut plane per axis suffices. The plane <code>x_j = 1/2</code> (in <code>a/4</code> units) is a good choice because A-sites have even coordinates: the only bond segments covering <code>1/2</code> leave an A-site at <code>x_j = 0</code> with <code>sgn(d_j) = +1</code>. There are exactly <code>4·abc/cells_j</code> of them and <strong>every one carries <code>+1</code></strong>, so the signed flux is <code>2·popcount − n_cross</code> and <code>W_j = 0</code> is the single cardinality constraint “exactly half of them set” (pysat <code>CardEnc.equals</code>, sequential-counter encoding). That this cut-plane flux equals <code>icemix.enumerate.winding</code> bit for bit is <em>checked, not assumed</em>, over every ice state at (1,1,1), (1,1,2) and (1,1,3) — <code>cut_plane_equals_winding: true</code> in <code>part_A.json</code>, and again in <code>tests/test_cnf.py::test_cut_plane_flux_equals_the_winding_formula</code>.</p>
+<p><strong>(3) Hexagon flippability.</strong> Walking a hexagon in cycle order the traversal alternates with respect to the bond’s own A→B orientation, so flippability is “the six bits in cycle order alternate”: positions 0, 2, 4 all <code>b</code> and 1, 3, 5 all <code>1 − b</code> (<code>icemix.chain</code>). “Frozen” is then two 6-clauses per hexagon (block each pattern), with no auxiliaries at all; “hexagon <code>h</code> is flippable” is a selector <code>s_h ↔︎ (P_A ∨ P_B)</code> via two definitional auxiliaries, and “some hexagon flippable” is one clause over the selectors. The encoding was cross-checked against <code>icemix.chain.flippable_ref</code> — the reference implementation written directly from the definition, no bit tricks — over every hexagon and a sample of ice states: <strong>0 mismatches</strong> at (1,1,1) (90 states × 16 hexagons), (1,1,2) (200 × 32) and (1,1,3) (200 × 48).</p>
+<p><strong>(4) Translation invariance.</strong> <code>x_e ↔︎ x_{perm(e)}</code> from <code>icemix.frozen.translation_perm</code>, two clauses per bond.</p>
+<p>Formula sizes (from <code>part_A.json</code> / <code>part_B.json</code>):</p>
+<table>
+<thead>
+<tr>
+<th>formula</th>
+<th>cell</th>
+<th>vars</th>
+<th>clauses</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ice</td>
+<td>(1,1,1)</td>
+<td>16</td>
+<td>64</td>
+</tr>
+<tr>
+<td>ice ∧ <code>W = 0</code></td>
+<td>(1,1,1)</td>
+<td>40</td>
+<td>112</td>
+</tr>
+<tr>
+<td>ice ∧ <code>W = 0</code> ∧ frozen</td>
+<td>(1,1,1)</td>
+<td>40</td>
+<td>144</td>
+</tr>
+<tr>
+<td>ice ∧ <code>W = 0</code> ∧ some flippable (Theorem 1)</td>
+<td>(1,1,1)</td>
+<td>88</td>
+<td>385</td>
+</tr>
+<tr>
+<td>ice ∧ <code>W = 0</code> ∧ frozen</td>
+<td>(2,2,2)</td>
+<td>512</td>
+<td>1,536</td>
+</tr>
+<tr>
+<td>ice ∧ 2 translations ∧ some flippable</td>
+<td>(4,4,4)</td>
+<td>4,096</td>
+<td>25,601</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="item-a-the-two-method-count-gate">3. Item A — the two-method count gate</h2>
+<p>Mandatory gate: SAT enumeration (blocking clauses <strong>on the bond variables only</strong>, so no auxiliary can split one state into several models) against <code>icemix.enumerate</code>. Where both materialise states, the <em>sets</em> are compared, not just the counts.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>quantity</th>
+<th>SAT enumeration</th>
+<th><code>icemix</code> DFS</th>
+<th>known</th>
+<th>state sets identical</th>
+<th>SAT s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,1,1)</td>
+<td>ice</td>
+<td>90</td>
+<td>90</td>
+<td>90</td>
+<td>yes</td>
+<td>0.02</td>
+</tr>
+<tr>
+<td>(1,1,1)</td>
+<td><code>W = 0</code></td>
+<td>12</td>
+<td>12</td>
+<td>12</td>
+<td>yes</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>(1,1,1)</td>
+<td>frozen <code>W = 0</code></td>
+<td>12</td>
+<td>12</td>
+<td>12</td>
+<td>yes</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>ice</td>
+<td>3,618</td>
+<td>3,618</td>
+<td>3,618</td>
+<td>yes</td>
+<td>0.11</td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td><code>W = 0</code></td>
+<td>388</td>
+<td>388</td>
+<td>388</td>
+<td>yes</td>
+<td>0.02</td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>frozen <code>W = 0</code></td>
+<td>68</td>
+<td>68</td>
+<td>68</td>
+<td>yes</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td>ice</td>
+<td>181,122</td>
+<td>181,122</td>
+<td>181,122</td>
+<td>yes</td>
+<td>21.53</td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td><code>W = 0</code></td>
+<td>15,024</td>
+<td>15,024</td>
+<td>15,024</td>
+<td>yes</td>
+<td>1.22</td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td>frozen <code>W = 0</code></td>
+<td>528</td>
+<td>528</td>
+<td>528</td>
+<td>yes</td>
+<td>0.04</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td><code>W = 0</code></td>
+<td>221,628</td>
+<td>221,628</td>
+<td>221,628</td>
+<td>yes</td>
+<td>54.32</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>frozen <code>W = 0</code></td>
+<td>204</td>
+<td>204</td>
+<td>204</td>
+<td>yes</td>
+<td>0.04</td>
+</tr>
+</tbody>
+</table>
+<p>A <strong>third</strong> method is run at every cell: the frontier DP (<code>enumerate.frontier_count</code>), which counts without materialising a single state. It returns 90 / 3,618 / 181,122 / <strong>2,891,562</strong>, matching the known ice counts including (1,2,2)’s, whose 2.89 M states were deliberately not SAT-enumerated (≈ 5 min for no extra information; the registered gate asks only for (1,2,2)’s <code>W = 0</code> and frozen counts).</p>
+<p>A sample of up to 50 models of every formula was re-verified with <code>enumerate.ice_rule_ok_int</code>, <code>enumerate.winding_int</code> and the C kernel <code>msc_scalar_nflip</code>: the kernel reports 0 flippable hexagons on every model of a frozen formula and a positive count on the others. (In item D, by contrast, <em>every</em> state of every census is re-verified, not a sample.)</p>
+<p><strong>Gate: PASS, all eleven rows, exactly.</strong></p>
+<hr />
+<h2 id="item-b-unsat-certificates">4. Item B — UNSAT certificates</h2>
+<p>CaDiCaL rel-3.0.1 (<code>--binary=false</code>, exit 20 = UNSAT) writes a DRAT proof; <code>drat-trim</code> checks it and must print <code>s VERIFIED</code>. All artefacts — <code>.cnf</code>, <code>.drat</code>, and the checker’s own stdout — are kept under <code>experiments/07_certificates/results/certificates/</code>, so the claims can be rechecked without running any project code.</p>
+<h3 id="theorem-1">4.1 Theorem 1</h3>
+<p><code>(1,1,1)</code>: ice ∧ <code>W = 0</code> ∧ (some hexagon flippable).</p>
+<table>
+<tbody>
+<tr>
+<td>formula</td>
+<td>88 vars, 385 clauses, 4,121-byte CNF</td>
+</tr>
+<tr>
+<td>solver</td>
+<td>CaDiCaL rel-3.0.1, <strong>UNSAT</strong> in 0.017 s</td>
+</tr>
+<tr>
+<td>DRAT proof</td>
+<td>996 bytes</td>
+</tr>
+<tr>
+<td>checker</td>
+<td><code>drat-trim</code>, <strong><code>s VERIFIED</code></strong>, 0.274 s</td>
+</tr>
+<tr>
+<td>LRAT proof</td>
+<td>6,293 bytes, <code>lrat-check</code> <strong>VERIFIED</strong>, 0.030 s</td>
+</tr>
+</tbody>
+</table>
+<p>Both proof formats were produced and both checkers accepted, so the claim does not rest on one checker.</p>
+<h3 id="theorem-2">4.2 Theorem 2</h3>
+<p>Per cell and per axis: ice ∧ (invariant under both half-diagonals perpendicular to that axis) ∧ (some hexagon flippable). <strong>No <code>W = 0</code> constraint is imposed</strong> — which is the point: the certificate establishes the theorem in the form “frozen in <em>every</em> flux sector”, not merely in the zero sector.</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>axis</th>
+<th>clauses</th>
+<th>solver</th>
+<th>DRAT bytes</th>
+<th>solve s</th>
+<th>check s</th>
+<th><code>drat-trim</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,1,2)</td>
+<td>x</td>
+<td>801</td>
+<td>UNSAT</td>
+<td>651</td>
+<td>0.006</td>
+<td>0.278</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>y</td>
+<td>801</td>
+<td>UNSAT</td>
+<td>667</td>
+<td>0.015</td>
+<td>0.171</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>z</td>
+<td>737</td>
+<td>UNSAT</td>
+<td>636</td>
+<td>0.014</td>
+<td>0.278</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>x</td>
+<td>1,601</td>
+<td>UNSAT</td>
+<td>1,377</td>
+<td>0.018</td>
+<td>0.273</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>y</td>
+<td>1,601</td>
+<td>UNSAT</td>
+<td>1,371</td>
+<td>0.017</td>
+<td>0.271</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>z</td>
+<td>1,601</td>
+<td>UNSAT</td>
+<td>1,345</td>
+<td>0.005</td>
+<td>0.275</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>(2,2,2)</td>
+<td>x</td>
+<td>3,201</td>
+<td>UNSAT</td>
+<td>2,758</td>
+<td>0.006</td>
+<td>0.272</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>(2,2,2)</td>
+<td>y</td>
+<td>3,201</td>
+<td>UNSAT</td>
+<td>2,776</td>
+<td>0.006</td>
+<td>0.274</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>(2,2,2)</td>
+<td>z</td>
+<td>3,201</td>
+<td>UNSAT</td>
+<td>2,734</td>
+<td>0.023</td>
+<td>0.108</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>(3,3,3)</td>
+<td>x</td>
+<td>10,801</td>
+<td>UNSAT</td>
+<td>9,876</td>
+<td>0.051</td>
+<td>0.290</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>(3,3,3)</td>
+<td>y</td>
+<td>10,801</td>
+<td>UNSAT</td>
+<td>9,897</td>
+<td>0.049</td>
+<td>0.288</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>(3,3,3)</td>
+<td>z</td>
+<td>10,801</td>
+<td>UNSAT</td>
+<td>9,850</td>
+<td>0.048</td>
+<td>0.291</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>(4,4,4)</td>
+<td>x</td>
+<td>25,601</td>
+<td>UNSAT</td>
+<td>24,651</td>
+<td>0.103</td>
+<td>0.319</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>(4,4,4)</td>
+<td>y</td>
+<td>25,601</td>
+<td>UNSAT</td>
+<td>24,672</td>
+<td>0.017</td>
+<td>0.137</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>(4,4,4)</td>
+<td>z</td>
+<td>25,601</td>
+<td>UNSAT</td>
+<td>24,625</td>
+<td>0.017</td>
+<td>0.141</td>
+<td>VERIFIED</td>
+</tr>
+</tbody>
+</table>
+<p>The three (2,2,2) rows also carry LRAT proofs accepted by <code>lrat-check</code>. (4,4,4) — 1,024 bonds, 1,024 hexagons — cost 0.10 s to refute and 0.32 s to check, so the size ceiling here is nowhere near.</p>
+<p><strong>One subtlety, recorded because it would otherwise make a control vacuous.</strong> The two half-diagonals perpendicular to <code>z</code> are <code>(2,2,0)</code> and <code>(2,−2,0)</code>; modulo the box they <em>coincide</em> whenever the cell has extent 1 along <code>y</code> (<code>−2 ≡ 2 mod 4b</code> iff <code>b = 1</code>). That is why the (1,1,2) <code>z</code> row has 737 clauses rather than 801: it imposes one translation, not two, and is still UNSAT — correctly, since at <code>b = 1</code> the second translation is the same permutation. <code>part_B.json</code> records <code>translations_distinct_mod_box</code> for every row, and the negative control for Theorem 2 was therefore placed at (2,2,2) and (3,3,3), where the two are genuinely distinct.</p>
+<h3 id="negative-controls-the-certificates-can-fail">4.3 Negative controls — the certificates can fail</h3>
+<p>Each drops exactly one constraint and must come back SAT with a model that <code>icemix</code> <em>and</em> the C kernel independently certify as a flippable ice state.</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>control</th>
+<th>cell</th>
+<th>SAT</th>
+<th>flippable hexagons (icemix / C kernel)</th>
+<th>winding of the witness</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>drop <code>W = 0</code></td>
+<td>(1,1,1)</td>
+<td>yes</td>
+<td>4 / 4</td>
+<td>(0, 0, −2)</td>
+</tr>
+<tr>
+<td>drop the frozen clauses, keep <code>W = 0</code></td>
+<td>(1,1,2)</td>
+<td>yes</td>
+<td>8 / 8</td>
+<td>(0, 0, 0)</td>
+</tr>
+<tr>
+<td>drop one of the two half-diagonals (z)</td>
+<td>(2,2,2)</td>
+<td>yes</td>
+<td>32 / 32</td>
+<td>(0, 0, 0)</td>
+</tr>
+<tr>
+<td>drop one of the two half-diagonals (z)</td>
+<td>(3,3,3)</td>
+<td>yes</td>
+<td>60 / 60</td>
+<td>(−6, −6, 12)</td>
+</tr>
+</tbody>
+</table>
+<p>The (1,1,1) control is the sharpest: with <code>W = 0</code> removed the same formula is satisfiable, and its witness has winding <code>(0,0,−2)</code> — so the UNSAT verdict for Theorem 1 really is <em>about</em> the flux constraint and not an artefact of the encoding. The (2,2,2) and (3,3,3) controls show the same for the <em>second</em> translation of Theorem 2; the test suite additionally checks that the (2,2,2) witness really is invariant under the translation that was kept.</p>
+<hr />
+<h2 id="item-c-certified-model-counting-cpog-on-aarch64">5. Item C — certified model counting (CPOG on aarch64)</h2>
+<h3 id="outcome">5.1 Outcome</h3>
+<p><strong>CPOG builds and works end to end on this machine.</strong> The pipeline is</p>
+<pre><code>d4 FILE.cnf -dDNNF -out=FILE.nnf      # decision-DNNF compilation
+cpog-gen -v 1 FILE.cnf FILE.nnf FILE.cpog
+cpog-check -v 2 FILE.cnf FILE.cpog    # prints FULL-PROOF SUCCESS + the count</code></pre>
+<p>and <code>cpog-check</code>’s own line <code>CHECK: Regular model count = N</code> is the count this report treats as certified. The run <strong>never</strong> labels a count “certified” from <code>d4</code>’s raw output; <code>d4</code>’s number is recorded separately and required to agree with the checked one, which is a second method on the count itself.</p>
+<p>Smoke tests before any use: <code>p cnf 3 1 / 1 2 3 0</code> → certified 7; <code>p cnf 4 2 / 1 2 0 / -1 -2 0</code> → certified 8; a random 20-variable / 60-clause 3-CNF → certified 722, cross-checked against a plain <code>itertools.product</code> brute force over all 2²⁰ assignments → 722.</p>
+<h3 id="the-build-recipe-that-worked-no-sudo-aarch64">5.2 The build recipe that worked (no sudo, aarch64)</h3>
+<p>Recorded verbatim so the main loop can turn it into a chezmoi <code>run_onchange_</code> script. Everything lives under <code>~/.local/opt/&lt;tool&gt;/</code> with symlinks in <code>~/.local/bin/</code>; <code>/usr</code> is untouched.</p>
+<p><strong>Dependencies without root.</strong> <code>apt-get download</code> is an HTTP fetch, not an install, so headers can be unpacked into a private sysroot:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/.local/opt/sysdeps /tmp/cpogwork/debs <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> /tmp/cpogwork/debs</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">apt-get</span> download libgmp-dev libmpfr6 libmpfr-dev zlib1g-dev <span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  libboost1.83-dev libboost-iostreams1.83-dev libboost-program-options1.83-dev <span class="dt">\</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  libboost-filesystem1.83-dev libboost-serialization1.83-dev libboost-system1.83-dev</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> <span class="pp">*</span>.deb<span class="kw">;</span> <span class="cf">do</span> <span class="ex">dpkg-deb</span> <span class="at">-x</span> <span class="st">&quot;</span><span class="va">$f</span><span class="st">&quot;</span> ~/.local/opt/sysdeps<span class="kw">;</span> <span class="cf">done</span></span></code></pre></div>
+<p><strong>cpog</strong> (commit <code>a97ed8543d8368a234f715cf8b1a7aa38bc96c3d</code>) — no patches needed, pure C/C++11:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--depth</span> 1 https://github.com/rebryant/cpog ~/.local/opt/cpog</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/.local/opt/cpog/src <span class="kw">&amp;&amp;</span> <span class="fu">make</span> install     <span class="co"># -&gt; cpog-gen, cpog-check</span></span></code></pre></div>
+<p><strong>d4</strong> (crillab, commit <code>333370cc1e843dd0749c1efe88516e72b5239174</code>) — <strong>one real aarch64 blocker and its patch.</strong> <code>d4/patoh/libpatoh.a</code> is a <em>precompiled x86-64</em> static archive (confirmed with <code>file</code> on its extracted objects), used only by the optional <code>CB</code>/<code>VB</code> bipartite-graph partitioning heuristics. It cannot link on aarch64. Three edits remove it:</p>
+<ol type="1">
+<li><code>Makefile</code>: <code>CSRCS = $(filter-out heuristics/ClauseBipartiteGraphPartitioner.cc heuristics/VarBipartiteGraphPartitioner.cc, $(wildcard *.cc */*.cc))</code>, and drop <code>patoh/libpatoh.a</code> from the Linux <code>LFLAGS</code>.</li>
+<li><code>interfaces/PartitionerInterface.cc</code>: drop the two <code>#include</code>s and make the <code>CB</code>/<code>VB</code> branches print a message and <code>exit(12)</code> instead of referencing the missing symbols.</li>
+<li><code>core/Main.cc</code>: change the default of the <code>pv</code> option from <code>"CB"</code> to <code>"NO"</code>, so cpog’s documented invocation works unmodified.</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--depth</span> 1 https://github.com/crillab/d4 /tmp/cpogwork/d4</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the three patches above</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CPATH</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$HOME</span><span class="st">/.local/opt/sysdeps/usr/include:</span><span class="va">$HOME</span><span class="st">/.local/opt/sysdeps/usr/include/aarch64-linux-gnu&quot;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LIBRARY_PATH</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$HOME</span><span class="st">/.local/opt/sysdeps/usr/lib/aarch64-linux-gnu&quot;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /tmp/cpogwork/d4 <span class="kw">&amp;&amp;</span> <span class="fu">make</span> <span class="at">-j4</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/.local/opt/d4 <span class="kw">&amp;&amp;</span> <span class="fu">cp</span> <span class="at">-a</span> /tmp/cpogwork/d4/<span class="pp">*</span> ~/.local/opt/d4/</span></code></pre></div>
+<p>The linker picks the static <code>libgmp.a</code>/<code>libgmpxx.a</code> out of the extra <code>LIBRARY_PATH</code>, so the resulting <code>d4</code> needs nothing from the sysroot at run time (<code>ldd</code> shows only <code>libz</code>, <code>libstdc++</code>, <code>libm</code>, <code>libgcc_s</code>, <code>libc</code>).</p>
+<p><strong>cadical</strong> (<code>c60730422e758ef1cebe7aeddf2dda31c996bf04</code>, i.e. rel-3.0.1) and <strong>drat-trim</strong> (<code>2e3b2dc0ecf938addbd779d42877b6ed69d9a985</code>, which also builds <code>lrat-check</code>) — no patches:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--depth</span> 1 https://github.com/arminbiere/cadical /tmp/cpogwork/cadical</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /tmp/cpogwork/cadical <span class="kw">&amp;&amp;</span> <span class="ex">./configure</span> <span class="kw">&amp;&amp;</span> <span class="fu">make</span> <span class="at">-j4</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/.local/opt/cadical <span class="kw">&amp;&amp;</span> <span class="fu">cp</span> <span class="at">-a</span> build/cadical build/libcadical.a ~/.local/opt/cadical/</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--depth</span> 1 https://github.com/marijnheule/drat-trim /tmp/cpogwork/drat-trim</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /tmp/cpogwork/drat-trim <span class="kw">&amp;&amp;</span> <span class="fu">make</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/.local/opt/drat-trim <span class="kw">&amp;&amp;</span> <span class="fu">cp</span> <span class="at">-a</span> drat-trim lrat-check ~/.local/opt/drat-trim/</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-sf</span> ~/.local/opt/d4/d4               ~/.local/bin/d4</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-sf</span> ~/.local/opt/cpog/src/cpog-gen    ~/.local/bin/cpog-gen</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-sf</span> ~/.local/opt/cpog/src/cpog-check  ~/.local/bin/cpog-check</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-sf</span> ~/.local/opt/cadical/cadical      ~/.local/bin/cadical</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-sf</span> ~/.local/opt/drat-trim/drat-trim  ~/.local/bin/drat-trim</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-sf</span> ~/.local/opt/drat-trim/lrat-check ~/.local/bin/lrat-check</span></code></pre></div>
+<p>Total build time ≈ 8 minutes, inside the 45-minute box that was set.</p>
+<p><strong>Caveat worth carrying forward.</strong> Because <code>patoh</code> is gone, this <code>d4</code> compiles with <strong>no</strong> clause/variable partitioning heuristic (<code>-pv=NO</code>). That is correctness-neutral — the certified counts are checked independently by <code>cpog-check</code> — but it is a real performance loss on hard instances, and it is the most likely reason the largest compilations here are slow (§5.4). A future aarch64 build of <code>patoh</code>, or a partitioner substitute, would lift that.</p>
+<h3 id="the-certified-counts">5.3 The certified counts</h3>
+<p><code>cpog-check</code>’s verdict, its own model count, and the agreement with <code>d4</code>’s raw count. <strong>19 of 20 formulas certified</strong>; the one failure is a timeout, not a disagreement.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr>
+<th>formula</th>
+<th>vars</th>
+<th>clauses</th>
+<th>certified count</th>
+<th>expected</th>
+<th><code>d4</code> agrees</th>
+<th><code>d4</code> s</th>
+<th><code>cpog-gen</code> s</th>
+<th><code>cpog-check</code> s</th>
+<th>CPOG bytes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,1,1) ice</td>
+<td>16</td>
+<td>64</td>
+<td><strong>90</strong></td>
+<td>90</td>
+<td>yes</td>
+<td>0.13</td>
+<td>0.07</td>
+<td>0.12</td>
+<td>97,680</td>
+</tr>
+<tr>
+<td>(1,1,1) <code>W = 0</code></td>
+<td>40</td>
+<td>112</td>
+<td><strong>12</strong></td>
+<td>12</td>
+<td>yes</td>
+<td>0.12</td>
+<td>0.03</td>
+<td>0.07</td>
+<td>41,470</td>
+</tr>
+<tr>
+<td>(1,1,1) frozen <code>W = 0</code></td>
+<td>40</td>
+<td>144</td>
+<td><strong>12</strong></td>
+<td>12</td>
+<td>yes</td>
+<td>0.12</td>
+<td>0.03</td>
+<td>0.01</td>
+<td>45,646</td>
+</tr>
+<tr>
+<td>(1,1,2) ice</td>
+<td>32</td>
+<td>128</td>
+<td><strong>3,618</strong></td>
+<td>3,618</td>
+<td>yes</td>
+<td>0.20</td>
+<td>0.42</td>
+<td>0.42</td>
+<td>2,618,713</td>
+</tr>
+<tr>
+<td>(1,1,2) <code>W = 0</code></td>
+<td>104</td>
+<td>272</td>
+<td><strong>388</strong></td>
+<td>388</td>
+<td>yes</td>
+<td>0.07</td>
+<td>0.82</td>
+<td>0.42</td>
+<td>2,321,354</td>
+</tr>
+<tr>
+<td>(1,1,2) frozen <code>W = 0</code></td>
+<td>104</td>
+<td>336</td>
+<td><strong>68</strong></td>
+<td>68</td>
+<td>yes</td>
+<td>0.07</td>
+<td>0.27</td>
+<td>0.17</td>
+<td>1,508,099</td>
+</tr>
+<tr>
+<td>(1,1,3) ice</td>
+<td>48</td>
+<td>192</td>
+<td><strong>181,122</strong></td>
+<td>181,122</td>
+<td>yes</td>
+<td>0.08</td>
+<td>0.57</td>
+<td>0.82</td>
+<td>8,344,569</td>
+</tr>
+<tr>
+<td>(1,1,3) <code>W = 0</code></td>
+<td>200</td>
+<td>496</td>
+<td><strong>15,024</strong></td>
+<td>15,024</td>
+<td>yes</td>
+<td>0.89</td>
+<td>36.34</td>
+<td>12.22</td>
+<td>171,418,734</td>
+</tr>
+<tr>
+<td>(1,1,3) frozen <code>W = 0</code></td>
+<td>200</td>
+<td>592</td>
+<td><strong>528</strong></td>
+<td>528</td>
+<td>yes</td>
+<td>0.29</td>
+<td>6.57</td>
+<td>1.22</td>
+<td>15,174,239</td>
+</tr>
+<tr>
+<td>(1,2,2) frozen <code>W = 0</code></td>
+<td>256</td>
+<td>768</td>
+<td><strong>204</strong></td>
+<td>204</td>
+<td>yes</td>
+<td>0.31</td>
+<td>10.29</td>
+<td>3.19</td>
+<td>43,892,501</td>
+</tr>
+<tr>
+<td>(2,2,2) frozen <code>W = 0</code></td>
+<td>512</td>
+<td>1,536</td>
+<td><strong>612</strong></td>
+<td>—</td>
+<td>yes</td>
+<td>1.78</td>
+<td>299.57</td>
+<td>24.88</td>
+<td>411,041,494</td>
+</tr>
+<tr>
+<td>(1,2,3) frozen <code>W = 0</code></td>
+<td>488</td>
+<td>1,360</td>
+<td><strong>968</strong></td>
+<td>—</td>
+<td>yes</td>
+<td>0.97</td>
+<td>149.14</td>
+<td>37.35</td>
+<td>651,666,323</td>
+</tr>
+<tr>
+<td>(3,3,3) frozen <code>W = 0</code></td>
+<td>—</td>
+<td>—</td>
+<td><em>not obtained</em></td>
+<td>—</td>
+<td>—</td>
+<td><strong>timeout at 900 s in <code>d4</code></strong></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>And the stage-4b three-bond certificate at (1,1,1), re-derived as seven certified counting problems (the bond ids are re-asserted against the current lattice build inside the run, so a change in build order breaks the job rather than silently changing its meaning: bond 15 and bond 0 share the B-site at (1,1,1); bonds 0 and 1 share the A-site at the origin; bonds 1 and 15 share no site):</p>
+<table>
+<thead>
+<tr>
+<th>quantity</th>
+<th>certified count</th>
+<th>stage 4b §3.3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>N</code> (ice states)</td>
+<td><strong>90</strong></td>
+<td>90</td>
+</tr>
+<tr>
+<td><code>n_0</code></td>
+<td><strong>45</strong></td>
+<td>45</td>
+</tr>
+<tr>
+<td><code>n_1</code></td>
+<td><strong>45</strong></td>
+<td>45</td>
+</tr>
+<tr>
+<td><code>n_15</code></td>
+<td><strong>45</strong></td>
+<td>45</td>
+</tr>
+<tr>
+<td><code>n_{15,0}</code></td>
+<td><strong>15</strong></td>
+<td>15</td>
+</tr>
+<tr>
+<td><code>n_{0,1}</code></td>
+<td><strong>15</strong></td>
+<td>15</td>
+</tr>
+<tr>
+<td><code>n_{1,15}</code></td>
+<td><strong>25</strong></td>
+<td>25</td>
+</tr>
+</tbody>
+</table>
+<p>So the covariances behind the “no sign gauge exists” FAIL — <code>C = 90·15 − 45² = −675</code>, <code>−675</code>, and <code>90·25 − 45² = +225</code> — now rest on certified counts, and the three-bond obstruction at the 16-spin cell is a machine-checked fact rather than one implementation’s arithmetic.</p>
+<p><strong>The (2,2,2) frozen count is the substantive new one:</strong> 612 by SAT enumeration and 612 by a certified d-DNNF proof, at a cell where the project’s own enumerator cannot run at all.</p>
+<h3 id="what-was-left-uncertified-and-why">5.4 What was left uncertified, and why</h3>
+<p>Four counts were <strong>deliberately not attempted</strong>, with the measurement that decided it: the certified proof for (1,1,3) <code>W = 0</code> (15,024 models) is a 171 MB CPOG object costing 36 s to generate, and a probe on (1,2,2) ice passed 1.7 GB of CPOG in three minutes without finishing. Extrapolating, (1,2,2) ice (2,891,562 models), (1,2,2) <code>W = 0</code> (221,628), and the (1,2,3) counts (3,076,306,362 and 196,465,480) are all far beyond what is worth spending here — the last two by many orders of magnitude. <code>d4</code> alone did not finish compiling (1,2,3) ice in <strong>18.5 minutes</strong> (3.5 GB resident) before it was stopped. Those four counts therefore remain <strong>agreed by two independent methods</strong> (the frontier DP and, where it runs, the DFS enumeration) and are <strong>not</strong> described as certified anywhere in this report.</p>
+<p>(3,3,3) frozen <code>W = 0</code> is the one attempted-and-failed job: <code>d4</code> hit the 900 s wall. Its blocking-clause enumeration was also tried and abandoned (§9). The (3,3,3) frozen count is <strong>not known</strong>.</p>
+<p><strong>A caveat on what “certified” covers here.</strong> A model count is over <em>all</em> variables of the CNF, auxiliaries included, so a certified count is the count of the <em>encoding</em>, not automatically of the ice states. It coincides with the state count only if every auxiliary is functionally determined by the bond variables. That it is, for the sequential-counter flux encoding used here, is not assumed: it is <em>checked</em>, by the ten rows above whose certified count equals a count known by two other methods, across three different constraint sets and four cells. The 612 and 968 rows inherit that check because they use the same encoding shape, and each is independently equal to the projected SAT enumeration.</p>
+<hr />
+<h2 id="item-d-the-frozen-w-0-census-including-the-first-cubic-cell">6. Item D — the frozen <code>W = 0</code> census, including the first cubic cell</h2>
+<p>The (2,2,2) cell has <strong>128 bonds</strong>. <code>icemix.enumerate</code> raises above 64 spins and <code>chain.build_flip_graph</code> assumes a <code>uint64</code> state word, so the frozen set there had never been enumerated. The frozen-constrained CNF does it directly, because “frozen” is only two 6-clauses per hexagon and prunes the search enormously: <strong>612 states in 4.2 s</strong>. Every state was then re-verified independently — <code>enumerate.ice_rule_ok_int</code>, <code>enumerate.winding_int</code>, <code>chain.n_flippable_int</code> <strong>and</strong> the C kernel <code>msc_scalar_nflip</code> — with 0 failures at every cell.</p>
+<p>The stabiliser census needed a new implementation: <code>frozen.stabiliser_census</code> packs states into <code>uint64</code>. <code>cnf.stabiliser_census_int</code> is the same census on a packed <code>uint8</code> bit array, valid at any size, and <code>tests/test_cnf.py::test_stabiliser_census_int_agrees_with_the_uint64_version</code> requires the two to agree exactly (per-state stabiliser orders included) where both can run.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>bonds</th>
+<th>frozen <code>W = 0</code></th>
+<th>Theorem 2 family</th>
+<th>tilings of smaller frozen</th>
+<th>in <strong>neither</strong></th>
+<th>aperiodic</th>
+<th>min. stabiliser order</th>
+<th>FCC translations</th>
+<th>seconds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,1,2)</td>
+<td>32</td>
+<td>68</td>
+<td>44</td>
+<td>12</td>
+<td>24</td>
+<td>16</td>
+<td>1</td>
+<td>8</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>64</td>
+<td>204</td>
+<td>76</td>
+<td>124</td>
+<td>80</td>
+<td>64</td>
+<td>1</td>
+<td>16</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>(1,2,3)</td>
+<td>96</td>
+<td>968</td>
+<td>440</td>
+<td>584</td>
+<td>384</td>
+<td>336</td>
+<td>1</td>
+<td>24</td>
+<td>0.3</td>
+</tr>
+<tr>
+<td><strong>(2,2,2)</strong></td>
+<td><strong>128</strong></td>
+<td><strong>612</strong></td>
+<td><strong>108</strong></td>
+<td><strong>420</strong></td>
+<td><strong>192</strong></td>
+<td><strong>0</strong></td>
+<td><strong>2</strong></td>
+<td><strong>32</strong></td>
+<td><strong>4.2</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The (1,1,2) row (68 frozen, 16 aperiodic) and the (1,2,2) row (204 frozen, 64 aperiodic) reproduce exactly the numbers already in <code>icemix/frozen.py</code>’s docstring and <code>tests/test_frozen.py</code> — an unplanned but welcome cross-check of the whole pipeline against work done by a different route on a different day.</p>
+<p>The Theorem 2 family is complete at every cell: <code>C(2a,a)² + C(2b,b)² + C(2c,c)²</code> gives 44, 76, 440 and 108 respectively, and every predicted member is present in the enumerated set (<code>theorem2_family_all_present: true</code>).</p>
+<h3 id="the-readings">6.1 (2,2,2) — the readings</h3>
+<ul>
+<li><strong>612 frozen <code>W = 0</code> states</strong>, from a formula with 512 variables and 1,536 clauses. All 612 verified by icemix and by the C kernel.</li>
+<li><strong>Every one of them is periodic.</strong> The stabiliser-order histogram under the 32 FCC translations is <code>{2: 192, 4: 288, 8: 120, 16: 12}</code>: the minimum is 2, so <strong>no frozen <code>W = 0</code> state of (2,2,2) has trivial translation stabiliser</strong>. This is a genuine qualitative difference from the thin cells, where aperiodic frozen states are common (16 of 68 at (1,1,2), 64 of 204 at (1,2,2), 336 of 968 at (1,2,3)). It is not a general fact about cubic cells — it is a fact about <code>L = 2</code>, and the obvious next question is whether (3,3,3) has aperiodic frozen states (not answered here, see §9).</li>
+<li><strong>108 are the Theorem 2 family</strong> (3 × C(4,2)² = 3 × 36), and they are the most symmetric states in the set: the 12 of stabiliser order 16 and 96 of the 120 of order 8.</li>
+<li><strong>420 are tilings</strong> of frozen <code>W = 0</code> states of a proper sub-cell — 12 from (1,1,1), 68 each from (1,1,2)/(1,2,1)/(2,1,1), 204 each from (1,2,2)/(2,1,2)/(2,2,1), giving 420 distinct states. The whole Theorem 2 family is inside this set, so tiling subsumes the theorem here.</li>
+<li><strong>192 are neither</strong> — not in the Theorem 2 family, and not the tiling of any smaller frozen state. They are new at (2,2,2), and every one of them has stabiliser order exactly 4. This is the sharpest statement available about the gap between the two theorems and the truth: at the first cubic cell, 31 % of the frozen <code>W = 0</code> states are outside both.</li>
+<li>All 612 are in the <code>W = 0</code> sector by construction, so the flux-sector question does not arise here.</li>
+</ul>
+<h3 id="the-readings-1">6.2 (1,2,3) — the readings</h3>
+<ul>
+<li><strong>968 frozen <code>W = 0</code> states</strong> (96 bonds; the <code>W = 0</code> sector itself has 196,465,480 states, so this subset could only ever come from the frozen-constrained search, never from enumeration).</li>
+<li>440 in the Theorem 2 family (4 + 36 + 400), 584 tilings (528 from (1,1,3), 68 from (1,2,1), 12 from (1,1,1)), and the family sits inside the tilings.</li>
+<li><strong>384 are in neither</strong>, and <strong>336 of those are aperiodic</strong> — the largest set of frozen states beyond both theorems and beyond tiling that this project has exhibited.</li>
+</ul>
+<table style="width:6%;">
+<colgroup>
+<col style="width: 5%" />
+</colgroup>
+<tbody>
+<tr>
+<td>## 7. Defects and traps found</td>
+</tr>
+<tr>
+<td><strong>D1 — <code>frozen.stabiliser_census</code> cannot reach a cubic cell.</strong> It packs states into <code>uint64</code>, so it is silently limited to ≤ 64 bonds; (2,2,2) has 128. Fixed additively by <code>cnf.stabiliser_census_int</code> (packed <code>uint8</code> bit array, any size), with a test requiring the two to agree exactly where both run. The old function is untouched.</td>
+</tr>
+<tr>
+<td><strong>D2 — the two half-diagonals coincide mod the box when a transverse cell extent is 1.</strong> <code>(2,−2,0) ≡ (2,2,0) mod 4b</code> exactly when <code>b = 1</code>, so at (1,1,2) the <code>z</code>-axis form of Theorem 2 imposes <em>one</em> translation, not two. That is mathematically fine (the second is the same permutation), but a “drop one translation” control at such a cell would have been vacuous — it would have come back UNSAT and looked like a failed control. Recorded per row as <code>translations_distinct_mod_box</code>, and the Theorem 2 controls were placed at (2,2,2) and (3,3,3) instead.</td>
+</tr>
+<tr>
+<td><strong>D3 — <code>cpog-check</code> writes multi-gigabyte stdout, and the first version of this run captured it in memory.</strong> With <code>-v 2</code> the checker emitted <strong>1.98 GB</strong> on the (1,1,3) <code>W = 0</code> proof and the run was on its way to filling the repository with 4 GB of proof objects inside three minutes; <code>subprocess.run(capture_output=True)</code> was holding all of it in RAM. The run was stopped with <code>kill -TERM</code> at 15:07, the artefacts deleted, and the code changed to: <code>-v 1</code>; all <code>.nnf</code>/<code>.cpog</code>/log files written to a scratch directory <strong>outside</strong> the repository (<code>ICEMIX_CPOG_WORK</code>, default <code>/tmp/claude-1000/icemix-cpog</code>); the checker log <em>streamed</em> line by line and only the matching lines kept; and anything over 50 MB deleted after the verdict is read. Even at <code>-v 1</code> the (1,2,3) frozen check log was 6.5 GB, so the streaming fix is not cosmetic. What the repository keeps is the CNF, the DRAT/LRAT proofs (all ≤ 25 KB) and a ten-line checker verdict — 2.7 MB in total.</td>
+</tr>
+<tr>
+<td><strong>D4 — blocking-clause enumeration does not scale to (3,3,3).</strong> At (2,2,2) the frozen search returns 612 models in 4.2 s; at (3,3,3) the same code was still running after ~20 minutes without reaching a 3,000-model cap, so it was stopped with <code>kill -TERM</code>. The cost is not the search, it is the accumulating blocking clauses. A projected-model counter is the right tool there, and <code>d4</code> did not manage that either (§5.4).</td>
+</tr>
+<tr>
+<td><strong>D5 — the aarch64 <code>d4</code> has no partitioning heuristic.</strong> The <code>patoh</code> library shipped with <code>d4</code> is x86-64-only, so this build runs <code>-pv=NO</code>. Correctness is unaffected (the count is independently checked by <code>cpog-check</code>), but the compiler is weaker than upstream’s, and that is the most likely reason (1,2,3) ice would not compile.</td>
+</tr>
+<tr>
+<td><strong>D6 — <code>exptop</code> is still not installed into the project’s interpreter.</strong> As in stage 4, <code>run_certificates.py</code> has to put <code>~/repo/project/exptop/src</code> on <code>sys.path</code> by hand. Not a fork — the canonical <code>ProgressReporter</code> is imported — but an environment defect that keeps being worked around rather than fixed. Checked, as the conventions require: <code>grep -rl "class ProgressReporter" --include="*.py" .</code> finds no copy in this repository.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tests-added">8. Tests added</h2>
+<p><code>tests/test_cnf.py</code>, 17 tests, <strong>32 s</strong> on its own — every one a gate, not a smoke test:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>test</th>
+<th>what it can catch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>test_exactly_two_of_four_is_eight_clauses_and_correct</code></td>
+<td>all 16 assignments against the intended predicate</td>
+</tr>
+<tr>
+<td><code>test_flippability_encoding_matches_flippable_ref</code> (2 cells)</td>
+<td>the alternating-pattern encoding drifting from <code>chain.flippable_ref</code></td>
+</tr>
+<tr>
+<td><code>test_cut_plane_flux_equals_the_winding_formula</code> (3 cells)</td>
+<td>the single cut plane no longer computing the winding</td>
+</tr>
+<tr>
+<td><code>test_half_diagonals_are_the_theorem2_vectors</code></td>
+<td>the <code>b = 1</code> coincidence (D2) changing silently</td>
+</tr>
+<tr>
+<td><code>test_sat_enumeration_reproduces_the_known_counts_and_the_state_sets</code> (2 cells)</td>
+<td>any drift between SAT, the DFS enumerator, the frontier DP and the known counts — <strong>state sets</strong>, not just counts</td>
+</tr>
+<tr>
+<td><code>test_theorem1_is_unsat_and_the_control_is_sat</code></td>
+<td>Theorem 1 in process, with its negative control</td>
+</tr>
+<tr>
+<td><code>test_theorem2_is_unsat_on_every_axis</code> (2 cells × 3 axes)</td>
+<td>Theorem 2 in process</td>
+</tr>
+<tr>
+<td><code>test_theorem2_control_one_translation_is_sat</code></td>
+<td>the second translation mattering; also that the witness really is invariant under the one kept</td>
+</tr>
+<tr>
+<td><code>test_theorem1_drat_certificate_end_to_end</code></td>
+<td>cadical + drat-trim end to end, and that the <em>control</em> comes back SAT and unverified; skips cleanly if the binaries are absent</td>
+</tr>
+<tr>
+<td><code>test_222_frozen_set_contains_the_108_member_translation_family</code></td>
+<td>the (2,2,2) frozen set losing the 108 predicted members, or the family exhausting it</td>
+</tr>
+<tr>
+<td><code>test_stabiliser_census_int_agrees_with_the_uint64_version</code></td>
+<td>the new big-int census disagreeing with <code>frozen.stabiliser_census</code></td>
+</tr>
+<tr>
+<td><code>test_recorded_results_are_internally_consistent</code></td>
+<td>the recorded run drifting from its own claims; skips if <code>results.json</code> is absent</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Whole suite, run once at the end on the final tree:</strong></p>
+<pre><code>OMP_NUM_THREADS=4 ~/.pyenv/versions/3.12.13/bin/python3 -m pytest
+288 passed in 805.81s (0:13:25)      # exit 0</code></pre>
+<p>288 = the 271 of the 2026-09-04 afternoon run plus these 17. No skips, no failures.</p>
+<hr />
+<h2 id="run-ledger-every-launch-and-its-feed-card">9. Run ledger — every launch and its feed card</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>session</th>
+<th>items</th>
+<th>feed card</th>
+<th>final status</th>
+<th>wall</th>
+<th>outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tmux certABD</code></td>
+<td>A, B, D</td>
+<td><code>ice-mixing-certificates-sat-2305929</code></td>
+<td><strong>completed</strong></td>
+<td>157 s</td>
+<td><code>part_A/B/D.json</code></td>
+</tr>
+<tr>
+<td><code>tmux certCD</code></td>
+<td>D, C</td>
+<td><code>ice-mixing-certificates-sat-2315631</code></td>
+<td><strong>KILLED</strong> (<code>kill -TERM</code>, stamped)</td>
+<td>323 s</td>
+<td>superseded; artefacts deleted (defect D3)</td>
+</tr>
+<tr>
+<td><code>tmux certC</code></td>
+<td>C</td>
+<td><code>ice-mixing-certificates-sat-2339911</code></td>
+<td><strong>completed</strong></td>
+<td>1,642 s</td>
+<td><code>part_C.json</code></td>
+</tr>
+<tr>
+<td><code>tmux icesuite</code></td>
+<td>full pytest</td>
+<td>— (not an instrumented run)</td>
+<td>exit 0</td>
+<td>806 s</td>
+<td>288 passed</td>
+</tr>
+</tbody>
+</table>
+<p>Sub-minute probes were run with <code>--no-feed</code>, per the convention, and left no cards: the encoding gates at (1,1,1)/(1,1,2), the certificate pre-flight, and the four-cell census re-run (10 s). Two bare probes were stopped with <code>kill -TERM</code> and left no card because they were not instrumented runs: the (3,3,3) blocking-clause enumeration (~20 min, D4) and the <code>d4</code> (1,2,3) ice compilation (18.5 min, §5.4).</p>
+<p>Machine discipline: <code>uptime</code> was checked before every launch (other agents were building Lean on the same box); nothing ran with more than <code>OMP_NUM_THREADS=4</code>, and no two heavy jobs of mine were ever started side by side.</p>
+<hr />
+<h2 id="what-was-not-done-and-why">10. What was NOT done, and why</h2>
+<ol type="1">
+<li><strong>A certified count at (3,3,3).</strong> <code>d4</code> hit the 900 s wall compiling the frozen formula, and blocking-clause enumeration had already been abandoned there (D4). The (3,3,3) frozen <code>W = 0</code> count remains unknown. This is the one item of the brief that was attempted and failed.</li>
+<li><strong>Certified counts for the four large formulas</strong> ((1,2,2) ice and <code>W = 0</code>; (1,2,3) ice and <code>W = 0</code>). Skipped on a measured projection, not a guess — see §5.4. They stay two-method-agreed, not certified.</li>
+<li><strong>SAT enumeration of (1,2,2)’s full ice manifold</strong> (2,891,562 states): ≈ 5 min for no information the frontier DP does not already give, and the registered gate did not ask for it. The DP’s 2,891,562 is in the results.</li>
+<li><strong>Aperiodicity at (3,3,3).</strong> The most interesting question raised by §6.1 — is “no aperiodic frozen state” special to <code>L = 2</code>? — needs the (3,3,3) frozen set, which item 1 above did not deliver.</li>
+<li><strong>A <code>patoh</code> replacement for <code>d4</code> on aarch64.</strong> Recorded as D5; fixing it is the obvious lever if certified counting is wanted at larger cells.</li>
+<li><strong>Nothing was committed</strong>, and <code>LOG.md</code>, <code>HANDOVER.md</code>, <code>README.md</code>, <code>paper/</code> and <code>docs/project-briefing*</code> were not touched, as instructed. <code>icemix/frozen.py</code> was <em>not</em> edited either — the big-int stabiliser census went into <code>icemix/cnf.py</code> instead.</li>
+</ol>
+<hr />
+<h2 id="what-a-reader-should-take-from-this">11. What a reader should take from this</h2>
+<p>The two frozen-state theorems now come with proof objects. Anyone with <code>drat-trim</code> can take <code>experiments/07_certificates/results/certificates/</code> and confirm, without running a line of this project’s code, that at (1,1,1) no zero-flux ice state has a flippable hexagon, and that at (1,1,2), (1,2,2), (2,2,2), (3,3,3) and (4,4,4) no state invariant under both half-diagonals perpendicular to an axis has one either — in any flux sector. The counts the note quotes at the small cells are now certified model counts as well, and so are the three covariance counts behind the stage-4b three-bond obstruction.</p>
+<p>The new mathematics is in §6. At the first cubic cell there are 612 frozen <code>W = 0</code> states; 108 are Theorem 2’s, 420 are tilings of smaller frozen states, and 192 are neither — so the census section of the note can say, with a certified count behind it, that the two theorems and periodic tiling together still miss about a third of the frozen states at <code>L = 2</code>. And every frozen <code>W = 0</code> state at (2,2,2) is periodic, which is <em>not</em> true at (1,1,2), (1,2,2) or (1,2,3). Whether that survives to <code>L = 3</code> is open.</p>
+</main>
+</body>
+</html>

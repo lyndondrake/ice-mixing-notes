@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The dynamical exponent of the single-hexagon-flip chain on pyrochlore spin ice</title>
+<meta name="description" content="the exponent, z = 2.004 ± 0.060 over thirteen sizes to 221,184 spins, the 1/L² correction, the fixed-size test">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "ScholarlyArticle",
+ "@id": "https://lyndondrake.github.io/ice-mixing-notes/notes/measurement-z.html",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/notes/measurement-z.html",
+ "headline": "The dynamical exponent of the single-hexagon-flip chain on pyrochlore spin ice",
+ "name": "The dynamical exponent of the single-hexagon-flip chain on pyrochlore spin ice",
+ "datePublished": "2026-09-06",
+ "version": "2026-09-06",
+ "author": [
+  {
+   "@type": "Person",
+   "name": "Lyndon Drake"
+  }
+ ],
+ "creditText": "Lyndon Drake, with Claude Code (Anthropic Claude 5 models)",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "inLanguage": "en-GB",
+ "encoding": [
+  {
+   "@type": "MediaObject",
+   "contentUrl": "https://lyndondrake.github.io/ice-mixing-notes/notes/measurement-z.pdf",
+   "encodingFormat": "application/pdf"
+  }
+ ]
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div class="doc-links" style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0"><p class="small"><a href="measurement-z.pdf">PDF</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/notes/measurement-z.md">Markdown source</a></p><p class="small"><strong>Certification, as the notes index states it:</strong> none; exact gaps on enumerable cells anchor the estimator</p><section class="panel small"><p>This note has no published claims manifest yet; its standing is as the note itself and the <a href="index.html">notes index</a> state it.</p></section></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">The dynamical exponent of the single-hexagon-flip chain on pyrochlore spin ice</h1>
+
+<p class="author">Lyndon Drake, with Claude Code (Anthropic Claude 5 models)</p>
+<p class="date">2026-09-06</p>
+</header>
+<section class="abstract"><h2>Abstract</h2>
+<p>The generator of the single-hexagon-flip chain on pyrochlore spin ice is the Rokhsar–Kivelson-point Hamiltonian of quantum spin ice, so its spectral gap is that Hamiltonian’s excitation gap and its mixing exponent is the dynamical exponent Henley predicted to be 2 in 2004. On <span class="math inline">\(L \times L \times L\)</span> conventional cubic cells at zero winding I measure the relaxation time of the transverse polarisation at the smallest wavevector over thirteen sizes from <span class="math inline">\(L = 2\)</span> to <span class="math inline">\(L = 24\)</span>, the largest cell holding 221,184 spins, with 512 to 1024 replicas at each size, and obtain <span class="math inline">\(z = 2.004 \pm 0.060\)</span> from the exponential autocorrelation time and <span class="math inline">\(z = 1.996 \pm 0.040\)</span> from the integrated one. The leading correction to scaling is <span class="math inline">\(1/L^{2}\)</span> rather than <span class="math inline">\(1/L\)</span>, and a naive power law over the same data returns 1.912, which is not the result. An independent test at fixed size, with no extrapolation in it, compares <span class="math inline">\(\tau(q_{\min})/\tau(2q_{\min})\)</span> against the diffusive value 4 and gives <span class="math inline">\(3.973 \pm 0.014\)</span> at <span class="math inline">\(L = 24\)</span>, implying 1.99. Nothing here is certified in the sense that this project’s frozen-state results are. What stands behind the number is exact spectral gaps on four enumerable cells, which anchor the estimator and calibrate its finite-series bias correction against known answers; an observable panel carrying both parities under global arrow reversal, since a slow mode of the wrong parity is invisible by symmetry rather than by statistics; and the fixed-size ratio test. All statements attach to the dynamically accessible component of the zero-winding sector.</p>
+</section>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#the-chain-and-what-its-exponent-means" id="toc-the-chain-and-what-its-exponent-means">The chain, and what its exponent means</a></li>
+<li><a href="#construction-and-conventions" id="toc-construction-and-conventions">Construction and conventions</a></li>
+<li><a href="#the-estimator" id="toc-the-estimator">The estimator</a>
+<ul>
+<li><a href="#why-the-panel-needs-both-parities" id="toc-why-the-panel-needs-both-parities">Why the panel needs both parities</a></li>
+<li><a href="#finite-series-bias-corrected-and-validated" id="toc-finite-series-bias-corrected-and-validated">Finite-series bias, corrected and validated</a></li>
+<li><a href="#exact-anchors" id="toc-exact-anchors">Exact anchors</a></li>
+</ul></li>
+<li><a href="#the-campaign" id="toc-the-campaign">The campaign</a></li>
+<li><a href="#fitting-the-exponent" id="toc-fitting-the-exponent">Fitting the exponent</a></li>
+<li><a href="#an-independent-test-with-no-fit-in-it" id="toc-an-independent-test-with-no-fit-in-it">An independent test with no fit in it</a></li>
+<li><a href="#what-this-establishes-and-what-it-does-not" id="toc-what-this-establishes-and-what-it-does-not">What this establishes, and what it does not</a></li>
+<li><a href="#traps-worth-recording" id="toc-traps-worth-recording">Traps worth recording</a></li>
+<li><a href="#related-measurements" id="toc-related-measurements">Related measurements</a></li>
+<li><a href="#appendix-artefacts" id="toc-appendix-artefacts">Appendix: artefacts</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+</ul>
+</details></nav>
+<h1 id="the-chain-and-what-its-exponent-means">The chain, and what its exponent means</h1>
+<p>Pyrochlore spin ice states are the two-in–two-out configurations of Ising spins on the pyrochlore lattice <span class="citation" data-cites="bramwell-gingras-2001-spin-ice-state">(<a href="#ref-bramwell-gingras-2001-spin-ice-state" role="doc-biblioref">Bramwell and Gingras 2001</a>)</span>, equivalently the Eulerian orientations of the diamond lattice, whose bonds carry the spins and whose sites are the tetrahedron centres. A single spin flip breaks the ice rule and creates a monopole pair <span class="citation" data-cites="castelnovo-et-al-2008-magnetic-monopoles-spin-ice">(<a href="#ref-castelnovo-et-al-2008-magnetic-monopoles-spin-ice" role="doc-biblioref">Castelnovo, Moessner, and Sondhi 2008</a>)</span>, and the smallest move preserving the rule reverses the six arrows around a hexagonal plaquette.</p>
+<p>The chain studied here is the obvious one. Pick a hexagon uniformly at random; if its arrows run head to tail, reverse all six with probability <span class="math inline">\(1/2\)</span>; otherwise do nothing. Flipping is an involution and the hexagon is drawn from a fixed distribution, so the transition matrix is symmetric and the chain reversible with the uniform stationary distribution on each flux sector. Under Henley’s classical-to-quantum correspondence at Rokhsar–Kivelson points <span class="citation" data-cites="henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas">(<a href="#ref-henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points" role="doc-biblioref">Henley 2004</a>; <a href="#ref-rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas" role="doc-biblioref">Rokhsar and Kivelson 1988</a>)</span> its generator is, up to normalisation, the ring-exchange Hamiltonian of pyrochlore spin ice at its RK point <span class="citation" data-cites="hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid">(<a href="#ref-hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid" role="doc-biblioref">Hermele, Fisher, and Balents 2004</a>)</span>. That is an identity rather than an analogy, so the chain’s spectral gap <span class="math inline">\(\Delta\)</span> is the Hamiltonian’s excitation gap.</p>
+<p>Half the expected answer is a theorem: Masaoka, Soejima and Watanabe prove <span class="math inline">\(\Delta \lesssim L^{-2}\)</span>, hence <span class="math inline">\(z \ge 2\)</span>, for gapless frustration-free systems, a class containing the RK point here <span class="citation" data-cites="masaoka-et-al-2025-rigorous-lower-bound-dynamical-exponents-gapless-frustration-free-systems">(<a href="#ref-masaoka-et-al-2025-rigorous-lower-bound-dynamical-exponents-gapless-frustration-free-systems" role="doc-biblioref">Masaoka, Soejima, and Watanabe 2025b</a>)</span>, and the same bound was known much earlier for the two-dimensional dimer plaquette chain by a variational argument <span class="citation" data-cites="henley-1997-dimer-covering-relaxation-time">(<a href="#ref-henley-1997-dimer-covering-relaxation-time" role="doc-biblioref">Henley 1997</a>)</span>. The matching bound <span class="math inline">\(\Delta \gtrsim L^{-2}\)</span> is open. The physical expectation is <span class="math inline">\(z = 2\)</span> exactly, since the coarse-grained polarisation is locally conserved and should relax diffusively, and Henley says as much for the diamond-lattice ice model in the paper that establishes the correspondence <span class="citation" data-cites="henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points">(<a href="#ref-henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points" role="doc-biblioref">Henley 2004</a>)</span>. What was missing on this lattice was the number, its error bar, and the form of the corrections that carry it.</p>
+<h1 id="construction-and-conventions">Construction and conventions</h1>
+<p>The lattice is <span class="math inline">\(L \times L \times L\)</span> conventional cubic cells of the diamond lattice with periodic boundaries: <span class="math inline">\(16L^{3}\)</span> spins, which are the bonds, <span class="math inline">\(8L^{3}\)</span> sites and <span class="math inline">\(n_{\mathrm{hex}} = 16L^{3}\)</span> hexagons. Anisotropic cells <span class="math inline">\((a,b,c)\)</span> with <span class="math inline">\(16abc\)</span> spins serve as exactly solvable anchors. The ice rule requires two of the four arrows at each site to point in, making the arrow field divergence-free, so the winding <span class="math inline">\(\mathbf{W}\)</span>, the net arrow flux through the three coordinate cut planes, is conserved by every flip. The measurement lives entirely in <span class="math inline">\(\mathbf{W} = 0\)</span>, the largest sector. Conservation is asserted after every applied move, and across the campaign the counts of ice-rule and winding violations are zero and zero. The hexagon set is derived from adjacency together with displacement, and the derived counts (six per bond, twelve per site, <span class="math inline">\(16abc\)</span> in all) asserted against a hand derivation, for reasons given under traps below.</p>
+<p>One <em>sweep</em> is <span class="math inline">\(n_{\mathrm{hex}}\)</span> attempts, the continuous time in which each hexagon attempts at unit rate, which is the normalisation in which the generator is the RK Hamiltonian; every <span class="math inline">\(\tau\)</span> below is in sweeps unless marked otherwise. The units differ by <span class="math inline">\(16L^{3}\)</span>, so an exponent quoted in attempt units would be larger by 3.</p>
+<p>The observable is the coarse-grained polarisation <span class="math inline">\(\mathbf{P}(\mathbf{q})\)</span>, the arrow field averaged onto sites and Fourier transformed, at <span class="math inline">\(q_{\min} = 2\pi/L\)</span>, resolved into components transverse and longitudinal to <span class="math inline">\(\mathbf{q}\)</span>. The longitudinal part is near zero by the divergence-free constraint, and the transverse part <span class="math inline">\(P_{\perp}(q_{\min})\)</span> carries the slow physics.</p>
+<h1 id="the-estimator">The estimator</h1>
+<p>From each replica’s sampled series the analysis takes the integrated time <span class="math inline">\(\tau_{\mathrm{int}} = 1/2 + \sum_{t \ge 1}\rho(t)\)</span> with Sokal’s automatic windowing, and the exponential time <span class="math inline">\(\tau_{\exp}\)</span> from a weighted straight-line fit to <span class="math inline">\(\log\rho\)</span> on the tail with a window-stability spread. Both are carried through and fitted separately. Errors are jackknifed over <em>blocks</em> of the engine rather than over replicas, because sixty-four replicas share the bit positions of a 64-bit word and consume one shared hexagon index per attempt with an independent acceptance coin each: lanes within a block are coupled, blocks share nothing. The within-block equal-time correlation is <span class="math inline">\(3.4 \times 10^{-4}\)</span>, giving 1003 effective independent series out of 1024. Every run starts at the canonical reference state of a constructive start convention, so membership of the accessible component is true by construction, and burns in for 40 to 50 relaxation times.</p>
+<h2 id="why-the-panel-needs-both-parities">Why the panel needs both parities</h2>
+<p>The relaxation time of an observable is the slowest mode it couples to, so it bounds <span class="math inline">\(1/\Delta\)</span> from below and equals it only when the coupling survives. Symmetry can remove the coupling exactly, and here it demonstrably does. At <span class="math inline">\((1,2,2)\)</span> the accessible component is closed under global arrow reversal <span class="math inline">\(R\)</span> and small enough to enumerate. Its three slowest eigenvectors are all even under <span class="math inline">\(R\)</span> while <span class="math inline">\(\mathbf{P}(\mathbf{q})\)</span> is odd, the overlap vanishes identically, and the polarisation’s relaxation time is 242.07 attempts against a true <span class="math inline">\(1/\Delta\)</span> of 389.95. No amount of sampling closes that gap.</p>
+<p>The campaign therefore carried seven observable families at every size, four odd under <span class="math inline">\(R\)</span> (<span class="math inline">\(P_{\perp}\)</span> and <span class="math inline">\(P_{\parallel}\)</span> at <span class="math inline">\(q_{\min}\)</span> and <span class="math inline">\(2q_{\min}\)</span>) and three even (the flippability structure factor, the total flippable count and <span class="math inline">\(|P_{\perp}(q_{\min})|^{2}\)</span>), taking the slowest as the headline. In cubic geometry <span class="math inline">\(P_{\perp}(q_{\min})\)</span> is slowest at all thirteen sizes, by factors of 20 to 55, and <span class="math inline">\(|P_{\perp}|^{2}\)</span> relaxes at exactly half the polarisation time, as a squared observable should. An eighth family was added afterwards, the helicity <span class="math inline">\(h_k(\mathbf{q}) = \operatorname{Im}(P_i(\mathbf{q})^{*}P_j(\mathbf{q}))\)</span> with <span class="math inline">\((i,j,k)\)</span> cyclic and <span class="math inline">\(\mathbf{q}\)</span> along axis <span class="math inline">\(k\)</span>, because the <span class="math inline">\((1,2,2)\)</span> even mode proved to be exactly that pseudoscalar and every original member is orthogonal to it; its ratio to the polarisation time falls from 0.6813 at <span class="math inline">\(L = 2\)</span> to <span class="math inline">\(0.4988 \pm 0.0025\)</span> at <span class="math inline">\(L = 16\)</span>, approaching one half from above as a two-photon composite should. A panel bounds only what it measures, so every time below remains a lower bound on <span class="math inline">\(1/\Delta\)</span>.</p>
+<h2 id="finite-series-bias-corrected-and-validated">Finite-series bias, corrected and validated</h2>
+<p>Estimating an autocorrelation with the <em>sample</em> mean subtracts <span class="math inline">\(2\tau_{\mathrm{int}}C(0)/N\)</span> from every lag, pushing the tail negative and the fitted time low. The effect is common-mode across series of the same length, so jackknife bars do not cover it. The correction applied throughout is <span class="math inline">\(\rho \to \rho(1-\delta) + \delta\)</span> with <span class="math inline">\(\delta = 2\tau_{\mathrm{int}}/N\)</span>, and it was validated against exact answers rather than argued for. At the two enumerable cells where the same observable’s autocorrelation can be computed exactly on the same component, with the same estimator and fit window, the raw error at <span class="math inline">\(N = 2000\)</span> samples is <span class="math inline">\(-4.84\%\)</span> at <span class="math inline">\((1,2,2)\)</span> and <span class="math inline">\(-3.74\%\)</span> at <span class="math inline">\((1,1,4)\)</span>; corrected these become <span class="math inline">\(-0.69 \pm 0.60\%\)</span> and <span class="math inline">\(+0.16 \pm 0.81\%\)</span>, and corrected residuals stay consistent with zero at every length from 2000 to 40,000 samples while raw errors scale as <span class="math inline">\(1/N\)</span>. On the campaign the correction is 1.5 to 2.2 per cent and essentially size-independent, so it moves the amplitude and not the exponent.</p>
+<h2 id="exact-anchors">Exact anchors</h2>
+<p>The cubic <span class="math inline">\(L = 2\)</span> cell has roughly <span class="math inline">\(2 \times 10^{11}\)</span> sector states and cannot be enumerated, so the exact anchors are a ladder of anisotropic cells. None enters the fit for <span class="math inline">\(z\)</span>. They test the generator, the gap machinery and the estimators against answers that are known rather than sampled.</p>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th style="text-align: right;"><span class="math inline">\(\lvert D\rvert\)</span> / <span class="math inline">\(\lvert\)</span>giant<span class="math inline">\(\rvert\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(1/\Delta\)</span> (att.)</th>
+<th style="text-align: right;"><span class="math inline">\(1/\Delta\)</span> (sweeps)</th>
+<th style="text-align: center;">slowest mode</th>
+<th style="text-align: center;"><span class="math inline">\(\tau_{\mathrm{asym}}(P)\,\Delta\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\((1,1,2)\)</span></td>
+<td style="text-align: right;">160 / 160</td>
+<td style="text-align: right;">132.47</td>
+<td style="text-align: right;">4.140</td>
+<td style="text-align: center;">odd</td>
+<td style="text-align: center;">0.996</td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,1,3)\)</span></td>
+<td style="text-align: right;">3,360 / 3,360</td>
+<td style="text-align: right;">310.56</td>
+<td style="text-align: right;">6.470</td>
+<td style="text-align: center;">odd</td>
+<td style="text-align: center;">0.998</td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,2,2)\)</span></td>
+<td style="text-align: right;">221,424 / 221,424</td>
+<td style="text-align: right;">389.95</td>
+<td style="text-align: right;">6.093</td>
+<td style="text-align: center;"><strong>even</strong></td>
+<td style="text-align: center;"><strong>0.621</strong></td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,1,4)\)</span></td>
+<td style="text-align: right;">42,240 / <strong>43,008</strong></td>
+<td style="text-align: right;">2287.95</td>
+<td style="text-align: right;">35.749</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">1.000</td>
+</tr>
+</tbody>
+</table>
+<p>Exact gaps on the accessible component <span class="math inline">\(D\)</span>, with the last column giving the fraction of <span class="math inline">\(1/\Delta\)</span> that the polarisation can see. Dense diagonalisation and deflated Lanczos agree to double precision where both ran, and the <span class="math inline">\((1,2,2)\)</span> value was re-verified to twelve significant figures by 60,000 power iterations on the deflated operator. At <span class="math inline">\((1,1,4)\)</span>, where the coupling is present, the Monte Carlo estimator recovers the exact time of the same observable to 0.4 per cent, <span class="math inline">\(2276.4 \pm 4.3\)</span> attempts against an exact 2285.7 under the matched estimator and window. The production engine, a bit-sliced C kernel packing 64 replicas into 64-bit words, was itself validated bit for bit against a definition-level reference over 9.6 million per-attempt state comparisons at each of three cells, with zero mismatches.</p>
+<h1 id="the-campaign">The campaign</h1>
+<p>Sizes up to <span class="math inline">\(L = 12\)</span> used 1024 replicas and 6000 samples per replica, covering 600 relaxation times after a burn-in of 50; <span class="math inline">\(L = 14\)</span> and 16 used 512 replicas over the same 600, burn-in 40; <span class="math inline">\(L = 20\)</span> and 24, 512 replicas over 500. The ladder cost 2874 s of wall time on one desk-side GB10 Grace–Blackwell machine, 16 threads of 20 cores, no GPU.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: right;"><span class="math inline">\(L\)</span></th>
+<th style="text-align: right;">spins <span class="math inline">\(= n_{\mathrm{hex}}\)</span></th>
+<th style="text-align: right;">replicas</th>
+<th style="text-align: right;"><span class="math inline">\(\tau_{\exp}\)</span> (sweeps)</th>
+<th style="text-align: right;"><span class="math inline">\(\tau_{\mathrm{int}}\)</span> (sweeps)</th>
+<th style="text-align: right;"><span class="math inline">\(\tau(q_{\min})/\tau(2q_{\min})\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">128</td>
+<td style="text-align: right;">1024</td>
+<td style="text-align: right;">1.803(4)</td>
+<td style="text-align: right;">1.692(4)</td>
+<td style="text-align: right;">1.829(6)</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">432</td>
+<td style="text-align: right;">1024</td>
+<td style="text-align: right;">3.472(5)</td>
+<td style="text-align: right;">3.366(5)</td>
+<td style="text-align: right;">2.614(5)</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1,024</td>
+<td style="text-align: right;">1024</td>
+<td style="text-align: right;">5.804(9)</td>
+<td style="text-align: right;">5.698(8)</td>
+<td style="text-align: right;">3.077(6)</td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2,000</td>
+<td style="text-align: right;">1024</td>
+<td style="text-align: right;">8.814(13)</td>
+<td style="text-align: right;">8.734(13)</td>
+<td style="text-align: right;">3.365(7)</td>
+</tr>
+<tr>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">3,456</td>
+<td style="text-align: right;">1024</td>
+<td style="text-align: right;">12.43(3)</td>
+<td style="text-align: right;">12.36(2)</td>
+<td style="text-align: right;">3.524(8)</td>
+</tr>
+<tr>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">5,488</td>
+<td style="text-align: right;">1024</td>
+<td style="text-align: right;">16.75(3)</td>
+<td style="text-align: right;">16.68(3)</td>
+<td style="text-align: right;">3.648(8)</td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">8,192</td>
+<td style="text-align: right;">1024</td>
+<td style="text-align: right;">21.81(4)</td>
+<td style="text-align: right;">21.73(4)</td>
+<td style="text-align: right;">3.734(9)</td>
+</tr>
+<tr>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">16,000</td>
+<td style="text-align: right;">1024</td>
+<td style="text-align: right;">33.94(8)</td>
+<td style="text-align: right;">33.83(4)</td>
+<td style="text-align: right;">3.836(10)</td>
+</tr>
+<tr>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">27,648</td>
+<td style="text-align: right;">1024</td>
+<td style="text-align: right;">48.42(9)</td>
+<td style="text-align: right;">48.35(9)</td>
+<td style="text-align: right;">3.866(9)</td>
+</tr>
+<tr>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">43,904</td>
+<td style="text-align: right;">512</td>
+<td style="text-align: right;">65.56(18)</td>
+<td style="text-align: right;">65.64(15)</td>
+<td style="text-align: right;">3.886(13)</td>
+</tr>
+<tr>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">65,536</td>
+<td style="text-align: right;">512</td>
+<td style="text-align: right;">85.93(21)</td>
+<td style="text-align: right;">85.78(23)</td>
+<td style="text-align: right;">3.929(10)</td>
+</tr>
+<tr>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">128,000</td>
+<td style="text-align: right;">512</td>
+<td style="text-align: right;">133.5(2)</td>
+<td style="text-align: right;">133.0(2)</td>
+<td style="text-align: right;">3.944(9)</td>
+</tr>
+<tr>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">221,184</td>
+<td style="text-align: right;">512</td>
+<td style="text-align: right;">193.3(6)</td>
+<td style="text-align: right;">193.4(5)</td>
+<td style="text-align: right;">3.973(14)</td>
+</tr>
+</tbody>
+</table>
+<p>Relaxation times of <span class="math inline">\(P_{\perp}(q_{\min})\)</span> in sweeps, errors jackknifed over engine blocks, with the fixed-size diffusive ratio in the last column. The integrated time tracks the exponential one to within 0.1 per cent at every size, which is what a single dominant mode looks like and is worth having, since the two estimators fail differently.</p>
+<h1 id="fitting-the-exponent">Fitting the exponent</h1>
+<p>A naive power law over all thirteen points returns <span class="math inline">\(z = 1.912\)</span> with <span class="math inline">\(\chi^{2}/\mathrm{dof} = 550\)</span>. It is not the result, for two reasons pointing the same way: it sits below a proved floor, and it drifts monotonically upward as small sizes are dropped, through 1.937 and 1.957 to 1.998 when only <span class="math inline">\(L \ge 14\)</span> is kept. Drift under truncation is the signature of a correction to scaling. The local exponents between successive sizes say the same from the other end, rising monotonically from 1.616 across <span class="math inline">\(L = 2 \to 3\)</span> to 2.031 across <span class="math inline">\(L = 20 \to 24\)</span>, approaching 2 from below. The third route fits <span class="math inline">\(\tau = A L^{z}(1 + \text{corrections})\)</span> by weighted nonlinear least squares.</p>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 18%" />
+<col style="width: 13%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+</colgroup>
+<thead>
+<tr>
+<th>fit form</th>
+<th style="text-align: right;"><span class="math inline">\(z\)</span></th>
+<th>correction coeff.</th>
+<th style="text-align: right;"><span class="math inline">\(A\)</span></th>
+<th style="text-align: right;">points (<span class="math inline">\(L_{\min}\)</span>)</th>
+<th style="text-align: right;"><span class="math inline">\(\chi^{2}/\mathrm{dof}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pure power law</td>
+<td style="text-align: right;">1.912</td>
+<td>—</td>
+<td style="text-align: right;">0.4198</td>
+<td style="text-align: right;">13 (2)</td>
+<td style="text-align: right;">550</td>
+</tr>
+<tr>
+<td><span class="math inline">\(+\,c/L\)</span></td>
+<td style="text-align: right;">2.114</td>
+<td>1.69</td>
+<td style="text-align: right;">0.2199</td>
+<td style="text-align: right;">13 (2)</td>
+<td style="text-align: right;">33.7</td>
+</tr>
+<tr>
+<td><span class="math inline">\(+\,c/L^{2}\)</span></td>
+<td style="text-align: right;">2.000</td>
+<td>1.42</td>
+<td style="text-align: right;">0.3332</td>
+<td style="text-align: right;">13 (2)</td>
+<td style="text-align: right;"><strong>1.61</strong></td>
+</tr>
+<tr>
+<td><span class="math inline">\(+\,c_1/L + c_2/L^{2}\)</span></td>
+<td style="text-align: right;">2.004</td>
+<td>0.054, 1.37</td>
+<td style="text-align: right;">0.3281</td>
+<td style="text-align: right;">13 (2)</td>
+<td style="text-align: right;">1.72</td>
+</tr>
+<tr>
+<td><span class="math inline">\(+\,c/L\)</span> (tail)</td>
+<td style="text-align: right;">2.017</td>
+<td>0.465</td>
+<td style="text-align: right;">0.3109</td>
+<td style="text-align: right;">9 (6)</td>
+<td style="text-align: right;">1.70</td>
+</tr>
+<tr>
+<td><span class="math inline">\(+\,c/L^{2}\)</span> (tail)</td>
+<td style="text-align: right;">1.996</td>
+<td>1.08</td>
+<td style="text-align: right;">0.3377</td>
+<td style="text-align: right;">9 (6)</td>
+<td style="text-align: right;">1.90</td>
+</tr>
+</tbody>
+</table>
+<p>Fits to <span class="math inline">\(\tau_{\exp}\)</span>. The same analysis on <span class="math inline">\(\tau_{\mathrm{int}}\)</span> gives <span class="math inline">\(z \in [1.989, 2.001]\)</span> among the forms that fit, with a headline of <span class="math inline">\(1.996 \pm 0.040\)</span>.</p>
+<p>Two features of that table identify the leading correction as <span class="math inline">\(1/L^{2}\)</span>. The <span class="math inline">\(1/L^{2}\)</span> form fits with <span class="math inline">\(\chi^{2}/\mathrm{dof} = 1.61\)</span> where the <span class="math inline">\(1/L\)</span> form manages only 33.7, and when both terms are allowed the fit chooses between them itself, giving the <span class="math inline">\(1/L\)</span> coefficient 0.054 against 1.37 for <span class="math inline">\(1/L^{2}\)</span>, consistent with zero, while the exponent barely moves. Restricting to forms that fit at all, meaning <span class="math inline">\(\chi^{2}/\mathrm{dof} &lt; 5\)</span>, excludes the pure power law and the pure <span class="math inline">\(1/L\)</span> correction and leaves four fits with <span class="math inline">\(z \in [1.996, 2.017]\)</span>. This is an empirical identification and not a derivation. I have no argument for why the correction should be analytic in <span class="math inline">\(1/L^{2}\)</span> here, only the observation that one such term of order-unity amplitude absorbs the entire drift from <span class="math inline">\(L = 2\)</span> upward.</p>
+<p><span class="math display">\[
+z = 2.004 \pm 0.060 \quad (\tau_{\exp}), \qquad
+z = 1.996 \pm 0.040 \quad (\tau_{\mathrm{int}}),
+\]</span></p>
+<p>with amplitude <span class="math inline">\(A \approx 0.33\)</span> sweeps. The quoted uncertainty is deliberately the unfiltered spread over fit forms, the badly fitting <span class="math inline">\(1/L\)</span> form included; the statistical component, propagated from the data’s own error bars by parametric bootstrap, is <span class="math inline">\(\pm 0.005\)</span>, and quoting that would be false precision by an order of magnitude. Both values are consistent with <span class="math inline">\(z = 2\)</span>, with the theorem <span class="math inline">\(z \ge 2\)</span>, and with the two-dimensional <span class="math inline">\(2.01(2)\)</span> obtained by the same technique at the square-lattice dimer RK point <span class="citation" data-cites="isakov-et-al-2011-dynamics-conformal-quantum-critical-points">(<a href="#ref-isakov-et-al-2011-dynamics-conformal-quantum-critical-points" role="doc-biblioref">Isakov et al. 2011</a>)</span>.</p>
+<h1 id="an-independent-test-with-no-fit-in-it">An independent test with no fit in it</h1>
+<p>Every number above depends on extrapolating in <span class="math inline">\(L\)</span>. This one does not. At fixed <span class="math inline">\(L\)</span>, diffusive relaxation <span class="math inline">\(\tau \sim q^{-2}\)</span> predicts <span class="math inline">\(\tau(q_{\min})/\tau(2q_{\min}) = 4\)</span>, and both times come from the same run, the same configurations and the same estimator, with no finite-size fit between the data and the prediction. The ratio rises from 1.829 at <span class="math inline">\(L = 2\)</span> to <span class="math inline">\(3.973 \pm 0.014\)</span> at <span class="math inline">\(L = 24\)</span>, an implied exponent climbing from 0.871 to 1.990. What makes this more than a second consistency check is that the approach is from below, at the same rate and over the same range as the local exponents approach 2: two routes with almost nothing in common see corrections of the same size and sign. A genuinely sub-diffusive exponent would have to be reproduced conspiratorially by the fixed-size ratio as well.</p>
+<h1 id="what-this-establishes-and-what-it-does-not">What this establishes, and what it does not</h1>
+<p>What is established is that on the dynamically accessible component of the <span class="math inline">\(\mathbf{W} = 0\)</span> sector, over <span class="math inline">\(L = 2\)</span> to 24, the relaxation time of <span class="math inline">\(P_{\perp}(q_{\min})\)</span> grows as <span class="math inline">\(L^{z}\)</span> with <span class="math inline">\(z = 2.004 \pm 0.060\)</span> and a leading <span class="math inline">\(1/L^{2}\)</span> correction, the fixed-size ratio test implying 1.99 independently. Four things it is not.</p>
+<p>It is not a proof of rapid mixing. A measured <span class="math inline">\(z \approx 2\)</span> is a prerequisite and evidence, but the matching lower bound <span class="math inline">\(\Delta \gtrsim L^{-2}\)</span> remains open, and no route to it is proposed here.</p>
+<p>Every <span class="math inline">\(\tau\)</span> reported is an observable’s relaxation time, hence a lower bound on <span class="math inline">\(1/\Delta\)</span>. The panel found the polarisation slowest of its members at all thirteen sizes, and the helicity family closed the one blind spot exact diagonalisation had exposed, but a panel bounds only what it measures. At <span class="math inline">\((1,2,2)\)</span> the bound is loose by a factor of 1.6 for a reason of symmetry, and the argument that cubic geometry hides no such mode, resting on the even sector being the two-photon sector and on the measured helicity ratio tending to one half, is supported by measurement rather than proved.</p>
+<p>The restriction to the accessible component is not a formality. Frozen states, configurations with no flippable hexagon, exist in the <span class="math inline">\(\mathbf{W} = 0\)</span> sector at every cell size and are absorbing and isolated, since the chain can neither leave one nor reach one; in RK language each is an exact zero-energy eigenstate degenerate with the equal-weight superposition over its sector. The full sector’s gap is therefore exactly zero at every <span class="math inline">\(L\)</span>, and a statement about <span class="math inline">\(\Delta\)</span> that does not name a component is empty. The companion notes on frozen states in this series carry the constructions, the exact counts and the certificates. What matters here is that the start convention places every replica in the accessible component by construction, and that this component is not always the giant one: at <span class="math inline">\((1,1,4)\)</span> it is not, and using the giant component instead would misstate <span class="math inline">\(\Delta\)</span> by a factor of 3.6.</p>
+<p>And the quoted uncertainty is dominated by the choice of correction form rather than by statistics, so a longer campaign at the same sizes would not shrink it. A larger <span class="math inline">\(L\)</span>, where the corrections are themselves smaller, would.</p>
+<h1 id="traps-worth-recording">Traps worth recording</h1>
+<p><em>The quotient-graph trap.</em> Enumerating hexagons as six-cycles of the periodic quotient graph is wrong on small cells. At <span class="math inline">\((1,1,1)\)</span> that graph is <span class="math inline">\(K(4,4)\)</span>, with 96 six-cycles against 16 true hexagons. All 80 extras are non-contractible, all respect the ice rule, and all 80 changed <span class="math inline">\(\mathbf{W}\)</span> in the 80 cases tested. Flipping them corrupts the flux sector while leaving every downstream number plausible.</p>
+<p><em>The accessible component is not the giant component.</em> At <span class="math inline">\((1,1,4)\)</span> it holds 42,240 states against the giant component’s 43,008, and a start state drawn uniformly from <span class="math inline">\(\mathbf{W} = 0\)</span> fails to reach the giant component 93 per cent of the time. Hence the constructive start convention, with a connectivity certificate calibrated against exact enumeration: no false positives, no false negatives, and the 6.67 per cent accessible fraction at that cell correctly reported.</p>
+<p><em>A real bug, caught by a test.</em> The flippability structure factor grouped hexagon centres by quarter-lattice units, but a centre is the mean of six integers, so distinct phases were merged and <span class="math inline">\(F(\mathbf{q})\)</span> silently corrupted, until an exact <span class="math inline">\(k/6\)</span> key and a run-time assertion replaced the grouping. No reported result depended on <span class="math inline">\(F\)</span>, which is luck and not design.</p>
+<p><em>Where the time goes.</em> Measuring the observable, not running the chain, was the bottleneck, at 132 ms per sample at <span class="math inline">\(L = 16\)</span>, and a bit-sliced vertical-counter kernel cut that by roughly a factor of six, which is what made <span class="math inline">\(L = 20\)</span> and 24 affordable.</p>
+<h1 id="related-measurements">Related measurements</h1>
+<p>Reading an RK Hamiltonian’s spectrum off the autocorrelations of the corresponding classical chain is Henley’s technique <span class="citation" data-cites="henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points">(<a href="#ref-henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points" role="doc-biblioref">Henley 2004</a>)</span>, first used by Ivanov to extract a vison gap on the triangular lattice <span class="citation" data-cites="ivanov-2004-roksar-kivelson-dimer-model-vision-gap">(<a href="#ref-ivanov-2004-roksar-kivelson-dimer-model-vision-gap" role="doc-biblioref">Ivanov 2004</a>)</span>. In two dimensions the measurement has been done properly: Isakov, Fendley, Ludwig, Trebst and Troyer ran the classical RK dynamics of the square-lattice quantum dimer model up to <span class="math inline">\(L = 96\)</span> and fitted <span class="math inline">\(z = 2.01(2)\)</span>, alongside a continuously varying exponent along a <span class="math inline">\(\mathbb{Z}_2\)</span> line and <span class="math inline">\(z = 2.170(3)\)</span> at an Ising conformal quantum critical point <span class="citation" data-cites="isakov-et-al-2011-dynamics-conformal-quantum-critical-points">(<a href="#ref-isakov-et-al-2011-dynamics-conformal-quantum-critical-points" role="doc-biblioref">Isakov et al. 2011</a>)</span>. The value here is the three-dimensional analogue by the same route, and its agreement is the external calibration one would want.</p>
+<p>In three dimensions the nearest prior work is Läuchli, Capponi and Assaad, who ran the same stochastic dynamics at the RK point of the cubic-lattice dimer model in the zero-flux sector and saw the soft mode near <span class="math inline">\((\pi,\pi,\pi)\)</span> disperse quadratically <span class="citation" data-cites="lauchli-et-al-2008-dynamical-dimer-correlations-at-rk-points">(<a href="#ref-lauchli-et-al-2008-dynamical-dimer-correlations-at-rk-points" role="doc-biblioref">Läuchli, Capponi, and Assaad 2008</a>)</span> — an observation consistent with <span class="math inline">\(z = 2\)</span> at a single size, with no fitted exponent and no error bar, on the cubic dimer model rather than diamond-lattice ice. A measured local-dynamics exponent does exist for the three-dimensional cubic dimer model, <span class="math inline">\(z = 1.92(1)\)</span> from short-time critical dynamics <span class="citation" data-cites="peng-et-al-2026-short-time-critical-dynamics-cubic-dimer">(<a href="#ref-peng-et-al-2026-short-time-critical-dynamics-cubic-dimer" role="doc-biblioref">Peng, Yan, and Yin 2026</a>)</span>, but it belongs to the columnar–Coulomb critical point of an interacting model and should not be read against the value here.</p>
+<p>For pyrochlore ice itself I have found no prior measurement, and the chain seems to have fallen between two literatures. The classical Monte Carlo community built loop and worm algorithms <span class="citation" data-cites="barkema-newman-1998-monte-carlo-ice-models shinaoka-2011-pyrochlore-heisenberg-spin-ice-loop-algorithm otsuka-2014-cluster-algorithm-spin-ice">(<a href="#ref-barkema-newman-1998-monte-carlo-ice-models" role="doc-biblioref">Barkema and Newman 1998</a>; <a href="#ref-shinaoka-2011-pyrochlore-heisenberg-spin-ice-loop-algorithm" role="doc-biblioref">Shinaoka 2011</a>; <a href="#ref-otsuka-2014-cluster-algorithm-spin-ice" role="doc-biblioref">Otsuka 2014</a>)</span> in order to replace the slow local dynamics, and measured the dynamic exponents of those algorithms rather than of the chain they displaced; the quantum ice literature on this lattice measures flux-sector energies and photon dispersions in the liquid phase <span class="citation" data-cites="shannon-et-al-2012-quantum-ice-monte-carlo benton-et-al-2012-emergent-electromagnetism-quantum-spin-ice">(<a href="#ref-shannon-et-al-2012-quantum-ice-monte-carlo" role="doc-biblioref">Shannon et al. 2012</a>; <a href="#ref-benton-et-al-2012-emergent-electromagnetism-quantum-spin-ice" role="doc-biblioref">Benton, Sikora, and Shannon 2012</a>)</span> rather than gap scaling at the RK point. The general lower bound that frames the result was proved only last year <span class="citation" data-cites="masaoka-et-al-2025-rigorous-lower-bound-dynamical-exponents-gapless-frustration-free-systems masaoka-et-al-2025-ising-dynamical-critical-exponent-bound">(<a href="#ref-masaoka-et-al-2025-rigorous-lower-bound-dynamical-exponents-gapless-frustration-free-systems" role="doc-biblioref">Masaoka, Soejima, and Watanabe 2025b</a>, <a href="#ref-masaoka-et-al-2025-ising-dynamical-critical-exponent-bound" role="doc-biblioref">2025a</a>)</span>.</p>
+<h1 class="unnumbered" id="appendix-artefacts">Appendix: artefacts</h1>
+<p>All paths are in the repository at <code>github.com/lyndondrake/ice-mixing</code>. The engine is <code>icemix/msc.py</code> with its kernel <code>icemix/_msc.c</code>, its canonical RNG mapping documented in the module docstring and reproduced there by a pure-Python decoder, and <code>icemix/chain.py</code> as the definition-level reference it is validated against; then <code>icemix/autocorr.py</code> (estimators, windowing, bias correction), <code>icemix/taurun.py</code> (the two-pass <span class="math inline">\(\tau\)</span> measurement), <code>icemix/panel.py</code> (the panel and its parities), <code>icemix/zfit.py</code> (the fits and the fit-form uncertainty), with <code>icemix/lattice.py</code>, <code>icemix/start.py</code>, <code>icemix/component.py</code>, <code>icemix/spectrum.py</code> and <code>icemix/exact_ac.py</code> supporting them. The runs are <code>experiments/03_campaign/</code> (the ladder, the fits, the anchors, the bias validation), <code>experiments/02_calibration/</code> (bit-for-bit validation, the <span class="math inline">\((1,2,2)\)</span> spectrum), <code>experiments/06_helicity_cubic/</code> (the helicity ratios) and <code>experiments/01_falsifiers/</code> (the census and the frozen states); each carries <code>results/results.json</code>, a generated <code>results/summary.md</code> in which every number is traceable to that JSON, and its runner. Every number in this note comes from one of those files or from the full working note, <code>paper/mixing-exponent-note.tex</code>. Tests are in <code>tests/test_msc.py</code>, <code>tests/test_campaign.py</code>, <code>tests/test_panel.py</code>, <code>tests/test_observables.py</code> and <code>tests/test_spectrum.py</code>; the bound <span class="math inline">\(z \ge 2\)</span> was carried as a test-suite tripwire throughout and fired once, on a naive fit of 1.859 at the calibration stage, which is how the correction-to-scaling analysis became a requirement of the campaign rather than an afterthought.</p>
+<h1 class="unnumbered" id="references">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-barkema-newman-1998-monte-carlo-ice-models" class="csl-entry" role="listitem">
+Barkema, G. T., and M. E. J. Newman (1998), <span>‘Monte Carlo Simulation of Ice Models’</span>, <em>Physical Review E</em>, 57: 1155–66.
+</div>
+<div id="ref-benton-et-al-2012-emergent-electromagnetism-quantum-spin-ice" class="csl-entry" role="listitem">
+Benton, Owen, Olga Sikora, and Nic Shannon (2012), <span>‘Seeing the Light: Experimental Signatures of Emergent Electromagnetism in a Quantum Spin Ice’</span>, <em>Physical Review B</em>, 86: 075154.
+</div>
+<div id="ref-bramwell-gingras-2001-spin-ice-state" class="csl-entry" role="listitem">
+Bramwell, Steven T., and Michel J. P. Gingras (2001), <span>‘Spin Ice State in Frustrated Magnetic Pyrochlore Materials’</span>, <em>Science</em>, 294: 1495–501.
+</div>
+<div id="ref-castelnovo-et-al-2008-magnetic-monopoles-spin-ice" class="csl-entry" role="listitem">
+Castelnovo, Claudio, Roderich Moessner, and Shivaji L. Sondhi (2008), <span>‘Magnetic Monopoles in Spin Ice’</span>, <em>Nature</em>, 451: 42–5.
+</div>
+<div id="ref-henley-1997-dimer-covering-relaxation-time" class="csl-entry" role="listitem">
+Henley, Christopher L. (1997), <span>‘Relaxation Time for a Dimer Covering with Height Representation’</span>, <em>Journal of Statistical Physics</em>, 89: 483–507.
+</div>
+<div id="ref-henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points" class="csl-entry" role="listitem">
+Henley, Christopher L. (2004), <span>‘From Classical to Quantum Dynamics at Rokhsar–Kivelson Points’</span>, <em>Journal of Physics: Condensed Matter</em>, 16: S891–8.
+</div>
+<div id="ref-hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid" class="csl-entry" role="listitem">
+Hermele, Michael, Matthew P. A. Fisher, and Leon Balents (2004), <span>‘Pyrochlore Photons: The U(1) Spin Liquid in a $S=1/2$ Three-Dimensional Frustrated Magnet’</span>, <em>Physical Review B</em>, 69: 064404.
+</div>
+<div id="ref-isakov-et-al-2011-dynamics-conformal-quantum-critical-points" class="csl-entry" role="listitem">
+Isakov, Sergei V., et al. (2011), <span>‘Dynamics at and Near Conformal Quantum Critical Points’</span>, <em>Physical Review B</em>, 83: 125114.
+</div>
+<div id="ref-ivanov-2004-roksar-kivelson-dimer-model-vision-gap" class="csl-entry" role="listitem">
+Ivanov, Dmitri A. (2004), <span>‘Vison Gap in the Rokhsar–Kivelson Dimer Model on the Triangular Lattice’</span>, <em>Physical Review B</em>, 70: 094430.
+</div>
+<div id="ref-lauchli-et-al-2008-dynamical-dimer-correlations-at-rk-points" class="csl-entry" role="listitem">
+Läuchli, Andreas M., Sylvain Capponi, and Fakher F. Assaad (2008), <span>‘Dynamical Dimer Correlations at Bipartite and Non-Bipartite Rokhsar–Kivelson Points’</span>, <em>Journal of Statistical Mechanics: Theory and Experiment</em> P01010.
+</div>
+<div id="ref-masaoka-et-al-2025-ising-dynamical-critical-exponent-bound" class="csl-entry" role="listitem">
+Masaoka, Rintaro, Tomohiro Soejima, and Haruki Watanabe (2025a), <span>‘Rigorous Lower Bound of the Dynamical Critical Exponent of the Ising Model’</span>, <em>Journal of Statistical Physics</em>, 192: 76.
+</div>
+<div id="ref-masaoka-et-al-2025-rigorous-lower-bound-dynamical-exponents-gapless-frustration-free-systems" class="csl-entry" role="listitem">
+Masaoka, Rintaro, Tomohiro Soejima, and Haruki Watanabe (2025b), <span>‘Rigorous Lower Bound on Dynamical Exponents in Gapless Frustration-Free Systems’</span>, <em>Physical Review X</em>, 15: 041050.
+</div>
+<div id="ref-otsuka-2014-cluster-algorithm-spin-ice" class="csl-entry" role="listitem">
+Otsuka, Hiromi (2014), <span>‘Cluster Algorithm for Monte Carlo Simulations of Spin Ice’</span>, <em>Physical Review B</em>, 90: 220406(R).
+</div>
+<div id="ref-peng-et-al-2026-short-time-critical-dynamics-cubic-dimer" class="csl-entry" role="listitem">
+Peng, Y., Z. Yan, and S. Yin (2026), <span>‘Short-Time Critical Dynamics in the Classical Cubic Dimer Model’</span>, <em>Communications in Theoretical Physics</em>, 78/7, <a href="https://doi.org/10.1088/1572-9494/ae5941">https://doi.org/10.1088/1572-9494/ae5941</a>.
+</div>
+<div id="ref-rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas" class="csl-entry" role="listitem">
+Rokhsar, Daniel S., and Steven A. Kivelson (1988), <span>‘Superconductivity and the Quantum Hard-Core Dimer Gas’</span>, <em>Physical Review Letters</em>, 61: 2376–9.
+</div>
+<div id="ref-shannon-et-al-2012-quantum-ice-monte-carlo" class="csl-entry" role="listitem">
+Shannon, Nic, et al. (2012), <span>‘Quantum Ice: A Quantum Monte Carlo Study’</span>, <em>Physical Review Letters</em>, 108: 067204.
+</div>
+<div id="ref-shinaoka-2011-pyrochlore-heisenberg-spin-ice-loop-algorithm" class="csl-entry" role="listitem">
+Shinaoka, Hiroshi (2011), <em>Extended Loop Algorithm for Pyrochlore Heisenberg Spin Models with Spin-Ice Type Degeneracy</em>.
+</div>
+</div>
+</main>
+</body>
+</html>

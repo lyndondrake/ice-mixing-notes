@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How the work was done: the method of a language-model research programme on pyrochlore ice, and what it produced beyond its results</title>
+<meta name="description" content="how the work was done: pre-registration and stage gates, the status vocabulary, the two-method gate, the certification ladder, the division of labour, the record; what the method caught and missed; generalisable findings">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "ScholarlyArticle",
+ "@id": "https://lyndondrake.github.io/ice-mixing-notes/notes/method.html",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/notes/method.html",
+ "headline": "How the work was done: the method of a language-model research programme on pyrochlore ice, and what it produc",
+ "name": "How the work was done: the method of a language-model research programme on pyrochlore ice, and what it produced beyond its results",
+ "datePublished": "2026-09-06",
+ "version": "2026-09-06",
+ "author": [
+  {
+   "@type": "Person",
+   "name": "Lyndon Drake"
+  }
+ ],
+ "creditText": "Lyndon Drake, with Claude Code (Anthropic Claude 5 models)",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "inLanguage": "en-GB",
+ "encoding": [
+  {
+   "@type": "MediaObject",
+   "contentUrl": "https://lyndondrake.github.io/ice-mixing-notes/notes/method.pdf",
+   "encodingFormat": "application/pdf"
+  }
+ ]
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div class="doc-links" style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0"><p class="small"><a href="method.pdf">PDF</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/notes/method.md">Markdown source</a></p><p class="small"><strong>Certification, as the notes index states it:</strong> none; the evidence is the log, the handover file and the archived reports</p><section class="panel small"><p>This note has no published claims manifest yet; its standing is as the note itself and the <a href="index.html">notes index</a> state it.</p></section></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">How the work was done: the method of a language-model research programme on pyrochlore ice, and what it produced beyond its results</h1>
+
+<p class="author">Lyndon Drake, with Claude Code (Anthropic Claude 5 models)</p>
+<p class="date">2026-09-06</p>
+</header>
+<section class="abstract"><h2>Abstract</h2>
+<p>The results of this project, a measured dynamical exponent, two frozen-state theorems, a certified periodicity result at two cell sizes, a reduction of the periodicity conjecture to a parity statement, and four falsifier results, were produced by language models working under human direction over about four weeks of sessions. This note describes the method rather than the results: the pre-registration of every measurement stage with its falsifiers and its readings, the gate between stages at which a human reads a report against the registration, the status vocabulary in which every claim carries the word proved, certified, enumerated, solver or conjecture, the two-method gate for every count, the certification ladder from a solver verdict to a checked DRAT or LRAT proof to a formalisation in Lean 4 or Isabelle/HOL, the division of labour between a main loop that reasons, reviews and logs and subagents that compute and report in archived documents, and the record itself, a log in which every claim has an actor and a status and every withdrawal is kept. It then lists what the method caught and what it missed, each with the incident that is its evidence, and the generalisable findings: that structure seen only on degenerate cells is suspect and the two kinds of degeneracy that arose here, that a statement true by an averaging argument over the whole torus cannot be found by any finite window, that a solver’s silence within a time cap is an outcome to be recorded and not a claim, and that the rules which held were the ones enforced by code or by a gate rather than by a sentence in a brief. Nothing in this note is certified; its evidence is the repository’s log, its handover file and its archived subagent reports, and the sibling notes carry the results.</p>
+</section>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#what-the-method-had-to-do" id="toc-what-the-method-had-to-do">What the method had to do</a></li>
+<li><a href="#pre-registration-and-stage-gates" id="toc-pre-registration-and-stage-gates">Pre-registration and stage gates</a></li>
+<li><a href="#the-status-vocabulary" id="toc-the-status-vocabulary">The status vocabulary</a></li>
+<li><a href="#the-two-method-gate" id="toc-the-two-method-gate">The two-method gate</a></li>
+<li><a href="#the-certification-ladder" id="toc-the-certification-ladder">The certification ladder</a></li>
+<li><a href="#division-of-labour" id="toc-division-of-labour">Division of labour</a></li>
+<li><a href="#the-record" id="toc-the-record">The record</a></li>
+<li><a href="#what-the-method-caught-and-what-it-missed" id="toc-what-the-method-caught-and-what-it-missed">What the method caught, and what it missed</a></li>
+<li><a href="#generalisable-findings" id="toc-generalisable-findings">Generalisable findings</a></li>
+<li><a href="#artefacts" id="toc-artefacts">Artefacts</a></li>
+</ul>
+</details></nav>
+<h1 id="what-the-method-had-to-do">What the method had to do</h1>
+<p>The problem set was a mixture of a numerical measurement at scale, a set of exact computations on small cells, machine-checked proofs, and analytic work whose aim was to find and prove structure. The failure modes of language models differ across those kinds of work. A model that runs a Monte Carlo campaign can fit noise and report a clean exponent; a model that enumerates can miscount and never know; a model that proves can re-derive a refuted statement at the same cost as recalling that it was refuted, and cannot feel the difference; and a model that searches for structure on small examples will find structure that is an artefact of the example. The method described here is the set of rules that were adopted against those failure modes, with the evidence for each rule’s value.</p>
+<h1 id="pre-registration-and-stage-gates">Pre-registration and stage gates</h1>
+<p>Every measurement stage was registered before it ran. The registration named the quantity, the cells, the estimator, the falsifiers (what would count as a failure), and the reading rule, that is, how the numbers would be read as PASS or FAIL. After the stage the subagent that ran it wrote a report; the main loop read the report against the registration and recorded PASS or FAIL as registered, and the human read both at the gate before the next stage was briefed. The rule was that a reading is never reinterpreted after the fact: if a falsifier fires, the stage fails and the failure is recorded, whatever the number looks like.</p>
+<p>Two defects of substance were caught this way during the campaign, both in flight: a phase quantisation of hexagon centres that corrupted a structure factor, and a family of fast observables that had been fitted to noise. Both are in the log with their dates, and both would have survived a method that let the reading follow the number. The plan of record (<code>docs/next-stage-plan-2026-09-04.md</code>) carries the registration of the falsifier stage in the form used: each item with its statement, its falsifier, its cost and its reading, and a later section with the outcomes against it.</p>
+<h1 id="the-status-vocabulary">The status vocabulary</h1>
+<p>Every claim in the working notes and the log carries one of five words. <strong>Proved</strong> means a proof is written and can be read. <strong>Certified</strong> means a machine-checked artefact exists in the repository: a DRAT or LRAT proof accepted by an independent checker, a CPOG count, a Lean 4 or Isabelle/HOL theory that builds. <strong>Enumerated</strong> means the statement was checked on every state of a cell by exhaustive enumeration. <strong>Solver</strong> means a SAT verdict without a checked proof. <strong>Conjecture</strong> means evidence only. The vocabulary was adopted on the first day of the analytic work and applied backwards to everything already recorded; its value is that a reader of any sentence knows what stands behind it without opening a file, and that the writer cannot promote a solver verdict to a theorem by a turn of phrase. The note on the periodicity conjecture, <code>docs/frozen-structure-2026-09-05.md</code>, is written entirely in it.</p>
+<h1 id="the-two-method-gate">The two-method gate</h1>
+<p>No count was trusted on its own. Every enumeration of ice states was matched against an independent enumerator on every cell where both could run (a frontier dynamic programme against a bit-parallel depth first search; later, SAT enumeration with blocking clauses against both), as sets rather than as totals, and the tests in the repository assert the match. Certified counts by knowledge compilation were matched against the enumerators before they were quoted. The frozen state census at <span class="math inline">\((2,2,2)\)</span> was produced by SAT enumeration and certified by CPOG; the count of 612 is quoted because both agree. The crystallographic anchors, the cell’s point group and its 192 general positions, were computed and asserted as tests, so that a symmetry argument rests on a checked group rather than a recalled one.</p>
+<p>The value of the gate showed in the one place it was skipped: the first form of the chain-current identity in the note on dipole types was written with a sign convention that ignored the projection of the dipole on the chain, and failed on the enumerated states; the correct law was found by fixing the failure. Without the enumeration the wrong identity would have been recorded as proved.</p>
+<h1 id="the-certification-ladder">The certification ladder</h1>
+<p>A statement about a finite cell moves up a ladder as it is trusted more. A solver verdict is recorded as such. A DRAT proof from the solver is checked by drat-trim and the verdict file kept; the proof itself is not committed but its hash is. Where a formula defeats a direct solve, cube-and-conquer produces one LRAT proof per leaf cube, each checked by lrat-check, and a DRAT proof that the leaves are exhaustive, with a manifest of hashes and a checker written from scratch in the standard library so that a third party need run none of the project’s code. Counts are certified by CPOG. Theorems with hand proofs were formalised in Lean 4, with a bridge from the formal hexagons to the ones the simulation derives, so that the object proved about is the object simulated; and the real-root verdicts of the sector marginals were certified in Isabelle/HOL by Sturm’s theorem. The rule was that a statement is described by the highest rung it has reached and no higher, and that a rung is climbed only when the cost is small against the value: the <span class="math inline">\(L = 3\)</span> periodicity result cost a night of certification and was worth it; the <span class="math inline">\(L = 4\)</span> result stopped at 22,746 of 23,153 leaves and is described as indicated, not proved.</p>
+<h1 id="division-of-labour">Division of labour</h1>
+<p>The main loop, the session the human talks to, did the reasoning, the review and the record. Subagents did the computing and the reading of long outputs, and wrote reports that were archived verbatim with their provenance (<code>docs/reports/</code>). A subagent’s “done” was treated as a claim: the main loop checked the diff, re-ran a sample, or re-derived the number before quoting it, and where a subagent’s number and a results file disagreed, the file won and the disagreement was recorded. The eight contribution notes beside this one were drafted by subagents from the repository’s reports and code, with a literature search whose every entry was verified against a fetched record, and each was instructed to flag in its text any number that rests on prose or on its own arithmetic rather than a results file; the flags are in the notes. Model choice followed the work: a stronger model for the analytic day, when the whole argument had to be held at once, and smaller ones for the mechanical scans and the watch loops.</p>
+<h1 id="the-record">The record</h1>
+<p>The log (<code>LOG.md</code>) is chronological and carries every claim with its actor and its status; corrections are appended, not overwritten, so that a withdrawn statement can be read beside its withdrawal. The handover file (<code>HANDOVER.md</code>) is rewritten at the close of every session to let a fresh session continue with nothing to re-derive: what is in flight with the command to verify it, what to do in order, and the standing policies the human has set. Memory outside the repository holds only pointers. The commit history is one commit per milestone with a message that states the result, and every milestone is pushed. The value of the record is not sentimental: on the day the periodicity work was done, the morning’s note was read second by the afternoon’s session, and the afternoon’s queries were built on its dead ends without repeating them.</p>
+<h1 id="what-the-method-caught-and-what-it-missed">What the method caught, and what it missed</h1>
+<p>Caught: the two campaign defects above; a vacuous pass that a falsifier would have produced, disarmed before the stage ran; a propagation law found on four cells and refuted on the fifth, recorded as withdrawn with the reason (see the next section); a sign convention in an identity, by the enumerated states; a first framing of the prior-art gap, narrowed after every cited reference was fetched, with the earlier wording kept.</p>
+<p>Missed, and now rules: the main loop’s own exploratory solvers were launched beside a twelve-worker job and pushed the load to 33 on 20 cores, the oversubscription its own log had warned a day earlier against, and again to 18 on the analytic day; the lesson is that a warning written as a completed action decays, and the launch check now lives in the brief as a step. Two subagents parked on their own background monitors and stopped, twice each, until messaged; the lesson is that a watch loop belongs inside one tool call or in the main loop, never in a subagent’s background. A solver’s silence inside a cap was at first reported as “running” for too long; the rule now is that a cap reached is an outcome, recorded with its cap, and the handover names it as such.</p>
+<h1 id="generalisable-findings">Generalisable findings</h1>
+<p><strong>Structure seen only on degenerate cells is suspect, and there are two kinds of degeneracy here.</strong> On cells with an extent of two, every chain parallel to a given chain is its half-box translate, so a “propagation law” between chains was in fact the half-box symmetry; it held on four such cells and failed on <span class="math inline">\((4,4,4)\)</span>. On cells with <span class="math inline">\(\gcd(b,c) = 1\)</span> transverse to an axis there is one chain per slab along that axis, so a kink-free chain is a whole slab and rigidity appears that larger cells lack; it held on <span class="math inline">\((2,2,3)\)</span> and <span class="math inline">\((2,3,3)\)</span> and failed on <span class="math inline">\((2,2,2)\)</span>, <span class="math inline">\((2,2,4)\)</span> and <span class="math inline">\((3,3,3)\)</span>. The rule adopted: no structural claim is recorded from a cell unless it also holds on a cell without both degeneracies, and the note names the cells to trust.</p>
+<p><strong>Some true statements have no finite witness.</strong> That every hexagon of a frozen state has exactly two flow reversals is proved by an average over the torus, and a hexagon with four reversals is consistent with freezing on the 610 hexagons within three steps of it. A window test can therefore refute a local conjecture but cannot confirm a global lemma, and the distinction was made explicit after the propagation-law episode: a claim that a window cannot see was thereafter attacked by a counting or parity argument rather than a larger window.</p>
+<p><strong>Sharpness is worth measuring.</strong> Several statements were tested not only for truth but for the minimal hypothesis: that five of six directions do not suffice for Theorem S, that no pair, triple, quadruple or quintuple of directions is excluded by a single defect, that per-axis hypotheses fail where the three-axis one holds. Each such measurement told the analytic work what kind of proof was possible, and in one case (the quintuple result) that no local proof was.</p>
+<p><strong>The right reformulation was found by asking the solver which hypothesis it needed, not by asking it for the theorem.</strong> The reduction of the periodicity conjecture went through five candidate intermediate statements in a day, each tested as a query in minutes; the one that survived, the parity on hexagons, was not the first or the most natural, and the two that preceded it (type periodicity, and its step to the period) became corollaries. The cost of a wrong candidate was minutes, and the record keeps all five.</p>
+<p><strong>Mechanised rules held; prose rules decayed.</strong> The gates that were code, the tests that assert counts, the checkers that accept or reject proofs, did their work every time. The rules that lived as sentences in a brief, on machine load, on monitors, on the caps, were the ones that failed and had to be moved into code or into the checklist of a launch.</p>
+<h1 id="artefacts">Artefacts</h1>
+<ul>
+<li><code>LOG.md</code>, <code>HANDOVER.md</code>, <code>docs/reports/</code> (archived subagent reports with provenance), <code>docs/next-stage-plan-2026-09-04.md</code> (a registration and its outcomes), <code>docs/frozen-structure-2026-09-05.md</code> (the status vocabulary in use), <code>tests/</code> (the two-method gates and crystallographic anchors), <code>experiments/07_certificates/verify_cnc_certificate.py</code> (the independent checker), <code>formal/</code> (Lean 4 and Isabelle/HOL).</li>
+</ul>
+</main>
+</body>
+</html>

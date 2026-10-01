@@ -1,0 +1,997 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subagent report: stage 4f — a helicity (pseudoscalar) mode in cubic geometry (2026-09-04)</title>
+<meta name="description" content="Subagent report: stage 4f — a helicity (pseudoscalar) mode in cubic geometry (2026-09-04)">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Subagent report: stage 4f — a helicity (pseudoscalar) mode in cubic geometry (2026-09-04)",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-04-stage4f.html",
+ "datePublished": "2026-09-04",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "inLanguage": "en-GB"
+}</script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-04-stage4f.md">Markdown source</a></p></div>
+<main class="doc">
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#subagent-report-stage-4f-a-helicity-pseudoscalar-mode-in-cubic-geometry-2026-09-04" id="toc-subagent-report-stage-4f-a-helicity-pseudoscalar-mode-in-cubic-geometry-2026-09-04">Subagent report: stage 4f — a helicity (pseudoscalar) mode in cubic geometry (2026-09-04)</a>
+<ul>
+<li><a href="#headline" id="toc-headline">0. Headline</a></li>
+<li><a href="#what-was-implemented" id="toc-what-was-implemented">1. What was implemented</a></li>
+<li><a href="#calibration-at-122-reading-v" id="toc-calibration-at-122-reading-v">2. Calibration at (1,2,2) — reading (v)</a></li>
+<li><a href="#r-parity-of-the-helicity-members-verified-numerically" id="toc-r-parity-of-the-helicity-members-verified-numerically">3. R-parity of the helicity members, verified numerically</a></li>
+<li><a href="#pre-flight" id="toc-pre-flight">4. Pre-flight</a></li>
+<li><a href="#the-cubic-ladder" id="toc-the-cubic-ladder">5. The cubic ladder</a></li>
+<li><a href="#feed-card-ledger" id="toc-feed-card-ledger">6. Feed-card ledger</a></li>
+<li><a href="#defects-and-deviations-recorded" id="toc-defects-and-deviations-recorded">7. Defects and deviations recorded</a></li>
+<li><a href="#operating-record-and-how-to-re-derive-everything" id="toc-operating-record-and-how-to-re-derive-everything">8. Operating record and how to re-derive everything</a></li>
+<li><a href="#what-was-not-run-and-why" id="toc-what-was-not-run-and-why">9. What was not run, and why</a></li>
+<li><a href="#test-count" id="toc-test-count">10. Test count</a></li>
+</ul></li>
+</ul>
+</details></nav>
+<h1 id="subagent-report-stage-4f-a-helicity-pseudoscalar-mode-in-cubic-geometry-2026-09-04">Subagent report: stage 4f — a helicity (pseudoscalar) mode in cubic geometry (2026-09-04)</h1>
+<p>Provenance: Claude Opus 5 (1M) implementation/numerics subagent, dispatched by the Fable main loop against <code>docs/next-stage-plan-2026-09-04.md</code> §5 item 4f, 2026-09-04. Compute: GB10 (spark-709c), CPU only, no GPU, no ARC (no ARC acknowledgement is owed). Artefacts: an additive change to <code>icemix/panel.py</code> (the new even-parity <code>helicity</code> family, off by default), <code>experiments/06_helicity_cubic/{run_helicity_cubic.py,make_summary.py}</code>, <code>experiments/06_helicity_cubic/results/{results.json,summary.md,run.log,progress.json}</code>, <code>tests/test_stage4f.py</code>. <strong>Every number below is traceable to <code>results.json</code></strong>, which <code>make_summary.py</code> renders into <code>summary.md</code> without arithmetic of its own. Nothing was committed; the main loop commits.</p>
+<p>The run <strong>completed</strong> at 11:45:40 (3,413.5 s wall, peak RSS 8.21 GiB, exit status 0). The draft of this report was written while L = 16 was still running, at the main loop’s instruction; the tables were then rebuilt from the finished <code>results.json</code>. §8 keeps the operating material, because how the run was driven is part of the record.</p>
+<hr />
+<h2 id="headline">0. Headline</h2>
+<p><strong>VERDICT: PASS.</strong> All seven sizes measured; reading (ii), the FAIL-UP hard stop, was not triggered at any size.</p>
+<pre><code>R_h(L) = tau_exp(helicity, q_min) / tau_exp(P_perp, q_min)</code></pre>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>L</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>6</th>
+<th>8</th>
+<th>12</th>
+<th>16</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>R_h</strong></td>
+<td>0.6813</td>
+<td>0.5417</td>
+<td>0.5131</td>
+<td><strong>0.5048</strong></td>
+<td><strong>0.5026</strong></td>
+<td><strong>0.5010</strong></td>
+<td><strong>0.4988</strong></td>
+</tr>
+<tr>
+<td>±</td>
+<td>0.0051</td>
+<td>0.0023</td>
+<td>0.0018</td>
+<td>0.0017</td>
+<td>0.0019</td>
+<td>0.0015</td>
+<td>0.0025</td>
+</tr>
+<tr>
+<td>|P⊥|²/P⊥</td>
+<td>0.4608</td>
+<td>0.4687</td>
+<td>0.4847</td>
+<td>0.4928</td>
+<td><strong>0.4958</strong></td>
+<td><strong>0.4992</strong></td>
+<td><strong>0.4972</strong></td>
+</tr>
+</tbody>
+</table>
+<p><code>R_h</code> falls monotonically to <strong>1/2</strong> — from above through L = 12 and crossing to 0.4988 ± 0.0025 at L = 16, i.e. sitting on 1/2 within half an error bar — exactly as the Gaussian two-photon argument of the plan’s §4 predicts, and in lockstep with the independent <code>|P⊥|²/P⊥</code> control, which approaches 1/2 from below. The two meet the Wick value from opposite sides by L = 8 and stay there.</p>
+<p><strong>There is no slow helicity mode in cubic geometry.</strong> The thin-cell pathology of <code>(1,2,2)</code> — where the pseudoscalar is 1.61× <em>slower</em> than the polarisation and is the slowest mode of the whole chain — does not survive the addition of a third thick direction. The odd polarisation <code>P_transverse_h1</code> remains the headline family at every cubic size, and the note’s “τ is a lower bound on 1/Δ” statements stand unrevised.</p>
+<p>The registered readings:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th></th>
+<th>statement</th>
+<th>outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>(i)</strong></td>
+<td><code>R_h</code> ∈ [0.40, 0.60] at every L ≥ 6</td>
+<td><strong>PASS</strong> — 0.5048, 0.5026, 0.5010, 0.4988 at L = 6, 8, 12, 16; none out of band</td>
+</tr>
+<tr>
+<td><strong>(ii)</strong></td>
+<td><code>R_h</code> &gt; 1 at any L ≥ 4 → FAIL-UP, hard stop</td>
+<td><strong>not triggered</strong> — max over L ≥ 4 is 0.5131</td>
+</tr>
+<tr>
+<td><strong>(iii)</strong></td>
+<td><code>R_h</code> ∈ (0.60, 1] at L ≥ 6 → FAIL-DOWN-SLOW</td>
+<td><strong>not triggered</strong></td>
+</tr>
+<tr>
+<td><strong>(iv)</strong></td>
+<td><code>\|P⊥\|²/P⊥</code> ∈ [0.45, 0.55] at L ≥ 8</td>
+<td><strong>PASS</strong> — 0.4958, 0.4992, 0.4972 at L = 8, 12, 16</td>
+</tr>
+<tr>
+<td><strong>(v)</strong></td>
+<td>the estimator reproduces <code>R_h</code> = 1.61 at (1,2,2)</td>
+<td><strong>PASS</strong> — see §2; the estimator sees the mode</td>
+</tr>
+</tbody>
+</table>
+<p>One thing the run establishes beyond the registered readings: at <code>(1,2,2)</code> the <strong>production panel with the new member now makes the helicity the headline family</strong> (<code>helicity_total_h1</code>, even, <code>R_h</code> = 1.8986), where the stage-3 panel could not see the slowest mode at all. The parity blind spot that stage 4d §8.6 identified is closed, at no Markov cost, and the fix is now demonstrated to be harmless in cubic geometry rather than merely plausible.</p>
+<hr />
+<h2 id="what-was-implemented">1. What was implemented</h2>
+<h3 id="the-panel-change-additive-icemixpanel.py">The panel change (additive, <code>icemix/panel.py</code>)</h3>
+<p><code>PanelSpec.helicity</code> (default <strong>False</strong>) adds four even-parity families computed from the polarisation components <code>measure_panel</code> already records:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>family</th>
+<th>components</th>
+<th>what it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>helicity_h1</code></td>
+<td>3 (one per q axis)</td>
+<td><code>h_k(q_min) = Im(P_i(q_min)* P_j(q_min))</code>, <code>(i,j,k)</code> cyclic</td>
+</tr>
+<tr>
+<td><code>helicity_total_h1</code></td>
+<td>1</td>
+<td><code>h_x + h_y + h_z</code> at <code>q_min</code></td>
+</tr>
+<tr>
+<td><code>helicity_h2</code></td>
+<td>3</td>
+<td>the same at <code>2 q_min</code></td>
+</tr>
+<tr>
+<td><code>helicity_total_h2</code></td>
+<td>1</td>
+<td>the sum at <code>2 q_min</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>h_k = Re P_i · Im P_j − Im P_i · Re P_j</code> — three multiplies and a subtraction on the float64 group-count values inside the sampling loop, one per axis per harmonic per sample. Both <code>P_i</code> and <code>P_j</code> are transverse to <code>q</code> by construction (asserted in <code>build_panel</code>). Sign and normalisation match <code>experiments/05_thin_even/run_thin_even.py</code> exactly; the run script’s <code>helicity_from_polarisation</code> is the single shared definition and <code>tests/test_stage4f.py</code> asserts the panel’s grouped-count route agrees with it to 1e-9 relative on four independent lanes of a cubic L = 2 state.</p>
+<p><code>icemix.panel.helicity_ratio(panel)</code> computes <code>R_h</code> per family and picks the best resolved <code>q_min</code> member (<code>max</code> over <code>R_h</code>, which is the conservative choice for the FAIL-UP reading).</p>
+<h3 id="the-change-does-not-touch-the-existing-panel">The change does not touch the existing panel</h3>
+<p>Verified three ways, all in <code>tests/test_stage4f.py</code>:</p>
+<ol type="1">
+<li><strong>Against the pre-change module.</strong> <code>git show HEAD:icemix/panel.py</code> was materialised as a temporary module and run on a short deterministic panel at <code>(1,2,2)</code> (1 block, 300 samples, seed 777). Every family’s <code>tau_exp</code>, <code>tau_int</code> and <code>rho_head</code> from the current module is <strong>bit-identical</strong> to it; those numbers are frozen in the test as <code>GOLDEN_PRE_CHANGE</code>. The same check was run at cubic <code>(2,2,2)</code> with 400 samples during development and also came back bit-identical.</li>
+<li><strong>helicity on vs off.</strong> With <code>helicity=True</code> the seven stage-3 families return the same <code>tau_exp</code>, <code>tau_int</code>, their errors and their whole <code>rho_head</code>, digit for digit, and the sampling interval and burn-in are unchanged — the observable is a function of numbers already in hand and consumes no RNG.</li>
+<li><strong>Against stage 3 itself.</strong> The cubic ladder was run with the <em>very</em> <code>tau_guess_sweeps</code> values stage 3 used (read out of <code>experiments/03_campaign/results/results.json</code>), the same seeds (<code>1000 + 7L</code>), block counts, sample counts, <code>per_tau</code>, <code>burn_taus</code> and fast-pass lengths. <code>tau_exp(P_transverse_h1)</code> reproduces the stage-3 table to 1e-6 relative or better at every size — and that residual is the rounding of the six-significant-figure stage-3 constants I compared against, not a difference in the chain (see §5).</li>
+</ol>
+<hr />
+<h2 id="calibration-at-122-reading-v">2. Calibration at (1,2,2) — reading (v)</h2>
+<p>Sector: 221,628 <code>W = 0</code> states in 205 components, giant 221,424, comp(R) = giant, closed under global arrow reversal — reproducing stage 1 and stage 4d exactly.</p>
+<h3 id="exact-30-leading-eigenpairs-rhot-by-2500-sparse-mat-vecs-on-15-columns">Exact (30 leading eigenpairs; <code>rho(t)</code> by 2,500 sparse mat-vecs on 15 columns)</h3>
+<table>
+<thead>
+<tr>
+<th>quantity</th>
+<th>this run</th>
+<th>stage 4d</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1/Δ</code> (attempts)</td>
+<td><strong>389.95</strong></td>
+<td>389.95</td>
+</tr>
+<tr>
+<td><code>tau_exp(helicity_yz)</code> (attempts)</td>
+<td><strong>389.45</strong></td>
+<td>389.45</td>
+</tr>
+<tr>
+<td><code>tau_exp(P⊥(q_min))</code> (attempts)</td>
+<td><strong>242.07</strong></td>
+<td>242.07</td>
+</tr>
+<tr>
+<td><code>R_h</code> exact (asymptotic)</td>
+<td><strong>1.6088</strong></td>
+<td>1.6088</td>
+</tr>
+</tbody>
+</table>
+<p>Reproduced to the last quoted digit from an independent code path (this run’s own enumeration, flip graph, spectrum and observable construction).</p>
+<h3 id="stochastic-the-campaign-estimator-from-the-reference-state-r">Stochastic — the campaign estimator, from the reference state R</h3>
+<p>512 replicas in 8 blocks, 20,000 samples at 39 attempts (2,000 relaxation times per replica), burn-in 19,497 attempts, <code>giant-start-1</code>, finite-series bias correction applied — i.e. the <code>taurun</code> path the campaign uses.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>observable</th>
+<th>MC <code>tau_exp</code> (att)</th>
+<th>exact, <em>same estimator</em> (att)</th>
+<th>rel. error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>helicity_yz</code></td>
+<td><strong>378.08 ± 1.92</strong></td>
+<td>377.55</td>
+<td><strong>+0.14 %</strong></td>
+</tr>
+<tr>
+<td><code>P⊥(q_min)</code></td>
+<td><strong>211.02 ± 0.25</strong></td>
+<td>211.60</td>
+<td><strong>−0.27 %</strong></td>
+</tr>
+<tr>
+<td><strong><code>R_h</code></strong></td>
+<td><strong>1.7917 ± 0.0094</strong></td>
+<td><strong>1.7843</strong></td>
+<td><strong>+0.41 %</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Reading (v) passes, and the caveat matters.</strong> The registered value 1.61 is the <em>asymptotic</em> ratio <code>−1/log λ</code> of the slowest eigenvalue each observable couples to. The stochastic estimator does not measure that: it fits the log-slope of <code>ρ(t)</code> over the window <code>ρ ∈ [0.02, 0.6]</code>, which is amplitude-weighted and therefore lands lower for both observables and higher for their ratio. Applying the <em>identical</em> fit to the <em>exact</em> <code>ρ(t)</code>, subsampled at the same 39-attempt interval, gives 1.7843 — and the Monte Carlo returns 1.7917 ± 0.0094, agreeing to 0.4 %. So the estimator is faithful; the 1.61 → 1.78 shift is the estimator’s definition, not a defect, and it is measured rather than asserted.</p>
+<p>The substantive half of the reading is unambiguous either way: <strong>the stochastic estimator sees the helicity mode at (1,2,2)</strong>, returning <code>R_h</code> ≈ 1.79 ≫ 1 — the helicity relaxing far <em>slower</em> than the polarisation — where every stage-3 panel member is exactly orthogonal to that mode by symmetry. Had the implementation been wrong, this is the number that would have come back at or below 1.</p>
+<p>Run through the <strong>production panel</strong> instead (<code>q</code> on the two thick axes, 512 replicas, 6,000 samples), <code>(1,2,2)</code> now returns headline family <code>helicity_total_h1</code> (even) with <code>R_h</code> = 1.8986. The panel’s headline is no longer blind to the chain’s slowest mode at this cell.</p>
+<hr />
+<h2 id="r-parity-of-the-helicity-members-verified-numerically">3. R-parity of the helicity members, verified numerically</h2>
+<p>Registered as a check rather than assumed from the algebra.</p>
+<ul>
+<li><strong>Exhaustively</strong> on all 221,424 states of the <code>(1,2,2)</code> giant component: every helicity column satisfies <code>h(R s) = h(s)</code> to a relative deviation below 1e-12 (they are <strong>even</strong>), and every non-vanishing polarisation column satisfies <code>P(R s) = −P(s)</code> to the same tolerance (<strong>odd</strong>). The longitudinal <code>P_k(q_k)</code> columns are identically zero by the lattice divergence-free constraint — float noise at 1e-17, carrying no parity — and are classified <code>null</code> rather than forced into a verdict.</li>
+<li><strong>On sampled accessible states of cubic cells</strong> L = 2 and L = 3 (6 states each, taken from the engine after burn-in, each compared with its bitwise complement): helicity even, polarisation odd, to the same tolerance.</li>
+</ul>
+<p>Verdict: helicity even everywhere. This is what makes the family a genuine complement to <code>P⊥</code> rather than a re-measurement of it.</p>
+<hr />
+<h2 id="pre-flight">4. Pre-flight</h2>
+<p>Timed as briefed, on L = 2 and L = 4, before committing to the rest.</p>
+<table>
+<thead>
+<tr>
+<th>L</th>
+<th>stage-3 wall (uncontended)</th>
+<th>measured here</th>
+<th>ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>15.0 s</td>
+<td>54 s</td>
+<td>3.6×</td>
+</tr>
+<tr>
+<td>4</td>
+<td>28.4 s</td>
+<td>100 s</td>
+<td>3.5×</td>
+</tr>
+</tbody>
+</table>
+<p>Mean slowdown <strong>×3.57</strong>, projecting <strong>2,330 s (38.8 min)</strong> for the remaining sizes and <strong>1,048 s</strong> for L = 16, well inside the brief’s “~30 min more” allowance for including 16 — so 16 was kept. The slowdown is machine contention, not the new observable: the helicity is two multiplies and a subtraction per axis per harmonic per sample, on numbers the sampling step has already produced, and it consumes no Markov time at all. What it does cost is <em>analysis</em>: four more families to autocorrelate and jackknife. Timed back to back at L = 2 under the same contention during development, <code>helicity=False</code> took 70.2 s and <code>helicity=True</code> 81.9 s — a 17 % overhead, all of it post-processing, with the two runs’ seven shared families bit-identical. Contention sources were the stage-4a/4b sweep (another session’s job, started 10:43) and, for part of the window, this task’s own test suite. L = 12 in fact took 988 s against its 772 s projection and L = 16 is running slower still (load average reached 22 on a 20-core machine); see §8.</p>
+<p>L = 16 in the end took <strong>1,525 s</strong> against its 1,048 s projection: the contention cleared part-way through it, so it ran at roughly the projected rate for the first third and much faster afterwards.</p>
+<p>Memory: <code>free -g</code> before launch showed <strong>89 GiB available</strong> of 121 GiB (RSS-invisible vLLM resident present), load average 3.00. Measured peak RSS of the completed run: <strong>8.21 GiB</strong> (<code>meta.peak_rss_bytes</code> = 8,817,414,144; <code>VmHWM</code> agreed), reached in the L = 12/16 panel analysis. Total wall <strong>3,413.5 s</strong> (56.9 min); load average at exit 2.32. <code>OMP_NUM_THREADS=12</code> and <code>--threads 12</code>, per the brief’s cap.</p>
+<p>Per-size walls (s): L = 2 → 54, 3 → 99, 4 → 100, 6 → 140, 8 → 229, 12 → 988, 16 → 1,525.</p>
+<hr />
+<h2 id="the-cubic-ladder">5. The cubic ladder</h2>
+<h3 id="the-stage-3-reproduction-gate">5.1 The stage-3 reproduction gate</h3>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>L</th>
+<th>interval (att)</th>
+<th>burn-in (att)</th>
+<th>replicas</th>
+<th>samples</th>
+<th><code>tau_exp(P⊥)</code> here (sw)</th>
+<th>stage 3 (sw)</th>
+<th>rel. diff</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>17</td>
+<td>8,294</td>
+<td>1024</td>
+<td>6,000</td>
+<td>1.80309</td>
+<td>1.80309</td>
+<td>+1.8e-06</td>
+</tr>
+<tr>
+<td>3</td>
+<td>175</td>
+<td>87,630</td>
+<td>1024</td>
+<td>6,000</td>
+<td>3.47223</td>
+<td>3.47223</td>
+<td>−8.1e-07</td>
+</tr>
+<tr>
+<td>4</td>
+<td>632</td>
+<td>316,049</td>
+<td>1024</td>
+<td>6,000</td>
+<td>5.80442</td>
+<td>5.80442</td>
+<td>+6.3e-07</td>
+</tr>
+<tr>
+<td>6</td>
+<td>4,387</td>
+<td>2,193,321</td>
+<td>1024</td>
+<td>6,000</td>
+<td>12.4284</td>
+<td>12.4284</td>
+<td>+1.0e-07</td>
+</tr>
+<tr>
+<td>8</td>
+<td>17,924</td>
+<td>8,961,926</td>
+<td>1024</td>
+<td>6,000</td>
+<td>21.8130</td>
+<td>21.813</td>
+<td>−1.3e-06</td>
+</tr>
+<tr>
+<td>12</td>
+<td>135,114</td>
+<td>67,557,053</td>
+<td>1024</td>
+<td>6,000</td>
+<td>48.4238</td>
+<td>48.4238</td>
+<td>+8.3e-07</td>
+</tr>
+<tr>
+<td>16</td>
+<td>561,166</td>
+<td>224,466,388</td>
+<td>512</td>
+<td>6,000</td>
+<td>85.9292</td>
+<td>85.9292</td>
+<td><strong>−8.8e-09</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Every residual is at the level of the six-significant-figure stage-3 constants I compared against; the chain is the same chain. Ice-rule violations 0 and winding violations 0 at every size, as in stage 3.</p>
+<h3 id="tau_exp-by-family-sweeps">5.2 <code>tau_exp</code> by family (sweeps)</h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr>
+<th>L</th>
+<th><code>P_transverse_h1</code></th>
+<th><code>P_transverse_h2</code></th>
+<th><code>abs_P_transverse_squared</code></th>
+<th><code>helicity_h1</code></th>
+<th><code>helicity_total_h1</code></th>
+<th><code>helicity_h2</code></th>
+<th><code>helicity_total_h2</code></th>
+<th>headline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td><strong>1.8031</strong></td>
+<td>0.98588</td>
+<td>0.83084</td>
+<td>1.2284</td>
+<td>1.1994</td>
+<td>0.54950</td>
+<td>0.56878</td>
+<td><code>P_transverse_h1</code> / odd</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>3.4722</strong></td>
+<td>1.3284</td>
+<td>1.6274</td>
+<td>1.8809</td>
+<td>1.8306</td>
+<td>0.66819</td>
+<td>0.68077</td>
+<td><code>P_transverse_h1</code> / odd</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>5.8044</strong></td>
+<td>1.8865</td>
+<td>2.8136</td>
+<td>2.9782</td>
+<td>2.9595</td>
+<td>0.93097</td>
+<td>0.92914</td>
+<td><code>P_transverse_h1</code> / odd</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>12.428</strong></td>
+<td>3.5269</td>
+<td>6.1251</td>
+<td>6.2736</td>
+<td>6.2174</td>
+<td>1.7599</td>
+<td>1.7591</td>
+<td><code>P_transverse_h1</code> / odd</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>21.813</strong></td>
+<td>5.8415</td>
+<td>10.815</td>
+<td>10.963</td>
+<td>10.909</td>
+<td>2.9172</td>
+<td>2.9151</td>
+<td><code>P_transverse_h1</code> / odd</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>48.424</strong></td>
+<td>12.527</td>
+<td>24.174</td>
+<td>24.260</td>
+<td>24.145</td>
+<td>6.2671</td>
+<td>6.2575</td>
+<td><code>P_transverse_h1</code> / odd</td>
+</tr>
+<tr>
+<td>16</td>
+<td><strong>85.929</strong></td>
+<td>21.868</td>
+<td>42.722</td>
+<td>42.860</td>
+<td>42.766</td>
+<td>10.981</td>
+<td>10.966</td>
+<td><code>P_transverse_h1</code> / odd</td>
+</tr>
+</tbody>
+</table>
+<p>Jackknife errors on the three columns the readings use (sweeps):</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>L</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>6</th>
+<th>8</th>
+<th>12</th>
+<th>16</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>P_transverse_h1</code></td>
+<td>±0.0041</td>
+<td>±0.0053</td>
+<td>±0.0095</td>
+<td>±0.0246</td>
+<td>±0.0421</td>
+<td>±0.0944</td>
+<td>±0.212</td>
+</tr>
+<tr>
+<td><code>helicity_h1</code></td>
+<td>±0.0087</td>
+<td>±0.0073</td>
+<td>±0.0091</td>
+<td>±0.0176</td>
+<td>±0.0358</td>
+<td>±0.0568</td>
+<td>±0.183</td>
+</tr>
+<tr>
+<td><code>abs_P_transverse_squared</code></td>
+<td>±0.0051</td>
+<td>±0.0044</td>
+<td>±0.0166</td>
+<td>±0.0295</td>
+<td>±0.064</td>
+<td>±0.115</td>
+<td>±0.245</td>
+</tr>
+</tbody>
+</table>
+<p><code>tau_int</code> (sweeps), same rows and columns:</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>L</th>
+<th><code>P_transverse_h1</code></th>
+<th><code>P_transverse_h2</code></th>
+<th><code>abs_P_transverse_squared</code></th>
+<th><code>helicity_h1</code></th>
+<th><code>helicity_total_h1</code></th>
+<th><code>helicity_h2</code></th>
+<th><code>helicity_total_h2</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>1.6919</td>
+<td>0.88230</td>
+<td>0.76863</td>
+<td>1.1036</td>
+<td>1.0735</td>
+<td>0.48461</td>
+<td>0.50815</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3.3664</td>
+<td>1.2041</td>
+<td>1.5648</td>
+<td>1.7721</td>
+<td>1.7181</td>
+<td>0.63640</td>
+<td>0.64862</td>
+</tr>
+<tr>
+<td>4</td>
+<td>5.6980</td>
+<td>1.7701</td>
+<td>2.7411</td>
+<td>2.8924</td>
+<td>2.8705</td>
+<td>0.90386</td>
+<td>0.90154</td>
+</tr>
+<tr>
+<td>6</td>
+<td>12.357</td>
+<td>3.4470</td>
+<td>6.0712</td>
+<td>6.2096</td>
+<td>6.1600</td>
+<td>1.7607</td>
+<td>1.7624</td>
+</tr>
+<tr>
+<td>8</td>
+<td>21.725</td>
+<td>5.8129</td>
+<td>10.827</td>
+<td>10.922</td>
+<td>10.871</td>
+<td>2.9791</td>
+<td>2.9770</td>
+</tr>
+<tr>
+<td>12</td>
+<td>48.347</td>
+<td>12.606</td>
+<td>24.198</td>
+<td>24.227</td>
+<td>24.117</td>
+<td>6.5018</td>
+<td>6.5100</td>
+</tr>
+<tr>
+<td>16</td>
+<td>85.779</td>
+<td>22.062</td>
+<td>42.800</td>
+<td>42.887</td>
+<td>42.953</td>
+<td>11.459</td>
+<td>11.467</td>
+</tr>
+</tbody>
+</table>
+<p><code>tau_exp</code> and <code>tau_int</code> agree to a few parts in a thousand for every helicity member from L = 6 up — the mode is a clean single exponential, not a fitted tail on a mixture. Per-family jackknife errors over MSC blocks are in <code>results.json</code> and rendered by <code>make_summary.py</code> (§8); the errors on the ratio itself are in §5.4 and are the ones the readings use.</p>
+<h3 id="the-resolved-gate-no-family-fitted-to-noise">5.3 The <code>resolved</code> gate — no family fitted to noise</h3>
+<p>The stage-3 gate is carried unchanged and is doing work:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>L</th>
+<th>families fitted</th>
+<th>families <strong>bounded</strong> (unresolved, <code>tau_exp</code> = NaN, upper bound reported instead)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>all 11</td>
+<td>—</td>
+</tr>
+<tr>
+<td>3, 4</td>
+<td>9</td>
+<td><code>P_longitudinal_h1</code>, <code>P_longitudinal_h2</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>8</td>
+<td><code>P_longitudinal_h1</code>, <code>P_longitudinal_h2</code>, <code>F_flippability_h1</code></td>
+</tr>
+<tr>
+<td>8, 12, 16</td>
+<td>7</td>
+<td><code>P_longitudinal_h1</code>, <code>P_longitudinal_h2</code>, <code>F_flippability_h1</code>, <code>n_flippable_total</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>All four helicity families are <code>resolved</code> at every size</strong>, with fit <code>r²</code> between 0.9891 (L = 2, <code>helicity_h2</code>) and 1.0000 (L ≥ 6, every member). No helicity number in this report is a fit to noise. The unresolved families are exactly the ones stage 3 also could not resolve at the slow-tuned interval, for the same reasons (<code>P_longitudinal</code> is near-zero by the divergence-free constraint; <code>F(q)</code> and the flippable count relax on a fast local scale) — the fast-sampling second pass turns them into numbers where it can and an explicit upper bound where it cannot.</p>
+<h3 id="r_hl-per-member">5.4 <code>R_h(L)</code>, per member</h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th>L</th>
+<th><strong>best q_min member</strong></th>
+<th><code>helicity_h1</code></th>
+<th><code>helicity_total_h1</code></th>
+<th><code>helicity_h2</code></th>
+<th><code>helicity_total_h2</code></th>
+<th>|P⊥|²/P⊥</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td><strong>0.6813 ± 0.0051</strong> (<code>helicity_h1</code>)</td>
+<td>0.6813</td>
+<td>0.6652</td>
+<td>0.3048</td>
+<td>0.3155</td>
+<td>0.4608</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>0.5417 ± 0.0023</strong> (<code>helicity_h1</code>)</td>
+<td>0.5417</td>
+<td>0.5272</td>
+<td>0.1924</td>
+<td>0.1961</td>
+<td>0.4687</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>0.5131 ± 0.0018</strong> (<code>helicity_h1</code>)</td>
+<td>0.5131</td>
+<td>0.5099</td>
+<td>0.1604</td>
+<td>0.1601</td>
+<td>0.4847</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>0.5048 ± 0.0017</strong> (<code>helicity_h1</code>)</td>
+<td>0.5048</td>
+<td>0.5003</td>
+<td>0.1416</td>
+<td>0.1415</td>
+<td>0.4928</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>0.5026 ± 0.0019</strong> (<code>helicity_h1</code>)</td>
+<td>0.5026</td>
+<td>0.5001</td>
+<td>0.1337</td>
+<td>0.1336</td>
+<td>0.4958</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>0.5010 ± 0.0015</strong> (<code>helicity_h1</code>)</td>
+<td>0.5010</td>
+<td>0.4986</td>
+<td>0.1294</td>
+<td>0.1292</td>
+<td>0.4992</td>
+</tr>
+<tr>
+<td>16</td>
+<td><strong>0.4988 ± 0.0025</strong> (<code>helicity_h1</code>)</td>
+<td>0.4988</td>
+<td>0.4977</td>
+<td>0.1278</td>
+<td>0.1276</td>
+<td>0.4972</td>
+</tr>
+</tbody>
+</table>
+<p>(The <code>_h2</code> columns are the ratio of the <code>2 q_min</code> helicity to the <code>q_min</code> polarisation, so their limit is <code>1/(2·4) = 0.125</code> under <code>τ ∼ q^-2</code>, and they approach it from above with the same lattice corrections the stage-3 harmonic ratio shows — a third, free consistency check that the family is measuring what it claims.)</p>
+<p>The per-axis member and the summed member agree to within 1 %, as they must in a cubic cell where the three axes are equivalent; taking the max of the two is what <code>helicity_ratio</code> reports and what the readings use.</p>
+<h3 id="what-this-says-physically">5.5 What this says physically</h3>
+<p>Two independent even bilinears in <code>P</code> — the scalar <code>|P⊥(q_min)|²</code> and the pseudoscalar <code>h_k(q_min)</code> — both converge to exactly half the polarisation’s relaxation time, from opposite sides, by L = 8. That is the Wick/two-photon prediction of the plan’s §4 met by a channel the plan did not have, and it is stronger evidence than the <code>|P⊥|²</code> check alone: <code>|P⊥|²</code> at <code>τ/2</code> is partly a Gaussian identity, whereas the helicity is a <em>different</em> representation of the cubic point group (it changes sign under every improper operation) and had no obligation to land on the same number.</p>
+<p>The <code>(1,2,2)</code> anomaly is therefore confirmed to be what stage 4d §6 suspected: a property of cells with a two-dimensional cross-section and only one cell of thickness, not of the Coulomb phase. In cubic geometry the long-wavelength helicity is an ordinary two-photon composite and is <em>faster</em> than the polarisation, so the panel’s headline — and every “lower bound on 1/Δ” statement in the note that rests on it — is unaffected.</p>
+<hr />
+<h2 id="feed-card-ledger">6. Feed-card ledger</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>what</th>
+<th>pid</th>
+<th>launched</th>
+<th>threads</th>
+<th>feed card</th>
+<th>status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>golden capture, pre- and post-change panel at (1,2,2) and (2,2,2)</td>
+<td>—</td>
+<td>10:35–10:45</td>
+<td>1–2</td>
+<td><strong>none</strong> (sub-minute / ~2 min foreground probes)</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>2</td>
+<td>end-to-end smoke of the run script (<code>--sizes 2 --no-feed --out smoke.json</code>)</td>
+<td>1542653</td>
+<td>10:41:35</td>
+<td>6</td>
+<td><strong>none</strong>, <code>--no-feed</code> deliberately</td>
+<td>completed, 127 s; <code>smoke.json</code> deleted</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>tests/test_stage4f.py</code>, then the full suite</td>
+<td>—</td>
+<td>10:44, 10:49</td>
+<td>2–4</td>
+<td><strong>none</strong> (test runs)</td>
+<td>completed</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>the production run</strong></td>
+<td><strong>1563535</strong></td>
+<td><strong>10:48:47</strong></td>
+<td><strong>12</strong></td>
+<td><code>~/.local/state/exptop/feeds/spark-709c/ice-mixing-stage4f-1563535</code></td>
+<td><strong>completed</strong> 11:45:40, 3,413.5 s, exit 0 — the card carries the run’s own <code>done</code> stamp</td>
+</tr>
+<tr>
+<td>5</td>
+<td>full test suite, re-run against the finished <code>results.json</code></td>
+<td>—</td>
+<td>11:47</td>
+<td>6</td>
+<td><strong>none</strong> (test run)</td>
+<td>completed</td>
+</tr>
+</tbody>
+</table>
+<p><strong>One feed card exists for this task and it is the production run’s.</strong> No zombie cards were created: the only deliberate stop was of nothing (no run was killed), the smoke probe was given <code>--no-feed</code> rather than a card it would have to clean up, and sub-minute probes opened no feed. If the production run has to be stopped, stop it with <code>tmux send-keys -t stage4f C-c</code> or <code>kill -TERM 1563535</code> — <strong>never</strong> <code>tmux kill-session</code>, which delivers SIGHUP and leaves the card reading <code>running</code> against a dead pid (stage 4d §8.5).</p>
+<hr />
+<h2 id="defects-and-deviations-recorded">7. Defects and deviations recorded</h2>
+<ol type="1">
+<li><strong><code>pyrun.sh</code> is unusable in this repository</strong>, as in stage 4d: there is no <code>.venv/</code>. Everything ran under <code>~/.pyenv/versions/3.12.13/bin/python3</code> (numpy 1.26.4, scipy 1.17.1), as the brief allowed.</li>
+<li><strong><code>exptop</code> is not importable from that interpreter.</strong> The run appends <code>~/repo/project/exptop/src</code> to <code>sys.path</code> and uses the <strong>canonical</strong> <code>exptop.progress.ProgressReporter</code> — the stage-4d arrangement, copied verbatim. <code>grep -rl "class ProgressReporter" --include='*.py' . | grep -v .venv</code> over this repository returns <strong>nothing</strong>: no vendored reporter existed and none was created. <code>results.json</code> records which reporter it got (<code>meta.canonical_progress_feed = "canonical"</code>). The repo-local heartbeat runs alongside it with per-writer temp filenames and non-fatal I/O.</li>
+<li><strong>A near-zero column has no parity, and the first version of the R-parity check said so wrongly.</strong> <code>P_k(q_k)</code> (longitudinal) is identically zero by the divergence-free constraint, so <code>max|v[perm]+v| / max|v|</code> is a ratio of two float-noise quantities and came out ~1.3 instead of ~0. Caught by the test suite before the production run; fixed by scaling each column against the largest member of its family and classifying a numerically-zero column <code>null</code>. No result depended on it, but it would have made <code>all_polarisation_odd</code> read <code>false</code> for a reason that is not physics.</li>
+<li><strong><code>tau_exp</code> fit windows make the (1,2,2) ratio 1.78, not 1.61.</strong> Recorded here rather than buried: the registered reading’s 1.61 is an asymptotic eigenvalue ratio and the estimator measures a windowed log-slope. The report quotes both, and the pass criterion compares the Monte Carlo against the <em>exact answer under the identical estimator</em> (1.7843), which is the only like-for-like comparison. Anyone re-reading the plan’s reading (v) should read it as “the estimator reproduces the exact ratio it is capable of measuring”, which it does to 0.4 %.</li>
+<li><strong>The machine was contended throughout.</strong> The stage-4a/4b sweep from another session (started 10:43) and this task’s own test suite ran alongside; walls are 3.5–4.5× the stage-3 figures and the L = 16 projection of 1,048 s is running long. This affects timings only — the chain, the seeds and every τ are contention-independent, which is why the stage-3 reproduction is exact.</li>
+<li><strong>Serialisation was honoured.</strong> No Markov-chain measurement was launched until <code>tmux has-session -t stage4abc</code> failed (10:47:57) and <code>pgrep -af run_stage4abc</code> showed no worker. The 4a/4b relaunch under the new session name <code>stage4ab</code> appeared afterwards and was not waited on (it is a single process; the main loop was told).</li>
+<li><strong>The incremental-<code>results.json</code> patch post-dates the run it was written for.</strong> The main loop asked mid-run for <code>results.json</code> to be flushed after every size so a partial run stays readable. The patch (write after every phase and every size, with <code>meta.complete</code>, and <code>make_summary.py</code> made standalone on a partial file) landed <em>after</em> the production process had started, so that process still wrote <code>results.json</code> once, at the end. <code>run.log</code> carried every per-size line as it landed and was what the draft of this report was built from; the finished tables were then rebuilt from <code>results.json</code>. Any future run gets the incremental behaviour, and <code>make_summary.py</code> will mark such a file <code>PARTIAL RUN</code>.</li>
+<li><strong>Two key-name mismatches, caught by the tests and by the first <code>make_summary</code> run.</strong> <code>panel.measure_panel</code> records <code>invariants.winding_all_zero</code>, not <code>winding_violations</code> (my assumption from the stage-3 report’s prose). Both <code>make_summary.py</code> and <code>tests/test_stage4f.py</code> were fixed to read the field that exists. No result depended on it — the underlying check is <code>max_abs_winding = 0.0</code> at every size — but it is the kind of thing that would have silently dropped an invariant assertion had the key been optional rather than raising.</li>
+</ol>
+<hr />
+<h2 id="operating-record-and-how-to-re-derive-everything">8. Operating record and how to re-derive everything</h2>
+<p>The run was launched detached, per the conventions, and survived this session’s teardown of its watcher shells — which is exactly the point of the container.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td>tmux session</td>
+<td><code>stage4f</code> (single window)</td>
+</tr>
+<tr>
+<td>pid</td>
+<td>1563535</td>
+</tr>
+<tr>
+<td>command</td>
+<td><code>OMP_NUM_THREADS=12 ~/.pyenv/versions/3.12.13/bin/python3 experiments/06_helicity_cubic/run_helicity_cubic.py --threads 12</code></td>
+</tr>
+<tr>
+<td>cwd</td>
+<td><code>~/repo/project/ice-mixing</code></td>
+</tr>
+<tr>
+<td>launched / finished</td>
+<td>10:48:47 / 11:45:40 — <strong>3,413.5 s</strong>, exit 0</td>
+</tr>
+<tr>
+<td>log</td>
+<td><code>experiments/06_helicity_cubic/results/run.log</code></td>
+</tr>
+<tr>
+<td>local heartbeat</td>
+<td><code>experiments/06_helicity_cubic/results/progress.json</code></td>
+</tr>
+<tr>
+<td>exptop feed card</td>
+<td><code>~/.local/state/exptop/feeds/spark-709c/ice-mixing-stage4f-1563535</code> — completed</td>
+</tr>
+<tr>
+<td>verified at launch</td>
+<td>pid alive and both feeds advancing within 8 s of start; re-verified at 11:26, 11:29, 11:30 and 11:43</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Re-derive the summary and the verdict from <code>results.json</code>:</strong></p>
+<pre><code>cd ~/repo/project/ice-mixing
+~/.pyenv/versions/3.12.13/bin/python3 experiments/06_helicity_cubic/make_summary.py
+grep -n &quot;VERDICT&quot; experiments/06_helicity_cubic/results/summary.md</code></pre>
+<p><code>make_summary.py</code> is standalone and does no arithmetic of its own beyond selecting recorded fields: it re-evaluates the readings against the frozen bands from whatever sizes <code>results.json</code> contains, and marks the file <code>PARTIAL RUN</code> if the run did not finish.</p>
+<p><strong>Re-run the whole measurement</strong> (≈ 57 min on a contended machine, ≈ 20 min free; the calibration alone is ~4 min):</p>
+<pre><code>\
+tmux new-session -d -s stage4f \
+  &quot;OMP_NUM_THREADS=12 ~/.pyenv/versions/3.12.13/bin/python3 \
+   experiments/06_helicity_cubic/run_helicity_cubic.py --threads 12 \
+   &gt; experiments/06_helicity_cubic/results/run.log 2&gt;&amp;1&quot;</code></pre>
+<p><code>--sizes</code>, <code>--cal-samples</code>, <code>--cal-blocks</code>, <code>--t-max-rho</code>, <code>--k-spectrum</code>, <code>--out</code> and <code>--no-feed</code> are available; <code>--no-feed</code> is the right flag for a sub-minute probe, so that probes never leave a card behind.</p>
+<p><strong>If a rerun must be stopped:</strong> <code>tmux send-keys -t stage4f C-c</code>, or <code>kill -TERM &lt;pid&gt;</code>. <strong>Not</strong> <code>tmux kill-session</code> — that delivers SIGHUP, which the canonical <code>ProgressReporter</code> does not handle, leaving the card reading <code>running</code> against a dead pid (stage 4d §8.5). If that happens, stamp the card <code>failed</code> by hand.</p>
+<p><strong>Incremental results.</strong> After this run was launched the script was patched to flush <code>results.json</code> after every phase and every size (with <code>meta.complete</code>), so a future partial run is readable and <code>make_summary.py</code> renders it. The run reported here predates the patch and wrote <code>results.json</code> once, at the end; <code>run.log</code> carried every per-size line as it landed and was the source for the draft of this report.</p>
+<hr />
+<h2 id="what-was-not-run-and-why">9. What was not run, and why</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>item</th>
+<th>why not</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L = 5, 7, 10, 14, 20, 24</td>
+<td>not registered for 4f; the ladder 2, 3, 4, 6, 8, 12, 16 is the brief’s, and the readings are about <code>R_h(L)</code>’s limit, not a fit</td>
+</tr>
+<tr>
+<td>the exact <code>(1,2,3)</code> helicity spectrum</td>
+<td>stage 4d costed it at 31–243 h and did not run it; nothing in 4f needs it</td>
+</tr>
+<tr>
+<td>a dispersion map <code>τ(q)</code> on the helicity</td>
+<td>the plan files this under §6 polish; the <code>2 q_min</code> helicity member already gives the one free point</td>
+</tr>
+<tr>
+<td>a cubic exact-diagonalisation control</td>
+<td>out of reach (cubic L = 2 has ~2 × 10¹¹ <code>W = 0</code> states); this is why the calibration is at <code>(1,2,2)</code></td>
+</tr>
+<tr>
+<td>re-running stage 3’s z fit with the helicity family in the panel</td>
+<td>the headline family is unchanged at every size, so <code>τ(L)</code> and z are unchanged by construction; the main loop can confirm from <code>results.json</code> if it wants the statement in the note</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="test-count">10. Test count</h2>
+<p><code>tests/test_stage4f.py</code> adds <strong>17</strong> tests: 10 that exercise the panel change from definitions (the default spec is untouched; the label; the family set; bit-identity against the pre-change module and against <code>helicity=False</code>; component counts and parities; the <code>hel_rows</code> index map is cyclic and transverse; the grouped route equals the direct <code>Im(P_i* P_j)</code>; R-parity on the enumerated <code>(1,2,2)</code> giant; the <code>(1,2,2)</code> slow-mode overlaps including the exactly-orthogonal staggered combination and <code>tau_exp</code> = 389.45; the <code>helicity_ratio</code> helper) and 7 that check the registered readings against <code>results.json</code> (the exact calibration reproduces stage 4d; the stochastic estimator sees the mode; R-parity; the stage-3 τ table and zero ice-rule/winding violations; every size carries a helicity family; the readings are internally consistent; the control ratio).</p>
+<pre><code>238 tests before stage 4f  -&gt;  255 collected, 255 passed, 0 skipped</code></pre>
+<p>Reproduce with</p>
+<pre><code>cd ~/repo/project/ice-mixing
+OMP_NUM_THREADS=6 ~/.pyenv/versions/3.12.13/bin/python3 -m pytest -q</code></pre>
+</main>
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Z(L) given Theorem U, and more: Theorem U implies Theorem H on every cell without K_u. The stripe structure of every two-way axis on both sublattices </title>
+<meta name="description" content="Z(L) given Theorem U, and more: Theorem U implies Theorem H on every cell without K_u. The stripe structure of every two-way axis on both sublattices (Theorem 6 with Lemma 4, all three cases of Theorem 7), the profiles of Theorem 15 that it kills, and the diagonal law on full lin">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Z(L) given Theorem U, and more: Theorem U implies Theorem H on every cell without K_u. The stripe structure of every two-way axis on both sublattices (Theorem 6 with Lemma 4, all three cases of Theorem 7), the profiles of Theorem 15 that it kills, and the diagonal law on full lines give the contradiction over the three axes; neither W = 0, the walls, the uniform chains nor per-grid balance is needed. Every ingredient checked with 0 exceptions on the 1,357 odd cubic states, 48 oriented odd states of four other cells and 11 odd W = 0 states",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-30-fable-zeroflux.html",
+ "datePublished": "2026-09-30",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Fable), agent zeroflux, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-30-fable-zeroflux.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/thm-1.html">thm-1</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Z(L) given Theorem U, and more: Theorem U implies Theorem H on every cell without K_u. The stripe structure of every two-way axis on both sublattices (Theorem 6 with Lemma 4, all three cases of Theorem 7), the profiles of Theorem 15 that it kills, and the diagonal law on full lines give the contradiction over the three axes; neither W = 0, the walls, the uniform chains nor per-grid balance is needed. Every ingredient checked with 0 exceptions on the 1,357 odd cubic states, 48 oriented odd states of four other cells and 11 odd W = 0 states</h1>
+
+<p class="author">Claude (Fable), agent zeroflux, for Lyndon Drake</p>
+<p class="date">2026-09-30</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#verdict" id="toc-verdict">Verdict</a></li>
+<li><a href="#hypotheses-used" id="toc-hypotheses-used">Hypotheses used</a></li>
+<li><a href="#lemmas-with-proofs" id="toc-lemmas-with-proofs">Lemmas with proofs</a></li>
+<li><a href="#checks-on-states" id="toc-checks-on-states">Checks on states</a></li>
+<li><a href="#where-u-enters" id="toc-where-u-enters">Where U enters</a></li>
+<li><a href="#what-is-left" id="toc-what-is-left">What is left</a></li>
+<li><a href="#scripts-and-timings" id="toc-scripts-and-timings">Scripts and timings</a></li>
+<li><a href="#rules-kept-or-broken" id="toc-rules-kept-or-broken">Rules kept or broken</a></li>
+</ul>
+</details></nav>
+<p>Status tags: <strong>proved</strong>, <strong>computed</strong>, <strong>solver</strong>, <strong>conjecture</strong>. Scripts <code>scratch_h/h600</code>–<code>h605</code>. Everything below was written by one agent and checked by its own programs only; the main loop is to re-derive Lemmas Z-2 (cases II and III) and Z-3 before anything is built on them.</p>
+<h2 id="verdict">Verdict</h2>
+<p><strong>PROVED, and more than asked.</strong> Given Theorem U, Z(L) holds on every cubic cell; the same argument proves <strong>Theorem H itself given Theorem U, on every cell, with no use of K_u</strong> (Corollary Z-6). The hypotheses W = 0, (Z1) and (Z2) were not needed: they only served to make every axis two-way on both sublattices, and Lemma Z-2 covers the two other cases (Theorem 7’s mixed case and its second case) directly. The reduction of Theorem 1 therefore rests on Theorem U alone, and the first step of K_u on the whole slab is no longer an open statement on the path to H. The brief anticipated this outcome as “surprising and to be checked against the corpus”: every ingredient was checked on the 1,357 odd states of the cubic cells of side 3 and 4, on 48 oriented odd states of <span class="math inline">\((2,2,4)\)</span>, <span class="math inline">\((2,4,6)\)</span>, <span class="math inline">\((4,3,3)\)</span>, <span class="math inline">\((4,4,6)\)</span> and on 11 odd zero-flux states, with 0 exceptions in about 1.9 million checks, and the argument’s one non-obvious prediction on the corpus (which pairs of normals the two two-way axes of a three-type state can have) holds in all 429 such states with no exception.</p>
+<p>Why it was not seen before: Theorem 6 (27 September) and Theorem 15 (28 September) were never combined across the three axes at once. The main loop’s unchecked observation (i) of 28 September (two constant profiles on a sublattice with three two-way axes) is the first half of Lemma Z-3; its observation (ii), that the line fractions alone do not exclude three two-way axes, is right, and Lemma Z-4 is what the fractions lack: the diagonal law on a full set of lines.</p>
+<h2 id="hypotheses-used">Hypotheses used</h2>
+<ul>
+<li>Frozen state; Theorem U (every hole oriented), through Theorems 3, 4, 5 (second statement) and 6.</li>
+<li>Theorem 5 (first statement), Lemma 4, Theorem 15 and Theorem <span class="math inline">\(M&#39;\)</span>, all proved on every cell.</li>
+<li>Lemma 1 and Lemma 8, only in Lemma Z-7 (even-curl states), which is not part of the proof.</li>
+<li><strong>Not used:</strong> W = 0, (Z1), (Z2), Lemma 5, Lemma 6, Theorems 7, 8, 19, <span class="math inline">\(K_u\)</span>, oddness except through U and <span class="math inline">\(M&#39;\)</span>.</li>
+<li>Answer to the brief’s question on (Z2): the per-grid identity <span class="math inline">\(M_k(t) = \Phi_k\)</span> of the signed report (§1, Theorem (v)) is proved for <strong>every ice state</strong>, by flux conservation across the planes <span class="math inline">\(x_k = t \pm \tfrac12\)</span> and the ice rule alone; neither freezing nor orientation enters. Its proof was re-read and the identity re-verified on all 1,357 corpus states (W ≠ 0) and 28 zero-flux states. (Z1) is its sum over one sublattice, <span class="math inline">\(N_k^A = N_k^B = L W_k\)</span>, also for every ice state.</li>
+</ul>
+<h2 id="lemmas-with-proofs">Lemmas with proofs</h2>
+<p>Notation as in the note. For axis <span class="math inline">\(k\)</span> and sublattice <span class="math inline">\(S\)</span> the <span class="math inline">\(k\)</span>-lines of <span class="math inline">\(S\)</span> are indexed by their two transverse coordinates <span class="math inline">\((\alpha, \beta) \in X_S \times Y_S\)</span>, each of the parity of <span class="math inline">\(S\)</span>; every pair occurs. <span class="math inline">\(h^S_k(\alpha, \beta)\)</span> is the number of type-<span class="math inline">\(k\)</span> vertices on the line. A plane <span class="math inline">\(\{x_n = c\}\)</span> of <span class="math inline">\(S\)</span> is <span class="math inline">\(k\)</span>-free if it has none, and full if every one of its <span class="math inline">\(k\)</span>-lines has one.</p>
+<p><strong>Lemma Z-1 (one sublattice; B1(a)). Proved.</strong> Let a frozen state have every hole oriented and let axis <span class="math inline">\(k\)</span> be two-way on <span class="math inline">\(S\)</span>. Then there is <span class="math inline">\(n = n_S(k) \neq k\)</span> such that <span class="math inline">\(h^S_k\)</span> is a function of <span class="math inline">\(x_n\)</span> alone; every plane <span class="math inline">\(\{x_n = c\}\)</span> of <span class="math inline">\(S\)</span> is <span class="math inline">\(k\)</span>-free or full, its lines all carrying the same number <span class="math inline">\(h(c) \geq 1\)</span> of type-<span class="math inline">\(k\)</span> vertices, all of one sign.</p>
+<p><em>Proof.</em> In the proof of Theorem 6 the counts <span class="math inline">\(P = (h + s)/2\)</span> and <span class="math inline">\(Q = (h - s)/2\)</span> of the two signs are separable (Theorem 5, both statements), non-negative, with <span class="math inline">\(PQ = 0\)</span> (Theorem 4) and neither zero. Lemma 4 makes both functions of one coordinate <span class="math inline">\(x_n\)</span>, and <span class="math inline">\(h = P + Q\)</span> is then a function of <span class="math inline">\(x_n\)</span>. <span class="math inline">\(\square\)</span></p>
+<p>The brief’s route through a <span class="math inline">\(k\)</span>-free plane also works when the plane belongs to <span class="math inline">\(S\)</span>: <span class="math inline">\(F(c_0) +
+G(\beta) = 0\)</span> for all <span class="math inline">\(\beta\)</span> makes <span class="math inline">\(G\)</span> constant. When the only <span class="math inline">\(k\)</span>-free planes lie in <span class="math inline">\(S&#39;\)</span> that route says nothing about <span class="math inline">\(S\)</span>, and Lemma 4 is what gives <span class="math inline">\(S\)</span> its structure. Both situations occur (computed: of 1,814 two-way axis instances on the corpus, 1,626 have <span class="math inline">\(k\)</span>-free planes in both sublattices, 89 in A only, 99 in B only).</p>
+<p><strong>Lemma Z-2 (both sublattices; B1(c)). Proved.</strong> Let a frozen state have every hole oriented, let axis <span class="math inline">\(k\)</span> be two-way, and let both sublattices carry type <span class="math inline">\(k\)</span>. Then there is one axis <span class="math inline">\(n(k) \neq k\)</span> such that <span class="math inline">\(h^A_k\)</span> and <span class="math inline">\(h^B_k\)</span> are both functions of <span class="math inline">\(x_{n(k)}\)</span> alone, every plane <span class="math inline">\(\{x_{n(k)} = c\}\)</span> of either sublattice is <span class="math inline">\(k\)</span>-free or full with one sign, and two adjacent non-empty planes (one of each sublattice) have the same sign.</p>
+<p><em>Proof.</em> Three cases by the sublattice patterns.</p>
+<p><em>Case I, both sublattices two-way.</em> Lemma Z-1 gives normals <span class="math inline">\(n\)</span> for A and <span class="math inline">\(m\)</span> for B. Suppose <span class="math inline">\(m \neq n\)</span>. A has a full plane <span class="math inline">\(x_n = c\)</span> of sign <span class="math inline">\(+\)</span>, B a full plane <span class="math inline">\(x_m = d\)</span> of sign <span class="math inline">\(-\)</span>. The B-line at <span class="math inline">\((x_n, x_m) = (c + 1, d)\)</span> exists, carries type <span class="math inline">\(k\)</span> of sign <span class="math inline">\(-\)</span>, and is a diagonal neighbour of the A-lines <span class="math inline">\((c, d \pm 1)\)</span>, which carry type <span class="math inline">\(k\)</span> of sign <span class="math inline">\(+\)</span>: Theorem 3 is contradicted. So <span class="math inline">\(m = n\)</span>. Adjacent non-empty planes: every line of the B-plane <span class="math inline">\(c + 1\)</span> is a diagonal neighbour of lines of the full A-plane <span class="math inline">\(c\)</span>, and Theorem 3 gives the sign.</p>
+<p><em>Case II, A two-way, B of one sign <span class="math inline">\(\sigma\)</span>.</em> Lemma Z-1 gives <span class="math inline">\(n\)</span> for A. A has a plane <span class="math inline">\(x_n = c\)</span> of sign <span class="math inline">\(-\sigma\)</span>. Every B-line at <span class="math inline">\(x_n = c \pm 1\)</span> is a diagonal neighbour of lines of that plane, so by Theorem 3 it has no vertex of type <span class="math inline">\(k\)</span>. The empty lines of B form a product <span class="math inline">\(I \times J\)</span> (Theorem 5), which contains <span class="math inline">\(\{c - 1, c + 1\} \times Y_B\)</span>, so <span class="math inline">\(J = Y_B\)</span>; then <span class="math inline">\(F(c + 1) + G(\beta) = 0\)</span> for all <span class="math inline">\(\beta\)</span> makes <span class="math inline">\(G\)</span> constant, and <span class="math inline">\(h^B_k\)</span> is a function of <span class="math inline">\(x_n\)</span> whose non-empty planes are full. The sign statements are Theorem 3 again.</p>
+<p><em>Case III, A of one sign <span class="math inline">\(\sigma\)</span>, B of one sign <span class="math inline">\(-\sigma\)</span>.</em> This is the second case of the proof of Theorem 7, which shows that the empty lines of A form complete planes normal to an axis <span class="math inline">\(n\)</span>, that the same holds for B with the same <span class="math inline">\(n\)</span>, and that full planes of A and B are never adjacent. With the empty set <span class="math inline">\(I \times Y_A\)</span> the separable <span class="math inline">\(h^A_k\)</span> has <span class="math inline">\(G\)</span> constant, so it is a function of <span class="math inline">\(x_n\)</span>, and likewise <span class="math inline">\(h^B_k\)</span>. <span class="math inline">\(\square\)</span></p>
+<p>Case III has never been seen in a computed state (unsatisfiable at sides 3 and 4, per the note); case II occurs in the corpus (91 axis instances) and case I is the common one (1,723).</p>
+<p><strong>Lemma Z-3 (the killed profile; B2). Proved.</strong> Let <span class="math inline">\(P(x)\)</span>, <span class="math inline">\(Q(y)\)</span>, <span class="math inline">\(R(z)\)</span> be the profiles of Theorem 15 on <span class="math inline">\(S\)</span>, so that <span class="math inline">\(h_y/\ell_y = P - R\)</span>, <span class="math inline">\(h_z/\ell_z = Q - P\)</span>, <span class="math inline">\(h_x/\ell_x = 1 + R - Q\)</span>. If <span class="math inline">\(h^S_k\)</span> depends on <span class="math inline">\(x_n\)</span> alone, <span class="math inline">\(n \neq k\)</span>, then the profile of the third coordinate <span class="math inline">\(i(k)\)</span> is constant on <span class="math inline">\(S\)</span>. Consequently, if every hole is oriented, both sublattices carry all three types and all three axes are two-way, then with <span class="math inline">\(n(k)\)</span> from Lemma Z-2 the map <span class="math inline">\(k \mapsto i(k)\)</span> has the same image on A and B, of two or three elements; if three, every profile and every <span class="math inline">\(h_k\)</span> is constant on both sublattices; if two, <span class="math inline">\(\{a, b\}\)</span>, the axis <span class="math inline">\(c \notin \{a, b\}\)</span> has <span class="math inline">\(h^S_c\)</span> constant on both sublattices.</p>
+<p><em>Proof.</em> <span class="math inline">\(h_x/\ell_x = 1 + R(z) - Q(y)\)</span> on all pairs <span class="math inline">\((y, z)\)</span> of the parity of <span class="math inline">\(S\)</span>. If it does not depend on <span class="math inline">\(z\)</span> then <span class="math inline">\(R(z) = R(z&#39;)\)</span> for all <span class="math inline">\(z, z&#39;\)</span>, and if not on <span class="math inline">\(y\)</span> then <span class="math inline">\(Q\)</span> is constant; the two other axes are the same. Now <span class="math inline">\(i(k) \notin \{k, n(k)\}\)</span>, so <span class="math inline">\(i(x) \in \{y, z\}\)</span>, <span class="math inline">\(i(y) \in \{x, z\}\)</span>, <span class="math inline">\(i(z) \in \{x, y\}\)</span>, and the image cannot be a single axis. If it is <span class="math inline">\(\{a, b\}\)</span>, the profiles of <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are constant, and <span class="math inline">\(h_c\)</span> is <span class="math inline">\(\ell_c\)</span> times a constant plus the difference of those two profiles. The normals are common to A and B by Lemma Z-2, so the image is too. <span class="math inline">\(\square\)</span></p>
+<p>The eight assignments of normals fall into two classes under the symmetries of the cubic cell. In the cyclic class (<span class="math inline">\(n(x) = y\)</span>, <span class="math inline">\(n(y) = z\)</span>, <span class="math inline">\(n(z) = x\)</span>, or the reverse) every profile and every <span class="math inline">\(h_k\)</span> is constant. In the other class two axes <span class="math inline">\(a, b\)</span> have each other as normal and the third, <span class="math inline">\(c\)</span>, has <span class="math inline">\(n(c) \in \{a, b\}\)</span>; then <span class="math inline">\(i(a) = i(b) = c\)</span>, the profiles of <span class="math inline">\(c\)</span> and of the axis <span class="math inline">\(\{a,b\} \setminus
+\{n(c)\}\)</span> are constant, and the constant axis is <span class="math inline">\(n(c)\)</span>.</p>
+<p><strong>Lemma Z-4 (full lines carry one sign; B2/B3). Proved.</strong> Let a frozen state have every hole oriented. If every <span class="math inline">\(k\)</span>-line of both sublattices has a vertex of type <span class="math inline">\(k\)</span>, then axis <span class="math inline">\(k\)</span> is one-way.</p>
+<p><em>Proof.</em> The graph on the <span class="math inline">\(k\)</span>-lines of both sublattices in which two lines are joined when they are diagonal neighbours is connected: its vertices are the pairs <span class="math inline">\((\alpha, \beta)\)</span> with <span class="math inline">\(\alpha + \beta\)</span> even, and the steps <span class="math inline">\((\pm 1, \pm 1)\)</span> generate that set. Along any edge Theorem 3 gives equal signs to any two vertices of type <span class="math inline">\(k\)</span> on the two lines, and every line has one. <span class="math inline">\(\square\)</span></p>
+<p><strong>Theorem Z-5. Proved.</strong> In a frozen state with every hole oriented in which both sublattices carry all three types, some axis is not two-way.</p>
+<p><em>Proof.</em> Suppose all three axes are two-way. Lemma Z-2 applies to each. By Lemma Z-3 some axis <span class="math inline">\(c\)</span> has <span class="math inline">\(h^A_c\)</span> and <span class="math inline">\(h^B_c\)</span> constant, and the constants are at least 1 since both sublattices carry type <span class="math inline">\(c\)</span>. So every <span class="math inline">\(c\)</span>-line of both sublattices has a vertex of type <span class="math inline">\(c\)</span>, and by Lemma Z-4 axis <span class="math inline">\(c\)</span> is one-way, which contradicts two-way. <span class="math inline">\(\square\)</span></p>
+<p><strong>Corollary Z-6 (Theorem U implies Theorem H, without <span class="math inline">\(K_u\)</span>). Proved.</strong> On every cell, an odd frozen state with every hole oriented has an axis that is empty or one-way. Hence Theorem U implies Theorem H on every cell, and Z(L) given U is the special case W = 0.</p>
+<p><em>Proof.</em> If some type is absent its axis is empty. Otherwise, since the state is odd, Theorem <span class="math inline">\(M&#39;\)</span> makes both sublattices carry all three types, and Theorem Z-5 gives an axis that is not two-way; it is not empty, so it is one-way. For Z(L): W = 0 and three types give all six directions (Corollary Z of the signed report), contradicting the one-way axis, so no such odd state exists. <span class="math inline">\(\square\)</span></p>
+<p>With Theorem P and Lemma A: on every cubic cell, Theorem U implies the periodicity of frozen zero-flux states. On the cubic cells of side 4, 5, 6 the certificates of Theorem <span class="math inline">\(U&#39;\)</span> alone now give Theorem H; the <span class="math inline">\(K_u\)</span> certificates are not needed, and Theorem <span class="math inline">\(U&#39;\)</span> at sides 7 to 10 (which the note says are within reach) would give H there directly.</p>
+<p><strong>Lemma Z-7 (no test set of even curl). Proved.</strong> In a frozen state of even curl no sublattice carries all three types. So the hypotheses of Theorem Z-5 are met only by odd states.</p>
+<p><em>Proof.</em> By Lemma 1 every line fraction is 0 or 1. If <span class="math inline">\(P\)</span> is not constant, Lemma 8 applied to <span class="math inline">\(P - R\)</span> and to <span class="math inline">\(Q - P\)</span> makes <span class="math inline">\(R\)</span> and <span class="math inline">\(Q\)</span> constant, so <span class="math inline">\(h_x/\ell_x\)</span> is a constant 0 or 1 and <span class="math inline">\(S\)</span> lacks <span class="math inline">\(x\)</span> or lacks <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span>. If <span class="math inline">\(P\)</span> is constant, <span class="math inline">\(a_y\)</span> depends on <span class="math inline">\(z\)</span> and <span class="math inline">\(a_z\)</span> on <span class="math inline">\(y\)</span>, and <span class="math inline">\(a_x = 1 - a_y -
+a_z \geq 0\)</span> forces <span class="math inline">\(a_z \equiv 0\)</span> as soon as <span class="math inline">\(a_y\)</span> takes the value 1; so <span class="math inline">\(S\)</span> lacks <span class="math inline">\(y\)</span> or <span class="math inline">\(z\)</span>. <span class="math inline">\(\square\)</span> (Solver: “even curl and three types on A” is UNSAT at sides 3 and 4, controls SAT.)</p>
+<p><strong>Lemma Z-8 (the planes beside a wall; B1(b)). Proved in the note as Theorem 8; written out here.</strong> Let the state have all three types and let <span class="math inline">\(F = \{x_n = c_0\}\)</span> be a wall of Theorem 7 (a <span class="math inline">\(k\)</span>-free plane whose neighbours do not have the same label) with the plane <span class="math inline">\(c_0 + s\)</span> non-empty. Then the type-<span class="math inline">\(k\)</span> set of the planes <span class="math inline">\(c_0 + s\)</span> and <span class="math inline">\(c_0 + 2s\)</span> is the union of <span class="math inline">\(m\)</span> uniform chains of axis <span class="math inline">\(n\)</span>, all of one family: the family with step <span class="math inline">\(2e_i - 2e_k\)</span> (coordinates <span class="math inline">\((i, n, k)\)</span>) when <span class="math inline">\(s = +1\)</span> and <span class="math inline">\(F\)</span> is a plane of A, <span class="math inline">\(2e_i + 2e_k\)</span> when <span class="math inline">\(F\)</span> is a plane of B, and the reverse for <span class="math inline">\(s = -1\)</span>. A chain meets every <span class="math inline">\(k\)</span>-line of its plane once and every grid <span class="math inline">\(\{x_k = t\}\)</span> once, so <span class="math inline">\(m = h(c_0 + s) = h(c_0 + 2s)\)</span> and the two planes carry exactly <span class="math inline">\(m\)</span> type-<span class="math inline">\(k\)</span> vertices on every grid <span class="math inline">\(t\)</span>. This is the form (Q) of Theorem 13 on two planes. Not used in the proof above; the hypothesis of three types is necessary (below).</p>
+<p><strong>B1(d), the balance conditions in this language.</strong> For axis <span class="math inline">\(k\)</span> with normal <span class="math inline">\(n\)</span>, labels <span class="math inline">\(\lambda(c)
+\in \{0, +, -\}\)</span> and counts <span class="math inline">\(h(c)\)</span>: (Z1) <span class="math inline">\(\sum_{c \in S} \lambda(c) h(c) = 0\)</span> on each sublattice, that is the full planes of sign <span class="math inline">\(+\)</span> and of sign <span class="math inline">\(-\)</span> of <span class="math inline">\(S\)</span> carry the same number of type-<span class="math inline">\(k\)</span> vertices; (Z2) for every grid <span class="math inline">\(t\)</span>, <span class="math inline">\(\sum_c \lambda(c) a(c, t) = 0\)</span>; Lemma 6: <span class="math inline">\(\sum_c a(c, t)\)</span> is the same for every <span class="math inline">\(t\)</span> of a sublattice. Checked (below); not needed for the proof.</p>
+<p><strong>B3.</strong> Per-grid balance does not replace <span class="math inline">\(K_u\)</span>: nothing replaces it, because the step is not needed. Theorem 1 fed the uniform chain to <span class="math inline">\(K_u\)</span> to make a direction absent. Lemmas Z-3 and Z-4 make an axis one-way from Theorem 15 across the three axes and the diagonal law, with no wall, chain or balance.</p>
+<h2 id="checks-on-states">Checks on states</h2>
+<p>All checks by exact integer arithmetic on saved states; a violation count of 0 means every instance passed. Corpus: the 1,357 odd states of <span class="math inline">\((3,3,3)\)</span> and <span class="math inline">\((4,4,4)\)</span> (637 + 720; 1,001 with three types).</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>check (h600, corpus)</th>
+<th>instances</th>
+<th>exceptions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Theorem 15 on each sublattice (exact fit of <span class="math inline">\(P, Q, R\)</span>)</td>
+<td>2,714</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Theorem 4, one sign per line</td>
+<td>414,072 lines</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Theorem 3, diagonally neighbouring lines agree</td>
+<td>905,094 pairs</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Z-1: <span class="math inline">\(h^S_k\)</span> a function of one coordinate when <span class="math inline">\(k\)</span> is two-way on <span class="math inline">\(S\)</span>; Theorem 6 plane structure</td>
+<td>3,537</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Z-2: common <span class="math inline">\(n(k)\)</span> on both sublattices for a globally two-way axis (cases I 1,723, II 91, III 0)</td>
+<td>1,814</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Z-2: every plane normal to <span class="math inline">\(n(k)\)</span> one-signed; adjacent non-empty planes agree</td>
+<td>17,800; 12,895</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Theorem 7: some plane normal to <span class="math inline">\(n(k)\)</span> is <span class="math inline">\(k\)</span>-free</td>
+<td>1,814</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Z-3: the profile of <span class="math inline">\(i(k)\)</span> constant on <span class="math inline">\(S\)</span></td>
+<td>3,537</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Z-4: every line of both sublattices non-empty <span class="math inline">\(\Rightarrow\)</span> one-way (all 499 such axes are one-way)</td>
+<td>499</td>
+<td>0</td>
+</tr>
+<tr>
+<td>two-way axis with every line of both sublattices non-empty</td>
+<td>1,814</td>
+<td>0 found</td>
+</tr>
+</tbody>
+</table>
+<p>The prediction on the normals. In a three-type state with one-way axis <span class="math inline">\(c\)</span> and two-way axes <span class="math inline">\(a, b\)</span>, Lemma Z-3 with Lemma Z-4 forbids <span class="math inline">\((n(a), n(b))\)</span> from making <span class="math inline">\(a\)</span> or <span class="math inline">\(b\)</span> the constant axis, leaving <span class="math inline">\((n(a), n(b)) = (b, a)\)</span> or <span class="math inline">\((c, c)\)</span>. Computed: OTT 152 states, all <span class="math inline">\((n(y), n(z)) = (z, y)\)</span>; TOT 138, all <span class="math inline">\((z, x)\)</span>; TTO 139, all <span class="math inline">\((y, x)\)</span>; the forbidden assignments never occur, and <span class="math inline">\((c, c)\)</span> occurs only in the two-type states (ETT 74, TET 101, TTE 75, where <span class="math inline">\(c\)</span> is the empty axis). The constant profiles match: OTT states have exactly <span class="math inline">\(P\)</span> constant on both sublattices (152 of 152), TOT exactly <span class="math inline">\(Q\)</span>, TTO exactly <span class="math inline">\(R\)</span>.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>other test sets</th>
+<th>states</th>
+<th>checks</th>
+<th>exceptions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>h601: oriented odd samples of <span class="math inline">\((2,2,4)\)</span>, <span class="math inline">\((2,4,6)\)</span>, <span class="math inline">\((4,3,3)\)</span>, <span class="math inline">\((4,4,6)\)</span> (agent scomp’s h447 saves; 0 charged)</td>
+<td>48</td>
+<td>Z-1 96, Z-2 50, Z-3 96, Z-4 3, Theorem 3 30,090, Theorem 15 96</td>
+<td>0</td>
+</tr>
+<tr>
+<td>h603 kind O: odd, W = 0 (two types, four directions), <span class="math inline">\(L = 3\)</span> and 4, oriented</td>
+<td>11</td>
+<td>Z-1 44, Z-2 22, Z-3 44</td>
+<td>0</td>
+</tr>
+<tr>
+<td>h603 kind E: even curl, W = 0, three types, <span class="math inline">\(L = 3\)</span></td>
+<td>17</td>
+<td>six directions 17, even curl 17</td>
+<td>0</td>
+</tr>
+<tr>
+<td>h603, both kinds: (Z1) <span class="math inline">\(N_k^S = 0\)</span> and (Z2) zero on every grid</td>
+<td>28</td>
+<td>84 axes each</td>
+<td>0</td>
+</tr>
+<tr>
+<td>h603/h604: per-grid identity <span class="math inline">\(M_k(t) = \Phi_k\)</span> and Lemma 6 on the corpus (W ≠ 0)</td>
+<td>1,357</td>
+<td>4,155 axes; 8,310 sublattice grids</td>
+<td>0</td>
+</tr>
+<tr>
+<td>h604: (Z1), (Z2), Lemma 6 in the wall language on the odd W = 0 states</td>
+<td>10</td>
+<td>40; 240; 40</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>h602, walls (corpus, three-type states)</th>
+<th>instances</th>
+<th>exceptions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>non-empty planes normal to <span class="math inline">\(n(k)\)</span> one-signed; adjacent agree; a <span class="math inline">\(k\)</span>-free plane exists</td>
+<td>17,800; 17,800; 1,814</td>
+<td>0</td>
+</tr>
+<tr>
+<td>every empty plane is a Theorem 7 wall (no empty plane between two runs of the same sign)</td>
+<td>7,996</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Theorem 8: a chain of the slab beside a wall with a vertex of type <span class="math inline">\(k\)</span> is uniform</td>
+<td>8,566 chains</td>
+<td>0</td>
+</tr>
+<tr>
+<td><span class="math inline">\(m\)</span> = number of uniform chains = <span class="math inline">\(h(c_0 + s) = h(c_0 + 2s)\)</span></td>
+<td>6,892 wall sides</td>
+<td>0</td>
+</tr>
+<tr>
+<td><span class="math inline">\(a(c, t) = m\)</span> on every grid, both planes beside the wall</td>
+<td>13,784</td>
+<td>0</td>
+</tr>
+<tr>
+<td>family of the uniform chains by (side, sublattice of wall): <span class="math inline">\((+, A) \to -\)</span>, <span class="math inline">\((+, B) \to +\)</span>, <span class="math inline">\((-, A) \to +\)</span>, <span class="math inline">\((-, B) \to -\)</span></td>
+<td>8,566 chains</td>
+<td>0</td>
+</tr>
+<tr>
+<td>every full plane (not only beside a wall) has <span class="math inline">\(a(c, t)\)</span> the same on every grid</td>
+<td>17,800 planes</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>In the 356 two-type states the plane beside a wall is sometimes entirely of type <span class="math inline">\(k\)</span> (1,514 wall sides), and there 4,712 chains with a vertex of type <span class="math inline">\(k\)</span> are not uniform: Theorem 8’s hypothesis of three types (through Theorem <span class="math inline">\(M&#39;\)</span>) is necessary and was wrongly omitted in a first run of h602.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>solver (h605; CaDiCaL in an h32_cap child, cap 120 s)</th>
+<th><span class="math inline">\(L = 3\)</span></th>
+<th><span class="math inline">\(L = 4\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q1: even curl + three types on A</td>
+<td>UNSAT 2.3 s</td>
+<td>UNSAT 85.7 s</td>
+</tr>
+<tr>
+<td>Q2: even curl + every hole oriented + three types on A and B + six directions</td>
+<td>UNSAT 0.8 s</td>
+<td>UNSAT 9.5 s</td>
+</tr>
+<tr>
+<td>C1: even curl + six directions</td>
+<td>SAT 0.2 s</td>
+<td>SAT 0.2 s</td>
+</tr>
+<tr>
+<td>C2: frozen + three types on A (odd allowed)</td>
+<td>SAT 0.3 s</td>
+<td>SAT 0.3 s</td>
+</tr>
+<tr>
+<td>C3: even curl + oriented + types <span class="math inline">\(y, z\)</span> on A, both signs each</td>
+<td>SAT 0.3 s</td>
+<td>SAT 0.2 s</td>
+</tr>
+</tbody>
+</table>
+<p>Q1 and Q2 confirm Lemma Z-7 finitely; they are not steps of the proof.</p>
+<h2 id="where-u-enters">Where U enters</h2>
+<ul>
+<li>Lemma Z-1: Theorem 4 (one sign per line: orientation of the holes of the line and of the diamonds of Theorem 3) and the separability of the signed count <span class="math inline">\(s\)</span> (Theorem 5, second statement: the total charge of every <span class="math inline">\(k\)</span>-hole-line of <span class="math inline">\(S&#39;\)</span> must vanish).</li>
+<li>Lemma Z-2: Theorem 3 at every odd separation and transverse offset <span class="math inline">\((\pm 1, \pm 1)\)</span>, in all three cases; case III also uses Theorem 7’s second case, which is Theorems 3 and 5.</li>
+<li>Lemma Z-4: Theorem 3 only.</li>
+<li>Lemma Z-3, Theorem 15, Theorem <span class="math inline">\(M&#39;\)</span>: no orientation.</li>
+<li>Not used: Theorem 7’s wall, Lemma 5, Theorem 8, Theorem 19.</li>
+</ul>
+<p><strong>B4, the weakest form.</strong> The argument needs, for each two-way axis <span class="math inline">\(k\)</span>: (i) the line law, (ii) the diagonal law for diagonally neighbouring <span class="math inline">\(k\)</span>-lines, and (iii) total charge zero on every <span class="math inline">\(k\)</span>-line of holes. All three are consequences of U; (i) and (iii) follow from Lemma 3 summed along lines when the holes there are oriented. No form of U strictly weaker than “every hole oriented” is obtained, because the proof of Theorem 3 (Theorem 9) uses the orientation of every hole of the causal diamond, and the note records that dropping any one hole’s orientation equation makes the system feasible; corners alone (Lemma 2, unconditional) do not suffice. What can be said is that the argument uses U only through the conclusions of Theorems 3 and 4 and charge-neutral hole lines, for the two-way axes.</p>
+<h2 id="what-is-left">What is left</h2>
+<ul>
+<li><strong>Theorem U</strong> is now the only open statement between the record and Theorem H on every cell (and the periodicity of frozen zero-flux states on every cubic cell). Nothing in this report touches it.</li>
+<li><strong>Verification.</strong> The main loop should re-derive Lemma Z-2 cases II and III (the only places where Theorem 7’s proof is reused) and Lemma Z-3, then a checker with its own programs should re-run the corpus checks. Suggested stop rule for the checker: if any of Z-1 to Z-4 fails on re-derivation, report the line and stop; if all pass, the note’s Theorem 1 is to be restated as Corollary Z-6 with <span class="math inline">\(K_u\)</span> dropped from the reduction, and the certificates of <span class="math inline">\(K_u\)</span> moved to the record of certified facts rather than of steps.</li>
+<li><strong>Certificates.</strong> Theorem <span class="math inline">\(U&#39;\)</span> at sides 7 and 8 would now give Theorem H there (the <span class="math inline">\(K_u\)</span> certificates at those sides are no longer the bottleneck). Not analytic; the note ranks it last.</li>
+<li>Not recommended: anything on the “Closed, do not re-run” list; kuwall’s question on the first step of <span class="math inline">\(K_u\)</span> is no longer on the path to H, though its answer stays of independent interest.</li>
+<li>Two computed facts not used and not proved, recorded for the record: every full plane normal to <span class="math inline">\(n(k)\)</span> carries the same number of type-<span class="math inline">\(k\)</span> vertices on every grid (17,800 of 17,800), and no empty plane lies between two runs of the same sign (7,996 of 7,996).</li>
+</ul>
+<h2 id="scripts-and-timings">Scripts and timings</h2>
+<p>All from <code>experiments/08_frozen_structure/scratch_h</code>, project <code>.venv</code>, <code>PYTHONPATH</code> as prescribed, <code>TMPDIR=.tmp</code>. New scripts only; none existing modified.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>script</th>
+<th>what</th>
+<th>wall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h600_stripes.py</code></td>
+<td>Z-1 to Z-4, Theorems 3, 4, 6, 7, 15 on the odd corpus; normals and profiles tables</td>
+<td>6 s</td>
+</tr>
+<tr>
+<td><code>h601_othercells.py</code></td>
+<td>the same on the saved h447 samples of four non-cubic cells, oriented states only</td>
+<td>5 s</td>
+</tr>
+<tr>
+<td><code>h602_walls.py</code></td>
+<td>runs of planes, Theorem 7 walls, Theorem 8 chains and families, per-grid counts, Lemma 6</td>
+<td>about 60 s</td>
+</tr>
+<tr>
+<td><code>h603_zeroflux_states.py 3 40 120</code>, <code>4 30 150</code></td>
+<td>W = 0 states by solver (two batches per L, capped, killed at cap with finished queries kept), balance identities, Z-lemmas on the odd ones; saves <code>.tmp/h603_zf_L{3,4}.json</code></td>
+<td>4 min; 5 min</td>
+</tr>
+<tr>
+<td><code>h604_evencurl_test.py 3 40 120</code></td>
+<td>even-curl samples (three batches, all SAT in under 1 s), Z-5 hypothesis table, balance in wall language</td>
+<td>5 s</td>
+</tr>
+<tr>
+<td><code>h605_even_sublattice.py 3</code>, <code>4</code></td>
+<td>Q1, Q2 with three controls</td>
+<td>4 s; 96 s</td>
+</tr>
+</tbody>
+</table>
+<p>Solver total under 12 minutes, one CaDiCaL process at a time, every batch in an <code>h32_cap</code> child with a hard cap of 120 or 150 s, no job over 10 minutes, nothing on the Sparks.</p>
+<h2 id="rules-kept-or-broken">Rules kept or broken</h2>
+<p>Kept: compute from <code>scratch_h</code> with the prescribed interpreter, paths and <code>TMPDIR</code>; scripts numbered <code>h600</code>–<code>h605</code>; no existing script modified; no commit, no git; solver only for generating test states and two finite confirmations, each UNSAT with a SAT control, capped, one process at a time; status tags on every claim; counts checked and exceptions given for every claim about states; report under 400 lines. No solver probe on the first step of <span class="math inline">\(K_u\)</span> (kuwall’s task). Broken: none. One correction made during the work: the first run of h602 omitted Theorem 8’s hypothesis of three types and reported 4,712 false violations; the split by hypothesis is in the final script and the table above.</p>
+</main>
+</body>
+</html>

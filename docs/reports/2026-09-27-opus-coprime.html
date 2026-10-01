@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>(V) is proved by hand on every cell whose transverse extents are coprime, for every length of the rod axis: in chain coordinates two pairs of pattern </title>
+<meta name="description" content="(V) is proved by hand on every cell whose transverse extents are coprime, for every length of the rod axis: in chain coordinates two pairs of pattern vertices give X(-1) - X(1) = 1 + (X(-2) - X(2))/2, one vertex P of the rod line found by the Chinese remainder theorem gives X(-2)">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "(V) is proved by hand on every cell whose transverse extents are coprime, for every length of the rod axis: in chain coordinates two pairs of pattern vertices give X(-1) - X(1) = 1 + (X(-2) - X(2))/2, one vertex P of the rod line found by the Chinese remainder theorem gives X(-2) - X(2) = t_y(P) + t_z(P) >= 0, and the grid sums close it. The proof is linear, uses the whole x-circle, and is one explicit identity. The slab certificates, whose reach grows with the torus, are a different and still unexplained family",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-27-opus-coprime.html",
+ "datePublished": "2026-09-27",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus), agent coprime, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-27-opus-coprime.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/thm-10.html">thm-10</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">(V) is proved by hand on every cell whose transverse extents are coprime, for every length of the rod axis: in chain coordinates two pairs of pattern vertices give X(-1) - X(1) = 1 + (X(-2) - X(2))/2, one vertex P of the rod line found by the Chinese remainder theorem gives X(-2) - X(2) = t_y(P) + t_z(P) &gt;= 0, and the grid sums close it. The proof is linear, uses the whole x-circle, and is one explicit identity. The slab certificates, whose reach grows with the torus, are a different and still unexplained family</h1>
+
+<p class="author">Claude (Opus), agent coprime, for Lyndon Drake</p>
+<p class="date">2026-09-27</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#status-table" id="toc-status-table">0. Status table</a></li>
+<li><a href="#reproduction" id="toc-reproduction">1. Reproduction</a></li>
+<li><a href="#the-proof-theorem-v1" id="toc-the-proof-theorem-v1">2. The proof (Theorem V1)</a></li>
+<li><a href="#the-slab-certificates-and-why-they-do-not-explain-themselves" id="toc-the-slab-certificates-and-why-they-do-not-explain-themselves">3. The slab certificates, and why they do not explain themselves</a></li>
+<li><a href="#theorem-u-as-a-whole" id="toc-theorem-u-as-a-whole">4. Theorem U′ as a whole</a></li>
+<li><a href="#what-failed-and-why" id="toc-what-failed-and-why">5. What failed, and why</a></li>
+<li><a href="#rules-and-disclosures" id="toc-rules-and-disclosures">6. Rules and disclosures</a></li>
+<li><a href="#commands-run" id="toc-commands-run">7. Commands run</a></li>
+</ul>
+</details></nav>
+<p>Status tags: <strong>proved</strong> (argument written out here in full), <strong>certified</strong> (exact rational certificate verified in <code>fractions.Fraction</code>), <strong>computed</strong> (floating-point LP, exploration only), <strong>solver</strong> (not used here), <strong>conjecture</strong>. Scripts <code>scratch_h/h340_cert.py</code> … <code>h349_proof.py</code>, plus two helpers <code>h349b_rowspace.py</code> and <code>h349c_steps.py</code> (all new). No existing file was modified and nothing was committed. Everything ran on this Mac, one LP process at a time. No SAT solver was run.</p>
+<p>Notation. Cell <span class="math inline">\((a,b,c)\)</span>, coordinates modulo <span class="math inline">\((4a,4b,4c)\)</span>, relative to the A-hole <span class="math inline">\(O\)</span>. <span class="math inline">\(g=\gcd(b,c)\)</span>, <span class="math inline">\(d_b=\gcd(a,b)\)</span>, <span class="math inline">\(d_c=\gcd(a,c)\)</span>. Rods <span class="math inline">\(v=O-2e_x\)</span> and <span class="math inline">\(v&#39;=O+2e_x\)</span>. Lower bridgeheads <span class="math inline">\(\beta=O+(-1,1,1)\)</span> and <span class="math inline">\(\beta&#39;=O+(-1,-1,-1)\)</span> are of type <span class="math inline">\(y\)</span>. Upper bridgeheads <span class="math inline">\(\gamma=O+(1,1,-1)\)</span> and <span class="math inline">\(\gamma&#39;=O+(1,-1,1)\)</span> are of type <span class="math inline">\(z\)</span> (the six literals; Lemma U0 gives them from the four). <span class="math inline">\(G_{\pm1}\)</span> are the B-grids <span class="math inline">\(dx=\pm1\)</span>, <span class="math inline">\(N=2bc\)</span> is the number of vertices on an <span class="math inline">\(x\)</span>-grid, and <span class="math inline">\(n_k(x)=\sum_{\text{grid }x}t_k\)</span>.</p>
+<h2 id="status-table">0. Status table</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>statement</th>
+<th>status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Theorem V1.</strong> If <span class="math inline">\(\gcd(b,c)=1\)</span>, then for every <span class="math inline">\(a\ge1\)</span> every real solution <span class="math inline">\(t\ge0\)</span> of one-hot, (T2) and the pattern on <span class="math inline">\((a,b,c)\)</span> satisfies the identity <span class="math inline">\(\sum_{G_{-1}}(t_x+t_z)+\sum_{G_{+1}}t_y+\tfrac N2\,(t_y(P)+t_z(P))=0\)</span>. Here <span class="math inline">\(P=O+(2+4k,0,0)\)</span>, with <span class="math inline">\(d_b\mid k\)</span> and <span class="math inline">\(d_c\mid k+1\)</span>. Hence <span class="math inline">\(G_{-1}\)</span> is entirely of type <span class="math inline">\(y\)</span> ((V)), <span class="math inline">\(G_{+1}\)</span> has no type <span class="math inline">\(y\)</span>, and <span class="math inline">\(P\)</span> is of type <span class="math inline">\(x\)</span></td>
+<td><strong>proved</strong> (§2), linear, no integrality</td>
+</tr>
+<tr>
+<td>2</td>
+<td>The identity of row 1 lies in the row space of {one-hot, (T2), pattern types}</td>
+<td><strong>certified</strong> on 17 cells: (1,2,3), (2,2,3), (6,2,3), (12,2,3), (1,3,4), (2,3,4), (3,3,4), (6,3,4), (12,3,4), (15,3,5), (10,4,5), (3,4,5), (6,4,5), (2,4,5), (6,5,6), (2,7,8), (2,9,10). (20,4,5) did not finish: LP limit reached, LSQR residual 1.2e−7, consistent but <strong>not</strong> certified</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Controls: the identity is <strong>not</strong> in the row space with a wrong <span class="math inline">\(P\)</span> (<span class="math inline">\(k=0\)</span>, <span class="math inline">\(k=-1\)</span> on (6,3,4)), with only the four literals, or at <span class="math inline">\(g=2\)</span> ((6,2,4), (4,4,6), (6,4,6))</td>
+<td><strong>computed</strong> (float LSQR residuals 1.5 to 6.8)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>The steps of the proof, each as a linear identity on random points of the affine space: the pair identity, the rod-line grid relation, <span class="math inline">\(n_x(-2)=n_x(2)\)</span>, and the two chain-sharing relations at <span class="math inline">\(P\)</span></td>
+<td><strong>computed</strong> (residuals ≤ 3e−14) on (3,3,4), (4,3,4)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Exact first symmetric slab <span class="math inline">\(R\)</span> with LP optimum 0 (certificate at <span class="math inline">\(R\)</span> and exact positive point at <span class="math inline">\(R-1\)</span>), <span class="math inline">\(a=12\)</span>: (1,2), (1,3), (1,4): 2. (2,3), (3,2), (2,5), (2,7), (3,4), (4,3), (3,5), (5,3): 3. (3,7), (3,8), (3,10), (3,11): 5. (4,5): 7. (5,6): 9. (4,7), (4,9): 11. (5,7), (5,8): 13</td>
+<td><strong>certified</strong></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Least one-sided LP windows <span class="math inline">\([-p,q]\)</span> (Pareto corners; exact certificate at each corner, exact positive point at <span class="math inline">\([-(p-1),q]\)</span>): (3,4): <span class="math inline">\([-11,2]\)</span>, <span class="math inline">\([-3,3]\)</span>, <span class="math inline">\([-2,9]\)</span>. (4,5): <span class="math inline">\([-13,3]\)</span>, <span class="math inline">\([-7,5]\)</span>, <span class="math inline">\([-3,9]\)</span>, <span class="math inline">\([-2,11]\)</span>. (5,6): <span class="math inline">\([-15,3]\)</span>, <span class="math inline">\([-9,7]\)</span>, <span class="math inline">\([-3,11]\)</span>, <span class="math inline">\([-2,13]\)</span></td>
+<td><strong>certified</strong></td>
+</tr>
+<tr>
+<td>7</td>
+<td>The slab certificates (L1-minimal or slack-minimal, symmetry imposed) show no readable regularity: supports of 257 to 3,733 rows, and multipliers up to about 50 in absolute value</td>
+<td><strong>certified</strong> (the certificates); negative as a search for a closed form</td>
+</tr>
+<tr>
+<td>8</td>
+<td>The escape of the slab LP below threshold is a linear tilt in <span class="math inline">\(dx\)</span> of per-grid counts, which a torus forbids. Adding the grid-count rows <span class="math inline">\(n_x(dx)=n_x(dx+2)\)</span> shortens the reach only partly: (5,7) and (4,7) fall to 9, while (4,5) and (5,6) stay at 7 and 9</td>
+<td><strong>certified</strong> (reach); <strong>computed</strong> (profiles)</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Slab: given “the <span class="math inline">\(A\)</span> <span class="math inline">\(y\)</span>-line through <span class="math inline">\(v&#39;\)</span> has no type <span class="math inline">\(y\)</span>” (b−1 zeros), (V) is linear at <span class="math inline">\(R=3\)</span> on (3,4), (4,5), (5,7). That line statement has the same reach as (V) itself</td>
+<td><strong>certified</strong></td>
+</tr>
+<tr>
+<td>10</td>
+<td>At <span class="math inline">\(g=1\)</span> the LP forces even curl on every hexagon (Theorem U′ in full), on (3,3,4), (6,3,4), (4,4,5), (6,2,3), (10,4,5). It does not at <span class="math inline">\(g=3,4\)</span> ((3,3,3), (4,4,4))</td>
+<td><strong>computed</strong> (relative-interior point)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="reproduction">1. Reproduction</h2>
+<p><code>h331_aniso_lp.py</code> gives optimum 0 on (6,3,4), (6,3,5) and (6,4,5), and 8.6667 and 19.7778 on (3,3,3) and (4,4,4) with <code>--six</code> (<strong>computed</strong>, reproduced). My own builder <code>h340_cert.py</code> gives the validation values <strong>exactly</strong>: 26/3 on (3,3,3) and 178/9 on (4,4,4), as rationalised optimal points verified in Fraction arithmetic. Every LP in this report goes through that builder or a subclass of its rows.</p>
+<h2 id="the-proof-theorem-v1">2. The proof (Theorem V1)</h2>
+<p><strong>Ingredients, all proved elsewhere.</strong></p>
+<ul>
+<li>(C) Completeness (report 2026-09-17-completeness). Every real solution <span class="math inline">\(t\)</span> of one-hot and (T2) on any cell satisfies <span class="math display">\[t_y(v)=F_x(v)-F_z(v)+\sigma_v\alpha,\qquad t_z(v)=F_y(v)-F_x(v)+\sigma_v\beta,\]</span> where <span class="math inline">\(F_E(v)\)</span> is the sum of real chain weights <span class="math inline">\(f\)</span> over the two <span class="math inline">\(E\)</span>-chains through <span class="math inline">\(v\)</span>, <span class="math inline">\(\sigma=\pm1\)</span> on A/B, and <span class="math inline">\(\alpha,\beta\)</span> are constants. This is the statement that <span class="math inline">\((t_y,t_z)\)</span> is the all-<span class="math inline">\(x\)</span> solution plus a combination of chain modes and the two constants. The mode of an <span class="math inline">\(x\)</span>-chain adds <span class="math inline">\(+f\)</span> to <span class="math inline">\(t_y\)</span> and <span class="math inline">\(-f\)</span> to <span class="math inline">\(t_z\)</span>, that of a <span class="math inline">\(y\)</span>-chain <span class="math inline">\(+f\)</span> to <span class="math inline">\(t_z\)</span>, and that of a <span class="math inline">\(z\)</span>-chain <span class="math inline">\(-f\)</span> to <span class="math inline">\(t_y\)</span>.</li>
+<li>(S) One chain per slab (r1-lemma report, ingredient 2). If <span class="math inline">\(\gcd(b,c)=1\)</span>, then each pair of adjacent <span class="math inline">\(x\)</span>-grids holds exactly one <span class="math inline">\(x\)</span>-chain of the family joining them. So <span class="math inline">\(F_x(v)=X(x_v)\)</span> depends only on the <span class="math inline">\(x\)</span>-grid.</li>
+<li>(U0) Lemma U0 (uhand): the four literals of U′ force the six.</li>
+</ul>
+<p><strong>Chain incidences</strong> (from the chain rules: an A vertex <span class="math inline">\(p\)</span> has B neighbours <span class="math inline">\(p+d_0\)</span> and <span class="math inline">\(p+d_3\)</span> on its <span class="math inline">\(\{0,3\}\)</span>-chain and <span class="math inline">\(p+d_1\)</span> and <span class="math inline">\(p+d_2\)</span> on its <span class="math inline">\(\{1,2\}\)</span>-chain).</p>
+<ul>
+<li><span class="math inline">\(\beta=v+d_0\)</span> and <span class="math inline">\(\gamma&#39;=v&#39;+d_3\)</span>, so <span class="math inline">\(\beta\in C_{03}(v)\)</span> and <span class="math inline">\(\gamma&#39;\in C_{03}(v&#39;)\)</span>. Also <span class="math inline">\(\beta=w_z^++d_2\)</span> and <span class="math inline">\(\gamma&#39;=w_z^++d_1\)</span> with <span class="math inline">\(w_z^+=O+(0,0,2)\)</span>, so <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma&#39;\)</span> share a <span class="math inline">\(\{1,2\}\)</span>-chain.</li>
+<li><span class="math inline">\(\beta&#39;=v+d_1\)</span> and <span class="math inline">\(\gamma=v&#39;+d_2\)</span>, so <span class="math inline">\(\beta&#39;\in C_{12}(v)\)</span> and <span class="math inline">\(\gamma\in C_{12}(v&#39;)\)</span>. Also <span class="math inline">\(\beta&#39;=w_z^-+d_3\)</span> and <span class="math inline">\(\gamma=w_z^-+d_0\)</span>, so they share a <span class="math inline">\(\{0,3\}\)</span>-chain.</li>
+<li>Rod line. <span class="math inline">\(P=v&#39;+4ke_x\)</span> lies on both <span class="math inline">\(z\)</span>-chains of <span class="math inline">\(v&#39;\)</span> iff <span class="math inline">\(d_b\mid k\)</span>: the A vertices of <span class="math inline">\(C_{03}(v&#39;)\)</span> are <span class="math inline">\(v&#39;+j(2,2,0)\)</span>, and <span class="math inline">\(2j\equiv4k\ (4a)\)</span> together with <span class="math inline">\(2j\equiv0\ (4b)\)</span> is solvable iff <span class="math inline">\(\gcd(a,b)\mid k\)</span>, and the same holds for <span class="math inline">\((2,-2,0)\)</span>. Likewise <span class="math inline">\(P=v+4(k+1)e_x\)</span> lies on both <span class="math inline">\(y\)</span>-chains of <span class="math inline">\(v\)</span> iff <span class="math inline">\(d_c\mid k+1\)</span>. Since <span class="math inline">\(\gcd(d_b,d_c)\)</span> divides <span class="math inline">\(\gcd(b,c)=1\)</span>, such a <span class="math inline">\(k\)</span> exists by the Chinese remainder theorem.</li>
+<li>Each <span class="math inline">\(z\)</span>-chain meets every B <span class="math inline">\(x\)</span>-grid equally often. Its B vertices are <span class="math inline">\(u_0+js\)</span> with <span class="math inline">\(s=(2,\pm2,0)\)</span>, and over one period <span class="math inline">\(j\)</span> runs over a multiple of <span class="math inline">\(2a\)</span> consecutive values. So <span class="math inline">\(\sum_{u\in\text{B-grid }x}F_z(u)\)</span> is the same for every B-grid.</li>
+</ul>
+<p><strong>Proof.</strong> Let <span class="math inline">\(t\ge0\)</span> satisfy one-hot, (T2) and the six literals. Then <span class="math inline">\(t\)</span> is 0 on the two non-pattern types of each pattern vertex, by one-hot and <span class="math inline">\(t\ge0\)</span>.</p>
+<p><em>Step 1.</em> By (C) and (S), for B vertices <span class="math inline">\(u\)</span> and <span class="math inline">\(u&#39;\)</span> we have <span class="math inline">\(t_y(u)-t_y(u&#39;)=X(x_u)-X(x_{u&#39;})-(F_z(u)-F_z(u&#39;))\)</span>. The incidences give <span class="math inline">\(F_z(\beta)-F_z(\gamma&#39;)=f(C_{03}(v))-f(C_{03}(v&#39;))\)</span> and <span class="math inline">\(F_z(\beta&#39;)-F_z(\gamma)=f(C_{12}(v))-f(C_{12}(v&#39;))\)</span>. Adding, and using the pattern values <span class="math inline">\(t_y(\beta)=t_y(\beta&#39;)=1\)</span> and <span class="math inline">\(t_y(\gamma)=t_y(\gamma&#39;)=0\)</span>, <span class="math display">\[2=2\bigl(X(-1)-X(1)\bigr)-\bigl(F_z(v)-F_z(v&#39;)\bigr).\]</span> The rods have <span class="math inline">\(t_y(v)=t_y(v&#39;)=0\)</span>, so <span class="math inline">\(F_z(v)-F_z(v&#39;)=X(-2)-X(2)\)</span>. Hence <span class="math display">\[X(-1)-X(1)=1+\tfrac12\bigl(X(-2)-X(2)\bigr).\]</span></p>
+<p><em>Step 2.</em> <span class="math inline">\(P\)</span> shares its <span class="math inline">\(z\)</span>-chains with <span class="math inline">\(v&#39;\)</span>, so <span class="math inline">\(t_y(P)=t_y(P)-t_y(v&#39;)=X(x_P)-X(2)\)</span>. It shares its <span class="math inline">\(y\)</span>-chains with <span class="math inline">\(v\)</span>, so <span class="math inline">\(t_z(P)=t_z(P)-t_z(v)=X(-2)-X(x_P)\)</span>. Adding, <span class="math display">\[X(-2)-X(2)=t_y(P)+t_z(P).\]</span></p>
+<p><em>Step 3.</em> Summing (C) over a B-grid gives <span class="math inline">\(n_y(x)=N X(x)-\sum_{\text{grid}}F_z+N\sigma_B\alpha\)</span>, and the middle term is the same for every B-grid. So <span class="math display">\[n_y(-1)-n_y(1)=N\bigl(X(-1)-X(1)\bigr)=N+\tfrac N2\bigl(t_y(P)+t_z(P)\bigr).\]</span></p>
+<p><em>Step 4.</em> Since <span class="math inline">\(n_y(-1)=N-\sum_{G_{-1}}(t_x+t_z)\)</span>, Step 3 is the identity of row 1: <span class="math display">\[\sum_{G_{-1}}(t_x+t_z)+\sum_{G_{+1}}t_y+\tfrac N2\bigl(t_y(P)+t_z(P)\bigr)=0.\]</span> Every term is non-negative, so each vanishes. <span class="math inline">\(\square\)</span></p>
+<p><strong>Corollaries (proved).</strong> (i) (V) holds on every cell <span class="math inline">\((a,b,c)\)</span> with <span class="math inline">\(\gcd(b,c)=1\)</span> and any <span class="math inline">\(a\ge1\)</span>. (ii) By the grid-count identity (<span class="math inline">\(n_x\)</span> is the same on every grid of a sublattice, a linear consequence of (C)), B has no vertex of type <span class="math inline">\(x\)</span> anywhere. (iii) <span class="math inline">\(G_{+1}\)</span> has no type <span class="math inline">\(y\)</span>, and <span class="math inline">\(P\)</span> is of type <span class="math inline">\(x\)</span>.</p>
+<p><strong>What the proof uses.</strong> It uses no integrality: the proof is linear. The non-negativity it uses is at the vertices of <span class="math inline">\(G_{-1}\)</span> (types <span class="math inline">\(x\)</span>, <span class="math inline">\(z\)</span>), the vertices of <span class="math inline">\(G_{+1}\)</span> (type <span class="math inline">\(y\)</span>), the one vertex <span class="math inline">\(P\)</span> (types <span class="math inline">\(y\)</span>, <span class="math inline">\(z\)</span>), and the non-pattern types at the six pattern vertices. With the four literals it also uses the cage non-negativity inside Lemma U0; with four literals alone the identity is not in the row space (row 3). On the question the brief put (Lemma T needs integrality, the LP needs none): this proof uses <strong>no</strong> integrality and so does not use Lemma T. It rests on the same structural fact as R1, <span class="math inline">\(F_x=X(x)\)</span>. It uses <strong>the whole <span class="math inline">\(x\)</span>-circle</strong> twice. The grid sums of Step 3 are linear identities only because the <span class="math inline">\(z\)</span>-chains close up round the torus, and <span class="math inline">\(P\)</span> sits at <span class="math inline">\(x\)</span>-distance <span class="math inline">\(|2+4k|\)</span> with <span class="math inline">\(k\)</span> determined modulo <span class="math inline">\(d_bd_c\)</span>. So it is a torus certificate, valid for every <span class="math inline">\(a\)</span>, and not a slab certificate.</p>
+<p><strong>The short-cell family</strong> (main-loop correction 1). When <span class="math inline">\(d_b=1\)</span> or <span class="math inline">\(d_c=1\)</span>, <span class="math inline">\(P\)</span> can be taken to be a rod (<span class="math inline">\(k=0\)</span> gives <span class="math inline">\(P=v&#39;\)</span>; <span class="math inline">\(k=-1\)</span> gives <span class="math inline">\(P=v\)</span>). Its term is then fixed at 0 by the pattern, and the certificate is the pure linear identity <span class="math inline">\(\sum_{G_{-1}}(t_x+t_z)+\sum_{G_{+1}}t_y=0\)</span>. This is the family check3 found on <span class="math inline">\((2,b,c)\)</span>: at <span class="math inline">\(a=2\)</span> one of <span class="math inline">\(b\)</span>, <span class="math inline">\(c\)</span> is odd. It is certified on (2,4,5), (2,7,8) and (2,9,10) (row 2). When <span class="math inline">\(d_b,d_c&gt;1\)</span>, as on (6,3,4) (<span class="math inline">\(P=O-10e_x\)</span>), (6,2,3), (12,3,4) and (15,3,5), the extra vertex <span class="math inline">\(P\)</span> is needed. With <span class="math inline">\(P\)</span> replaced by a rod the identity fails (row 3).</p>
+<h2 id="the-slab-certificates-and-why-they-do-not-explain-themselves">3. The slab certificates, and why they do not explain themselves</h2>
+<ul>
+<li><strong>The exact reach</strong> (row 5) has no law in <span class="math inline">\((b,c)\)</span> that I can state. It depends on both extents. It saturates in <span class="math inline">\(c\)</span> for fixed <span class="math inline">\(b\)</span>: 3 for <span class="math inline">\(b=2\)</span>, 5 for <span class="math inline">\(b=3\)</span> (<span class="math inline">\(c\ge7\)</span>), 11 for <span class="math inline">\(b=4\)</span> (<span class="math inline">\(c=7,9\)</span>), 13 for <span class="math inline">\(b=5\)</span> (<span class="math inline">\(c=7,8\)</span>). It is smaller when <span class="math inline">\(c=b+1\)</span>: 3, 7 and 9 for <span class="math inline">\(b=3,4,5\)</span>. The one-sided windows (row 6) are far from symmetric. On the transverse torus (3,4) the LP corners are (11,2), (3,3), (2,9), against the solver’s (2,5), (3,3), (5,2) (check3).</li>
+<li><strong>Canonical forms.</strong> The L1-minimal symmetric duals have supports of 257 (3,4), 337 (3,5), 1,031 (4,5), 1,810 (5,6) and 3,733 (5,7), and multipliers such as −53/2 or 19. The slack-minimal duals (<code>h342</code>) put slack of total mass 26 to 646 on <span class="math inline">\(t_z\)</span> at <span class="math inline">\(G_{-1}\)</span>, <span class="math inline">\(t_y\)</span> at <span class="math inline">\(G_{+1}\)</span>, <span class="math inline">\(t_x\)</span> on the outer B-grids, and a few A-lines. No position table along the single chain, and no <span class="math inline">\((i,j,i+j)\)</span> table, showed a pattern stable over three tori with <span class="math inline">\(\min(b,c)\ge3\)</span>. <strong>I did not try the cage-law basis</strong>; once the torus proof was found I spent the time on it instead.</li>
+<li><strong>Mechanism (computed).</strong> Below threshold the LP optimum tilts the per-grid counts linearly in <span class="math inline">\(dx\)</span> (<code>h344</code>: <span class="math inline">\(n_x\)</span> on the B-grids falls by 1.41 per two grids on (4,5), <span class="math inline">\(R=6\)</span>). The chain parametrisation forbids such a tilt on a torus. On a slab it is a boundary mode, and the certificate has to spend length to kill it. That is why the slab certificate is long and irregular, while the torus certificate is one line of vertices plus two grids.</li>
+<li><strong>What the LP forces</strong> at threshold (row 10; <code>h343</code>): B has no type <span class="math inline">\(x\)</span> on every grid of the slab; <span class="math inline">\(G_{-1}\)</span> is all <span class="math inline">\(y\)</span> and <span class="math inline">\(G_{+1}\)</span> all <span class="math inline">\(z\)</span>; the rods on the rod line at <span class="math inline">\(dx\equiv2\pmod4\)</span> are of type <span class="math inline">\(x\)</span>; the A-plane <span class="math inline">\(z=0\)</span> has no type <span class="math inline">\(y\)</span> and the A-plane <span class="math inline">\(y=0\)</span> no type <span class="math inline">\(z\)</span> (a W_r-type conclusion).</li>
+</ul>
+<h2 id="theorem-u-as-a-whole">4. Theorem U′ as a whole</h2>
+<ol start="22" type="A">
+<li>is proved (§2). B being free of type <span class="math inline">\(x\)</span> follows linearly (Corollary ii). Even curl on every hexagon is forced by the LP at <span class="math inline">\(g=1\)</span> on five cells and not at <span class="math inline">\(g=3,4\)</span> (row 10, <strong>computed</strong>). So the whole of U′ appears to be a linear statement at <span class="math inline">\(g=1\)</span>. I have not written the linear step from “B has no type <span class="math inline">\(x\)</span>” to even curl. The note’s route to even curl is Theorem M′, which uses the integrality of Lemma 4. <strong>Conjecture:</strong> at <span class="math inline">\(g=1\)</span> that step also has a linear certificate on every torus.</li>
+</ol>
+<h2 id="what-failed-and-why">5. What failed, and why</h2>
+<ul>
+<li><strong>Reading a closed form off the slab certificates</strong> failed (§3). They are vertices of a very degenerate dual, and they have to cancel boundary modes. The regularity was in the torus problem, not the slab.</li>
+<li><strong>Minimal certificates on “easy” tori misled me at first.</strong> The two-column certificates of <code>h348</code> on (3,3,4), (3,4,5), (2,5,7) and others exploit chain coincidences (<span class="math inline">\(d_b=1\)</span> or <span class="math inline">\(d_c=1\)</span>). Only cells with <span class="math inline">\(d_b,d_c&gt;1\)</span>, such as (6,3,4) and (12,3,4), exposed the rod-line vertex <span class="math inline">\(P\)</span>.</li>
+<li><strong>First exact check of the identity reported failure</strong> (<code>h349</code>, first version): I had imposed the pattern only as <span class="math inline">\(t(h,a_h)=1\)</span>. The zeros of the other two types at a pattern vertex need <span class="math inline">\(t\ge0\)</span>, not just one-hot. With those rows added the identity is certified. The pure-Python Fraction elimination was also far too slow (213 s on (6,3,4)) and was replaced by float solve, rationalisation and exact re-verification.</li>
+<li><strong>(20,4,5)</strong> exact verification hit the 300 s LP limit (float residual 1.2e−7).</li>
+<li><strong>Flattening <span class="math inline">\(n_x\)</span></strong> does not bring the slab reach down to the solver’s 3 (row 8).</li>
+</ul>
+<h2 id="rules-and-disclosures">6. Rules and disclosures</h2>
+<ul>
+<li>One shell command contained an empty heredoc (<code>&lt;&lt;'X' … X</code>, typed by mistake, executing nothing). It ran without effect; it is recorded as a breach of the no-heredoc rule.</li>
+<li>A background shell loop of <code>h340 scan</code> over ten tori was started without a pre-flight total. Its projected run was over ten minutes, which the rules send to <code>expq-cli submit</code>. I stopped it (TaskStop) after four tori (about 3 minutes) and re-ran the tori I needed one at a time in the foreground.</li>
+<li>Two foreground commands passed the ten-minute limit and were moved to the background by the harness. They were the first <code>h349</code> (slow Fraction elimination: I did not pre-flight it, and stopped it) and the batch of controls plus sweep (sequential LPs, about 11 minutes in total, allowed to finish, one process).</li>
+<li>Two helper scripts are named <code>h349b_rowspace.py</code> and <code>h349c_steps.py</code>, outside the strict <code>h34N_*</code> pattern.</li>
+<li>I read neither check3’s certificates nor its report.</li>
+</ul>
+<h2 id="commands-run">7. Commands run</h2>
+<p>From <code>scratch_h</code>, project <code>.venv</code>, <code>PYTHONPATH=&lt;repo&gt;:&lt;repo&gt;/experiments/08_frozen_structure</code>, <code>TMPDIR=&lt;repo&gt;/.tmp</code>.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>command</th>
+<th>what</th>
+<th>verdict</th>
+<th>wall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h331_aniso_lp.py 6,3,4</code> / <code>6,3,5</code> / <code>6,4,5</code></td>
+<td>reproduction</td>
+<td>optimum 0, 0, 0</td>
+<td>1.4–2.6 s</td>
+</tr>
+<tr>
+<td><code>h331_aniso_lp.py 3,3,3 --six</code>, <code>4,4,4 --six</code></td>
+<td>validation</td>
+<td>8.6667, 19.7778</td>
+<td>&lt; 1 s</td>
+</tr>
+<tr>
+<td><code>h340_cert.py 3,3 all --a 3 --six</code>, <code>4,4 all --a 4 --six</code></td>
+<td>validation, exact</td>
+<td>26/3, 178/9 exact</td>
+<td>0.1, 0.3 s</td>
+</tr>
+<tr>
+<td><code>h340_cert.py b,c scan 1..16 --six</code>, 24 tori</td>
+<td>exact first symmetric <span class="math inline">\(R\)</span></td>
+<td>row 5</td>
+<td>1 s – 98 s each</td>
+</tr>
+<tr>
+<td><code>h340_cert.py 3,4 / 4,5 / 5,6 window</code></td>
+<td>one-sided windows</td>
+<td>row 6</td>
+<td>6 s, 32 s, 140 s</td>
+</tr>
+<tr>
+<td><code>h340_cert.py b,c all --a 1..3</code>, 4 tori</td>
+<td>whole-cell LP, short <span class="math inline">\(a\)</span></td>
+<td>0 (float); exact rationalisation of the L1 dual failed except on (3,4)</td>
+<td>&lt; 5 s each</td>
+</tr>
+<tr>
+<td><code>h341_look.py 3,4 3 --sym --slack</code></td>
+<td>certificate as column functional</td>
+<td>63 slack columns, mass 300</td>
+<td>&lt; 1 s</td>
+</tr>
+<tr>
+<td><code>h342_slackmin.py</code>, 5 tori</td>
+<td>slack-minimal canonical duals</td>
+<td>§3, no regularity</td>
+<td>&lt; 3 s each</td>
+</tr>
+<tr>
+<td><code>h343_forced.py</code> on slabs and tori</td>
+<td>LP-forced structure, curl</td>
+<td>rows 10, §3</td>
+<td>&lt; 10 s each</td>
+</tr>
+<tr>
+<td><code>h344_profile.py 4,5 6</code>, <code>5,7 12</code></td>
+<td>escape profiles</td>
+<td>linear tilt</td>
+<td>&lt; 5 s</td>
+</tr>
+<tr>
+<td><code>h345_flat.py</code>, 6 tori</td>
+<td>reach with <span class="math inline">\(n_x\)</span> flattened</td>
+<td>row 8</td>
+<td>&lt; 1 min each</td>
+</tr>
+<tr>
+<td><code>h346_lemma.py …</code>, about 30 runs</td>
+<td>lemma split (planes, line <span class="math inline">\(L\)</span>)</td>
+<td>row 9</td>
+<td>&lt; 15 s each</td>
+</tr>
+<tr>
+<td><code>h347_delta.py</code>, 6 cells</td>
+<td>grid identities at <span class="math inline">\(g=1\)</span>; control (4,4,6)</td>
+<td>exact constants at <span class="math inline">\(g=1\)</span>, fail at <span class="math inline">\(g=2\)</span></td>
+<td>&lt; 5 s each</td>
+</tr>
+<tr>
+<td><code>h348_deltacert.py</code>, 10 cells</td>
+<td>minimal certificates of <span class="math inline">\(N\delta\ge0\)</span></td>
+<td>exposed <span class="math inline">\(P\)</span> on (12,3,4)</td>
+<td>1–10 s</td>
+</tr>
+<tr>
+<td><code>h349_proof.py</code>, 17 cells + 7 controls</td>
+<td>Theorem V1 identity, exact</td>
+<td>rows 2, 3</td>
+<td>0.0–71 s; (20,4,5) 301 s, not certified; (6,4,6) control 170 s</td>
+</tr>
+<tr>
+<td><code>h349b_rowspace.py 3,3,4</code></td>
+<td>float row-space test (before the pattern fix)</td>
+<td>residual 3.3 (pattern rows incomplete)</td>
+<td>2 s</td>
+</tr>
+<tr>
+<td><code>h349c_steps.py 3,3,4</code>, <code>4,3,4</code></td>
+<td>steps as identities on random affine points</td>
+<td>all ≤ 3e−14</td>
+<td>5 s</td>
+</tr>
+</tbody>
+</table>
+</main>
+</body>
+</html>

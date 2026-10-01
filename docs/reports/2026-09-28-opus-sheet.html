@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The near-miss of (V′) at the one-sided threshold is one sheet on the labels of the x-chains, given by one formula at every g; opening the transverse t</title>
+<meta name="description" content="The near-miss of (V′) at the one-sided threshold is one sheet on the labels of the x-chains, given by one formula at every g; opening the transverse torus does not remove g but replaces it by the number of chain labels of the surface that is left, and on the plane (V′) is false">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "The near-miss of (V′) at the one-sided threshold is one sheet on the labels of the x-chains, given by one formula at every g; opening the transverse torus does not remove g but replaces it by the number of chain labels of the surface that is left, and on the plane (V′) is false",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-28-opus-sheet.html",
+ "datePublished": "2026-09-28",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus 5), prover agent sheet, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-28-opus-sheet.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/closed-tilted-sheet.html">closed-tilted-sheet</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">The near-miss of (V′) at the one-sided threshold is one sheet on the labels of the x-chains, given by one formula at every g; opening the transverse torus does not remove g but replaces it by the number of chain labels of the surface that is left, and on the plane (V′) is false</h1>
+
+<p class="author">Claude (Opus 5), prover agent sheet, for Lyndon Drake</p>
+<p class="date">2026-09-28</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#verdicts" id="toc-verdicts">1. Verdicts</a></li>
+<li><a href="#observations-of-phase-1-with-the-data" id="toc-observations-of-phase-1-with-the-data">2. Observations of Phase 1, with the data</a></li>
+<li><a href="#the-invariant-and-the-proof-what-was-tried" id="toc-the-invariant-and-the-proof-what-was-tried">3. The invariant and the proof: what was tried</a></li>
+<li><a href="#what-is-missing-phase-2-and-phase-3" id="toc-what-is-missing-phase-2-and-phase-3">4. What is missing (Phase 2 and Phase 3)</a></li>
+<li><a href="#what-failed-and-why" id="toc-what-failed-and-why">5. What failed and why</a></li>
+<li><a href="#rules" id="toc-rules">6. Rules</a></li>
+<li><a href="#commands-run" id="toc-commands-run">7. Commands run</a></li>
+</ul>
+</details></nav>
+<p>Tags: <strong>proved</strong>, <strong>computed</strong> (exact, no solver), <strong>solver</strong> (SAT verdict under a cap), <strong>conjecture</strong>. New scripts (all in <code>experiments/08_frozen_structure/scratch_h/</code>): <code>h560_lib.py</code>, <code>h560_worker.py</code>, <code>h561_nearmiss.py</code>, <code>h562_show.py</code>, <code>h563_cells.py</code>, <code>h564_where.py</code>, <code>h565_defects.py</code>, <code>h566_backbone.py</code>, <code>h567_reach.py</code>, <code>h568_cyl.py</code>, <code>h569_formula.py</code>. The geometry and the encoders are those of <code>h360_lib.py</code> (agent check3; direct encoding of (T2), no auxiliary variables). Every solve runs in a child process under <code>subprocess.run(timeout=...)</code>. Saved models are in <code>.tmp/h561_*.pkl</code>, logs in <code>.tmp/h561_*.log</code>. No existing script was modified; nothing under <code>docs/</code>, no record file and no git was touched.</p>
+<p>Setting throughout: cell <span class="math inline">\((a, b, c)\)</span>, rods along <span class="math inline">\(x\)</span>, <span class="math inline">\(g = \gcd(b, c)\)</span>, the A-hole <span class="math inline">\(O = (2,0,0)\)</span>, the rods <span class="math inline">\(v = (0,0,0)\)</span> and <span class="math inline">\(v&#39; = (4,0,0)\)</span>, the four literals of (V′): <span class="math inline">\(v, v&#39;\)</span> of type <span class="math inline">\(x\)</span>, the lower bridgehead <span class="math inline">\(O + (-1,1,1)\)</span> of type <span class="math inline">\(y\)</span>, the upper bridgehead <span class="math inline">\(O + (1,1,-1)\)</span> of type <span class="math inline">\(z\)</span>. The negation: some B-vertex of the grid <span class="math inline">\(dx = -1\)</span> (relative to <span class="math inline">\(O\)</span>) is of type <span class="math inline">\(x\)</span>. Type-only model (one-hot and (T2)), no signs. “Window <span class="math inline">\([-p, q]\)</span>”: (T2) on the hexagons all of whose vertices have <span class="math inline">\(-p \le dx \le q\)</span>. On a grid $x = $ const put <span class="math inline">\(s = y + z\)</span> and <span class="math inline">\(d = y - z\)</span>; modulo <span class="math inline">\(4g\)</span> they are well defined on the torus, the classes of <span class="math inline">\(d\)</span> on a grid are exactly the x-chains of the family <span class="math inline">\(\{0,1\}\)</span> (step <span class="math inline">\((0,2,2)\)</span>) in that grid and the classes of <span class="math inline">\(s\)</span> those of <span class="math inline">\(\{2,3\}\)</span> (step <span class="math inline">\((0,2,-2)\)</span>) (computed from the definitions: a chain of <span class="math inline">\(\{0,1\}\)</span> has constant <span class="math inline">\(y - z\)</span> and <span class="math inline">\(2bc/g\)</span> vertices on each of its two grids, which is the size of a class). A class of <span class="math inline">\(s\)</span> meets a class of <span class="math inline">\(d\)</span> in a <strong>cell</strong> of <span class="math inline">\(2bc/g^2\)</span> vertices.</p>
+<h2 id="verdicts">1. Verdicts</h2>
+<ol type="1">
+<li><p><strong>Phase 1: there is a common structure, and it is the same at every <span class="math inline">\(g\)</span> (solver + computed, <span class="math inline">\(g = 3\)</span> to <span class="math inline">\(7\)</span>).</strong> On the one-sided near-miss window <span class="math inline">\([-3, 2g]\)</span>, one grid short of the corner <span class="math inline">\((3, 2g+1)\)</span>, the set of type-<span class="math inline">\(x\)</span> vertices of the window is determined up to exactly <strong>two</strong> choices: after two models, blocking both, the third query is UNSAT. This holds on <span class="math inline">\((12,3,3)\)</span>, <span class="math inline">\((12,3,6)\)</span>, <span class="math inline">\((12,6,9)\)</span>, <span class="math inline">\((12,4,4)\)</span>, <span class="math inline">\((12,4,8)\)</span>, <span class="math inline">\((16,8,12)\)</span>, <span class="math inline">\((12,5,5)\)</span>, <span class="math inline">\((12,5,10)\)</span>, <span class="math inline">\((12,6,6)\)</span>, <span class="math inline">\((12,6,12)\)</span>, <span class="math inline">\((16,7,7)\)</span>, and on the mirror window <span class="math inline">\([-2g, 3]\)</span> at <span class="math inline">\(g = 4, 5, 6\)</span>. (On <span class="math inline">\((12,10,15)\)</span> two models were found and the third query was stopped by the 300 s cap.) Tori with the same <span class="math inline">\(g\)</span>, square or not, give <strong>the same two sets in label coordinates</strong>.</p></li>
+<li><p><strong>The sheet, exactly (computed on the saved models, <span class="math inline">\(g = 3\)</span> to <span class="math inline">\(7\)</span>).</strong> On every grid of the window the type-<span class="math inline">\(x\)</span> set is a union of whole cells, one cell in each class of <span class="math inline">\(s\)</span> (a <em>graph</em> over the chains of <span class="math inline">\(\{2,3\}\)</span>; on the mirror window, over those of <span class="math inline">\(\{0,1\}\)</span>), so each grid has <span class="math inline">\(2bc/g\)</span> vertices of type <span class="math inline">\(x\)</span> on both sublattices. On the A-grids <span class="math inline">\(x = 6, 8, \dots, 2g+2\)</span> (<span class="math inline">\(v\)</span> at <span class="math inline">\(x = 0\)</span>) it is given by one formula, modulo <span class="math inline">\(4g\)</span>:</p>
+<ul>
+<li>orientation <span class="math inline">\(+\)</span>: <span class="math inline">\(D(s) = x\)</span> for every class, except <span class="math inline">\(D(x-4) = 8 - x\)</span> and <span class="math inline">\(D(4-x) = 4-x\)</span>;</li>
+<li>orientation <span class="math inline">\(-\)</span>: the image under <span class="math inline">\((y,z) \mapsto (-y,-z)\)</span>: <span class="math inline">\(D(s) = -x\)</span>, except <span class="math inline">\(D(4-x) = x - 8\)</span> and <span class="math inline">\(D(x-4) = x - 4\)</span>.</li>
+</ul>
+<p>Each of the 26 saved models fits exactly one orientation on every one of these grids and the other on none (<code>h569_formula.py</code>; <span class="math inline">\(g = 3\)</span>: 2 grids, <span class="math inline">\(g = 7\)</span>: 6 grids). In words: a <strong>sheet</strong> on the plane <span class="math inline">\(d_2 \cdot p = 0\)</span> (orientation <span class="math inline">\(+\)</span>) or <span class="math inline">\(d_3 \cdot p = 0\)</span> (orientation <span class="math inline">\(-\)</span>) through the rod <span class="math inline">\(v\)</span>, advancing one chain label per cube, and <strong>two defects</strong>, each one cell per grid, riding on a chain of axis <span class="math inline">\(y\)</span> (step <span class="math inline">\((2,0,2)\)</span>, at <span class="math inline">\(y \equiv 2 \bmod 2g\)</span>) and a chain of axis <span class="math inline">\(z\)</span> (step <span class="math inline">\((2,-2,0)\)</span>, at <span class="math inline">\(z \equiv 0 \bmod 2g\)</span>), each moving one label per two grids relative to the sheet. The drift is along one of the bond directions, as the brief guessed, but the sense is <strong>not</strong> forced: the two models are the two senses. Near the cage (<span class="math inline">\(x \le 4\)</span>) the pattern is different and is the same in both models on the grids <span class="math inline">\(x = -1, 0, 1\)</span>.</p></li>
+<li><p><strong>Why <span class="math inline">\(2g\)</span> (conjecture, from item 2).</strong> In orientation <span class="math inline">\(+\)</span> the second defect lies on a cell of the sheet exactly when <span class="math inline">\(2x \equiv 4 \pmod{4g}\)</span>, that is at <span class="math inline">\(x = 2\)</span> (the cell of the methylene <span class="math inline">\(O + 2e_y\)</span> of the cage) and next at <span class="math inline">\(x = 2g + 2\)</span>, the last A-grid of the window; the two defects meet each other at <span class="math inline">\(x = 4\)</span> and next at <span class="math inline">\(x = 2g+4\)</span>. The window that is one grid longer is UNSAT. The obstruction is therefore that the configuration of sheet and defects returns, after one circuit of the label circle <span class="math inline">\(\mathbb{Z}_g\)</span>, to the relative position it had at the cage, where the cage supported it. This is the linear reach, with the constant read off.</p></li>
+<li><p><strong>Every target has reach <span class="math inline">\(2g \pm 1\)</span> (solver, <span class="math inline">\(g = 3, 4, 5, 6\)</span>).</strong> For each vertex <span class="math inline">\(b\)</span> of grid <span class="math inline">\(-1\)</span> separately, the least <span class="math inline">\(q\)</span> such that <span class="math inline">\([-3, q]\)</span> forces <span class="math inline">\(b\)</span> not of type <span class="math inline">\(x\)</span> lies in <span class="math inline">\(\{2g-1, 2g, 2g+1\}\)</span> (<span class="math inline">\(\{5,6,7\}\)</span>, <span class="math inline">\(\{7,8,9\}\)</span>, <span class="math inline">\(\{9,10,11\}\)</span>, <span class="math inline">\(\{11,12,13\}\)</span>). The targets of reach <span class="math inline">\(2g+1\)</span> are exactly the type-<span class="math inline">\(x\)</span> vertices of grid <span class="math inline">\(-1\)</span> in the two rigid models. The “near” and the “far” targets are not distinguished: the reach is global in the transverse plane.</p></li>
+<li><p><strong>The rigid sheet is special to the one-sided corner (solver).</strong> One grid short for a fixed target, or at the symmetric corner <span class="math inline">\([-(2g-2), 2g-3]\)</span>, the models are not rigid and not graphs: e.g. <span class="math inline">\((12,5,5)\)</span>, <span class="math inline">\([-3,8]\)</span>, target <span class="math inline">\((1,-3)\)</span>: 20 distinct models, 28 of 50 type <span class="math inline">\(x\)</span> on A-grids and 18 on B-grids (backbone: 8 free per grid); at <span class="math inline">\([-8,7]\)</span> some models are the sheet and some have 11 per grid concentrated on two classes of <span class="math inline">\(s\)</span> and two of <span class="math inline">\(d\)</span>. So the sheet is the shape of the extreme near-miss, not the shape of every solution of the negation.</p></li>
+<li><p><strong>The open-torus form of (V′) does not remove <span class="math inline">\(g\)</span> (solver, 24 cylinders; the most important negative result).</strong> Cut the transverse torus along one axis (remove every hexagon with a vertex on the grid <span class="math inline">\(y = -2b\)</span>, or <span class="math inline">\(z = -2c\)</span>) and take the window <span class="math inline">\([-20, 20]\)</span> on <span class="math inline">\(a = 12\)</span>. Then (i) the targets at distance 1 from the cut are never excluded (the negation lives at the cut, as the note says); (ii) <strong>if the circle left closed is not longer than the one cut, every other target is excluded; if it is longer, no target at all is excluded</strong>, whatever <span class="math inline">\(g\)</span>: e.g. <span class="math inline">\((12,4,8)\)</span> cut <span class="math inline">\(z\)</span> (closed circle 16): 54 of 62 excluded; cut <span class="math inline">\(y\)</span> (closed circle 32): 0 of 62; the same dichotomy on <span class="math inline">\((12,4,6)\)</span>, <span class="math inline">\((12,3,6)\)</span>, <span class="math inline">\((12,5,10)\)</span> with <span class="math inline">\(g = 2, 3, 5\)</span> and on <span class="math inline">\((12,4,5)\)</span>, <span class="math inline">\((12,5,4)\)</span> with <span class="math inline">\(g = 1\)</span>. (iii) On a cylinder whose closed circle is <span class="math inline">\(4b\)</span>, the reach below the cage (upper side 4) is <span class="math inline">\(2b + 1\)</span> for <span class="math inline">\(b = 4, 5, 6\)</span> (<span class="math inline">\(2b-1\)</span> at <span class="math inline">\(b = 3\)</span>), <strong>independent of <span class="math inline">\(g\)</span></strong>: <span class="math inline">\((20,6,8)\)</span> has <span class="math inline">\(g = 2\)</span> and reach 13, where the torus <span class="math inline">\((6,8)\)</span> has reach 3. (iv) Cutting both transverse circles makes the negation satisfiable (ucore §4, not re-run). So the quantity that sets the reach is the number <span class="math inline">\(G\)</span> of chain labels of the transverse surface: <span class="math inline">\(G = g\)</span> on the torus, <span class="math inline">\(G = b\)</span> on the cylinder closed in <span class="math inline">\(y\)</span>, <span class="math inline">\(G = \infty\)</span> on the plane where (V′) is false. There is no formulation of (V′) “with the transverse torus open so that <span class="math inline">\(g\)</span> plays no part”: opening it either makes the statement false or replaces <span class="math inline">\(g\)</span> by a larger label count.</p></li>
+<li><p><strong>Phase 2 and Phase 3: not achieved.</strong> No invariant with properties (a) to (c) of the brief was found, and no proof of the closure step is offered. §4 says what is missing.</p></li>
+</ol>
+<h2 id="observations-of-phase-1-with-the-data">2. Observations of Phase 1, with the data</h2>
+<h3 id="rigidity-h561_nearmiss.py-cell-3-2g---k-6">2.1 Rigidity (<code>h561_nearmiss.py CELL 3 2g --k 6</code>)</h3>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th><span class="math inline">\(g\)</span></th>
+<th>window</th>
+<th>models before UNSAT</th>
+<th>control <span class="math inline">\([-3, 2g+1]\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(12,3,3)</td>
+<td>3</td>
+<td>[−3,6]</td>
+<td>2</td>
+<td>UNSAT</td>
+</tr>
+<tr>
+<td>(12,3,6), (12,6,9)</td>
+<td>3</td>
+<td>[−3,6]</td>
+<td>2, 2</td>
+<td>—</td>
+</tr>
+<tr>
+<td>(12,4,4), (12,4,8), (16,8,12)</td>
+<td>4</td>
+<td>[−3,8]</td>
+<td>2, 2, 2</td>
+<td>—</td>
+</tr>
+<tr>
+<td>(12,5,5), (12,5,10)</td>
+<td>5</td>
+<td>[−3,10]</td>
+<td>2, 2</td>
+<td>(12,5,5): UNSAT</td>
+</tr>
+<tr>
+<td>(12,10,15)</td>
+<td>5</td>
+<td>[−3,10]</td>
+<td>≥ 2 (third query capped at 300 s)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>(12,6,6), (12,6,12)</td>
+<td>6</td>
+<td>[−3,12]</td>
+<td>2, 2</td>
+<td>(12,6,12): UNSAT</td>
+</tr>
+<tr>
+<td>(16,7,7)</td>
+<td>7</td>
+<td>[−3,14]</td>
+<td>2</td>
+<td>UNSAT</td>
+</tr>
+<tr>
+<td>(12,g,g), g = 4, 5, 6</td>
+<td></td>
+<td>mirror [−2g,3]</td>
+<td>2 each</td>
+<td>(12,5,5) [−11,3]: UNSAT</td>
+</tr>
+</tbody>
+</table>
+<p>“Models” count distinct type-<span class="math inline">\(x\)</span> sets on the grids of the window (blocking clause on the type-<span class="math inline">\(x\)</span> literals of the window). The type-<span class="math inline">\(y\)</span>/<span class="math inline">\(z\)</span> split may vary. The pattern alone is SAT in every case (it is the first query of each run).</p>
+<h3 id="the-label-tables-h563_cells.py-h565_defects.py">2.2 The label tables (<code>h563_cells.py</code>, <code>h565_defects.py</code>)</h3>
+<p>Each grid row lists <span class="math inline">\(D(s)\)</span> for the classes of <span class="math inline">\(s\)</span> in increasing order; e.g. <span class="math inline">\((12,6,6)\)</span>, model 0, A-grids <span class="math inline">\(x = 6, 8, 10, 12, 14\)</span>: <code>2,6,6,6,6,22</code> / <code>8,0,8,8,8,20</code> / <code>10,22,10,10,18,10</code> / <code>12,12,20,12,16,12</code> / <code>14,14,18,14,14,14</code> (classes <span class="math inline">\(s = 2,6,\dots\)</span> or <span class="math inline">\(0,4,\dots\)</span>). <span class="math inline">\((12,6,12)\)</span> gives the identical table; <span class="math inline">\((12,3,3)\)</span> and <span class="math inline">\((12,6,9)\)</span> give identical tables (models in the other order). The B-grid <span class="math inline">\(x+1\)</span> carries the same cells as the A-grid <span class="math inline">\(x\)</span> with the two defects moved by <span class="math inline">\(\pm 2\)</span> in <span class="math inline">\(s\)</span> (read off the tables; not tested by a formula).</p>
+<h3 id="the-ending">2.3 The ending</h3>
+<p>At the far end of the window the sheet does not end: it is present on the last grid, where the second defect sits on a cell of the sheet (item 3 of §1). Beyond the window the grids are unconstrained. In ucore’s model (<span class="math inline">\(L=4\)</span>, <span class="math inline">\([-6,5]\)</span>) the structure “stopped at the gap” in the same way.</p>
+<h3 id="the-cut-h561-...---cut-h564_where.py-h566_backbone.py-h568_cyl.py">2.4 The cut (<code>h561 ... --cut</code>, <code>h564_where.py</code>, <code>h566_backbone.py</code>, <code>h568_cyl.py</code>)</h3>
+<p>With the torus cut and the layers ample the negation has many models (6 of 6 distinct on <span class="math inline">\((12,4,4)\)</span>, <span class="math inline">\((12,5,5)\)</span>), dense on the A-grids (24 to 42 of 50) and nearly empty on the B-grids; the type-<span class="math inline">\(x\)</span> vertices of grid <span class="math inline">\(-1\)</span> (1 or 2 of them, up to 7 with the cut along <span class="math inline">\(z\)</span>) all sit at <span class="math inline">\(y = \pm 9\)</span>, next to the cut at <span class="math inline">\(y = -10\)</span>. Backbone on <span class="math inline">\((12,5,5)\)</span>, cut <span class="math inline">\(y\)</span>, <span class="math inline">\([-20,20]\)</span>: the near target is UNSAT, and with the far target (adjacent to the cut) 40 of the 50 vertices of grid <span class="math inline">\(-1\)</span> are forced not of type <span class="math inline">\(x\)</span>, the 10 free ones being those next to the cut. There is no sheet in these models; the cut absorbs the defect.</p>
+<p>The cylinder survey (window <span class="math inline">\([-20,20]\)</span>, <span class="math inline">\(a = 12\)</span>; “excl.” = targets of grid <span class="math inline">\(-1\)</span> forced not of type <span class="math inline">\(x\)</span>, of all non-bridgehead targets; survivors all at distance 1 from the cut when excl. &gt; 0):</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th><span class="math inline">\(g\)</span></th>
+<th>cut</th>
+<th>closed circle</th>
+<th>excl.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(12,4,4)</td>
+<td>4</td>
+<td>y / z</td>
+<td>16</td>
+<td>22/30, 22/30</td>
+</tr>
+<tr>
+<td>(12,5,5)</td>
+<td>5</td>
+<td>y / z</td>
+<td>20</td>
+<td>38/48, 38/48</td>
+</tr>
+<tr>
+<td>(12,6,6)</td>
+<td>6</td>
+<td>y / z</td>
+<td>24</td>
+<td>58/70, 58/70</td>
+</tr>
+<tr>
+<td>(12,4,8)</td>
+<td>4</td>
+<td>y</td>
+<td>32</td>
+<td><strong>0/62</strong></td>
+</tr>
+<tr>
+<td>(12,4,8)</td>
+<td>4</td>
+<td>z</td>
+<td>16</td>
+<td>54/62</td>
+</tr>
+<tr>
+<td>(12,8,4)</td>
+<td>4</td>
+<td>y / z</td>
+<td>16 / 32</td>
+<td>54/62, <strong>0/62</strong></td>
+</tr>
+<tr>
+<td>(12,4,6)</td>
+<td>2</td>
+<td>y / z</td>
+<td>24 / 16</td>
+<td><strong>0/46</strong>, 38/46</td>
+</tr>
+<tr>
+<td>(12,5,10)</td>
+<td>5</td>
+<td>y / z</td>
+<td>40 / 20</td>
+<td><strong>0/98</strong>, 88/98</td>
+</tr>
+<tr>
+<td>(12,3,6)</td>
+<td>3</td>
+<td>y / z</td>
+<td>24 / 12</td>
+<td><strong>0/34</strong>, 28/34</td>
+</tr>
+<tr>
+<td>(12,4,5)</td>
+<td>1</td>
+<td>y / z</td>
+<td>20 / 16</td>
+<td><strong>0/38</strong>, 30/38</td>
+</tr>
+<tr>
+<td>(12,5,4)</td>
+<td>1</td>
+<td>y / z</td>
+<td>16 / 20</td>
+<td>32/38 (two at distance 1 also excluded), <strong>0/38</strong></td>
+</tr>
+</tbody>
+</table>
+<p>On <span class="math inline">\((20,4,8)\)</span> cut <span class="math inline">\(y\)</span> the result 0/62 persists with <span class="math inline">\([-36,36]\)</span> (solver). Reach below the cage with the upper side 4 (<code>h567_reach.py 20,b,c 4 36 --cut z -2c --mirror</code>, closed circle <span class="math inline">\(4b\)</span>): <span class="math inline">\(b = 4\)</span>: 9 on <span class="math inline">\(c = 5, 6, 8, 12\)</span>; <span class="math inline">\(b = 5\)</span>, <span class="math inline">\(c = 10\)</span>: 11; <span class="math inline">\(b = 3\)</span>, <span class="math inline">\(c = 6\)</span>: 5; <span class="math inline">\(b = 6\)</span>, <span class="math inline">\(c = 8\)</span> (<span class="math inline">\(g = 2\)</span>): 13. On the square cylinders <span class="math inline">\((20,4,4)\)</span> and <span class="math inline">\((20,6,6)\)</span> the upper side 4 is not enough (6 of 30 and 10 of 70 excluded up to 36 below), while <span class="math inline">\([-20,20]\)</span> excludes all but the edge; I did not locate their corner.</p>
+<h3 id="verdict-of-phase-1">2.5 Verdict of Phase 1</h3>
+<p>There is a common structure at the extreme near-miss, and it is literally the same object at every <span class="math inline">\(g\)</span> from 3 to 7, square and not, described by one formula in the chain labels modulo <span class="math inline">\(4g\)</span>. The brief’s reading (a plane normal to a bond direction, drifting at a fixed rate round a label circle of circumference proportional to <span class="math inline">\(g\)</span>) is confirmed, with two additions: the sheet carries two defects on chains of axes <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span>, and the sense of the drift is not forced. In the second kind of near-miss (cut torus) there is no sheet, and the survey shows why the route’s first step cannot be taken as stated: with the torus open, <span class="math inline">\(g\)</span> is replaced by the label count of what is left, or the statement fails. The route is not closed by Phase 1, but its formulation must change: the closure step has to be stated on the closed label circle, not on an open torus.</p>
+<h2 id="the-invariant-and-the-proof-what-was-tried">3. The invariant and the proof: what was tried</h2>
+<p>The candidate suggested by §1 item 2 is the <strong>label phase</strong>: on each grid, the type-<span class="math inline">\(x\)</span> set as a map <span class="math inline">\(D : \mathbb{Z}_g \to \mathbb{Z}_g\)</span> from the chains of <span class="math inline">\(\{2,3\}\)</span> to those of <span class="math inline">\(\{0,1\}\)</span>. In the rigid models <span class="math inline">\(\sum_s D(s) \equiv (g - 4)x + 12 \pmod{4g}\)</span> on the A-grids (orientation <span class="math inline">\(+\)</span>; computed from the formula), i.e. the phase advances by a fixed amount per grid, which is (b) of the brief. (c) holds in the sense that the grids <span class="math inline">\(x = -1, 0, 1\)</span> are the same in both models. But (a) fails: the graph property is not a consequence of (T2), of C and <span class="math inline">\(P^k\)</span>, or of (C), for solutions of the negation in general. §1 item 5: one grid short for a fixed target, or at the symmetric corner, the type-<span class="math inline">\(x\)</span> set of a grid is not a union of cells, its count is not <span class="math inline">\(2bc/g\)</span> (28 and 18 of 50), and the models are many. The phase is defined only on the extreme solutions, so it cannot be the quantity that a proof carries from the cage to the far end. I found no quantity defined on all solutions of the negation, on a bounded set of grids, that reduces to this phase on the rigid ones.</p>
+<p>Where integrality would enter, if the phase were available: the graph property itself (each chain of <span class="math inline">\(\{2,3\}\)</span> meets the type-<span class="math inline">\(x\)</span> set of a grid in exactly one cell) is a 0/1 statement of the kind of Lemmas 8 and 9, a function of two chain labels with values 0 and 1 that is forced to be a graph. The linear relaxation cannot see it (the LP of the note, item 3, is feasible). I did not find a derivation of it.</p>
+<p>The only per-grid quantity that is conserved in every solution is linear and known: summing <span class="math inline">\(P^x\)</span> over a plane of holes gives <span class="math inline">\(n_A(x+2) - n_A(x-2) = 2(n_B(x+1) - n_B(x-1))\)</span> and the mirror, where <span class="math inline">\(n_S\)</span> counts type <span class="math inline">\(x\)</span> on a grid; on a slab of bounded counts this makes the counts constant on each sublattice. It is linear, holds equally in the rigid (10/10 at <span class="math inline">\(g=5\)</span>) and dense (28/18) models, and cannot distinguish them.</p>
+<h2 id="what-is-missing-phase-2-and-phase-3">4. What is missing (Phase 2 and Phase 3)</h2>
+<ol type="1">
+<li><strong>A statement on the closed label circle, not on the open torus.</strong> §1 item 6 shows that any uniform statement must refer to the chain labels of the transverse surface: on the plane the negation is satisfiable, on a cylinder the reach is <span class="math inline">\(2b + 1\)</span> in the closed half-length <span class="math inline">\(b\)</span> whatever <span class="math inline">\(g\)</span>. What is wanted is: <em>in a solution of the negation on the slab <span class="math inline">\([-3, q]\)</span> over the closed torus, some <span class="math inline">\(\mathbb{Z}_g\)</span>-valued (or <span class="math inline">\(\mathbb{Z}_{4g}\)</span>-valued) phase is defined on every grid from the cage onwards, is pinned at the cage, and advances by one label per two grids.</em> Closure after one circuit (<span class="math inline">\(q = 2g+1\)</span>) would then be a counting step.</li>
+<li><strong>The obstacle to 1.</strong> The phase is visible only in the extreme solutions (§3). For every shorter window the solutions of the negation are dense and not organised by chain labels, so the phase would have to be extracted as an invariant of a general solution (for instance an average over the cells of a grid, a winding number of the type-<span class="math inline">\(x\)</span> set round the label torus, or a first moment of the counts per chain), and I did not find one that is (i) defined on all solutions, (ii) moved by exactly one label per two grids, (iii) not a linear combination of laws. Requirement (iii) is forced by the LP result; any such invariant must use 0/1 somewhere.</li>
+<li><strong>Tests one could run next</strong> (not run): compute, for each grid of dense near-miss models, the number of type-<span class="math inline">\(x\)</span> vertices on each chain of each family and each cell, and look for a moment (e.g. <span class="math inline">\(\sum_\sigma \omega^{\sigma} n(\sigma)\)</span> with <span class="math inline">\(\omega\)</span> a <span class="math inline">\(g\)</span>-th root of unity, a Fourier coefficient of the chain counts on <span class="math inline">\(\mathbb{Z}_g\)</span>) whose argument advances by <span class="math inline">\(2\pi/g\)</span> per two grids in all models; if one exists it is the candidate for (ii), and its modulus would have to be bounded below by an integrality argument. The characters of Lemma 11 at which three families are supported are exactly the functions of <span class="math inline">\(d_l \cdot p\)</span>, and the sheet lies on <span class="math inline">\(d_2 \cdot p = 0\)</span>; this is the place I would look.</li>
+</ol>
+<p>No lemma of a proof is claimed, so none was tested as Phase 3 asks.</p>
+<h2 id="what-failed-and-why">5. What failed and why</h2>
+<ul>
+<li>Reading the sheet off one model per setting: models of the negation at non-extreme windows are numerous and dense; only the one-sided extreme is rigid. Restricting to it gave the clean result, but that restriction is also why no invariant of general solutions came out of it.</li>
+<li>The cut as a way to remove <span class="math inline">\(g\)</span> (§1 item 6).</li>
+<li>Two interpretations I checked and dropped: that ucore’s sheet on <span class="math inline">\(y + z\)</span> and this one on <span class="math inline">\(y - z\)</span> differ (they are the same up to the choice of bridgeheads, which swaps the two x-families), and that the defects are errors of the solver (they are in both models and in every cell).</li>
+</ul>
+<h2 id="rules">6. Rules</h2>
+<ul>
+<li><strong>One solver process at a time: broken briefly.</strong> A background survey (<code>h567_reach.py</code> on eight cylinders, one solver each) was still running when I started the near-miss runs on <span class="math inline">\((20,6,8)\)</span>, <span class="math inline">\((20,4,8)\)</span> and the <span class="math inline">\(g = 7\)</span> batch; for about two minutes two solver processes ran together. All were small (the largest single solve 29 s, apart from one capped at 300 s). No other rule was broken to my knowledge. One shell heredoc (empty, a no-op) was issued by mistake and did nothing.</li>
+<li>All UNSAT verdicts above have SAT controls on the same clause set (the pattern alone, or the earlier models of the same run).</li>
+</ul>
+<h2 id="commands-run">7. Commands run</h2>
+<p>From the repository root with <code>PYTHONPATH=&lt;repo&gt;:&lt;repo&gt;/experiments/08_frozen_structure:&lt;scratch_h&gt;</code> and <code>TMPDIR=&lt;repo&gt;/.tmp</code>; scripts in <code>scratch_h/</code>.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>command</th>
+<th>wall</th>
+<th>verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h561_nearmiss.py 12,4,4 3 8 --k 1</code></td>
+<td>0.4 s</td>
+<td>SAT; 8 of 32 type <span class="math inline">\(x\)</span> per grid</td>
+</tr>
+<tr>
+<td><code>h561 12,5,5 3 11</code> / <code>3 10 --k 6</code></td>
+<td>&lt; 1 s</td>
+<td>UNSAT / 2 models</td>
+</tr>
+<tr>
+<td><code>h561</code> on (12,3,3), (12,3,6), (12,6,9), (12,4,4), (12,4,8), (12,5,5), (12,5,10), (12,6,6), (12,6,12), window <span class="math inline">\([-3,2g]\)</span>, <code>--k 6</code></td>
+<td>0.2–8 s each</td>
+<td>2 models each, third UNSAT</td>
+</tr>
+<tr>
+<td><code>h561 12,3,3 3 7</code>, <code>12,6,12 3 13</code></td>
+<td>&lt; 6 s</td>
+<td>UNSAT</td>
+</tr>
+<tr>
+<td><code>h561 16,7,7 3 14</code> / <code>3 15</code></td>
+<td>7 s / 10 s</td>
+<td>2 models / UNSAT</td>
+</tr>
+<tr>
+<td><code>h561 16,8,12 3 8</code></td>
+<td>35 s</td>
+<td>2 models</td>
+</tr>
+<tr>
+<td><code>h561 12,10,15 3 10</code></td>
+<td>300 s CAPPED</td>
+<td>2 models, third query capped</td>
+</tr>
+<tr>
+<td><code>h561 12,g,g 2g 3</code> (g = 4, 5, 6); <code>12,5,5 11 3</code></td>
+<td>&lt; 3 s</td>
+<td>2 models each / UNSAT</td>
+</tr>
+<tr>
+<td><code>h561 12,g,g (2g-2) (2g-3)</code> (g = 4, 5, 6); <code>12,5,5 8 8</code></td>
+<td>&lt; 1 s</td>
+<td>≥ 8 models / UNSAT</td>
+</tr>
+<tr>
+<td><code>h561 12,5,5 3 8 --target 1,-3 --k 20</code></td>
+<td>&lt; 1 s</td>
+<td>20 models, dense</td>
+</tr>
+<tr>
+<td><code>h561 ... 20 20 --cut y/z</code> on (12,4,4), (12,5,5)</td>
+<td>&lt; 1 s</td>
+<td>6 models each, type <span class="math inline">\(x\)</span> at the cut</td>
+</tr>
+<tr>
+<td><code>h561 20,6,8 12 4 --cut z -16</code>, <code>13 4</code>, <code>20,4,8 8 4 --cut z -16</code></td>
+<td>&lt; 1 s</td>
+<td>SAT (the negation sits at the cut)</td>
+</tr>
+<tr>
+<td><code>h563_cells.py</code>, <code>h565_defects.py</code>, <code>h569_formula.py</code> on the saved models</td>
+<td>&lt; 5 s</td>
+<td>computed; §1 items 1–2</td>
+</tr>
+<tr>
+<td><code>h566_backbone.py 12,5,5 3 q near</code> q = 4, 6, 8, 10</td>
+<td>&lt; 1 s each</td>
+<td>complete / UNSAT at 10</td>
+</tr>
+<tr>
+<td><code>h566_backbone.py 12,5,5 20 20 near/far/any --cut y -10</code></td>
+<td>&lt; 1 s</td>
+<td>UNSAT / complete / complete</td>
+</tr>
+<tr>
+<td><code>h567_reach.py 12,g,g 3 16</code> g = 3, 4, 5, 6</td>
+<td>7 s – 1 min</td>
+<td>reaches in <span class="math inline">\(\{2g-1, 2g, 2g+1\}\)</span></td>
+</tr>
+<tr>
+<td><code>h567_reach.py 12,5,5 ... --cut y -10</code> (4 variants)</td>
+<td>&lt; 20 s each</td>
+<td>§2.4</td>
+</tr>
+<tr>
+<td><code>h567_reach.py 12,4,8 3 22 --cut ... --mirror</code> (5 cuts)</td>
+<td>&lt; 30 s each</td>
+<td>§2.4</td>
+</tr>
+<tr>
+<td><code>h567_reach.py 20,4,8 3 36 --cut z/y --mirror</code>, <code>36 36 --cut y</code>, <code>36 12 --cut z</code></td>
+<td>20 s – 2 min</td>
+<td>§2.4</td>
+</tr>
+<tr>
+<td><code>h567_reach.py 20,b,c 4 36 --cut z -2c --mirror</code>, 9 cells</td>
+<td>≈ 4 min total</td>
+<td>§2.4</td>
+</tr>
+<tr>
+<td><code>h568_cyl.py CELL y/z 20</code>, 12 cells × 2</td>
+<td>0.3–5 s each</td>
+<td>table of §2.4</td>
+</tr>
+</tbody>
+</table>
+</main>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>(RP) at distance 2 proved modulo three sign laws — Lemma O (every hole of an odd state oriented, ⟸ Theorem U), (R⁺) and the gap ≥ 1 line-sign law, the</title>
+<meta name="description" content="(RP) at distance 2 proved modulo three sign laws — Lemma O (every hole of an odd state oriented, ⟸ Theorem U), (R⁺) and the gap ≥ 1 line-sign law, the last two laws of every frozen state — through a new global identity: at an oriented hole the moment field obeys the cage law Pᵏ, ">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "(RP) at distance 2 proved modulo three sign laws — Lemma O (every hole of an odd state oriented, ⟸ Theorem U), (R⁺) and the gap ≥ 1 line-sign law, the last two laws of every frozen state — through a new global identity: at an oriented hole the moment field obeys the cage law Pᵏ, so signed line counts are separable, and with the line-sign law the + and − counts of a two-signed sublattice depend on one transverse coordinate (stripes). Walls between stripes are k-free planes at which (E′) holds automatically, so Theorem D applies without (E′) as a hypothesis. The same argument gives every two-way axis a uniform chain, hence H ⇐ K_u + Lemma O + (R⁺) + (S≥1). The type-only part of (RP) (pattern ⇒ k-free plane) holds without oddness (solver) and is LP-positive; 'three types' enters only in Theorem D(iii)",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-27-opus-rphand.html",
+ "datePublished": "2026-09-27",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus), agent rphand, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-27-opus-rphand.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/thm-1-first-form.html">thm-1-first-form</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">(RP) at distance 2 proved modulo three sign laws — Lemma O (every hole of an odd state oriented, ⟸ Theorem U), (R⁺) and the gap ≥ 1 line-sign law, the last two laws of every frozen state — through a new global identity: at an oriented hole the moment field obeys the cage law Pᵏ, so signed line counts are separable, and with the line-sign law the + and − counts of a two-signed sublattice depend on one transverse coordinate (stripes). Walls between stripes are k-free planes at which (E′) holds automatically, so Theorem D applies without (E′) as a hypothesis. The same argument gives every two-way axis a uniform chain, hence H ⇐ K_u + Lemma O + (R⁺) + (S≥1). The type-only part of (RP) (pattern ⇒ k-free plane) holds without oddness (solver) and is LP-positive; ‘three types’ enters only in Theorem D(iii)</h1>
+
+<p class="author">Claude (Opus), agent rphand, for Lyndon Drake</p>
+<p class="date">2026-09-27</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#status-table" id="toc-status-table">0. Status table</a></li>
+<li><a href="#local-lemmas-type-only-proved" id="toc-local-lemmas-type-only-proved">1. Local lemmas (type-only, proved)</a></li>
+<li><a href="#the-new-global-identity-pᵏ-for-the-moment-field-proved" id="toc-the-new-global-identity-pᵏ-for-the-moment-field-proved">2. The new global identity: Pᵏ for the moment field (proved)</a></li>
+<li><a href="#rp-at-distance-2" id="toc-rp-at-distance-2">3. (RP) at distance 2</a></li>
+<li><a href="#every-two-way-axis-carries-a-uniform-chain-h-k_u-lemma-o-r-s1" id="toc-every-two-way-axis-carries-a-uniform-chain-h-k_u-lemma-o-r-s1">4. Every two-way axis carries a uniform chain; H ⇐ K_u + Lemma O + (R⁺) + (S≥1)</a></li>
+<li><a href="#what-holds-in-the-type-only-model-task-f" id="toc-what-holds-in-the-type-only-model-task-f">5. What holds in the type-only model (task (f))</a></li>
+<li><a href="#the-role-of-three-types-task-g" id="toc-the-role-of-three-types-task-g">6. The role of ‘three types’ (task (g))</a></li>
+<li><a href="#independent-checks-on-solver-generated-states" id="toc-independent-checks-on-solver-generated-states">7. Independent checks on solver-generated states</a></li>
+<li><a href="#what-failed-and-why" id="toc-what-failed-and-why">8. What failed, and why</a></li>
+<li><a href="#the-exact-residual" id="toc-the-exact-residual">9. The exact residual</a></li>
+<li><a href="#files" id="toc-files">10. Files</a></li>
+</ul>
+</details></nav>
+<p>Status tags: <strong>proved</strong> (argument written here or in a cited report), <strong>proved (cage check)</strong> (exhaustive enumeration of one cage, the standard of Lemma R), <strong>computed</strong> (whole odd corpus, 637 states at L = 3 and 720 at L = 4, <code>h38_lib.load_odd_corpus</code>, 0 exceptions unless stated), <strong>solver</strong> (type-only model, with the sign field where stated, on the (L,L,L) torus), <strong>conjecture</strong>. Every conditional result names its inputs. All computation on the primary Mac in the project <code>.venv</code>, one process at a time; every solve in a capped child process (h32_cap discipline). No Spark was used. Scripts <code>scratch_h/h240_*.py</code> – <code>h249_*.py</code> (new; several carry more than one mode). No tracked file was edited and nothing was committed.</p>
+<p><strong>Canonical frame used throughout</strong> (every reversing pair is carried to it by a lattice symmetry, <code>h240</code>): m = (0,0,0) ∈ A of type x (= l), u = m + d₀ = (1,1,1) and v = m + d₃ = (−1,−1,1) ∈ B of type z (= k); the third axis is j = y. O = (0,0,2) is the A-hole between m and m + 4e_z; its bridgeheads are u, v (s_z = −1) and u′ = (1,−1,3), v′ = (−1,1,3) (s_z = +1); its methylenes are m, (0,0,4), (±2,0,2), (0,±2,2). The x↔︎y swap fixes u, v, so τ(m) = x is no loss.</p>
+<p><em>Corrections (2026-09-27, after the independent check <code>2026-09-27-opus-check.md</code>; verdict: confirmed, no gap).</em> (i) In the Corollary of §4 delete ‘If a type is absent, Lemma A’: an absent type is an empty axis, so the case falls under ‘one-way or empty’; the Lemma A of record is a different statement. (ii) Lemma R proves the first two members of (R⁺) (the pairs inside one cage); read §9’s ‘k-separation ≤ 3’ in that sense. (iii) ‘K_u (certified)’ carries the scope recorded for it: modulo Lemma L, cells with a ≥ 3 and b, c ≥ 4 by window certificates, the small honest cells by torus verdicts. (iv) Case 2 of Theorem W is correct but never occurs on the corpus or in the solver at L = 3, 4.</p>
+<h2 id="status-table">0. Status table</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>statement</th>
+<th>status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Lemma T</strong> (transfer): (0,0,4) is not type k and u′, v′ are type k; (u′, v′) is a reversing pair at (0,0,4)</td>
+<td><strong>proved</strong> (Pᵏ at O)</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Lemma St</strong>: the hole O is straight, along x = τ(m) or along the third axis y</td>
+<td><strong>proved</strong> ((T2) + law C)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>sign pattern: straight-x ⇒ ε(u) = ε(v′) = −ε(v) = −ε(u′); straight-y ⇒ ε(u) = ε(u′) = −ε(v) = −ε(v′)</td>
+<td><strong>proved</strong> (bond rule)</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Lemma sP</strong>: at every <em>oriented</em> hole the moment field n_k = ε[τ = k] satisfies Pᵏ; it fails (for all three axes) exactly at the 96 unoriented (yy/zz) cage patterns</td>
+<td><strong>proved (cage check)</strong>, <code>h249 cage</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Theorem sLC</strong>: if every hole is oriented, the signed k-line counts are separable, s^S_k = F̃(x_i) + G̃(x_j)</td>
+<td><strong>proved</strong> from 4; computed 0/413 k mixed differences</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Two-product lemma</strong>: P, Q ≥ 0 separable with PQ ≡ 0, neither ≡ 0 ⇒ both depend on the same single coordinate</td>
+<td><strong>proved</strong></td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Stripe theorem</strong>: in an odd state (Lemma O, (S)), a sublattice carrying type-k vertices of both signs has its (#+, #−) per k-line a function of one transverse coordinate</td>
+<td><strong>proved</strong> mod Lemma O, (S); computed 1565 + 1972 instances</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>Lemma E</strong> (sign-separated plane): at a k-free plane whose neighbours are uniformly signed with opposite signs (or one neighbour k-free), (E′) holds at every hole</td>
+<td><strong>proved</strong> mod Lemma O at its holes; computed 2469 + 3743 walls</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>(c) for the reversing pair</strong>: the m-plane with normal y (O straight-x) or x (O straight-y) is k-free</td>
+<td><strong>proved</strong> mod Lemma O, (S), (R⁺); computed 10 552 + 20 552</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>(b)</strong>: the k-line through m is k-free</td>
+<td><strong>proved</strong> from (R⁺) alone (and a corollary of 9); type-only: <strong>solver</strong> L = 5 without oddness, cores grow (4, 8, 28 hexagons at distance 4, 8, 12)</td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>(RP), d = 1</strong>: u and v lie on uniform chains, of axis y (straight-x) or x (straight-y)</td>
+<td><strong>proved mod Lemma O, (R⁺), (S≥1)</strong> (+ Theorem D, proved); computed 10 552 + 20 552</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>Walls</strong>: every two-way axis of an odd three-type state has a sign-separated wall, and every type-k vertex beside it lies on a uniform chain</td>
+<td><strong>proved</strong> mod the same three laws; computed 543 + 727 axes, Theorem D’s conclusion 2678 + 4214 planes</td>
+</tr>
+<tr>
+<td>13</td>
+<td><strong>H ⇐ K_u + Lemma O + (R⁺) + (S≥1)</strong></td>
+<td><strong>proved</strong> (reduction)</td>
+</tr>
+<tr>
+<td>14</td>
+<td>(S≥1): two type-k vertices of a k-line with ≥ 1 non-k vertex between them and none of type k share a sign, in <strong>every</strong> frozen state</td>
+<td><strong>solver</strong> (type-only + signs, no oddness): gaps 1, 2 at L = 4, gaps 1, 2, 3 at L = 5; gap 0 needs oddness (UNSAT only with an odd hexagon) — it is Lemma O</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>W_r (type-only)</strong>: τ(2,0,2) = x, τ(u) = τ(u′) = z ⇒ the A-plane y = 0 is z-free</td>
+<td><strong>solver</strong> L = 3, 4, 5, no oddness, no three types; LP relaxation positive (6, 16): needs integrality; cores global</td>
+</tr>
+<tr>
+<td>16</td>
+<td>type-only decomposition of (RP): pattern ⇒ plane is type-only; plane ⇒ uniform chain needs oddness (and three types in the straight-x case)</td>
+<td><strong>solver</strong> L = 3, 4</td>
+</tr>
+<tr>
+<td>17</td>
+<td>(g) ‘three types’ is used once, in Theorem D(iii); in two-type states every failing member lies on a complete type-k B-plane (the excluded alternative of D)</td>
+<td><strong>proved</strong> (location of use); <strong>computed</strong> 14 244 / 14 244 and 31 344 / 31 344</td>
+</tr>
+<tr>
+<td>18</td>
+<td>(d ≥ 2) SS pairs: the stripe theorem applies, but that the member itself borders a wall is not proved</td>
+<td><strong>computed</strong> (h220), open here</td>
+</tr>
+</tbody>
+</table>
+<p>The three inputs of 11–13, with their standing: <strong>Lemma O</strong> (every hole of an odd state has one rod in, one out) — solver (orient report: bond model L = 3; Theorem U, type-only, L = 3, 4, 5), corner case proved by hand, straight case ⟺ Theorem U, hand residue (V). <strong>(R⁺)</strong> — two type-k vertices at transverse offset (±1, ±1) share a sign, any k-separation; solver L = 3, 4, 5 in all frozen states (extremal §9), Lemma R its first two members (cage check). <strong>(S≥1)</strong> — row 14. The line-sign law (S) = Lemma O (gap 0) + (S≥1).</p>
+<h2 id="local-lemmas-type-only-proved">1. Local lemmas (type-only, proved)</h2>
+<p><strong>Lemma T (transfer).</strong> Pᵏ at O reads K(0,0,4) − K(m) = K(u′) + K(v′) − K(u) − K(v), with K = [τ = z]. The left side is K(0,0,4) ∈ {0,1} (m is type x), the right side K(u′) + K(v′) − 2 ≤ 0. Both vanish: (0,0,4) is not type z and u′, v′ are type z. Since u′ = (0,0,4) + d₁ and v′ = (0,0,4) + d₂ lie on the z-grid 3, (u′, v′) is a reversing pair at (0,0,4), its members on the −z side. Applying Lemma T to it returns (u, v): the transfer pairs the two bridgehead pairs of one cage and does not propagate. ∎ (Computed: 10 552 + 20 552.)</p>
+<p><strong>Lemma St (straightness).</strong> By law C, O has two rods; its z-methylenes m, (0,0,4) are not type z, so both rods are among the x-methylenes (±2,0,2) and the y-methylenes (0,±2,2). Suppose O were an (x,y)-corner with rods at σ_x e_x, σ_y e_y. In the hexagon (O, σ), σ = (σ_x, σ_y, σ_xσ_y), the A-vertices a_x, a_y are those rods and a_z is a z-methylene, so N_A = 2; its B-vertex b_z = O + (σ_x, σ_y, −σ_xσ_y) is a bridgehead (all four are type z by Lemma T) of hexagon axis z, so N_B ≥ 1, against (T2). Hence O is straight-x (both (±2,0,2) type x) or straight-y (both (0,±2,2) type y). ∎ (Computed: 8592 + 17 692 straight-x, 1960 + 2860 straight-y; the uniform chain has the third axis y exactly in the straight-x instances and the axis τ(m) = x exactly in the straight-y ones.)</p>
+<p><strong>Sign pattern (bond rule d_{τ(a)}ε(a) = d_{τ(b)}ε(b)).</strong> m → u (d₀): ε(u) = ε(m); m → v (d₃): ε(v) = −ε(m). Straight-x: r = (2,0,2) of type x is bonded to u = r + d₂ and u′ = r + d₃, so ε(u) = ε(r), ε(u′) = −ε(r); r′ = (−2,0,2) is bonded to v = r′ + d₁ and v′ = r′ + d₀, so ε(v) = −ε(r′), ε(v′) = ε(r′). Hence ε(u) = ε(v′) = −ε(u′) = −ε(v): <strong>the bridgeheads with y = +1 carry one sign, those with y = −1 the other.</strong> Straight-y: through (0,2,2) and (0,−2,2) of type y the same computation gives ε(u) = ε(u′) = −ε(v) = −ε(v′): <strong>the split is by x.</strong> ∎ (Computed: patterns (1,−1,−1,1) and (1,−1,1,−1) for (u,v,u′,v′) with ε(u) = +1, all instances.)</p>
+<p><strong>Further forced literals (solver backbone, <code>h241</code>, pattern only, L = 3, 4, 5).</strong> (2,0,−2), (−2,0,−2) ≠ z; (2,2,0), (−2,−2,0) ≠ y; p, q ≠ y (the two-hexagon lemma); (±3,±1,−1) ≠ x, (±1,±3,−1) ≠ y; (0,0,±4), (0,0,±8) ≠ z (at L = 5 the whole k-line of m). With an odd hexagon: (±2,0,2) ≠ y. With odd and three types: w = (2,2,0) is type z (the first step of the uniform chain; not forced without both hypotheses) and exactly one of (0,2,2), (2,0,2) is type z. Each of these is a finite (T2) consequence, several with hexagon cores of 1–8 hexagons (<code>h242</code>); none is used below except through Lemmas T and St.</p>
+<h2 id="the-new-global-identity-pᵏ-for-the-moment-field-proved">2. The new global identity: Pᵏ for the moment field (proved)</h2>
+<p>Write n_k(v) = ε(v)[τ(v) = k], the k-component of the moment.</p>
+<p><strong>Lemma sP.</strong> In every frozen state, at every oriented hole O (one rod pointing toward O, one away) and for every axis k, <span class="math display">\[n_k(O+2e_k) - n_k(O-2e_k) \;=\; \sum_{s}\, s_k\, n_k(O+s)\]</span> (sum over the four bridgeheads, with the sign convention of the type law Pᵏ). At an unoriented hole the identity fails for every k.</p>
+<p><em>Proof (cage check, <code>h249_signedcage.py cage</code>).</em> Enumerate the 3¹⁰ type assignments of the ten cage vertices and keep the 1200 that satisfy (T2) on the cage’s four hexagons (the count of Lemma R; law C and the type law Pᵏ hold in all of them). For each, solve the bond rule on the twelve cage bonds: it is consistent in all 1200 and fixes ε up to a global flip, which changes both sides of the identity and preserves orientation. In the 1104 oriented patterns the identity holds for all three k; the 96 unoriented patterns (all straight, the yy/zz and zz/yy cages of the orient report, 32 per rod axis) violate it for all three k (288 = 96 × 3 violations: along the rod axis the two antiparallel rods, along each other axis two type-k bridgeheads on opposite k-sides with opposite signs). The restriction of a frozen state to a cage is one of the enumerated patterns with its sign solution, so the check is a proof. Identical for A- and B-cages. ∎</p>
+<p>The null space of the corpus data (<code>h249_signedcage.py 3</code>, 356 distinct signed cage rows per sublattice) is one-dimensional and is exactly this identity, the same vector as for the type rows: the moment field satisfies the cage law and nothing else linear on one cage.</p>
+<p><strong>Theorem sLC.</strong> If every hole of the sublattice S′ is oriented, then for every axis k the signed count s^S_k(x_i, x_j) = Σ_{v ∈ S k-line} n_k(v) is F̃(x_i) + G̃(x_j).</p>
+<p><em>Proof.</em> Word for word the proof of Theorem LC (wprime §2), with n_k in place of [τ = k]: summing Lemma sP over an S′-hole k-line telescopes the left side and leaves the vanishing mixed second difference of s^S_k on every unit square. ∎ In an odd state every hole is oriented (Lemma O), so sLC holds on both sublattices. Computed: 0 violations on 137 592 + 276 480 unit squares (<code>h248_signedlc.py</code>).</p>
+<p><strong>Two-product lemma (proved).</strong> Let P(a,b) = p(a) + p′(b) ≥ 0 and Q(a,b) = q(a) + q′(b) ≥ 0 on a product set X × Y, with P·Q ≡ 0 and neither identically zero. Then p and q are both constant, or p′ and q′ are both constant.</p>
+<p><em>Proof.</em> Q ≢ 0 gives a zero of P, so min P = 0 and the zero set of P is the product Z_P = I_P × J_P (I_P = argmin p, J_P = argmin p′); likewise Z_Q = I_Q × J_Q, and PQ ≡ 0 means Z_P ∪ Z_Q = X × Y. If I_P ≠ X and J_P ≠ Y, pick a₀ ∉ I_P, b₀ ∉ J_P: every (a₀, y) lies outside Z_P, so J_Q = Y, and every (x, b₀) likewise, so I_Q = X: Q ≡ 0, a contradiction. So I_P = X or J_P = Y, not both (P ≢ 0). If I_P = X (p constant), every row b ∉ J_P lies outside Z_P, hence in Z_Q, so I_Q = X: q constant. The case J_P = Y is symmetric. ∎</p>
+<p>This is the sheet theorem’s non-linear step (‘a separable 0/1 function has a constant factor’) in the form the signs need: the non-negativity of two separable counts plus the one non-linear constraint PQ = 0.</p>
+<p><strong>Stripe theorem.</strong> Let every hole be oriented and let (S) hold on the S k-lines. If S carries type-k vertices of both signs, there is a transverse axis n ≠ k such that P^S(ℓ) = #(+ type-k on ℓ) and Q^S(ℓ) = #(− type-k on ℓ) depend only on the x_n-coordinate of the S k-line ℓ. So every S-plane {x_n = c} is either k-free or <em>full of one sign</em>: each of its S k-lines carries type-k vertices, all of that sign.</p>
+<p><em>Proof.</em> P = (h + s)/2 and Q = (h − s)/2 are separable by LC and sLC, non-negative, PQ = 0 by (S), neither zero; apply the two-product lemma. ∎ Computed: 1565 + 1972 (state, axis, two-signed sublattice) instances, all striped, none in both directions.</p>
+<p><strong>Lemma E (the sign-separated plane).</strong> Let F be a k-free plane with normal n ≠ k, and let the type-k vertices of each neighbour plane F ± e_n share one sign σ_± (vacuous if that plane is k-free), with σ₊ = −σ₋ when both neighbours carry type k. If the holes of F are oriented (only needed in the two-sided case), (E′) holds at every hole of F.</p>
+<p><em>Proof.</em> At a hole O of F the k-methylenes lie in F and are not type k, so Pᵏ gives T₊ + T₋ = 0 with T_± = Σ_{s: s_n = ±1} s_k K(O+s), and Lemma sP gives σ₊T₊ + σ₋T₋ = 0. If one neighbour is k-free its T vanishes and so does the other; otherwise σ₊ = −σ₋ gives T₊ = T₋ = 0. The two bridgeheads with s_n = +1 have opposite s_k, so T₊ = 0 says they agree in type k, which is (E′); likewise on the other side. ∎</p>
+<p>So (E′), false as a statement about all k-free planes and equivalent to Theorem U′ with companions (attack proposal §2.5), is automatic at a k-free plane that separates opposite signs: its content there is Lemma O at the plane’s holes.</p>
+<h2 id="rp-at-distance-2">3. (RP) at distance 2</h2>
+<p><strong>Theorem RP₁.</strong> Let the state be odd with all three types present, and assume Lemma O, (S≥1) and (R⁺). Let (m; u, v) be a reversing pair on axis k and O the hole between m and m + 4e_k on the side of u, v. Then O is straight along an axis a ∈ {τ(m), j}; with b the other transverse axis, the plane of m’s sublattice through m with normal b is k-free, (E′) holds at each of its holes, and u and v lie on complete b-chains all of whose vertices are type k. b is the third axis j exactly when O is straight along τ(m).</p>
+<p><em>Proof (canonical frame, straight-x; straight-y is the same with x and y exchanged).</em> (S) = Lemma O (gap 0) + (S≥1).</p>
+<ol type="1">
+<li>By Lemmas T, St and the sign pattern, the B z-lines (1,1) and (−1,1) contain type-z vertices of sign ε(u) =: +, and (1,−1), (−1,−1) of sign −.</li>
+<li>B carries both signs on z, so by the stripe theorem (P^B, Q^B) depends only on x or only on y. Only on x is impossible: P^B(1,·) ≥ 1 and Q^B(1,·) ≥ 1 would put both signs on the line (1,1), against (S). So it depends only on y: every B z-line of the plane y = 1 carries type-z vertices, all +, and every B z-line of the plane y = −1 carries type-z vertices, all −.</li>
+<li>An A z-line (a, 0) is diagonally adjacent to the B-lines (a+1, 1) (nonempty, +) and (a+1, −1) (nonempty, −). A type-z vertex on it would have both signs by (R⁺). So the A-plane {y = 0} is z-free. This is step (c); step (b), the k-line (0,0), is its special case (and follows from (R⁺) and the lines of u and v alone).</li>
+<li>Lemma E with F = {y = 0} ∩ A, σ₊ = +, σ₋ = −: (E′) at every hole of F.</li>
+<li>Theorem D (w1prime §4: A-plane c k-free, (E′) at it, odd, three types) with j = y, c = 0: the B-plane y = 1 contains u, so it is not z-free, and the type-z vertices of the slab {1, 2} are complete y-chains of type z. In particular the y-chain of that slab through u, (0,2,2) – u – (2,2,0) – (3,1,−1) – …, is uniform. The mirror (x,y,z) ↦ (x,−y,−z) (a lattice symmetry) gives v on a uniform y-chain of the slab {−1, −2}. ∎</li>
+</ol>
+<p>Computed along the proof (<code>h240_rp_frame.py verify 3|4</code>, all 10 552 + 20 552 canonical instances): Lemma T, straightness, the sign pattern, (S) on the B z-lines, the stripe direction (y for straight-x, x for straight-y), the k-free plane, (E′) at every hole of it, and the uniform chain of the predicted axis: 0 exceptions in each.</p>
+<p><strong>Where ‘odd’ enters:</strong> Lemma O (steps 2, 4) and Theorem D(iii). <strong>Where ‘three types’ enters:</strong> only Theorem D(iii) (§6). (R⁺) and (S≥1) hold in every frozen state.</p>
+<h2 id="every-two-way-axis-carries-a-uniform-chain-h-k_u-lemma-o-r-s1">4. Every two-way axis carries a uniform chain; H ⇐ K_u + Lemma O + (R⁺) + (S≥1)</h2>
+<p><strong>Theorem W (walls).</strong> Let the state be odd with three types, with Lemma O, (R⁺), (S≥1). If axis k is two-way, there are a normal n ≠ k and a k-free plane F with normal n whose neighbour planes are each k-free or uniformly signed, not both k-free and not of one sign. Every type-k vertex of a non-free neighbour of F lies on a uniform chain (axis n).</p>
+<p><em>Proof.</em> Label each plane {x_n = c} (an A-plane for c even, a B-plane for c odd) by the set of signs of its type-k vertices.</p>
+<p><em>Case 1: some sublattice S carries both signs.</em> By the stripe theorem choose n so that every S-plane is k-free or full of one sign; both signs occur. (i) An S′-plane next to a full + S-plane has labels in {0, +}: each of its type-k vertices is diagonally adjacent to nonempty + S-lines, (R⁺). (ii) Every S′-plane has a single label: if S′ is two-signed it is striped, and not along the other transverse axis m (a − stripe along m would put a − line into the S′-plane beside a full + S-plane, against (i)), so along n; if S′ is one-signed it is trivial. Now go round the cyclic sequence of S-planes and take a full + S-plane c₁ followed, after k-free S-planes only, by a full − S-plane c₂. Between them all labels are single; let c* be the last + plane in [c₁, c₂) and c** the first nonzero plane after it, which is −. By (i) and its mirror, c** ≥ c* + 2; take F = c* + 1.</p>
+<p><em>Case 2: A all of sign σ, B all of −σ.</em> By (R⁺) no nonempty A-line is diagonally adjacent to a nonempty B-line. With LC’s product zero sets Z_A = I × J, Z_B = I′ × J′: if I and J were both proper, a full A-column and a full A-row would empty two B-columns and two B-rows and force Z_B = everything, against B ≠ ∅; so Z_A is a union of full planes of one normal, and so is Z_B, with the same normal n (a full A-plane of one normal meets the diagonal neighbourhood of a full B-plane of the other). Full A- and B-planes are never adjacent; take a full A-plane c* whose next nonempty plane is a B-plane and put F = c* + 1, whose other neighbour c* + 2 is k-free.</p>
+<p>In both cases Lemma E gives (E′) at F and Theorem D (in the orientation fixed by the lattice symmetries) puts every type-k vertex of the non-free neighbour on a complete type-k n-chain. ∎</p>
+<p>Computed (<code>h248_signedlc.py stripes 3|4</code>): every two-way axis has such a wall (543 / 543 and 727 / 727 in three-type states; 264 / 264 and 280 / 280 in two-type states), (E′) holds at every hole of every such wall (2469 + 3743 walls), and Theorem D’s conclusion holds on every non-free neighbour in three-type states (2678 + 4214).</p>
+<p><strong>Corollary (H, conditional).</strong> In an odd state some direction is absent, given K_u (certified), Lemma O, (R⁺) and (S≥1). <em>Proof.</em> If a type is absent, Lemma A. If some axis is one-way or empty, a direction is absent. Otherwise take any axis (it is two-way); Theorem W gives a uniform chain (same-type neighbours share a sign, so it carries one moment); K_u gives an absent direction. ∎</p>
+<p>This replaces the proposal’s H ⇐ K_u + (RP) + (A₃): (A₃) and (E′) drop out, and the only oddness-dependent input is Lemma O, i.e. Theorem U, whose hand residue is (V). <strong>This reduction should be audited by the main loop before it is relied on</strong>; every step is written above and each has been checked on the corpus and on the solver samples of §7.</p>
+<h2 id="what-holds-in-the-type-only-model-task-f">5. What holds in the type-only model (task (f))</h2>
+<ul>
+<li>Local, proved: Lemma T, Lemma St and the forced literals of §1.</li>
+<li><strong>W_r (solver, <code>h244_hypq.py</code>):</strong> three literals suffice for the plane: τ(2,0,2) = x and τ(u) = τ(u′) = z force the A-plane {y = 0} to be z-free, in the type-only model, without oddness and without three types, at L = 3, 4, 5 (UNSAT 0.02 s, 0.28 s, 2.2 s). The configuration is one x-rod of an A-hole with its two cage bridgeheads of type z. In odd states (Lemma O) the other two bridgeheads are then type z as well (otherwise the cage is the unoriented yy/zz cage), so W_r’s configuration is the reversing-pair cage.</li>
+<li>(c) and (b) are therefore type-only statements. They are not counting statements: the LP max of the plane’s type-z count under one-hot, (T2) and the three literals is 6 (L = 3) and 16 (L = 4) (<code>h246_lp.py</code>), so a proof needs integrality; the deletion-minimal hexagon cores for single plane vertices at L = 6 have 439–948 hexagons (<code>h242</code>), and the type-z freeness of the whole k-line of m has cores 4, 8, 28 at distance 4, 8, 12. My proof of (c) uses signs and Lemma O and so covers odd states only; a type-only proof (which would also cover the curl-free states, where W_r holds but Lemma O fails) is open.</li>
+<li>(RP)’s two halves (<code>h243_rp_queries.py</code>, L = 3, 4): pattern ⇒ plane: UNSAT without oddness. Plane ⇒ chain: the straight-y case (plane {x = 0}) needs oddness only; the straight-x case needs oddness and three types.</li>
+</ul>
+<h2 id="the-role-of-three-types-task-g">6. The role of ‘three types’ (task (g))</h2>
+<p>In the proof it is used once: Theorem D(iii) excludes Δ ≡ −1, i.e. the whole neighbour plane of type k, by S1 + M′, which need a vertex of the normal’s type. In a two-type state (in the canonical frame the absent type is always the third axis y, so O is straight-x) steps 1–4 go through unchanged (computed: plane, stripes and (E′) in all 24 496 + 52 496 two-type instances), and D’s alternative occurs: <strong>every member without a uniform chain lies on a complete type-k B-plane {y = ±1}</strong> (14 244 / 14 244 at L = 3, 31 344 / 31 344 at L = 4; 1764 + 5328 members have both). So in two-type states the reversing pair still sits beside a free plane, but its side of the wall can be one full plane of type k.</p>
+<h2 id="independent-checks-on-solver-generated-states">7. Independent checks on solver-generated states</h2>
+<p><code>h244_hypq.py sample</code> draws odd, three-type frozen states with a sign field from the type-only model (random type assumptions for diversity); <code>h248_signedlc.py stripes L file</code> checks Lemma O at every hole, (S) on every line, sLC, the stripe theorem, walls on every two-way axis, (E′) at every wall and Theorem D’s conclusion. <strong>Computed, 0 exceptions:</strong> L = 5, 142 states (seed 3): Lemma O at every hole 142/142, (S) and sLC on all 426 (state, axis), stripe theorem 368/368, walls on 184/184 two-way axes, (E′) at 809/809 walls, Theorem D’s conclusion 1208/1208. L = 6, 44 states (seed 4; batch stopped at its 300 s cap after 44 of 60): 44/44, 132/132, 130/130, 65/65, 334/334, 486/486. These states are outside the corpus and larger than it, so the chain of §2–§4 is not a feature of the L = 3, 4 corpus.</p>
+<h2 id="what-failed-and-why">8. What failed, and why</h2>
+<ul>
+<li><strong>A type-only proof of (c).</strong> The claim is type-only (W_r), but LP-positive with global cores, so it needs a non-linear step on the type field alone; the sign-free separable quantities available (LC’s three potentials α(x), β(y), γ(z) per sublattice, the wprime/w1prime height functions) gave no product structure with a zero/nonzero dichotomy. The signed counts supply exactly that dichotomy (PQ = 0), which is why the proof goes through signs.</li>
+<li><strong>Propagating the pair along the line.</strong> Lemma T pairs the two bridgehead pairs of one cage and is an involution; the k-freeness of the line beyond m ± 4e_k and m + 8e_k is not local (cores grow).</li>
+<li><strong>Avoiding (R⁺).</strong> It is used at one point: an A-line between a full + and a full − B-plane is empty. From Lemma sP at the holes of those planes one gets only a Cauchy–Riemann relation for the + (resp. −) A-kinks on the two A-planes beside each B-plane — a height function, not a contradiction. Lemma R (proved) covers only k-separations ≤ 3.</li>
+<li><strong>Avoiding (S≥1).</strong> The two-product lemma needs PQ = 0 on every line; with only |s| ≤ h and s ≡ h (mod 2) the zero sets of P and Q need not cover the torus and nothing follows.</li>
+<li><strong>(RP) for d ≥ 2.</strong> The stripe theorem applies to any two-signed sublattice, but I have not shown that a member of a longer SS pair borders a wall (a + stripe can be two planes wide). Not needed for H by §4.</li>
+</ul>
+<h2 id="the-exact-residual">9. The exact residual</h2>
+<p>For (RP) at d = 1, for Theorem W and for H (given K_u), the residual is three sign laws and nothing else:</p>
+<ol type="1">
+<li><strong>Lemma O</strong> in odd states (equivalently Theorem U: an unoriented straight cage forces curl-free). Solver L = 3, 4, 5; hand residue (V). The only input that needs oddness.</li>
+<li><strong>(R⁺)</strong> in frozen states. Solver L = 3, 4, 5; hand-proved for k-separation ≤ 3 (Lemma R).</li>
+<li><strong>(S≥1)</strong> in frozen states. Solver gaps 1–2 at L = 4, 1–3 at L = 5; gap 1 also in the lines report.</li>
+</ol>
+<p>Items 2 and 3 are laws of every frozen state (no oddness), statements about finitely many vertices apart from the unbounded separation along one line, and are the natural next hand targets; item 1 is (V).</p>
+<h2 id="files">10. Files</h2>
+<p>New scripts in <code>experiments/08_frozen_structure/scratch_h/</code> (run with the brief’s environment line):</p>
+<ul>
+<li><code>h240_rp_frame.py L [R]</code> — canonical frame of all reversing pairs, constant-type table; <code>verify L [two]</code> — every step of Theorem RP₁ on the corpus, and the two-type analysis. Cache <code>.tmp/h240_frame_L*.pkl</code>.</li>
+<li><code>h241_rp_backbone.py L R cap variants</code> — backbone of the pattern (P, PO, PO3, with Sx/Sy).</li>
+<li><code>h242_core.py L cap target [extra] [flags]</code> — deletion-minimal hexagon cores (own capped worker).</li>
+<li><code>h243_rp_queries.py L cap claims variants</code> — the steps of (RP) as solver queries.</li>
+<li><code>h244_hypq.py</code> — minimal hypotheses for the plane (W_r); <code>sample L n seed cap</code> — solver samples with signs.</li>
+<li><code>h245_hypbackbone.py</code> — backbone of an arbitrary hypothesis.</li>
+<li><code>h246_lp.py</code> — LP relaxation of the plane claim.</li>
+<li><code>h247_slab.py</code> — slab-reach queries; <code>gap L cap g,…</code> — (S) with gaps, type-only + signs, with and without oddness.</li>
+<li><code>h248_signedlc.py [L]</code> — signed LC, (S), (R⁺) on the corpus; <code>stripes L [file]</code> — stripe theorem, walls, (E′), Theorem D’s conclusion.</li>
+<li><code>h249_signedcage.py L</code> — null space of signed cage data; <code>cage</code> — the cage check proving Lemma sP.</li>
+</ul>
+<p>Outputs cited are reproduced by these commands (0.5–25 s each; the samplers up to 5 min).</p>
+</main>
+</body>
+</html>

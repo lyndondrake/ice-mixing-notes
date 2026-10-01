@@ -1,0 +1,905 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signed completeness, proved for every cell: the kernel of law P^k is the span of the chains of the two other axes (dimension 4b·gcd(a,c) + 4c·gcd(a,b)</title>
+<meta name="description" content="Signed completeness, proved for every cell: the kernel of law P^k is the span of the chains of the two other axes (dimension 4b·gcd(a,c) + 4c·gcd(a,b) − 4·gcd(a,b,c) + 2 for k = x); the joint system of the three laws and the bond rule has as solutions exactly the sums over chains">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Signed completeness, proved for every cell: the kernel of law P^k is the span of the chains of the two other axes (dimension 4b·gcd(a,c) + 4c·gcd(a,b) − 4·gcd(a,b,c) + 2 for k = x); the joint system of the three laws and the bond rule has as solutions exactly the sums over chains of a weight times the chain's own direction, n = ½ Σ g(C) u_C 1_C; the six direction indicators of a state with every hole oriented are sums over chains in which each chain carries two weights, each coupling two directions whose difference is parallel to the chain; the signed line fractions have six family profiles and do not add to a constant",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-28-opus-scomp.html",
+ "datePublished": "2026-09-28",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus), agent scomp, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-28-opus-scomp.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/thm-23.html">thm-23</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Signed completeness, proved for every cell: the kernel of law P^k is the span of the chains of the two other axes (dimension 4b·gcd(a,c) + 4c·gcd(a,b) − 4·gcd(a,b,c) + 2 for k = x); the joint system of the three laws and the bond rule has as solutions exactly the sums over chains of a weight times the chain’s own direction, n = ½ Σ g(C) u_C 1_C; the six direction indicators of a state with every hole oriented are sums over chains in which each chain carries two weights, each coupling two directions whose difference is parallel to the chain; the signed line fractions have six family profiles and do not add to a constant</h1>
+
+<p class="author">Claude (Opus), agent scomp, for Lyndon Drake</p>
+<p class="date">2026-09-28</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#status-table" id="toc-status-table">Status table</a></li>
+<li><a href="#b1-the-kernel-of-law-pk" id="toc-b1-the-kernel-of-law-pk">B1: the kernel of law <span class="math inline">\(P^k\)</span></a></li>
+<li><a href="#b2-the-joint-system" id="toc-b2-the-joint-system">B2: the joint system</a></li>
+<li><a href="#b3-states-that-are-not-odd" id="toc-b3-states-that-are-not-odd">B3: states that are not odd</a></li>
+<li><a href="#b4-the-signed-line-fractions" id="toc-b4-the-signed-line-fractions">B4: the signed line fractions</a></li>
+<li><a href="#b5-directions-on-one-sublattice-optional" id="toc-b5-directions-on-one-sublattice-optional">B5: directions on one sublattice (optional)</a></li>
+<li><a href="#computations-run" id="toc-computations-run">Computations run</a></li>
+<li><a href="#what-failed-and-why" id="toc-what-failed-and-why">What failed, and why</a></li>
+<li><a href="#rules" id="toc-rules">Rules</a></li>
+<li><a href="#relation-to-the-main-loops-claims" id="toc-relation-to-the-main-loops-claims">Relation to the main loop’s claims</a></li>
+</ul>
+</details></nav>
+<p>Status tags: <strong>proved</strong> (argument written out here in full), <strong>computed</strong> (exact, reproducible, no solver), <strong>solver</strong> (SAT verdict through <code>h32_cap</code>), <strong>conjecture</strong>. Scripts <code>scratch_h/h440_lib.py</code> to <code>h448_dirsets.py</code> (h449 unused). All work on the primary Mac, one heavy process at a time. No existing file was modified.</p>
+<p>Notation. Cell <span class="math inline">\((a,b,c)\)</span>, coordinates modulo <span class="math inline">\((4a,4b,4c)\)</span>, <span class="math inline">\(N = 8abc\)</span> vertices. <span class="math inline">\(\Lambda\)</span> is the FCC lattice of translations of A, generated by the <span class="math inline">\(d_i - d_j\)</span>. For a chain family <span class="math inline">\(f = \{i,j\}\)</span> the step is <span class="math inline">\(u_f = d_i - d_j\)</span>; so <span class="math inline">\(u_{01} = (0,2,2)\)</span>, <span class="math inline">\(u_{23} = (0,2,-2)\)</span>, <span class="math inline">\(u_{02} = (2,0,2)\)</span>, <span class="math inline">\(u_{13} = (2,0,-2)\)</span>, <span class="math inline">\(u_{03} = (2,2,0)\)</span>, <span class="math inline">\(u_{12} = (2,-2,0)\)</span>. <span class="math inline">\(g_{bc} = \gcd(b,c)\)</span> and so on, <span class="math inline">\(g_3 = \gcd(a,b,c)\)</span>. <span class="math inline">\(\sigma_v = \pm 1\)</span> on A and B.</p>
+<h2 id="status-table">Status table</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>statement</th>
+<th>tag</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Theorem K (B1).</strong> On every cell, for each axis <span class="math inline">\(k\)</span>, the real solutions of law <span class="math inline">\(P^k\)</span> (one equation per hole) are exactly the span of the indicators of the chains of the two axes other than <span class="math inline">\(k\)</span> and the two sublattice constants. Only the antisymmetric constant is needed beyond the chains, and only at the trivial wavevector.</td>
+<td><strong>proved</strong> (hand, Fourier); <strong>computed</strong> on 20 cells × 3 axes</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Dimension formula.</strong> <span class="math inline">\(\dim\ker P^x = 4b\,g_{ac} + 4c\,g_{ab} - 4g_3 + 2\)</span>, and cyclically. The chains of the two axes and the two constants satisfy exactly <span class="math inline">\(4g_3\)</span> independent relations.</td>
+<td><strong>proved</strong>; <strong>computed</strong> on 20 cells × 3 axes</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Wave-operator form.</strong> The symbol of <span class="math inline">\(P^x\)</span> is a <span class="math inline">\(2\times2\)</span> matrix <span class="math inline">\(M^x\)</span> (A and B amplitudes) with <span class="math inline">\(\det M^x = x^{-4}\prod_{f}(\chi(u_f) - 1)\)</span> over the four families of axes <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span>; eliminating B, <span class="math inline">\(K|_A\)</span> is annihilated by the product of the four difference operators <span class="math inline">\(T_{u_f} - 1\)</span> along the chain steps. <span class="math inline">\(M^x = 0\)</span> exactly where both families of <span class="math inline">\(y\)</span> or both of <span class="math inline">\(z\)</span> are supported.</td>
+<td><strong>proved</strong> (hand); symbolic check <strong>computed</strong> (<code>h442</code>)</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Theorem J (B2a).</strong> On every cell the real solutions of the joint system (three laws <span class="math inline">\(P^k\)</span> on <span class="math inline">\(n_k\)</span> and the bond rule on every bond) are exactly <span class="math inline">\(n = \tfrac12\sum_C g(C)\,u_C\,\mathbf 1_C\)</span> with real weights <span class="math inline">\(g\)</span>: each chain carries its own step direction. No sublattice constant occurs. <span class="math inline">\(\dim = 4(a\,g_{bc} + b\,g_{ac} + c\,g_{ab}) - 4g_3 + 1\)</span>.</td>
+<td><strong>proved</strong>; <strong>computed</strong> on 22 cells</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Sharing (B2a).</strong> A chain of axis <span class="math inline">\(x\)</span> enters <span class="math inline">\(n_y\)</span> and <span class="math inline">\(n_z\)</span> with coefficients <span class="math inline">\((+1,+1)\)</span> for family <span class="math inline">\(\{0,1\}\)</span> and <span class="math inline">\((+1,-1)\)</span> for <span class="math inline">\(\{2,3\}\)</span> (similarly for <span class="math inline">\(y\)</span>, <span class="math inline">\(z\)</span>). Unlike the types, where both families of an axis enter the two transverse indicators with <span class="math inline">\((+1,-1)\)</span>.</td>
+<td><strong>proved</strong> (part of 4)</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>(B2b).</strong> The three laws never imply the bond rule (on any cell). The bond rule implies the three laws on the cell <span class="math inline">\((1,1,1)\)</span> and on no other cell.</td>
+<td><strong>proved</strong>; <strong>computed</strong> on 22 cells</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Theorem D (B2c).</strong> In a frozen state with every hole oriented, each of the six direction indicators <span class="math inline">\(D_\delta\)</span> is a sum over the chains through <span class="math inline">\(v\)</span> of weights attached to (chain, pair of directions): each chain <span class="math inline">\(C\)</span> carries two weights, one for each unordered pair <span class="math inline">\(\{\delta, \delta&#39;\}\)</span> of directions transverse to its axis with <span class="math inline">\(\delta - \delta&#39; = \pm u_C/2\)</span>, entering <span class="math inline">\(D_\delta\)</span> with <span class="math inline">\(+\)</span> and <span class="math inline">\(D_{\delta&#39;}\)</span> with <span class="math inline">\(-\)</span>; plus constants <span class="math inline">\(\kappa_k/2 + \sigma_v\gamma_k/2\)</span> on <span class="math inline">\(D_{\pm e_k}\)</span>.</td>
+<td><strong>proved</strong>, given (C) of the record and Lemma 3</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Every state of the odd corpus (1,357) and every sampled odd state on (2,2,4), (2,4,6), (4,4,6), (4,3,3) (48) satisfies the joint system, so lies in the span of the signed modes.</td>
+<td><strong>computed</strong> (corpus), <strong>solver</strong> + computed (samples)</td>
+</tr>
+<tr>
+<td>9</td>
+<td>No charged hole in the 48 sampled odd states on the four non-cubic cells. Consistent with Theorem U there; a sample, not a proof.</td>
+<td><strong>solver</strong></td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>(B3).</strong> In 62 sampled frozen states with even curl (45 of them with charged holes) on (3,3,3), (4,4,4), (4,3,3), (2,4,6): <span class="math inline">\(P^k K_k = 0\)</span> and <span class="math inline">\(P^k n_k = c\)</span> at every hole, for all three <span class="math inline">\(k\)</span>; <span class="math inline">\(n_k\)</span> is in the span of Theorem K iff no hole is charged.</td>
+<td><strong>solver</strong> + computed; the “iff” is <strong>proved</strong> from Theorem K and Lemma 3</td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>Proposition O (B3).</strong> In a frozen state whose rods fill complete lines (every even-curl state), modulo the span of Theorem K, <span class="math inline">\(n_k \equiv u_k + \sum_\ell \rho_\ell \mathbf 1_\ell\)</span>, where <span class="math inline">\(u_k\)</span> is the mean-zero antiderivative of the charges along each rod line of axis <span class="math inline">\(k\)</span> and <span class="math inline">\(\rho\)</span> (constant on <span class="math inline">\(k\)</span>-lines) is any solution of a mixed-difference equation whose data are the total charges of the <span class="math inline">\(k\)</span>-lines of holes. So the part outside the span is determined by the charges (with the positions of the charged holes on rod lines).</td>
+<td><strong>proved</strong>; checks T1, T4 <strong>computed</strong> on the 62 states</td>
+</tr>
+<tr>
+<td>12</td>
+<td>The simpler decomposition without <span class="math inline">\(\rho\)</span> (line means are in the span) holds iff every <span class="math inline">\(k\)</span>-line of holes has total charge zero; it fails in 106 of the 186 (state, axis) cases.</td>
+<td><strong>computed</strong></td>
+</tr>
+<tr>
+<td>13</td>
+<td><strong>Theorem F (B4).</strong> With every hole oriented, on A: <span class="math inline">\(\sigma_x = [U_{02}{+}U_{13}](y) + [W_{03}{+}W_{12}](z)\)</span>, <span class="math inline">\(\sigma_y = [F_{01}{+}F_{23}](x) + [W_{03}{-}W_{12}](z)\)</span>, <span class="math inline">\(\sigma_z = [F_{01}{-}F_{23}](x) + [U_{02}{-}U_{13}](y)\)</span>; on B the same six family profiles with the shifts <span class="math inline">\(F_{01}(x{-}1)\)</span>, <span class="math inline">\(F_{23}(x{+}1)\)</span>, <span class="math inline">\(U_{02}(y{-}1)\)</span>, <span class="math inline">\(U_{13}(y{+}1)\)</span>, <span class="math inline">\(W_{03}(z{-}1)\)</span>, <span class="math inline">\(W_{12}(z{+}1)\)</span>. So the B fractions are determined by the A fractions up to constants. The sum at a vertex of A is <span class="math inline">\(2F_{01}(x) + 2U_{02}(y) + 2W_{03}(z)\)</span> + const.</td>
+<td><strong>proved</strong> (from Theorem J); <strong>computed</strong> on 1,357 + 65 oriented states, 0 exceptions</td>
+</tr>
+<tr>
+<td>14</td>
+<td>The sum <span class="math inline">\(\sigma_x + \sigma_y + \sigma_z\)</span> is not constant in general (constant in 48 of 637 and 38 of 720 corpus states). There is no analogue of “the fractions add to one”.</td>
+<td><strong>computed</strong></td>
+</tr>
+<tr>
+<td>15</td>
+<td>In every oriented state examined (1,357 + 65), at least one of the three coordinates has one of its two family profiles constant on A. Not explained.</td>
+<td><strong>computed</strong>, <strong>conjecture</strong> at most</td>
+</tr>
+<tr>
+<td>16</td>
+<td><strong>(B5).</strong> On (4,3,3), (6,2,3), (5,2,4), up to the symmetries: a sublattice can carry every pattern of absent / one-way / two-way on at most two axes. No pattern with all three axes present occurs, which Theorem S already implies.</td>
+<td><strong>solver</strong> (60 queries, each with a satisfiable control)</td>
+</tr>
+</tbody>
+</table>
+<p>Nothing found contradicts the main loop’s claims. Refinements are listed at the end.</p>
+<h2 id="b1-the-kernel-of-law-pk">B1: the kernel of law <span class="math inline">\(P^k\)</span></h2>
+<h3 id="the-law-at-an-a-hole">The law at an A-hole</h3>
+<p>Let <span class="math inline">\(O = a + 2e_x\)</span> with <span class="math inline">\(a \in\)</span> A. The bridgeheads with <span class="math inline">\(s_x = -1\)</span> are <span class="math inline">\(a + (1, s_y, s_z)\)</span> with <span class="math inline">\(s_y s_z = +1\)</span>, that is <span class="math inline">\(a + d_0\)</span> and <span class="math inline">\(a + d_1\)</span>. Those with <span class="math inline">\(s_x = +1\)</span> are <span class="math inline">\(a + (3, s_y, s_z)\)</span> with <span class="math inline">\(s_y s_z = -1\)</span>, that is <span class="math inline">\(a + 4e_x + d_2\)</span> and <span class="math inline">\(a + 4e_x + d_3\)</span>. So law <span class="math inline">\(P^x\)</span> at <span class="math inline">\(O\)</span> reads <span class="math display">\[K(a + 4e_x) - K(a) = K(a{+}4e_x{+}d_2) + K(a{+}4e_x{+}d_3) - K(a{+}d_0) - K(a{+}d_1). \tag{1}\]</span> The inversion <span class="math inline">\(v \mapsto (1,1,1) - v\)</span> exchanges A and B, maps holes to holes, reverses every <span class="math inline">\(s\)</span> (and hence the product condition), maps each chain family to itself, and maps law <span class="math inline">\(P^x\)</span> at a B-hole to law <span class="math inline">\(P^x\)</span> at an A-hole. A permutation of the coordinates permutes <span class="math inline">\(\{d_0,\dots,d_3\}\)</span>, the families and the laws. So statements checked at A-holes for <span class="math inline">\(k = x\)</span> hold at all holes and for all <span class="math inline">\(k\)</span>.</p>
+<h3 id="lemma-m-the-modes-solve-the-law-proved">Lemma M (the modes solve the law; proved)</h3>
+<p><em>The indicator of a chain of axis <span class="math inline">\(y\)</span> or <span class="math inline">\(z\)</span> satisfies (1), and so do <span class="math inline">\(\mathbf 1_A\)</span> and <span class="math inline">\(\mathbf 1_B\)</span>.</em></p>
+<p><em>Proof.</em> A B vertex <span class="math inline">\(b\)</span> lies on a chain <span class="math inline">\(C\)</span> of family <span class="math inline">\(\{i,j\}\)</span> iff <span class="math inline">\(b - d_i \in C\)</span> iff <span class="math inline">\(b - d_j \in C\)</span>. Take <span class="math inline">\(C\)</span> of family <span class="math inline">\(\{0,2\}\)</span>. Then <span class="math inline">\(a + d_0 \in C\)</span> iff <span class="math inline">\(a \in C\)</span>, and <span class="math inline">\(a + 4e_x + d_2 \in C\)</span> iff <span class="math inline">\(a + 4e_x \in C\)</span>. Also <span class="math inline">\(a + d_1 \in C\)</span> iff <span class="math inline">\(a + d_1 - d_0 = a - (0,2,2) \in C\)</span>, and <span class="math inline">\(a + 4e_x + d_3 \in C\)</span> iff <span class="math inline">\(a + 4e_x + d_3 - d_2 = a + (4,-2,2) \in C\)</span>. These two points differ by <span class="math inline">\((4,0,4) = 2u_{02}\)</span>, so the last two terms of (1) cancel and (1) holds. The other three families are the same computation. For <span class="math inline">\(\{1,3\}\)</span> the pairs are <span class="math inline">\((a+d_1, a)\)</span>, <span class="math inline">\((a+4e_x+d_3, a+4e_x)\)</span>, and <span class="math inline">\(a + (0,2,2)\)</span> against <span class="math inline">\(a + (2,2,0)\)</span>, which differ by <span class="math inline">\(u_{13}\)</span>. For <span class="math inline">\(\{0,3\}\)</span> they are <span class="math inline">\((a+d_0, a)\)</span>, <span class="math inline">\((a+4e_x+d_3, a+4e_x)\)</span>, and <span class="math inline">\(a - (0,2,2)\)</span> against <span class="math inline">\(a + (2,0,-2)\)</span>, which differ by <span class="math inline">\(u_{03}\)</span>. For <span class="math inline">\(\{1,2\}\)</span> they are <span class="math inline">\((a+d_1, a)\)</span>, <span class="math inline">\((a+4e_x+d_2, a+4e_x)\)</span>, and <span class="math inline">\(a + (0,2,2)\)</span> against <span class="math inline">\(a + (2,0,2)\)</span>, which differ by <span class="math inline">\(u_{12}\)</span>. For <span class="math inline">\(\mathbf 1_A\)</span>, both sides of (1) vanish at an A-hole. At a B-hole the methylene difference is 0 and the four bridgeheads have <span class="math inline">\(\sum_s s_x = 0\)</span>. <span class="math inline">\(\square\)</span></p>
+<p>(Also checked by the exact product law × modes = 0 on 20 cells in <code>h441</code>, and symbolically in <code>h442</code> (3).)</p>
+<h3 id="fourier-reduction-proved">Fourier reduction (proved)</h3>
+<p>Let <span class="math inline">\(G = \Lambda / (4a\mathbb Z \times 4b\mathbb Z \times 4c\mathbb Z)\)</span>, of order <span class="math inline">\(4abc\)</span>. For each character <span class="math inline">\(\psi\)</span> of <span class="math inline">\(G\)</span> fix an extension <span class="math inline">\(\chi(p) = x^{p_1}y^{p_2}z^{p_3}\)</span> with <span class="math inline">\(x^{4a} = y^{4b} = z^{4c} = 1\)</span>. The functions <span class="math inline">\(e_{\chi,A} = \chi\cdot\mathbf 1_A\)</span> and <span class="math inline">\(e_{\chi,B} = \chi\cdot\mathbf 1_B\)</span>, one extension per <span class="math inline">\(\psi\)</span>, form a basis of <span class="math inline">\(\mathbb C^V\)</span>. Every system below has integer coefficients and is invariant under <span class="math inline">\(\Lambda\)</span>, and it has one orbit of rows per hole sublattice (and per bond direction), so it maps the plane <span class="math inline">\(\langle e_{\chi,A}, e_{\chi,B}\rangle\)</span> into the corresponding character space on rows, through a small matrix <span class="math inline">\(M(\chi)\)</span>. Hence <span class="math inline">\(\ker = \bigoplus_\psi \ker M(\chi)\)</span>. The span <span class="math inline">\(W\)</span> of the modes is <span class="math inline">\(\Lambda\)</span>-invariant, so <span class="math inline">\(W = \bigoplus_\psi W_\psi\)</span>, and <span class="math inline">\(W_\psi\)</span> is spanned by the <span class="math inline">\(\psi\)</span>-projections of the generators. The projection of <span class="math inline">\(\mathbf 1_C\)</span>, for <span class="math inline">\(C\)</span> of family <span class="math inline">\(f = \{i,j\}\)</span> based at <span class="math inline">\(p_0\)</span>, vanishes unless <span class="math inline">\(\chi(u_f) = 1\)</span>, and is then <span class="math inline">\(\bar\chi(p_0)\,|C\cap A|/|A| \cdot (1, 1/\lambda_i)\)</span> with <span class="math inline">\(\lambda_i := \chi(d_i)\)</span>. The constants <span class="math inline">\(\mathbf 1_A\)</span> and <span class="math inline">\(\mathbf 1_B\)</span> project to <span class="math inline">\((1,0)\)</span> and <span class="math inline">\((0,1)\)</span> at <span class="math inline">\(\psi = 1\)</span> only. Integer coefficients make the real statement follow from the complex one. So it suffices to show <span class="math inline">\(\ker M(\chi) = W_\psi\)</span> for every <span class="math inline">\(\psi\)</span>.</p>
+<p><strong>Lemma P (the partition; proved).</strong> Since <span class="math inline">\(u_f = d_i - d_j\)</span>, <span class="math inline">\(\chi(u_f) = \lambda_i/\lambda_j\)</span>, so <span class="math inline">\(f\)</span> is supported at <span class="math inline">\(\psi\)</span> iff <span class="math inline">\(\lambda_i = \lambda_j\)</span>. The set <span class="math inline">\(Z(\psi)\)</span> of supported families is the set of pairs inside the blocks of the partition of <span class="math inline">\(\{0,1,2,3\}\)</span> by the value of <span class="math inline">\(\lambda\)</span>. There are five cases. All distinct: <span class="math inline">\(Z = \emptyset\)</span>. One pair: one family. Two pairs: the complementary pairs <span class="math inline">\(\{01,23\}\)</span>, <span class="math inline">\(\{02,13\}\)</span>, <span class="math inline">\(\{03,12\}\)</span> are exactly the two families of <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>, <span class="math inline">\(z\)</span>. A triple <span class="math inline">\(\{0,1,2,3\}\setminus\{\ell\}\)</span>: three families, one of each axis, those of the kagome plane <span class="math inline">\(\perp d_\ell\)</span>. All four equal: then <span class="math inline">\(\chi\)</span> is trivial on <span class="math inline">\(\Lambda\)</span> (generated by the <span class="math inline">\(d_i - d_j\)</span>), so <span class="math inline">\(\psi = 1\)</span>. (This replaces the Hermite normal form classification of the report of 17 September by one line.)</p>
+<p><strong>The symbol of <span class="math inline">\(P^x\)</span> (proved).</strong> Rows are the A-hole and B-hole laws, columns <span class="math inline">\((\mathrm{amp}_A, \mathrm{amp}_B)\)</span>: <span class="math display">\[M^x = \begin{pmatrix} D &amp; -U \\ -V &amp; D\end{pmatrix},\quad D = x^2 - x^{-2},\quad U = \sum_{\prod s = -1} s_x\chi(s) = xp - q/x,\quad V = \sum_{\prod s = +1} s_x\chi(s) = xq - p/x,\]</span> with <span class="math inline">\(p = y/z + z/y\)</span> and <span class="math inline">\(q = yz + 1/(yz)\)</span>. Put <span class="math inline">\(X_m = m^2 + m^{-2}\)</span>. Then <span class="math inline">\(pq = X_y + X_z\)</span>, <span class="math inline">\(p^2 + q^2 = 4 + X_yX_z\)</span>, <span class="math inline">\(UV = pqX_x - p^2 - q^2\)</span> and <span class="math inline">\(D^2 = X_x^2 - 4\)</span>, so <span class="math display">\[\det M^x = D^2 - UV = (X_x - X_y)(X_x - X_z).\]</span> Also <span class="math inline">\(X_x - X_z = x^{-2}(x^2z^2 - 1)(x^2z^{-2} - 1) = x^{-2}(\chi(u_{02}) - 1)(\chi(u_{13}) - 1)\)</span>, and in the same way <span class="math inline">\(X_x - X_y = x^{-2}(\chi(u_{03}) - 1)(\chi(u_{12}) - 1)\)</span>. So <span class="math inline">\(\det M^x \neq 0\)</span> iff no family of axis <span class="math inline">\(y\)</span> or <span class="math inline">\(z\)</span> is supported. This is item 3. Eliminating <span class="math inline">\(\mathrm{amp}_B\)</span> gives <span class="math inline">\((D^2 - UV)K_A = 0\)</span> as an operator identity, which is the “wave equation” form. It is a product of four difference operators <span class="math inline">\(T_{u_f} - 1\)</span> (times a shift), applied to the restriction to A. It is not a factorisation of <span class="math inline">\(P^x\)</span> itself, and the kernel of the product is the sum of the kernels of the factors only because all these operators are diagonal on <span class="math inline">\(G\)</span>.</p>
+<p><strong>When <span class="math inline">\(M^x = 0\)</span> (proved).</strong> <span class="math inline">\(D = 0\)</span> iff <span class="math inline">\(x^2 = \varsigma \in \{\pm1\}\)</span>. Then <span class="math inline">\(xyz\,U = \varsigma y^2 + \varsigma z^2 - y^2z^2 - 1 = -(y^2-\varsigma)(z^2-\varsigma)\)</span> and <span class="math inline">\(xyz\,V = \varsigma(y^2z^2+1) - y^2 - z^2 = \varsigma(y^2-\varsigma)(z^2-\varsigma)\)</span>. So <span class="math inline">\(M^x = 0\)</span> iff <span class="math inline">\(x^2 = y^2 = \varsigma\)</span> or <span class="math inline">\(x^2 = z^2 = \varsigma\)</span>. The first says <span class="math inline">\(\chi(u_{03}) = x^2y^2 = 1\)</span> and <span class="math inline">\(\chi(u_{12}) = x^2y^{-2} = 1\)</span>, both families of <span class="math inline">\(z\)</span>. Conversely both families of <span class="math inline">\(z\)</span> give <span class="math inline">\(y^4 = 1\)</span> and <span class="math inline">\(x^2 = y^2 = \pm1\)</span>. So <span class="math inline">\(M^x = 0\)</span> iff both families of <span class="math inline">\(y\)</span> or both families of <span class="math inline">\(z\)</span> are supported.</p>
+<p><strong>Proof of Theorem K.</strong> Fix <span class="math inline">\(\psi\)</span>. By Lemma M every supported mode vector lies in <span class="math inline">\(\ker M^x(\chi)\)</span>, and it is nonzero (first entry 1). (i) No family of <span class="math inline">\(y\)</span> or <span class="math inline">\(z\)</span> is supported: <span class="math inline">\(\det \neq 0\)</span>, so <span class="math inline">\(\ker = 0 = W_\psi\)</span> (the constants occur only at <span class="math inline">\(\psi = 1\)</span>, where every family is supported). (ii) Some are supported but not both of one axis: <span class="math inline">\(M^x \neq 0\)</span> and <span class="math inline">\(\det = 0\)</span>, so <span class="math inline">\(\dim\ker = 1\)</span>, spanned by any supported mode. (iii) Both families of <span class="math inline">\(y\)</span> are supported (or of <span class="math inline">\(z\)</span>), say <span class="math inline">\(f = \{0,2\}\)</span>, <span class="math inline">\(f&#39; = \{1,3\}\)</span>: <span class="math inline">\(M^x = 0\)</span> and <span class="math inline">\(\ker = \mathbb C^2\)</span>. The modes are <span class="math inline">\((1, 1/\lambda_0)\)</span> and <span class="math inline">\((1, 1/\lambda_1)\)</span>. They are independent unless <span class="math inline">\(\lambda_0 = \lambda_1\)</span>, which together with <span class="math inline">\(\lambda_0 = \lambda_2\)</span>, <span class="math inline">\(\lambda_1 = \lambda_3\)</span> makes all four equal, so <span class="math inline">\(\psi = 1\)</span>. There the constants give <span class="math inline">\((1,0)\)</span> and <span class="math inline">\((0,1)\)</span>. In every case <span class="math inline">\(\ker M^x(\chi) = W_\psi\)</span>. <span class="math inline">\(\square\)</span></p>
+<p><strong>Proof of the dimension formula.</strong> <span class="math inline">\(\dim\ker = \#\{\psi: \det = 0\} + \#\{\psi: M^x = 0\}\)</span>. Write <span class="math inline">\(\alpha, \beta, \gamma, \delta\)</span> for the conditions <span class="math inline">\(\chi(u_{02}), \chi(u_{13}), \chi(u_{03}), \chi(u_{12}) = 1\)</span>. The number of <span class="math inline">\(\psi\)</span> satisfying a set of conditions is <span class="math inline">\(|G|\)</span> divided by the order of the subgroup of <span class="math inline">\(G\)</span> generated by the corresponding steps. - One condition: <span class="math inline">\(\langle(2,0,\pm2)\rangle\)</span> has order <span class="math inline">\(2\,\mathrm{lcm}(a,c)\)</span>, giving <span class="math inline">\(2b\,g_{ac}\)</span> characters, which is the number of chains of the family. Likewise <span class="math inline">\(2c\,g_{ab}\)</span> for the <span class="math inline">\(z\)</span> families. - <span class="math inline">\(\alpha\beta\)</span>: the subgroup <span class="math inline">\(\{(2p,0,2q): p \equiv q \bmod 2\}\)</span> has order <span class="math inline">\(2ac\)</span>, giving <span class="math inline">\(2b\)</span> characters. <span class="math inline">\(\gamma\delta\)</span> gives <span class="math inline">\(2c\)</span>. - A cross pair, for example <span class="math inline">\(\alpha\gamma\)</span>: the two steps span <span class="math inline">\(P_1 = \Lambda\cap d_1^\perp\)</span>. Now <span class="math inline">\(v \mapsto v\cdot d_1/4\)</span> maps <span class="math inline">\(\Lambda\)</span> onto <span class="math inline">\(\mathbb Z\)</span> with kernel <span class="math inline">\(P_1\)</span> and sends the cell periods to <span class="math inline">\(a, -b, -c\)</span>, so <span class="math inline">\(\Lambda/(P_1 + \text{periods}) \cong \mathbb Z/g_3\)</span> and there are <span class="math inline">\(g_3\)</span> characters. The four cross pairs are the four kagome planes. - Any three conditions include both families of one axis and one of another, which forces the fourth (for example <span class="math inline">\(\delta = \alpha\beta/\gamma\)</span>). With all four, <span class="math inline">\(\psi = 1\)</span>, a single character.</p>
+<p>By inclusion and exclusion, <span class="math inline">\(\#\{\det = 0\} = (4b\,g_{ac} + 4c\,g_{ab}) - (2b + 2c + 4g_3) + 4 - 1\)</span> and <span class="math inline">\(\#\{M = 0\} = 2b + 2c - 1\)</span>. The sum is <span class="math inline">\(4b\,g_{ac} + 4c\,g_{ab} - 4g_3 + 2\)</span>. The generators number <span class="math inline">\(4b\,g_{ac} + 4c\,g_{ab} + 2\)</span>, so there are <span class="math inline">\(4g_3\)</span> relations: one at each non-trivial <span class="math inline">\(\psi\)</span> of the four kagome planes (<span class="math inline">\(4(g_3-1)\)</span>) and four at <span class="math inline">\(\psi = 1\)</span> (six vectors in <span class="math inline">\(\mathbb C^2\)</span>). <span class="math inline">\(\square\)</span></p>
+<h3 id="b1-computations-h441_kernel.py-exact-ranks-modulo-231-1">B1 computations (<code>h441_kernel.py</code>; exact ranks modulo <span class="math inline">\(2^{31}-1\)</span>)</h3>
+<p>Soundness: rank mod <span class="math inline">\(p \le\)</span> rank over <span class="math inline">\(\mathbb Q\)</span>. So <span class="math inline">\(N - \mathrm{rank}_p(P^k) \ge \dim\ker\)</span> and <span class="math inline">\(\mathrm{rank}_p(\text{modes}) \le \dim\text{span}\)</span>. The script checks law × modes <span class="math inline">\(= 0\)</span> over <span class="math inline">\(\mathbb Z\)</span>, so span <span class="math inline">\(\subseteq\)</span> ker. Equality of the two numbers therefore proves ker = span on the cell.</p>
+<table>
+<thead>
+<tr>
+<th>cell</th>
+<th>coprime pair</th>
+<th><span class="math inline">\(\dim\ker P^x, P^y, P^z\)</span></th>
+<th>= span?</th>
+<th>formula</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,1,2)</td>
+<td>yes</td>
+<td>10, 10, 6</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>yes</td>
+<td>14, 14, 14</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>(1,1,5)</td>
+<td>yes</td>
+<td>22, 22, 6</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>(1,2,3)</td>
+<td>yes</td>
+<td>18, 14, 10</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>(2,2,2)</td>
+<td>none</td>
+<td>26, 26, 26</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>(2,2,3)</td>
+<td>yes</td>
+<td>30, 30, 14</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>(2,2,4)</td>
+<td>none</td>
+<td>42, 42, 26</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>(1,5,5)</td>
+<td>yes</td>
+<td>38, 38, 38</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>(4,4,4)</td>
+<td>none</td>
+<td>114 ×3</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>(4,3,3)</td>
+<td>yes</td>
+<td>22, 58, 58</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>(6,2,3)</td>
+<td>yes</td>
+<td>46, 46, 46</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>(5,2,4)</td>
+<td>yes</td>
+<td>22, 54, 46</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>(3,4,4)</td>
+<td>yes</td>
+<td>30, 62, 62</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>(2,4,6)</td>
+<td>none</td>
+<td>74, 58, 42</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>(5,3,3)</td>
+<td>yes</td>
+<td>22, 70, 70</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>(4,4,6)</td>
+<td>none</td>
+<td>122, 122, 58</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>(6,2,9)</td>
+<td>yes</td>
+<td>94, 94, 46</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>(5,4,4)</td>
+<td>yes</td>
+<td>30, 94, 94</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>(6,3,4)</td>
+<td>yes</td>
+<td>70, 70, 46</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>(7,3,6)</td>
+<td>yes</td>
+<td>34, 106, 94</td>
+<td>yes</td>
+<td>ok</td>
+</tr>
+</tbody>
+</table>
+<p>Also (3,3,3): 62 ×3, (1,1,1): 6 ×3, (2,3,3): 22, 34, 34. The chain counts <span class="math inline">\(2E_i\,\gcd(E_j,E_l)\)</span> per family were asserted on every cell. 60 of 60 (cell, axis) pairs are equal, with no extra solutions anywhere, thin cells (extent 1 or 2) included.</p>
+<h2 id="b2-the-joint-system">B2: the joint system</h2>
+<p><strong>The signed modes (proved).</strong> For a chain <span class="math inline">\(C\)</span> of family <span class="math inline">\(f=\{i,j\}\)</span> put <span class="math inline">\(n = \tfrac12 u_f\)</span> on its vertices and 0 elsewhere. Distinct <span class="math inline">\(d\)</span>’s have <span class="math inline">\(d_m\cdot d_{m&#39;} = -1\)</span>, so <span class="math inline">\(d_m\cdot u_f = 0\)</span> for <span class="math inline">\(m \notin f\)</span>, while <span class="math inline">\(d_i\cdot u_f = 4\)</span> and <span class="math inline">\(d_j\cdot u_f = -4\)</span>. The bond rule on a bond of direction <span class="math inline">\(d_m\)</span> with one end or both in <span class="math inline">\(C\)</span>: if <span class="math inline">\(m \notin f\)</span> both sides are 0; if <span class="math inline">\(m \in f\)</span> both ends are in <span class="math inline">\(C\)</span> and both sides equal <span class="math inline">\(\tfrac12 d_m\cdot u_f\)</span>. The component of <span class="math inline">\(u_f\)</span> along the chain’s own axis is 0, and each other component is a multiple of <span class="math inline">\(\mathbf 1_C\)</span>, which solves the law of that axis by Lemma M. So the mode solves the joint system. In coordinates, <span class="math inline">\(\tfrac12u_{01} = (0,1,1)\)</span>, <span class="math inline">\(\tfrac12u_{23} = (0,1,-1)\)</span>, <span class="math inline">\(\tfrac12u_{02} = (1,0,1)\)</span>, <span class="math inline">\(\tfrac12u_{13} = (1,0,-1)\)</span>, <span class="math inline">\(\tfrac12u_{03} = (1,1,0)\)</span> and <span class="math inline">\(\tfrac12u_{12} = (1,-1,0)\)</span>. (I first derived these as the vectors orthogonal to the two <span class="math inline">\(d_m\)</span> off the chain, and only then noticed that they are the chain steps.)</p>
+<p><strong>Proof of Theorem J.</strong> Symbol per <span class="math inline">\(\psi\)</span>: unknowns <span class="math inline">\((n_A, n_B) \in \mathbb C^3\times\mathbb C^3\)</span>. Law rows: <span class="math inline">\((n_{A,k}, n_{B,k}) \in \ker M^k(\chi)\)</span> for each <span class="math inline">\(k\)</span>. Bond rows: <span class="math inline">\(d_r\cdot n_A = \lambda_r\, d_r\cdot n_B\)</span>, <span class="math inline">\(r = 0,\dots,3\)</span>. The mode of <span class="math inline">\(f\)</span> projects to <span class="math inline">\((u_f, u_f/\lambda_i)\)</span>. Cases by Lemma P: - All distinct: every <span class="math inline">\(\det M^k \neq 0\)</span>, so the kernel is 0. - One pair <span class="math inline">\(f = \{i,j\}\)</span> of axis <span class="math inline">\(m\)</span>: <span class="math inline">\(n_m = 0\)</span> (no family of the other axes). For <span class="math inline">\(k \neq m\)</span>, <span class="math inline">\(\ker M^k\)</span> is the line of <span class="math inline">\((1, 1/\lambda_i)\)</span>, so <span class="math inline">\(n_B = n_A/\lambda_i\)</span>. The bond rows become <span class="math inline">\(d_r\cdot n_A(1 - \lambda_r/\lambda_i) = 0\)</span>. For <span class="math inline">\(r \notin f\)</span>, <span class="math inline">\(\lambda_r \neq \lambda_i\)</span>, so <span class="math inline">\(n_A \perp d_r\)</span> for both <span class="math inline">\(r \notin f\)</span> and <span class="math inline">\(n_A \in \mathbb C u_f\)</span>. The kernel is 1-dimensional and spanned by the mode. - Two pairs, both families of axis <span class="math inline">\(m\)</span> with values <span class="math inline">\(\alpha \neq \beta\)</span>: <span class="math inline">\(n_m = 0\)</span> and, for <span class="math inline">\(k \neq m\)</span>, <span class="math inline">\(M^k = 0\)</span>, so the <span class="math inline">\(m\)</span>-free components are unconstrained by the laws. Taking <span class="math inline">\(m = x\)</span>: <span class="math inline">\(d_0, d_1\)</span> project to <span class="math inline">\(\pm(0,1,1)\)</span> and <span class="math inline">\(d_2, d_3\)</span> to <span class="math inline">\(\pm(0,1,-1)\)</span> in the <span class="math inline">\(yz\)</span> plane, and the bond rows reduce to <span class="math inline">\((n_A - \alpha n_B)\cdot(0,1,1) = 0\)</span> and <span class="math inline">\((n_A - \beta n_B)\cdot(0,1,-1) = 0\)</span>. That is two independent equations on four unknowns, so the kernel is 2-dimensional. The two modes lie in it and are independent. - A triple <span class="math inline">\(\{0,1,2,3\}\setminus\{\ell\}\)</span> with common value <span class="math inline">\(\mu \neq \lambda_\ell\)</span>: for each <span class="math inline">\(k\)</span> the two supported families of the other axes lie on different axes, so <span class="math inline">\(M^k \neq 0\)</span> and <span class="math inline">\(\ker M^k\)</span> is the line of <span class="math inline">\((1, 1/\mu)\)</span>. Hence <span class="math inline">\(n_B = n_A/\mu\)</span> with <span class="math inline">\(n_A \in \mathbb C^3\)</span>. The rows <span class="math inline">\(r \neq \ell\)</span> hold automatically and row <span class="math inline">\(\ell\)</span> gives <span class="math inline">\(n_A \perp d_\ell\)</span>. The kernel is 2-dimensional and spanned by the three modes <span class="math inline">\(u_f \perp d_\ell\)</span> (any two of which are independent). - All equal (<span class="math inline">\(\psi = 1\)</span>, <span class="math inline">\(\lambda_r = \lambda\)</span>): all <span class="math inline">\(M^k = 0\)</span> and the bond rows give <span class="math inline">\(n_A = \lambda n_B\)</span>. The kernel is 3-dimensional and spanned by the six <span class="math inline">\(u_f\)</span>.</p>
+<p>So the kernel equals the span of the signed modes at every <span class="math inline">\(\psi\)</span>. No sublattice constant is needed: at <span class="math inline">\(\psi = 1\)</span> the antisymmetric constant is killed by the bond rule. Dimension: the chains number <span class="math inline">\(4(a\,g_{bc} + b\,g_{ac} + c\,g_{ab})\)</span>, with one relation at each non-trivial kagome <span class="math inline">\(\psi\)</span> (<span class="math inline">\(4(g_3-1)\)</span> in all) and three at <span class="math inline">\(\psi = 1\)</span>, which gives <span class="math inline">\(4(a\,g_{bc} + b\,g_{ac} + c\,g_{ab}) - 4g_3 + 1\)</span>. <span class="math inline">\(\square\)</span></p>
+<p>In components, with <span class="math inline">\(G_f(v)\)</span> the weight of the chain of family <span class="math inline">\(f\)</span> through <span class="math inline">\(v\)</span>: <span class="math display">\[n_x = G_{02} + G_{13} + G_{03} + G_{12},\quad n_y = G_{01} + G_{23} + G_{03} - G_{12},\quad n_z = G_{01} - G_{23} + G_{02} - G_{13}.\]</span> Compare the types: <span class="math inline">\(K_y = G^T_{01} + G^T_{23} - G^T_{03} - G^T_{12} + \sigma\alpha\)</span> and so on, where both families of an axis enter the two transverse types with signs <span class="math inline">\((+,-)\)</span>. For the signs the two families of an axis differ: <span class="math inline">\((+,+)\)</span> for <span class="math inline">\(\{0,1\}\)</span>, <span class="math inline">\(\{0,2\}\)</span>, <span class="math inline">\(\{0,3\}\)</span> and <span class="math inline">\((+,-)\)</span> for <span class="math inline">\(\{2,3\}\)</span>, <span class="math inline">\(\{1,3\}\)</span>, <span class="math inline">\(\{1,2\}\)</span>, in the component order <span class="math inline">\((y,z)\)</span>, <span class="math inline">\((x,z)\)</span>, <span class="math inline">\((x,y)\)</span>. So the answer to “do they share weights in the same way” is: in another way. Each chain has one signed weight, and it enters both transverse components.</p>
+<p><strong>(B2b) proof.</strong> Per <span class="math inline">\(\psi\)</span> the bond rule alone forces <span class="math inline">\(n_A\)</span> once <span class="math inline">\(n_B\)</span> satisfies <span class="math inline">\(\sum_r\lambda_r(d_r\cdot n_B) = 0\)</span>. The rows <span class="math inline">\(d_r\)</span> satisfy only <span class="math inline">\(\sum d_r = 0\)</span>, so <span class="math inline">\(D n_A\)</span> must have coordinate sum 0. The kernel is therefore 2-dimensional unless <span class="math inline">\(\sum_r\lambda_r d_r = 0\)</span>, which (the <span class="math inline">\(d_r\)</span> having that one relation) means all <span class="math inline">\(\lambda_r\)</span> are equal, <span class="math inline">\(\psi = 1\)</span>, where it is 3-dimensional. So <span class="math inline">\(\dim\ker(\text{bond}) = N + 1\)</span> on every cell. The joint kernel is smaller exactly at the <span class="math inline">\(\psi\)</span> with all <span class="math inline">\(\lambda\)</span> distinct (0 against 2) or exactly one pair (1 against 2). At <span class="math inline">\(\psi = 1\)</span> the laws alone allow 6 and the joint system 3, so the laws never imply the bond rule. The bond rule implies the laws iff the cell has no <span class="math inline">\(\psi\)</span> of the first two kinds. On <span class="math inline">\((1,1,1)\)</span> the four <span class="math inline">\(\psi\)</span> are the trivial one and three of type “two pairs” (<code>h443</code>), so it does. If some extent, say <span class="math inline">\(c\)</span>, is at least 2, then <span class="math inline">\(\chi = (i, 1, \zeta)\)</span> with <span class="math inline">\(\zeta = e^{2\pi i/4c}\)</span> is admissible, and <span class="math inline">\(\lambda = (i\zeta, i/\zeta, -i/\zeta, -i\zeta)\)</span> are distinct because <span class="math inline">\(\zeta^2 \neq \pm1\)</span>. So every other cell has a generic <span class="math inline">\(\psi\)</span>. <span class="math inline">\(\square\)</span></p>
+<h3 id="b2-computations-h443_joint.py">B2 computations (<code>h443_joint.py</code>)</h3>
+<p>Exact ranks of JOINT, LAWS and BOND. Independently, every one of the <span class="math inline">\(64abc\)</span> lifted characters is enumerated with rational exponents, its partition is classified, and the predicted dimensions are summed from the case analysis above. That second count tests every per-<span class="math inline">\(\psi\)</span> claim in aggregate.</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>ker JOINT</th>
+<th>span of modes</th>
+<th>formula</th>
+<th>Fourier count</th>
+<th>ker LAWS</th>
+<th>ker BOND</th>
+<th>bond ⇒ laws</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,1,1)</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+<td>18</td>
+<td>9</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>13</td>
+<td>13</td>
+<td>13</td>
+<td>13</td>
+<td>26</td>
+<td>17</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td>17</td>
+<td>17</td>
+<td>17</td>
+<td>17</td>
+<td>34</td>
+<td>25</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(1,1,5)</td>
+<td>25</td>
+<td>25</td>
+<td>25</td>
+<td>25</td>
+<td>50</td>
+<td>41</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>21</td>
+<td>21</td>
+<td>21</td>
+<td>21</td>
+<td>42</td>
+<td>33</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(1,2,3)</td>
+<td>21</td>
+<td>21</td>
+<td>21</td>
+<td>21</td>
+<td>42</td>
+<td>49</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(1,3,3)</td>
+<td>33</td>
+<td>33</td>
+<td>33</td>
+<td>33</td>
+<td>66</td>
+<td>73</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(1,5,5)</td>
+<td>57</td>
+<td>57</td>
+<td>57</td>
+<td>57</td>
+<td>114</td>
+<td>201</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(2,2,2)</td>
+<td>41</td>
+<td>41</td>
+<td>41</td>
+<td>41</td>
+<td>78</td>
+<td>65</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(2,2,3)</td>
+<td>37</td>
+<td>37</td>
+<td>37</td>
+<td>37</td>
+<td>74</td>
+<td>97</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(2,2,4)</td>
+<td>57</td>
+<td>57</td>
+<td>57</td>
+<td>57</td>
+<td>110</td>
+<td>129</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(3,3,3)</td>
+<td>97</td>
+<td>97</td>
+<td>97</td>
+<td>97</td>
+<td>186</td>
+<td>217</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(4,4,4)</td>
+<td>177</td>
+<td>177</td>
+<td>177</td>
+<td>177</td>
+<td>342</td>
+<td>513</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(4,3,3)</td>
+<td>69</td>
+<td>69</td>
+<td>69</td>
+<td>69</td>
+<td>138</td>
+<td>289</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(6,2,3)</td>
+<td>69</td>
+<td>69</td>
+<td>69</td>
+<td>69</td>
+<td>138</td>
+<td>289</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(5,2,4)</td>
+<td>61</td>
+<td>61</td>
+<td>61</td>
+<td>61</td>
+<td>122</td>
+<td>321</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(3,4,4)</td>
+<td>77</td>
+<td>77</td>
+<td>77</td>
+<td>77</td>
+<td>154</td>
+<td>385</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(2,4,6)</td>
+<td>89</td>
+<td>89</td>
+<td>89</td>
+<td>89</td>
+<td>174</td>
+<td>385</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(5,3,3)</td>
+<td>81</td>
+<td>81</td>
+<td>81</td>
+<td>81</td>
+<td>162</td>
+<td>361</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(4,4,6)</td>
+<td>153</td>
+<td>153</td>
+<td>153</td>
+<td>153</td>
+<td>302</td>
+<td>769</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(5,4,4)</td>
+<td>109</td>
+<td>109</td>
+<td>109</td>
+<td>109</td>
+<td>218</td>
+<td>641</td>
+<td>no</td>
+</tr>
+<tr>
+<td>(6,3,4)</td>
+<td>93</td>
+<td>93</td>
+<td>93</td>
+<td>93</td>
+<td>186</td>
+<td>577</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+<p>“Laws ⇒ bond” is false on all 22. Only the partition counts 0, 1, 2, 3 and 6 pairs occurred (the script would stop on any other), which confirms Lemma P on these cells.</p>
+<h3 id="theorem-d-the-six-directions-proved-given-c-and-lemma-3">Theorem D, the six directions (proved, given (C) and Lemma 3)</h3>
+<p>Let a frozen state have every hole oriented. By (C) (report of 17 September, confirmed by check4), <span class="math inline">\(K = \sum_C f(C)\,t_C + \kappa + \sigma_v\gamma\)</span> with type modes <span class="math inline">\(t_C = e_y - e_z\)</span>, <span class="math inline">\(e_z - e_x\)</span>, <span class="math inline">\(e_x - e_y\)</span> for chains of axis <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>, <span class="math inline">\(z\)</span>, <span class="math inline">\(\kappa = (1,0,0)\)</span> and <span class="math inline">\(\gamma = (-\alpha-\beta, \alpha, \beta)\)</span>. By Lemma 3, <span class="math inline">\(n\)</span> solves the joint system, so by Theorem J <span class="math inline">\(n = \tfrac12\sum_C g(C)\,u_C\)</span>. For a chain <span class="math inline">\(C\)</span> of axis <span class="math inline">\(m\)</span>, the transverse directions split into two unordered pairs <span class="math inline">\(\pi = \{\delta, \delta&#39;\}\)</span> with <span class="math inline">\(\delta - \delta&#39; = \pm\tfrac12u_C\)</span>. For <span class="math inline">\(\{0,1\}\)</span> these are <span class="math inline">\(\{+e_y, -e_z\}\)</span> and <span class="math inline">\(\{+e_z, -e_y\}\)</span>; for <span class="math inline">\(\{2,3\}\)</span> they are <span class="math inline">\(\{+e_y, +e_z\}\)</span> and <span class="math inline">\(\{-e_y, -e_z\}\)</span>. Orient each pair so that <span class="math inline">\(\delta - \delta&#39; = +\tfrac12u_C\)</span> and give it the weight <span class="math inline">\(a_\pi(C)\)</span>. The pair mode (<span class="math inline">\(+a\)</span> on <span class="math inline">\(D_\delta\)</span>, <span class="math inline">\(-a\)</span> on <span class="math inline">\(D_{\delta&#39;}\)</span>) contributes <span class="math inline">\(a(e_{\tau(\delta)} - e_{\tau(\delta&#39;)})\)</span> to <span class="math inline">\(K\)</span> and <span class="math inline">\(a\,u_C/2\)</span> to <span class="math inline">\(n\)</span>. With <span class="math inline">\(a_{\pi_1} = (f+g)/2\)</span> and <span class="math inline">\(a_{\pi_2} = (g-f)/2\)</span> (for family <span class="math inline">\(\{0,1\}\)</span>, <span class="math inline">\(\pi_1 = \{+y,-z\}\)</span> and <span class="math inline">\(\pi_2 = \{+z,-y\}\)</span>; the other families alike), the sum over the two pairs reproduces <span class="math inline">\(f(C)t_C\)</span> and <span class="math inline">\(\tfrac12g(C)u_C\)</span>. Therefore <span class="math display">\[D_\delta(v) = \sum_{C\ni v}\ \sum_{\pi\ni\delta,\ \pi\text{ a pair of }C} \pm a_\pi(C) + \tfrac12\kappa_{k} + \tfrac12\sigma_v\gamma_{k}\qquad(\delta = \pm e_k),\]</span> with sign <span class="math inline">\(+\)</span> when <span class="math inline">\(\delta\)</span> is the leading member. Each weight is shared by exactly two directions whose difference is parallel to the chain, in the way that a type weight is shared by the two transverse types. Explicitly, with <span class="math inline">\(h_\pm = (f\pm g)/2\)</span> per chain: <span class="math inline">\(p_y = h_+^{01} + h_+^{23} - h_-^{03} - h_+^{12} + \tfrac12\sigma\alpha\)</span> and <span class="math inline">\(m_y = h_-^{01} + h_-^{23} - h_+^{03} - h_-^{12} + \tfrac12\sigma\alpha\)</span> (superscripts give the family of the chain through <span class="math inline">\(v\)</span>), and cyclically. The weights are real, not unique (the relations of Theorems K and J), and nothing here says anything about integrality. The statement is linear. It does not encode <span class="math inline">\(|n_k| = K_k\)</span>.</p>
+<h2 id="b3-states-that-are-not-odd">B3: states that are not odd</h2>
+<p><code>h444_even.py</code> uses the type model with T2, the sign field and every hexagon even. For each cell there are 8 plain queries with random assumptions and 8 queries per axis with an unoriented cage forced at the A-hole <span class="math inline">\((2,0,0)\)</span> (both orders of the bridgehead types). Each cell is one solver process with a 300 s cap.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>queries</th>
+<th>SAT / UNSAT</th>
+<th>distinct states</th>
+<th>charged states</th>
+<th>violations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(3,3,3)</td>
+<td>32</td>
+<td>21 / 11</td>
+<td>18</td>
+<td>12</td>
+<td>0</td>
+</tr>
+<tr>
+<td>(4,4,4)</td>
+<td>32</td>
+<td>18 / 14</td>
+<td>17</td>
+<td>12</td>
+<td>0</td>
+</tr>
+<tr>
+<td>(4,3,3)</td>
+<td>32</td>
+<td>15 / 17</td>
+<td>15</td>
+<td>11</td>
+<td>0</td>
+</tr>
+<tr>
+<td>(2,4,6)</td>
+<td>32</td>
+<td>12 / 20</td>
+<td>12</td>
+<td>10</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>The violations column counts three checks per state and axis, all exact: <span class="math inline">\(P^kK_k = 0\)</span> at every hole; <span class="math inline">\(P^kn_k = c\)</span> at every hole; and <span class="math inline">\(n_k\)</span> in the span iff <span class="math inline">\(c \equiv 0\)</span> (rank test). All charges are <span class="math inline">\(\pm2\)</span>. Charged holes, 24 to 256 of them per state, occur in plain samples too. So at a charged hole <span class="math inline">\(n_k\)</span> fails the law by exactly <span class="math inline">\(c(O)\)</span> on every axis <span class="math inline">\(k\)</span>, including axes other than that of the hole’s rods. For example, in state <code>plain_7</code> on (3,3,3) every rod line of axis <span class="math inline">\(x\)</span> has one sign, yet <span class="math inline">\(n_x\)</span> is not in the span.</p>
+<p><strong>Proposition O (proved).</strong> Let every rod line be complete (Lemma 1: every even-curl state). For a rod line <span class="math inline">\(\ell\)</span> of axis <span class="math inline">\(k\)</span> and a hole <span class="math inline">\(O\)</span> on it, the charge formula gives <span class="math inline">\(c(O) = \varepsilon(O{+}2e_k) - \varepsilon(O{-}2e_k)\)</span>, the jump of <span class="math inline">\(n_k\)</span> along <span class="math inline">\(\ell\)</span> (T1). Let <span class="math inline">\(u_k\)</span> be, on each rod line of axis <span class="math inline">\(k\)</span>, the antiderivative of these jumps normalised to mean zero on the line, and 0 elsewhere. Then <span class="math inline">\(n_k - u_k = \sum_\ell \bar n_\ell \mathbf 1_\ell\)</span>, where <span class="math inline">\(\bar n_\ell\)</span> is the mean of <span class="math inline">\(n_k\)</span> on the <span class="math inline">\(k\)</span>-line <span class="math inline">\(\ell\)</span>. Any function on one sublattice that depends on one transverse coordinate lies in <span class="math inline">\(\ker P^k\)</span>: at holes of the same sublattice the methylene difference vanishes, and at holes of the other sublattice the two bridgeheads with a given transverse coordinate have opposite <span class="math inline">\(s_k\)</span>. So by Theorem K it lies in the span, and hence so does <span class="math inline">\(\sum_\ell F(\ell)\mathbf 1_\ell\)</span> for every separable <span class="math inline">\(F\)</span>. On the torus a function on the grid of lines is separable iff all its mixed second differences vanish. By Theorem 5 of the note, the mixed second difference of <span class="math inline">\(\bar n\)</span> around a <span class="math inline">\(k\)</span>-line of holes is <span class="math inline">\(\mp\)</span> its total charge divided by the line length. Hence <span class="math inline">\(n_k \equiv u_k + \sum_\ell\rho_\ell\mathbf 1_\ell\)</span> modulo the span, for any <span class="math inline">\(\rho\)</span> with those prescribed mixed differences. The data are the jumps on the rod lines of axis <span class="math inline">\(k\)</span> and the line totals of the charges. <span class="math inline">\(\square\)</span></p>
+<p><strong>Checks (<code>h445_outside.py</code>).</strong> T1 (jump law) held in 186 of 186 (state, axis) cases. “The line means are in the span” failed in 106 of 186, and it fails exactly when some <span class="math inline">\(k\)</span>-line of holes has nonzero total charge (T4, 0 exceptions). The simpler description, <span class="math inline">\(n_k \equiv u_k\)</span> from the charges on rod lines alone, is therefore wrong in general, and the correction term <span class="math inline">\(\rho\)</span> is needed.</p>
+<h2 id="b4-the-signed-line-fractions">B4: the signed line fractions</h2>
+<p><strong>Proof of Theorem F.</strong> Average <span class="math inline">\(n_k = \sum_f (\tfrac12u_f)_k G_f\)</span> along the <span class="math inline">\(k\)</span>-line through <span class="math inline">\(v\)</span>. A chain of family <span class="math inline">\(\{0,1\}\)</span> has constant <span class="math inline">\(x\)</span> and constant <span class="math inline">\(y - z\)</span> modulo <span class="math inline">\(4g_{bc}\)</span> on each sublattice. Moving along a <span class="math inline">\(y\)</span>-line or a <span class="math inline">\(z\)</span>-line through <span class="math inline">\(v\)</span> changes <span class="math inline">\(y - z\)</span> by multiples of 4, so it meets every chain of the family in the pair of planes of <span class="math inline">\(v\)</span> equally often. The average of <span class="math inline">\(G_{01}\)</span> is therefore <span class="math inline">\(F_{01}\)</span>, the mean weight of the <span class="math inline">\(\{0,1\}\)</span> chains whose A-plane is <span class="math inline">\(x\)</span> (for <span class="math inline">\(v \in\)</span> A) or <span class="math inline">\(x - 1\)</span> (for <span class="math inline">\(v \in\)</span> B, since <span class="math inline">\(d_0\)</span> has <span class="math inline">\(x\)</span>-component <span class="math inline">\(+1\)</span>). For <span class="math inline">\(\{2,3\}\)</span> it is <span class="math inline">\(x + 1\)</span> on B (<span class="math inline">\(d_2\)</span> has <span class="math inline">\(x\)</span>-component <span class="math inline">\(-1\)</span>). The other families work the same way. Substituting the components of <span class="math inline">\(\tfrac12u_f\)</span> gives the formulas of item 13. <span class="math inline">\(\square\)</span></p>
+<p>So the three signed fractions carry six family profiles, two per coordinate. On one sublattice the <span class="math inline">\(x\)</span>-profiles of <span class="math inline">\(\sigma_y\)</span> and <span class="math inline">\(\sigma_z\)</span> are the sum and the difference of <span class="math inline">\(F_{01}\)</span> and <span class="math inline">\(F_{23}\)</span>. They are not tied to each other, but they tie A to B: given the A fractions, the B fractions are determined up to additive constants. The sum at a vertex is <span class="math inline">\(2F_{01}(x) + 2U_{02}(y) + 2W_{03}(z)\)</span> + const on A, shifted on B, and it is not constant. The direction fractions are <span class="math inline">\((h_k/\ell_k \pm \sigma_k)/2\)</span>, separable in the same two coordinates.</p>
+<p><strong>Checks (<code>h446_fractions.py</code>; exact, Fractions).</strong> Test S is separability of each <span class="math inline">\(\sigma_k\)</span> on each sublattice. Test L is that the B profiles are the predicted shifts of the family profiles read off A, up to constants. Test Σ is the formula for the sum.</p>
+<table>
+<thead>
+<tr>
+<th>source</th>
+<th>states</th>
+<th>J (joint system)</th>
+<th>S</th>
+<th>L</th>
+<th>Σ formula</th>
+<th>Σ constant</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>corpus <span class="math inline">\(L=3\)</span> (odd)</td>
+<td>637</td>
+<td>637</td>
+<td>637</td>
+<td>637</td>
+<td>637</td>
+<td>48</td>
+</tr>
+<tr>
+<td>corpus <span class="math inline">\(L=4\)</span> (odd)</td>
+<td>720</td>
+<td>720</td>
+<td>720</td>
+<td>720</td>
+<td>720</td>
+<td>38</td>
+</tr>
+<tr>
+<td>odd (2,2,4)</td>
+<td>14</td>
+<td>14</td>
+<td>14</td>
+<td>14</td>
+<td>14</td>
+<td>0</td>
+</tr>
+<tr>
+<td>odd (2,4,6)</td>
+<td>14</td>
+<td>14</td>
+<td>14</td>
+<td>14</td>
+<td>14</td>
+<td>0</td>
+</tr>
+<tr>
+<td>odd (4,3,3)</td>
+<td>5</td>
+<td>5</td>
+<td>5</td>
+<td>5</td>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>odd (4,4,6)</td>
+<td>15</td>
+<td>15</td>
+<td>15</td>
+<td>15</td>
+<td>15</td>
+<td>1</td>
+</tr>
+<tr>
+<td>even, uncharged (4 cells)</td>
+<td>17</td>
+<td>17</td>
+<td>17</td>
+<td>17</td>
+<td>17</td>
+<td>9</td>
+</tr>
+<tr>
+<td>even, charged (4 cells)</td>
+<td>45</td>
+<td>0</td>
+<td>0</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Values of the sum on A in odd states include <span class="math inline">\(\{-1, -\tfrac13, \tfrac13\}\)</span> at <span class="math inline">\(L = 3\)</span> and <span class="math inline">\(\{-\tfrac12, 0, \tfrac12, 1\}\)</span> at <span class="math inline">\(L = 4\)</span>. In every charged state some <span class="math inline">\(\sigma_k\)</span> fails to be separable, as Theorem 5 predicts.</p>
+<p>Item 15 (not explained): for each coordinate the script recorded whether <span class="math inline">\(F_{01}\)</span>, <span class="math inline">\(F_{23}\)</span>, both or neither is constant on A, and likewise for the other two coordinates. All four outcomes occur at every coordinate. But in all 1,422 oriented states at least one coordinate has a constant family profile. I have no argument for this, and a sample of this kind has misled the project before.</p>
+<h2 id="b5-directions-on-one-sublattice-optional">B5: directions on one sublattice (optional)</h2>
+<p><code>h448_dirsets.py</code>: type model with T2 and the sign field, no oddness, nothing about the other sublattice. Reversing all arrows and the maps <span class="math inline">\(\mathrm{diag}(-1,-1,1)\)</span> and so on preserve both sublattices and together flip any single axis of the moments. So only the pattern per axis matters: absent (0), one-way (1) or two-way (2). On (4,3,3) the swap <span class="math inline">\(y\leftrightarrow z\)</span> was also used. Each query came with a control that drops the constraints on one required axis, and all controls were SAT.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>patterns queried</th>
+<th>SAT</th>
+<th>UNSAT</th>
+<th>longest query</th>
+<th>wall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(4,3,3)</td>
+<td>17</td>
+<td>every pattern with at most two axes nonzero (11)</td>
+<td>every pattern with three axes nonzero (6)</td>
+<td>34 s</td>
+<td>75 s</td>
+</tr>
+<tr>
+<td>(6,2,3)</td>
+<td>26</td>
+<td>at most two axes (18)</td>
+<td>three axes (8)</td>
+<td>13.5 s</td>
+<td>49 s</td>
+</tr>
+<tr>
+<td>(5,2,4)</td>
+<td>26</td>
+<td>at most two axes (18)</td>
+<td>three axes (8)</td>
+<td>33 s</td>
+<td>95 s</td>
+</tr>
+</tbody>
+</table>
+<p>So on these cells the signs add no restriction on one sublattice beyond Theorem S (no sublattice carries all three types): two two-way axes on one sublattice occur. No query of the form “odd and all six directions”, or anything equivalent to H, was run.</p>
+<h2 id="computations-run">Computations run</h2>
+<p>From <code>scratch_h</code>, project <code>.venv</code>, <code>PYTHONPATH=&lt;repo&gt;:&lt;repo&gt;/experiments/08_frozen_structure</code>, <code>TMPDIR=&lt;repo&gt;/.tmp</code>. Logs and state files in <code>&lt;repo&gt;/.tmp</code> (<code>h441.log</code>, <code>h443.log</code>, <code>h444_*.json</code>, <code>h447_*.json</code>).</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>command</th>
+<th>what it tested</th>
+<th>verdict</th>
+<th>wall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h441_kernel.py 3,3,3 1,1,1 2,3,3</code></td>
+<td>pre-flight, B1 ranks</td>
+<td>equal, formula ok</td>
+<td>0.9 s</td>
+</tr>
+<tr>
+<td><code>h441_kernel.py</code> (20 cells, listed above)</td>
+<td>B1 kernel = span, formula, chain counts</td>
+<td>60/60 equal</td>
+<td>14.5 s (run twice)</td>
+</tr>
+<tr>
+<td><code>h443_joint.py 1,1,1 2,2,2 3,3,3</code></td>
+<td>pre-flight, B2</td>
+<td>equal</td>
+<td>1.7 s</td>
+</tr>
+<tr>
+<td><code>h443_joint.py 4,4,4</code></td>
+<td>timing, B2</td>
+<td>equal</td>
+<td>8.1 s</td>
+</tr>
+<tr>
+<td><code>h443_joint.py</code> (18 cells)</td>
+<td>B2 ranks, formulas, Fourier count, B2b</td>
+<td>all equal</td>
+<td>70 s</td>
+</tr>
+<tr>
+<td><code>h442_symbol.py</code> (first run)</td>
+<td>symbolic identities</td>
+<td>check (2) False: script bug (substitution)</td>
+<td>1.3 s</td>
+</tr>
+<tr>
+<td><code>h442_symbol.py</code></td>
+<td>the same, fixed</td>
+<td>ALL OK</td>
+<td>1.1 s</td>
+</tr>
+<tr>
+<td><code>h444_even.py 3,3,3 2 120</code></td>
+<td>pre-flight, even states</td>
+<td>6 SAT, 2 UNSAT, 0 violations</td>
+<td>1.5 s</td>
+</tr>
+<tr>
+<td><code>h444_even.py CELL 8 300</code> on 4 cells</td>
+<td>B3 samples and checks</td>
+<td>table above</td>
+<td>solver 0.2 to 0.4 s, under 3 s each</td>
+</tr>
+<tr>
+<td><code>h445_outside.py</code> (4 cells, twice)</td>
+<td>Proposition O checks</td>
+<td>T1 0 failures; T4 0 failures</td>
+<td>2.4 s</td>
+</tr>
+<tr>
+<td><code>h447_oddsample.py 2,4,6 3 60</code></td>
+<td>pre-flight, odd samples</td>
+<td>3 SAT</td>
+<td>1.2 s</td>
+</tr>
+<tr>
+<td><code>h447_oddsample.py CELL 16 300</code> on (2,4,6), (4,4,6), (2,2,4), (4,3,3)</td>
+<td>odd non-cubic samples</td>
+<td>15/16/14/5 SAT; no charged hole</td>
+<td>0.5, 19.2, 0.2, 20.1 s solver</td>
+</tr>
+<tr>
+<td><code>h446_fractions.py</code> (twice)</td>
+<td>B4 on corpus and samples</td>
+<td>table above</td>
+<td>8 s</td>
+</tr>
+<tr>
+<td><code>h448_dirsets.py 4,3,3 120</code> (first run)</td>
+<td>pre-flight</td>
+<td>crashed (unused variable)</td>
+<td>1 s</td>
+</tr>
+<tr>
+<td><code>h448_dirsets.py 4,3,3 120</code></td>
+<td>pre-flight</td>
+<td>controls UNSAT on 3-axis patterns (control design, see below)</td>
+<td>31 s</td>
+</tr>
+<tr>
+<td><code>h448_dirsets.py CELL 200</code> on 3 cells</td>
+<td>B5</td>
+<td>table above</td>
+<td>75, 49, 95 s</td>
+</tr>
+</tbody>
+</table>
+<p>No query hit its cap. Every solve went through <code>h32_cap.run_batch</code>, one process per cell, with a cap of 300 s or less for the whole batch.</p>
+<h2 id="what-failed-and-why">What failed, and why</h2>
+<ol type="1">
+<li><strong>The simpler description of the charge defect.</strong> My first guess was that in an even-curl state <span class="math inline">\(n_k\)</span> is, modulo the span, the mean-zero antiderivative of the charges along the rod lines of axis <span class="math inline">\(k\)</span>. It fails in 106 of 186 cases, exactly when a line of holes along <span class="math inline">\(k\)</span> has nonzero total charge. Those totals include holes whose rods lie on other axes. The correct statement (Proposition O) adds the term <span class="math inline">\(\rho\)</span> from Theorem 5.</li>
+<li><strong>B5 controls.</strong> The first control (“the same directions present, with no absences required”) was UNSAT for every pattern with three axes, because it is itself the three-types query that Theorem S excludes. It was replaced by dropping the constraints on one required axis, and all controls were then SAT.</li>
+<li><strong>Two script bugs</strong>, found and fixed before use: a substitution error in check (2) of <code>h442</code>, and an undefined variable in <code>h448</code>.</li>
+<li><strong>Hand proof of Lemma M.</strong> I first tried to derive it from the type chain-mode lemma of the record, through the derivation of <span class="math inline">\(P^k\)</span> from (T2). That route works, but it rests on a lemma I did not re-read, so I replaced it with the direct four-line check above.</li>
+<li><strong>No direct real-space proof.</strong> The kernel theorem is not a factorisation of <span class="math inline">\(P^k\)</span> itself. The factorisation exists only after eliminating one sublattice (item 3), and the case analysis at the degenerate <span class="math inline">\(\psi\)</span> is still needed.</li>
+</ol>
+<h2 id="rules">Rules</h2>
+<p>No rule was broken, as far as I know. Four points need stating. I listed the <code>scratch_h</code> directory, which shows check7’s file names (h430 to h432), but I did not open, run or touch them. I used shell <code>for</code> loops (not heredocs) to run the same script on several cells one after another, one solver process at a time. I imported read-only from <code>h38_lib</code>, <code>a4_typemodel</code>, <code>h32_cap</code> and <code>hlib</code> and modified none of them. For B5 I re-implemented the sign-field encoding in <code>h448</code> because <code>a4_typemodel.add_sign_field</code> does not expose its variables.</p>
+<h2 id="relation-to-the-main-loops-claims">Relation to the main loop’s claims</h2>
+<p>Nothing contradicts them. Four refinements: (a) Only the antisymmetric sublattice constant is needed beyond the chains, because <span class="math inline">\(\mathbf 1_A + \mathbf 1_B\)</span> is a chain sum. (b) “The six indicators have the same linear form as the types” is true in the sense of Theorem D, but the sharing is different. Each chain carries two weights, each coupling two directions whose difference is along the chain. The signed part has no sublattice constant, and the two families of an axis enter with different signs. (c) The signed line fractions do not add to a constant. There are six profiles, not three, and the fractions of B are determined by those of A up to constants, which has no counterpart for the types. (d) The membership of <span class="math inline">\(n_k\)</span> in the span, sampled in 34 states by the main loop, holds in all 1,357 corpus states and all 65 oriented samples, and is now a consequence of Lemma 3 and Theorem K rather than an observation.</p>
+</main>
+</body>
+</html>

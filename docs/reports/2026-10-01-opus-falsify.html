@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Falsify: a whole-torus SAT search for a counterexample to Theorem U on (3,3,9), (4,4,8), (7,7,7), (8,8,8), (6,6,9) and (3,3,12); none exists, and Theo</title>
+<meta name="description" content="Falsify: a whole-torus SAT search for a counterexample to Theorem U on (3,3,9), (4,4,8), (7,7,7), (8,8,8), (6,6,9) and (3,3,12); none exists, and Theorem U′ is certified on all six">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Falsify: a whole-torus SAT search for a counterexample to Theorem U on (3,3,9), (4,4,8), (7,7,7), (8,8,8), (6,6,9) and (3,3,12); none exists, and Theorem U′ is certified on all six",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-10-01-opus-falsify.html",
+ "datePublished": "2026-10-01",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus), agent falsify, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-10-01-opus-falsify.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/u-prime-certificates-2026-10-01.html">u-prime-certificates-2026-10-01</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Falsify: a whole-torus SAT search for a counterexample to Theorem U on (3,3,9), (4,4,8), (7,7,7), (8,8,8), (6,6,9) and (3,3,12); none exists, and Theorem U′ is certified on all six</h1>
+
+<p class="author">Claude (Opus), agent falsify, for Lyndon Drake</p>
+<p class="date">2026-10-01</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#verdict" id="toc-verdict">Verdict</a></li>
+<li><a href="#f1.-the-query-set" id="toc-f1.-the-query-set">F1. The query set</a></li>
+<li><a href="#pre-flight-f1-before-any-batch" id="toc-pre-flight-f1-before-any-batch">Pre-flight (F1), before any batch</a></li>
+<li><a href="#f2.-results-all-solver-every-control-sat-witness-ok-0-odd-hexagons" id="toc-f2.-results-all-solver-every-control-sat-witness-ok-0-odd-hexagons">F2. Results (all solver; every control SAT, witness ok, 0 odd hexagons)</a></li>
+<li><a href="#witness-section" id="toc-witness-section">Witness section</a></li>
+<li><a href="#f3.-certificates-certified" id="toc-f3.-certificates-certified">F3. Certificates (certified)</a></li>
+<li><a href="#what-this-changes-in-the-map" id="toc-what-this-changes-in-the-map">What this changes in the map</a></li>
+<li><a href="#scripts-and-timings" id="toc-scripts-and-timings">Scripts and timings</a></li>
+<li><a href="#rules-kept-or-broken" id="toc-rules-kept-or-broken">Rules kept or broken</a></li>
+</ul>
+</details></nav>
+<h2 id="verdict">Verdict</h2>
+<p><strong>UNSAT.</strong> Every query of Theorem U′ completed UNSAT at every cell of the brief, the optional two included: (3,3,9), (4,4,8), (3,3,12), (7,7,7), (8,8,8) and (6,6,9). Every query has a SAT control whose witness was decoded and re-checked. <strong>No counterexample</strong> to U, to H or to the periodicity conjecture exists on these cells (solver). With DRAT proofs checked by drat-trim (<code>s VERIFIED</code>) and symmetries checked as clause-set identities, <strong>Theorem U′, and so Theorem U, is certified on all six cells (certified)</strong>. By Theorem 1, <strong>Theorem H holds on all six cells</strong>. By Lemma 21 it also holds on every cell whose extents divide one of them, coordinate-wise and up to relabelling the axes. That adds open cells such as (3,6,9) and (4,8,8).</p>
+<p>Status tags: <strong>solver</strong> = cadical verdict with no proof. <strong>certified</strong> = the CNF file is refuted by cadical with a DRAT proof, drat-trim prints <code>s VERIFIED</code>, and any symmetry used is checked as a CNF automorphism. <strong>computed</strong> = an exact computation with no solver verdict.</p>
+<p>Total solver and checker wall: 6,353 s, about 106 minutes, inside the 3-hour budget. That is 191 s of pre-flight, 4,259 s of search (F2) and 1,903 s of certificates (F3). Each solve ran in a child cadical process with a hard <code>subprocess.run</code> timeout, one at a time, on this Mac.</p>
+<h2 id="f1.-the-query-set">F1. The query set</h2>
+<p><strong>The model.</strong> It is the type-only model of h280 (<code>h280_certlib.Model</code>), generalised to any cell in <code>h740_lib.GModel</code>:</p>
+<ul>
+<li>one-hot types;</li>
+<li>(T2) on every hexagon, as at most two and at least two of the six match literals, with no auxiliaries;</li>
+<li>an odd selector s(h) per hexagon, forbidding a match on A together with one on B.</li>
+</ul>
+<p>The only change from h280 is in the geometry. It is built from <code>lattice.build(a, b, c)</code>, and the minimal image uses each coordinate’s own box (h280 uses box[0] for all three). <strong>On (4,4,4) and (5,5,5) the CNF is identical to h280’s, clause for clause, in both the type-only and the type-and-sign models, and the 16 U′ unit sets are identical to h282’s</strong> (<code>h741 --selftest</code>; computed).</p>
+<p>The type model has weaker hypotheses than a frozen state (no cocycle, no ice rule). So UNSAT here covers every frozen state, and SAT would only be a candidate for the bond model.</p>
+<p><strong>One query</strong> at a cell (a, b, c) is given by:</p>
+<ul>
+<li>a rod axis k;</li>
+<li>the hole O = c0 + 2e_k, where c0 is the first vertex of the sublattice (A or B), so the holes are A + 2e_k for every k;</li>
+<li>an order (lower, upper) = (a, b) or (b, a) of the other two axes;</li>
+<li>a lower bridgehead i ∈ {0, 1}, at s_k = −1;</li>
+<li>an upper bridgehead j ∈ {0, 1}, at s_k = +1.</li>
+</ul>
+<p>The units are t(O − 2e_k, k), t(O + 2e_k, k), t(lower_i, a) and t(upper_j, b). The query is base ∧ units ∧ (⋁_h s(h)). The control is base ∧ units, which is SAT, and its witness is re-checked from positions: one-hot, (T2) counted, the units, and 0 odd hexagons.</p>
+<p>That gives <strong>16 queries per axis</strong>: 2 sublattices × 2 orders × 2 × 2 bridgeheads. The cage on axis k is h280’s x-cage with x replaced by k (<code>gcage</code>). For k = x it is h280’s cage exactly.</p>
+<p><strong>What covers which.</strong> FCC translations act transitively on the holes of each sublattice on every cell, and they are checked as automorphisms (h743), so one hole per sublattice suffices.</p>
+<ul>
+<li><strong>Cubic cells (7,7,7), (8,8,8).</strong> The cyclic permutation C (e_x → e_y → e_z) carries axis x to y and z. h283 re-run at L = 7 and L = 8 shows that T1 to T3, C, Tr, I and Rz are all automorphisms of the type-only + odd CNF, that the deliberate non-symmetry fails, and that the 16 hypotheses on axis x form <strong>one orbit</strong> (computed).
+<ul>
+<li>F2 ran all 16 on axis x directly.</li>
+<li>F3 certified one per sublattice and order: 4 queries, as at L = 6.</li>
+</ul></li>
+<li><strong>Non-cubic cells (3,3,9), (4,4,8), (3,3,12), (6,6,9).</strong> The transposition y ↔︎ z is not a symmetry, and C is not one either. Only the maps that permute equal extents survive. <code>h743_orbits.py</code> tried every signed permutation preserving the box, with shifts in {0..3}^3. It accepted 64 maps as clause-set automorphisms of the base CNF (all 64 site-preserving candidates) and found <strong>3 orbits</strong> of the 48 hypotheses on each of the four cells (computed):
+<ul>
+<li>16 on axes x and y with (i, j) ∈ {(0,0), (1,1)}, both sublattices and both orders;</li>
+<li>16 on axes x and y with (i, j) ∈ {(0,1), (1,0)};</li>
+<li>all 16 on the long axis z.</li>
+</ul>
+So <strong>the two bridgehead diagonals on the short axes do not reduce to each other</strong>, and z does not reduce to x or y. On (4,4,4) the same program finds one orbit of all 48, as a control.
+<ul>
+<li>F2 ran all 48 queries (3 axes × 16) directly on every non-cubic cell.</li>
+<li>F3 certified all 48 directly on (3,3,9), (4,4,8) and (3,3,12). On (6,6,9) it certified one representative per orbit: x A l0u0 yz, x A l0u1 yz and z A l0u0 xy.</li>
+</ul></li>
+</ul>
+<p><strong>Encoding check on non-cubic cells</strong> (<code>h742_corpuslift.py</code>; computed). Odd frozen corpus states were repeated by Lemma 21: 60 states of (3,3,3) to (3,3,9), and 40 of (4,4,4) to (4,4,8).</p>
+<ul>
+<li>Every lifted state satisfies the full base CNF, with s(h) = [h odd], and has an odd hexagon.</li>
+<li>Straight holes with both rods of type k were found on every axis: (5796, 5640, 4710) on (3,3,9) and (12824, 5148, 6048) on (4,4,8).</li>
+<li>The full U′ pattern occurs 0 times.</li>
+</ul>
+<p><strong>From U′ to U and H.</strong> The unoriented cage is exactly a straight hole with bridgeheads aa/bb (Lemma 3, an enumeration of one cage, which does not depend on the cell). It contains the four U′ literals, so U′ on all three axes gives U on the cell, and Theorem 1 gives H.</p>
+<h2 id="pre-flight-f1-before-any-batch">Pre-flight (F1), before any batch</h2>
+<p>One query plus its control, without proof logging (solver):</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>N</th>
+<th>clauses</th>
+<th>one query (s)</th>
+<th>queries planned</th>
+<th>projected (min)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(6,6,6) re-time</td>
+<td>1728</td>
+<td>127,872</td>
+<td>18.2 (record: about 20)</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>(3,3,9)</td>
+<td>648</td>
+<td>47,952</td>
+<td>0.9 (x), 2.0 (z)</td>
+<td>48</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td>(4,4,8)</td>
+<td>1024</td>
+<td>75,776</td>
+<td>6.5 (x), 5.1 (z)</td>
+<td>48</td>
+<td>5</td>
+</tr>
+<tr>
+<td>(3,3,12)</td>
+<td>864</td>
+<td>63,936</td>
+<td>3.3 (z)</td>
+<td>48</td>
+<td>2.5</td>
+</tr>
+<tr>
+<td>(7,7,7)</td>
+<td>2744</td>
+<td>203,056</td>
+<td>36.7</td>
+<td>16</td>
+<td>10</td>
+</tr>
+<tr>
+<td>(6,6,9)</td>
+<td>2592</td>
+<td>191,808</td>
+<td>32.8 (z)</td>
+<td>48</td>
+<td>26</td>
+</tr>
+<tr>
+<td>(8,8,8)</td>
+<td>4096</td>
+<td>303,104</td>
+<td>84.7</td>
+<td>16</td>
+<td>23</td>
+</tr>
+</tbody>
+</table>
+<p>The projected F2 total was about 68 minutes, so no query came near the 45-minute ceiling.</p>
+<p>F3 was projected at about 40 minutes. Proof size grows with N: 0.9 to 1.3 GB at side 7 was measured before side 8 was launched, and 2 to 3 GB was projected at side 8, under the 4 GB limit.</p>
+<p>The caps were 300 s for the small cells, 600 s for (7,7,7) and (6,6,9), and 1200 s for (8,8,8). None was reached.</p>
+<h2 id="f2.-results-all-solver-every-control-sat-witness-ok-0-odd-hexagons">F2. Results (all solver; every control SAT, witness ok, 0 odd hexagons)</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>axis</th>
+<th>queries</th>
+<th>verdict</th>
+<th>solve total / max (s)</th>
+<th>controls</th>
+<th>ctrl max (s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(3,3,9)</td>
+<td>x</td>
+<td>16</td>
+<td>16 UNSAT</td>
+<td>16.9 / 1.4</td>
+<td>16 SAT, ok</td>
+<td>0.10</td>
+</tr>
+<tr>
+<td>(3,3,9)</td>
+<td>y</td>
+<td>16</td>
+<td>16 UNSAT</td>
+<td>18.1 / 1.4</td>
+<td>16 SAT, ok</td>
+<td>0.09</td>
+</tr>
+<tr>
+<td>(3,3,9)</td>
+<td>z</td>
+<td>16</td>
+<td>16 UNSAT</td>
+<td>35.8 / 2.6</td>
+<td>16 SAT, ok</td>
+<td>0.10</td>
+</tr>
+<tr>
+<td>(4,4,8)</td>
+<td>x</td>
+<td>16</td>
+<td>16 UNSAT</td>
+<td>102.2 / 7.6</td>
+<td>16 SAT, ok</td>
+<td>0.12</td>
+</tr>
+<tr>
+<td>(4,4,8)</td>
+<td>y</td>
+<td>16</td>
+<td>16 UNSAT</td>
+<td>114.8 / 8.0</td>
+<td>16 SAT, ok</td>
+<td>0.10</td>
+</tr>
+<tr>
+<td>(4,4,8)</td>
+<td>z</td>
+<td>16</td>
+<td>16 UNSAT</td>
+<td>92.0 / 6.4</td>
+<td>16 SAT, ok</td>
+<td>0.12</td>
+</tr>
+<tr>
+<td>(3,3,12)</td>
+<td>x</td>
+<td>16</td>
+<td>16 UNSAT</td>
+<td>29.9 / 2.5</td>
+<td>16 SAT, ok</td>
+<td>0.10</td>
+</tr>
+<tr>
+<td>(3,3,12)</td>
+<td>y</td>
+<td>16</td>
+<td>16 UNSAT</td>
+<td>24.4 / 2.1</td>
+<td>16 SAT, ok</td>
+<td>0.12</td>
+</tr>
+<tr>
+<td>(3,3,12)</td>
+<td>z</td>
+<td>16</td>
+<td>16 UNSAT</td>
+<td>57.5 / 4.3</td>
+<td>16 SAT, ok</td>
+<td>0.19</td>
+</tr>
+<tr>
+<td>(7,7,7)</td>
+<td>x</td>
+<td>16</td>
+<td>16 UNSAT</td>
+<td>677.6 / 48.3</td>
+<td>16 SAT, ok</td>
+<td>0.16</td>
+</tr>
+<tr>
+<td>(8,8,8)</td>
+<td>x</td>
+<td>16</td>
+<td>16 UNSAT</td>
+<td>1499.2 / 124.1</td>
+<td>16 SAT, ok</td>
+<td>0.20</td>
+</tr>
+<tr>
+<td>(6,6,9)</td>
+<td>x</td>
+<td>16</td>
+<td>16 UNSAT</td>
+<td>502.7 / 35.3</td>
+<td>16 SAT, ok</td>
+<td>0.18</td>
+</tr>
+<tr>
+<td>(6,6,9)</td>
+<td>y</td>
+<td>16</td>
+<td>16 UNSAT</td>
+<td>536.5 / 39.5</td>
+<td>16 SAT, ok</td>
+<td>0.14</td>
+</tr>
+<tr>
+<td>(6,6,9)</td>
+<td>z</td>
+<td>16</td>
+<td>16 UNSAT</td>
+<td>524.5 / 34.9</td>
+<td>16 SAT, ok</td>
+<td>0.46</td>
+</tr>
+</tbody>
+</table>
+<p>There were 224 queries: 224 UNSAT, 0 SAT and 0 TIMEOUT. The 224 controls were all SAT.</p>
+<p>The (7,7,7) solve times (37 to 48 s) are somewhat inflated, because the orbit program h743 ran alongside the first queries; that was CPU contention, not a second solver.</p>
+<h2 id="witness-section">Witness section</h2>
+<p>None: no query was SAT, so the bond-model re-run, the two-way check (a) and the conjecture search (b) did not arise.</p>
+<h2 id="f3.-certificates-certified">F3. Certificates (certified)</h2>
+<p>Each UNSAT query was re-run with a cadical DRAT proof and checked by drat-trim.</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>axis</th>
+<th>queries</th>
+<th>verdict</th>
+<th>drat-trim</th>
+<th>proof size (MB)</th>
+<th>solve max (s)</th>
+<th>drat-trim max (s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(3,3,9)</td>
+<td>x, y, z</td>
+<td>48 (all)</td>
+<td>48 UNSAT</td>
+<td>48 × <code>s VERIFIED</code></td>
+<td>17.4 to 35.1</td>
+<td>2.7</td>
+<td>1.6</td>
+</tr>
+<tr>
+<td>(3,3,12)</td>
+<td>x, y, z</td>
+<td>48 (all)</td>
+<td>48 UNSAT</td>
+<td>48 × <code>s VERIFIED</code></td>
+<td>17.5 to 50.2</td>
+<td>4.4</td>
+<td>2.2</td>
+</tr>
+<tr>
+<td>(4,4,8)</td>
+<td>x, y, z</td>
+<td>48 (all)</td>
+<td>48 UNSAT</td>
+<td>48 × <code>s VERIFIED</code></td>
+<td>73.4 to 151.0</td>
+<td>8.7</td>
+<td>5.1</td>
+</tr>
+<tr>
+<td>(7,7,7)</td>
+<td>x</td>
+<td>4 (A/B × yz/zy, l0u0)</td>
+<td>4 UNSAT</td>
+<td>4 × <code>s VERIFIED</code></td>
+<td>864 to 1287</td>
+<td>47.5</td>
+<td>29.8</td>
+</tr>
+<tr>
+<td>(6,6,9)</td>
+<td>x, x, z</td>
+<td>3 (one per orbit)</td>
+<td>3 UNSAT</td>
+<td>3 × <code>s VERIFIED</code></td>
+<td>753, 753, 900</td>
+<td>35.2</td>
+<td>20.9</td>
+</tr>
+<tr>
+<td>(8,8,8)</td>
+<td>x</td>
+<td>4 (A/B × yz/zy, l0u0)</td>
+<td>4 UNSAT</td>
+<td>4 × <code>s VERIFIED</code></td>
+<td>1982 to 2916</td>
+<td>123.2</td>
+<td>69.5</td>
+</tr>
+</tbody>
+</table>
+<p>What each cell’s certificate rests on:</p>
+<ul>
+<li>(3,3,9), (3,3,12) and (4,4,8) are certified on every query directly, needing only the FCC translations.</li>
+<li>(7,7,7) and (8,8,8) are certified through the single orbit and C (h283 at L = 7, 8).</li>
+<li>(6,6,9) is certified through the three orbits of h743.</li>
+</ul>
+<p>The two (6,6,9) x proofs have equal size (753,088,480 B) but different CNF and DRAT hashes.</p>
+<p><strong>Files.</strong> Proofs over 50 MB were deleted after checking, and their SHA-256 and size were kept. 96 proofs are kept, all from the three small cells. All CNFs are kept. Together the files take 2.9 GB in <code>scratch_h/certs/h74x_*</code>.</p>
+<p><code>.gitignore</code> now ignores <code>certs/h74x_*.cnf</code> and <code>certs/h74x_*.drat</code>. The verdict file <code>certs/h74x_results.jsonl</code> (all 233 rows, pre-flight included) and the hash list <code>certs/h74x_sha256_2026-10-01.txt</code> are not ignored. Nothing was committed.</p>
+<h2 id="what-this-changes-in-the-map">What this changes in the map</h2>
+<p>Theorem U, and with it Theorem H by Theorem 1, now holds by certificate on (3,3,9), (4,4,8), (3,3,12), (6,6,9), (7,7,7) and (8,8,8). By Lemma 21 it also holds on every cell whose extents divide one of these, up to an axis permutation. Examples are (3,6,9), (4,8,8), (2,8,8) and (1,7,7).</p>
+<p>This extends Theorem 2 and proves nothing uniform. Two facts bear on the hand route:</p>
+<ul>
+<li>The search found no near miss: every control is SAT in under 0.5 s, and every query is UNSAT in at most about 2 minutes.</li>
+<li>Solve time grows smoothly with N, from 1.4 s at N = 648 to 124 s at N = 4096. On a cubic cell it goes 2.4, 9.5, 18 to 22, 37 to 48 and 85 to 124 s from side 4 to side 8.</li>
+</ul>
+<p>The K_u certificates of the first step already exist at sides 7 and 8, but they are no longer needed (Theorem 1, form of 30 September).</p>
+<h2 id="scripts-and-timings">Scripts and timings</h2>
+<p>All the scripts below are in <code>experiments/08_frozen_structure/scratch_h/</code>. No existing script was modified. h282 and h283 were re-run unchanged.</p>
+<ul>
+<li><code>h740_lib.py</code>: the GModel encoding (h280 generalised to a cell (a, b, c)), <code>gcage</code> on any axis, and <code>uprime_queries</code>.</li>
+<li><code>h741_uprime.py</code>: the runner. It does the control then the query, decodes and re-checks witnesses, and with <code>--drat</code> adds the DRAT proof and drat-trim. <code>--selftest</code> checks the CNF against h280 and h282. It writes rows to <code>certs/h74x_results.jsonl</code>.</li>
+<li><code>h742_corpuslift.py</code>: the corpus lift encoding check.</li>
+<li><code>h743_orbits.py</code>: the automorphisms and orbits on a non-cubic cell.</li>
+<li><code>h744_summary.py</code>: the tables and the SHA-256 list.</li>
+</ul>
+<p>The logs are in <code>.tmp/h741_F2_*.log</code> and <code>.tmp/h741_F3_*.log</code>.</p>
+<p>Re-run any cell, from <code>scratch_h</code> with the brief’s environment line:</p>
+<pre><code>h741_uprime.py 3 3 9 xyz all [--drat]
+h741_uprime.py 8 8 8 x 0,0,0,0 0,1,0,0 1,0,0,0 1,1,0,0 --drat --cap 1200 --dcap 2400
+h743_orbits.py 6 6 9
+h283_symcheck.py 8</code></pre>
+<h2 id="rules-kept-or-broken">Rules kept or broken</h2>
+<ul>
+<li><strong>Kept:</strong>
+<ul>
+<li>Mac only, with no <code>--host</code>.</li>
+<li>Every solve and check in a child process with a hard timeout (<code>h280_certlib.run</code>).</li>
+<li>One solver process at a time.</li>
+<li>Nothing detached: long batches ran as harness background shells, sequential, each finishing before the next.</li>
+<li>Whole-torus queries only: no windows, slabs or cuts.</li>
+<li>No hand-proof routes touched.</li>
+<li>New scripts numbered h740 to h744, with docstrings.</li>
+<li>No existing script modified, and no commits.</li>
+<li>The brief asked for proofs over 4 GB to be skipped. The largest was 2.9 GB, so none was skipped.</li>
+<li>Solver and checker wall 106 minutes, inside the 3-hour limit.</li>
+</ul></li>
+<li><strong>Edits outside scratch_h:</strong>
+<ul>
+<li><code>.gitignore</code>: three lines for <code>certs/h74x_*</code>, as the brief allowed.</li>
+</ul></li>
+<li><strong>Deviation:</strong>
+<ul>
+<li>Witness files would have gone to <code>.tmp/h741_witness_*.json</code>, not <code>.tmp/h74x_witness_&lt;cell&gt;.json</code>. None was written.</li>
+<li>h743 ran alongside the (7,7,7) batch. It is a pure-Python CNF identity check, not a solver, but it slowed those solves.</li>
+</ul></li>
+</ul>
+</main>
+</body>
+</html>

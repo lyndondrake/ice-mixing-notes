@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Completeness of the chain modes, proved for every cell: a stratified symbolic kernel computation on the unit torus</title>
+<meta name="description" content="Completeness of the chain modes, proved for every cell: a stratified symbolic kernel computation on the unit torus">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Completeness of the chain modes, proved for every cell: a stratified symbolic kernel computation on the unit torus",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-17-completeness.html",
+ "datePublished": "2026-09-17",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus 5), prover agent completeness, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-17-completeness.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/parametrisation-c.html">parametrisation-c</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Completeness of the chain modes, proved for every cell: a stratified symbolic kernel computation on the unit torus</h1>
+
+<p class="author">Claude (Opus 5), prover agent completeness, for Lyndon Drake</p>
+<p class="date">2026-09-17</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#target-statement" id="toc-target-statement">1. Target statement</a></li>
+<li><a href="#outcome" id="toc-outcome">2. Outcome</a></li>
+<li><a href="#definitions-and-encodings" id="toc-definitions-and-encodings">3. Definitions and encodings</a></li>
+<li><a href="#what-was-found" id="toc-what-was-found">4. What was found</a></li>
+<li><a href="#residual" id="toc-residual">5. Residual</a></li>
+<li><a href="#solver-checks-run" id="toc-solver-checks-run">6. Solver checks run</a></li>
+</ul>
+</details></nav>
+<h2 id="target-statement">1. Target statement</h2>
+<p>Let <span class="math inline">\(H\)</span> be the space of real solutions <span class="math inline">\((a,b)\)</span> on the vertices of the torus of the homogeneous two-match system: for every hexagon <span class="math inline">\(h\)</span>, <span class="math display">\[\sum_{v\in h}\mathrm{ind}_h(v)=0,\qquad
+\mathrm{ind}_h(v)=\begin{cases}-a(v)-b(v)&amp;\alpha_h(v)=x\\ a(v)&amp;\alpha_h(v)=y\\ b(v)&amp;\alpha_h(v)=z.\end{cases}\]</span> The <strong>chain modes</strong> <span class="math inline">\(m_C\)</span> (the vector <span class="math inline">\(w_E\)</span> on the vertices of a chain <span class="math inline">\(C\)</span> of axis <span class="math inline">\(E\)</span> and zero elsewhere, <span class="math inline">\(w_x=e_y-e_z\)</span>, <span class="math inline">\(w_y=e_z-e_x\)</span>, <span class="math inline">\(w_z=e_x-e_y\)</span>, so <span class="math inline">\((a,b)\)</span> components <span class="math inline">\((1,-1)\)</span>, <span class="math inline">\((0,1)\)</span>, <span class="math inline">\((-1,0)\)</span>) solve it, as do the two <strong>sublattice-antisymmetric constants</strong> <span class="math inline">\((a,b)=\sigma_v(\alpha,\beta)\)</span> with <span class="math inline">\(\sigma=+1\)</span> on A and <span class="math inline">\(-1\)</span> on B.</p>
+<p><strong>Completeness</strong> is the claim that these span <span class="math inline">\(H\)</span> on <strong>every</strong> cell <span class="math inline">\((a,b,c)\)</span>. It was verified numerically on seven small cells (<code>e13_realspace.py</code>, <code>e18_verify.py</code>) and is the premise of the parametrisation theorem of <code>docs/theorem-h-2026-09-06.md</code> and of the new partner identity (<code>r6_modes.py</code>, <code>r6_exact.py</code>, main loop, today). The note records that “a hand proof of completeness is the determinant computation above; it was not written out”. Probe F was to write it out as a stratified symbolic kernel computation over the whole unit torus, with sympy and no SAT solver.</p>
+<h2 id="outcome">2. Outcome</h2>
+<p><strong>Completeness is proved, for every cell, with no exception: at every one of the 69 strata into which the unit torus falls the kernel of the Fourier matrix is exactly the span of the chain modes supported there, together with the two constants at the sixteen points where the character is trivial on the FCC lattice.</strong> No stratum has a kernel larger than the mode span, so the note’s table is not a small-cell coincidence and no extra real-space mode exists. The proof is short because the <span class="math inline">\(4\times4\)</span> matrix, after clearing denominators, is built out of only four polynomials <span class="math inline">\(A=x^2-y^2\)</span>, <span class="math inline">\(B=x^2-z^2\)</span>, <span class="math inline">\(P=x^2y^2-1\)</span>, <span class="math inline">\(Q=x^2z^2-1\)</span>, one row per omitted direction, and the row omitting <span class="math inline">\(d_\ell\)</span> vanishes identically on exactly the <span class="math inline">\(\ell\)</span>-th kagome locus. The stratification has four types: a single chain family (rank 3, kernel 1), both families of one axis (rank 2, kernel 2), the three families of one kagome plane (rank 2, kernel 2, one row vacuous, one relation <span class="math inline">\(w_x+w_y+w_z=0\)</span> among the three modes), and the sixteen degenerate points where <span class="math inline">\(M\)</span> is the zero matrix (kernel 4, where the chain modes give only 2 and the two constants are indispensable). Every wavevector of the torus falls into one of these by an exact classification of which of the six locus conditions can hold at once, and the classification is forced: of the <span class="math inline">\(2^6\)</span> subsets only fourteen are realisable. Two independent cross-checks back the phase conventions: a numerical Fourier transform of the real-space chain modes on <span class="math inline">\((2,2,3)\)</span> reproduces the formula <span class="math inline">\(v_f(k)=(w_E,\;w_E/\chi(d_i))\)</span> to <span class="math inline">\(10^{-15}\)</span>, and the bookkeeping <span class="math inline">\(\sum_q\dim\ker M(q)=\dim H\)</span> holds on three cells, with the note’s seven-cell rank table reproduced exactly and extended to seven further cells.</p>
+<h2 id="definitions-and-encodings">3. Definitions and encodings</h2>
+<p><strong>Lattice.</strong> Diamond sites in quarter-cube units, box <span class="math inline">\((4a,4b,4c)\)</span>; A-sublattice is the FCC lattice <span class="math inline">\(\Lambda\)</span> generated by <span class="math inline">\((0,2,2)\)</span>, <span class="math inline">\((2,0,2)\)</span>, <span class="math inline">\((2,2,0)\)</span> (index 16 in <span class="math inline">\(\mathbb{Z}^3\)</span>), B is <span class="math inline">\(\Lambda+(1,1,1)\)</span>; the four A-to-B displacements are <span class="math inline">\(d_0=(1,1,1)\)</span>, <span class="math inline">\(d_1=(1,-1,-1)\)</span>, <span class="math inline">\(d_2=(-1,1,-1)\)</span>, <span class="math inline">\(d_3=(-1,-1,1)\)</span>. Axis pairing (<code>icemix.cnf.AXIS_PAIRS</code>): <span class="math inline">\(x=\{0,1\},\{2,3\}\)</span>; <span class="math inline">\(y=\{0,2\},\{1,3\}\)</span>; <span class="math inline">\(z=\{0,3\},\{1,2\}\)</span>.</p>
+<p><strong>Chain families.</strong> A chain of family <span class="math inline">\(f=\{i,j\}\)</span> alternates <span class="math inline">\(+d_i\)</span> and <span class="math inline">\(-d_j\)</span>; its period is <span class="math inline">\(u_f=d_i-d_j\)</span> and its axis is <span class="math inline">\(\mathrm{axis}(i,j)\)</span>. The six families, their steps and their loci (status: <em>computed</em>, <code>f1_strata.py</code>):</p>
+<table>
+<thead>
+<tr>
+<th>family</th>
+<th>axis</th>
+<th>step <span class="math inline">\(u_f\)</span></th>
+<th><span class="math inline">\(\chi(u_f)-1\)</span> vanishes iff</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(\{1,2\}\)</span></td>
+<td><span class="math inline">\(z\)</span></td>
+<td><span class="math inline">\((2,-2,0)\)</span></td>
+<td><span class="math inline">\(A=x^2-y^2=0\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\{0,3\}\)</span></td>
+<td><span class="math inline">\(z\)</span></td>
+<td><span class="math inline">\((2,2,0)\)</span></td>
+<td><span class="math inline">\(P=x^2y^2-1=0\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\{1,3\}\)</span></td>
+<td><span class="math inline">\(y\)</span></td>
+<td><span class="math inline">\((2,0,-2)\)</span></td>
+<td><span class="math inline">\(B=x^2-z^2=0\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\{0,2\}\)</span></td>
+<td><span class="math inline">\(y\)</span></td>
+<td><span class="math inline">\((2,0,2)\)</span></td>
+<td><span class="math inline">\(Q=x^2z^2-1=0\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\{2,3\}\)</span></td>
+<td><span class="math inline">\(x\)</span></td>
+<td><span class="math inline">\((0,2,-2)\)</span></td>
+<td><span class="math inline">\(C=y^2-z^2=0\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\{0,1\}\)</span></td>
+<td><span class="math inline">\(x\)</span></td>
+<td><span class="math inline">\((0,2,2)\)</span></td>
+<td><span class="math inline">\(R=y^2z^2-1=0\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Note <span class="math inline">\(C=B-A\)</span>, <span class="math inline">\(z^2P-y^2Q=C\)</span> and <span class="math inline">\(x^2R=z^2P-B\)</span>, which is why only <span class="math inline">\(A,B,P,Q\)</span> appear in the matrix.</p>
+<p><strong>Fourier reduction.</strong> For <span class="math inline">\((x,y,z)\)</span> on the unit 3-torus put <span class="math inline">\(\chi(p)=x^{p_1}y^{p_2}z^{p_3}\)</span> and take the ansatz <span class="math inline">\(\text{field}(v)=\mathrm{amp}_{\mathrm{sub}(v)}\cdot\chi(\mathrm{pos}\,v)\)</span> with <span class="math inline">\(\mathrm{amp}_A=(a_A,b_A)\)</span>, <span class="math inline">\(\mathrm{amp}_B=(a_B,b_B)\)</span>. Translating a hexagon by <span class="math inline">\(\lambda\in\Lambda\)</span> multiplies its equation by <span class="math inline">\(\chi(\lambda)\)</span>, so the system collapses to one equation per <span class="math inline">\(\Lambda\)</span>-orbit of hexagons. There are exactly four such orbits, one per omitted direction <span class="math inline">\(\ell\)</span> (<em>computed</em>, <code>f1_check.py</code> check (0): on <span class="math inline">\((2,2,2)\)</span>, <span class="math inline">\((2,2,3)\)</span>, <span class="math inline">\((3,3,3)\)</span> the <span class="math inline">\(16abc\)</span> hexagons form 4 orbits of <span class="math inline">\(4abc\)</span>, one per <span class="math inline">\(\ell\)</span>; equivalently <span class="math inline">\(n_{\text{hex}}=16abc=4\cdot4abc\)</span>, four per FCC cell). Hence <span class="math inline">\(M(x,y,z)\in\mathbb{C}^{4\times4}\)</span> acting on <span class="math inline">\((a_A,b_A,a_B,b_B)\)</span>, row <span class="math inline">\(i\)</span> being the orbit omitting <span class="math inline">\(d_i\)</span>.</p>
+<p><strong>Why the unit torus is the right index set.</strong> <span class="math inline">\(B_{abc}=4a\mathbb{Z}\times
+4b\mathbb{Z}\times4c\mathbb{Z}\subset\Lambda\)</span>, and the restriction map <span class="math inline">\(\mathrm{Hom}(\mathbb{Z}^3/B_{abc},U(1))\to\mathrm{Hom}(\Lambda/B_{abc},U(1))\)</span> is surjective with kernel <span class="math inline">\(K=\{\kappa:\kappa|_\Lambda=1\}\)</span> of order 16 (<span class="math inline">\(\kappa\in\mu_4^3\)</span> with <span class="math inline">\(\kappa_x^2=\kappa_y^2=\kappa_z^2\)</span>). So the <span class="math inline">\(64abc\)</span> lifted characters <span class="math inline">\(x^{4a}=y^{4b}=z^{4c}=1\)</span> cover each of the <span class="math inline">\(4abc\)</span> FCC wavevectors of the cell exactly 16 times, and proving the claim for every point of the unit torus proves it for every cell (<em>proved</em>). The redundancy is harmless: for <span class="math inline">\(\kappa\in K\)</span> one has <span class="math inline">\(M(\kappa\cdot e)=M(e)\,\mathrm{diag}(1,1,\lambda,\lambda)\)</span> with <span class="math inline">\(\lambda=\kappa_x\kappa_y\kappa_z\)</span>, so the kernels correspond.</p>
+<p><strong>The mode vectors.</strong> A chain of family <span class="math inline">\(f=\{i,j\}\)</span> based at an A vertex <span class="math inline">\(p_0\)</span> has A vertices <span class="math inline">\(p_0+nu_f\)</span> and B vertices <span class="math inline">\(p_0+d_i+nu_f\)</span>; its Fourier amplitude is supported where <span class="math inline">\(\chi(u_f)=1\)</span>, and there <span class="math inline">\(\chi(d_i)=\chi(d_j)\)</span>, so the family contributes the single line <span class="math display">\[v_f(k)=\bigl(w_E,\;w_E/\chi(d_i)\bigr)\in\mathbb{C}^4 .\]</span> Explicitly (<em>computed</em>, verified numerically in §4.6):</p>
+<table>
+<thead>
+<tr>
+<th><span class="math inline">\(f\)</span></th>
+<th><span class="math inline">\(v_f=(a_A,b_A,a_B,b_B)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(\{0,1\}\)</span></td>
+<td><span class="math inline">\((1,-1,\,1/xyz,\,-1/xyz)\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\{0,2\}\)</span></td>
+<td><span class="math inline">\((0,1,\,0,\,1/xyz)\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\{0,3\}\)</span></td>
+<td><span class="math inline">\((-1,0,\,-1/xyz,\,0)\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\{1,2\}\)</span></td>
+<td><span class="math inline">\((-1,0,\,-yz/x,\,0)\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\{1,3\}\)</span></td>
+<td><span class="math inline">\((0,1,\,0,\,yz/x)\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\{2,3\}\)</span></td>
+<td><span class="math inline">\((1,-1,\,xz/y,\,-xz/y)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong>The constants.</strong> A field constant on each sublattice with opposite signs has <span class="math inline">\(\chi|_\Lambda=1\)</span>, that is <span class="math inline">\((x,y,z)\in K\)</span>; there the two constant vectors are <span class="math inline">\((1,0,-1/xyz,0)\)</span> and <span class="math inline">\((0,1,0,-1/xyz)\)</span>.</p>
+<p><strong>Real versus complex.</strong> The system has integer coefficients and the modes are integer vectors, so if the complex span of the modes equals <span class="math inline">\(\ker_{\mathbb{C}}\)</span> then intersecting with <span class="math inline">\(\mathbb{R}^n\)</span> gives the real statement. Everything below is over <span class="math inline">\(\mathbb{C}\)</span>.</p>
+<p><strong>Environment.</strong> Mac, project venv, <code>PYTHONPATH</code> with the repo root and <code>experiments/08_frozen_structure</code>. Scripts <code>scratch_h/f1_strata.py</code> and <code>scratch_h/f1_check.py</code>; logs in <code>scratch_h/attack_2026-09-17/</code> (<code>f1_strata.log</code>, <code>f1_check.log</code>, <code>f1_matrix.log</code>). No SAT solver was used and none was needed.</p>
+<h2 id="what-was-found">4. What was found</h2>
+<h3 id="the-matrix-and-its-determinant">4.1 The matrix and its determinant</h3>
+<p>Clearing denominators row by row (each row multiplied by a monomial, which does not change the kernel) gives, with <span class="math inline">\(A,B,P,Q\)</span> as above (<em>computed</em>, <code>f1_matrix.log</code>):</p>
+<p><span class="math display">\[M=\begin{pmatrix}
+-xyz\,A &amp; -xyz\,B &amp; z^2A &amp; y^2B\\
+-xz^2P &amp; -xy^2Q &amp; yz\,P &amp; yz\,Q\\
+yz^2P &amp; y\,B &amp; -xz\,P &amp; -xy^2z\,B\\
+z\,A &amp; y^2z\,Q &amp; -xyz^2A &amp; -xy\,Q
+\end{pmatrix}\]</span></p>
+<p>row <span class="math inline">\(i\)</span> being the hexagon orbit omitting <span class="math inline">\(d_i\)</span>. Its determinant is <span class="math display">\[\det M=4x^2y^2z^2\,ABC\,PQR
+=4x^2y^2z^2\prod_{f}\bigl(\text{locus polynomial of }f\bigr),\]</span> which is the note’s formula up to the monomial (the raw, uncleared matrix has <span class="math inline">\(\det=4ABCPQR/(y^2z^6)\)</span>, exactly as in <code>docs/theorem-h-2026-09-06.md</code> and <code>e11_fourier.py</code>). The script checks <span class="math inline">\(\det M/\prod_f(\chi(u_f)-1)=4/z^2\)</span>, a nonzero constant times a monomial, so <strong>the twelve surfaces of the determinant are precisely the six chain loci</strong> and nothing else (<em>proved</em>).</p>
+<p>Two structural facts follow by inspection and are asserted in the script:</p>
+<ul>
+<li><strong>(S1)</strong> every entry of <span class="math inline">\(M\)</span> is a monomial multiple of one of <span class="math inline">\(A,B,P,Q\)</span>;</li>
+<li><strong>(S2)</strong> row 0 uses only <span class="math inline">\(A,B\)</span>; row 1 only <span class="math inline">\(P,Q\)</span>; row 2 only <span class="math inline">\(P,B\)</span>; row 3 only <span class="math inline">\(A,Q\)</span>. Hence row <span class="math inline">\(\ell\)</span> vanishes identically exactly on the locus where its two polynomials both vanish, and those four loci are precisely the four kagome strata of §4.2 (<em>computed</em>, asserted: “rows vanishing = [<span class="math inline">\(\ell\)</span>]” for each <span class="math inline">\(\ell\)</span>).</li>
+</ul>
+<h3 id="the-classification-of-the-strata">4.2 The classification of the strata</h3>
+<p>For a point <span class="math inline">\(k\)</span> of the torus let <span class="math inline">\(Z(k)\)</span> be the set of families <span class="math inline">\(f\)</span> with <span class="math inline">\(\chi(u_f)=1\)</span>. Writing <span class="math inline">\(E=(x^2,y^2,z^2)\)</span>, each of the six conditions is <span class="math inline">\(E^n=1\)</span> for an integer vector <span class="math inline">\(n\)</span>, and <span class="math inline">\(E^m=E^n=1\)</span> forces <span class="math inline">\(E^{m\pm n}=1\)</span>; a condition <span class="math inline">\(E^n=1\)</span> is forced by a set <span class="math inline">\(S\)</span> precisely when <span class="math inline">\(n\)</span> lies in the subgroup of <span class="math inline">\(\mathbb{Z}^3\)</span> generated by <span class="math inline">\(S\)</span>’s vectors (not merely in its saturation: <span class="math inline">\(E^{2n}=1\)</span> leaves <span class="math inline">\(E^n=\pm1\)</span>). The script computes this subgroup membership exactly by Hermite normal form over all <span class="math inline">\(2^6\)</span> subsets. <strong>Result (proved):</strong> exactly fourteen subsets are closed, and they are</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th><span class="math inline">\(|Z|\)</span></th>
+<th>patterns</th>
+<th>count</th>
+<th>geometry</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td><span class="math inline">\(\{\}\)</span></td>
+<td>1</td>
+<td>generic</td>
+</tr>
+<tr>
+<td>1</td>
+<td>each single family</td>
+<td>6</td>
+<td>one <span class="math inline">\(\langle110\rangle\)</span> direction</td>
+</tr>
+<tr>
+<td>2</td>
+<td><span class="math inline">\(\{01,23\}\)</span>, <span class="math inline">\(\{02,13\}\)</span>, <span class="math inline">\(\{03,12\}\)</span></td>
+<td>3</td>
+<td>both families of one axis</td>
+</tr>
+<tr>
+<td>3</td>
+<td><span class="math inline">\(\{12,13,23\}\)</span>, <span class="math inline">\(\{01,02,12\}\)</span>, <span class="math inline">\(\{01,03,13\}\)</span>, <span class="math inline">\(\{02,03,23\}\)</span></td>
+<td>4</td>
+<td>the three families of the kagome plane <span class="math inline">\(\perp d_\ell\)</span>, <span class="math inline">\(\ell=0,3,2,1\)</span></td>
+</tr>
+<tr>
+<td>6</td>
+<td>all</td>
+<td>1</td>
+<td><span class="math inline">\(\chi\)</span> trivial on <span class="math inline">\(\Lambda\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The two facts that make the list short: two conditions from different coordinate pairs always force a third (so <span class="math inline">\(|Z|=2\)</span> across pairs is impossible), and both conditions of one pair force the fourth power of each of its two phases to be 1 (for the pair <span class="math inline">\((x,y)\)</span>: <span class="math inline">\(x^2=y^2\)</span> and <span class="math inline">\(x^2y^2=1\)</span> give <span class="math inline">\(x^4=1\)</span>), after which any further condition forces all six. Hence <span class="math inline">\(|Z|\in\{0,1,2,3,6\}\)</span> and <span class="math inline">\(|Z|\in\{4,5\}\)</span> cannot occur.</p>
+<p>Resolving the signs (each condition <span class="math inline">\(x^2=y^2\)</span> splits into <span class="math inline">\(x=\pm y\)</span>, each <span class="math inline">\(x^2y^2=1\)</span> into <span class="math inline">\(xy=\pm1\)</span>) gives <strong>68 strata</strong> with <span class="math inline">\(Z\neq\{\}\)</span>, plus the generic stratum. Each stratum below is parametrised by free symbols <span class="math inline">\(s,t\)</span> ranging over the unit circle, subject to the genericity conditions that no further family is present.</p>
+<h3 id="the-stratum-table">4.3 The stratum table</h3>
+<p>Every entry is <em>proved</em>: on each stratum the script verifies <span class="math inline">\(M\,v_f=0\)</span> identically for every supported mode, certifies <span class="math inline">\(\mathrm{rank}\,M\)</span> by exhibiting a minor whose every non-monomial irreducible factor divides one of the excluded locus polynomials (so it cannot vanish anywhere on the stratum) and by checking that all larger minors vanish identically, and certifies <span class="math inline">\(\dim\mathrm{span}\)</span> of the modes the same way.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th>type</th>
+<th>strata</th>
+<th>parametrisation</th>
+<th><span class="math inline">\(Z\)</span></th>
+<th>rank <span class="math inline">\(M\)</span></th>
+<th><span class="math inline">\(\dim\ker\)</span></th>
+<th>spanned by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>generic</td>
+<td>1</td>
+<td><span class="math inline">\(\det M\neq0\)</span></td>
+<td><span class="math inline">\(\{\}\)</span></td>
+<td>4</td>
+<td>0</td>
+<td>nothing needed</td>
+</tr>
+<tr>
+<td>I</td>
+<td>12</td>
+<td><span class="math inline">\(x=\pm y\)</span>; <span class="math inline">\(xy=\pm1\)</span>; <span class="math inline">\(x=\pm z\)</span>; <span class="math inline">\(xz=\pm1\)</span>; <span class="math inline">\(y=\pm z\)</span>; <span class="math inline">\(yz=\pm1\)</span> (other two phases free)</td>
+<td>one family</td>
+<td>3</td>
+<td>1</td>
+<td>that family’s <span class="math inline">\(v_f\)</span></td>
+</tr>
+<tr>
+<td>II</td>
+<td>24</td>
+<td>one coordinate pair fixed at <span class="math inline">\((w,\pm w)\)</span>, <span class="math inline">\(w\in\mu_4\)</span>; third phase <span class="math inline">\(t\)</span> free, <span class="math inline">\(t^2\neq w^2\)</span></td>
+<td>both families of one axis</td>
+<td>2</td>
+<td>2</td>
+<td>the two <span class="math inline">\(v_f\)</span></td>
+</tr>
+<tr>
+<td>III</td>
+<td>16</td>
+<td><span class="math inline">\((x,y,z)=(t,\delta_1t,\delta_2t)\)</span>, <span class="math inline">\((t,\delta_1t,\delta_2/t)\)</span>, <span class="math inline">\((t,\delta_1/t,\delta_2t)\)</span>, <span class="math inline">\((t,\delta_1/t,\delta_2/t)\)</span>, <span class="math inline">\(\delta_i=\pm1\)</span>, <span class="math inline">\(t^4\neq1\)</span></td>
+<td>the three families of one kagome plane</td>
+<td>2</td>
+<td>2</td>
+<td>any two of the three <span class="math inline">\(v_f\)</span> (they sum to zero)</td>
+</tr>
+<tr>
+<td>IV</td>
+<td>16</td>
+<td><span class="math inline">\((x,y,z)\in\{\pm1\}^3\cup\{\pm i\}^3\)</span></td>
+<td>all six</td>
+<td>0</td>
+<td>4</td>
+<td>two independent <span class="math inline">\(v_f\)</span> <strong>plus both constants</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Counts: <span class="math inline">\(12+24+16+16=68\)</span>. Verdict on every one of the 68: <strong>SPANNED</strong> (<code>f1_strata.log</code>, summary table). Strata with a kernel not spanned by the modes: <strong>0</strong>.</p>
+<p>Three worked cases, each hand-checkable from the matrix of §4.1.</p>
+<p><strong>Type I, <span class="math inline">\(x=y=s\)</span>, <span class="math inline">\(z=t\)</span></strong> (family <span class="math inline">\(\{1,2\}\)</span>, axis <span class="math inline">\(z\)</span>). The rows become</p>
+<p><span class="math display">\[\begin{aligned}
+\text{row }0&amp;=s^2(t^2-s^2)\,(0,\,t,\,0,\,-1),\\
+\text{row }3&amp;=s^2(s^2t^2-1)\,(0,\,t,\,0,\,-1),\\
+\text{row }1&amp;=s\,\bigl(-t^2(s^4-1),\,-s^2(s^2t^2-1),\,t(s^4-1),\,t(s^2t^2-1)\bigr),\\
+\text{row }2&amp;=s\,\bigl(t^2(s^4-1),\,s^2-t^2,\,-t(s^4-1),\,-s^2t(s^2-t^2)\bigr).
+\end{aligned}\]</span></p>
+<p>Rows 0 and 3 are proportional. The vector <span class="math inline">\((1,0,t,0)\)</span> is annihilated by all four (rows 0 and 3 have zero first and third entries; rows 1 and 2 give <span class="math inline">\(\mp t^2(s^4-1)\pm t\cdot t(s^4-1)=0\)</span>), and it is minus the mode <span class="math inline">\(v_{\{1,2\}}=(-1,0,-t,0)\)</span>, since <span class="math inline">\(\chi(d_1)=x/yz=1/t\)</span> here. The <span class="math inline">\(3\times3\)</span> minor on rows <span class="math inline">\((0,1,2)\)</span>, columns <span class="math inline">\((0,1,3)\)</span> is <span class="math display">\[2s^4t^2(s^4-1)(s^2-t^2)^2(s^2t^2-1),\]</span> whose factors are exactly the locus polynomials of the five absent families (<span class="math inline">\(s^4-1\)</span> is <span class="math inline">\(\{0,3\}\)</span>; <span class="math inline">\(s^2-t^2\)</span> is <span class="math inline">\(\{1,3\}\)</span> and <span class="math inline">\(\{2,3\}\)</span>; <span class="math inline">\(s^2t^2-1\)</span> is <span class="math inline">\(\{0,2\}\)</span> and <span class="math inline">\(\{0,1\}\)</span>), so it is nonzero at every point of the stratum. Rank 3, kernel 1, spanned. The other eleven type-I strata are the same computation with signs.</p>
+<p><strong>Type III, <span class="math inline">\(\ell=0\)</span>, <span class="math inline">\(x=y=z=t\)</span>, <span class="math inline">\(t^4\neq1\)</span>.</strong> Row 0 vanishes identically (<span class="math inline">\(A=B=0\)</span>), and the rest are <span class="math inline">\(t^2(t^4-1)\)</span> times <span class="math inline">\((-t,-t,1,1)\)</span>, <span class="math inline">\((t,0,-1,0)\)</span>, <span class="math inline">\((0,t,0,-1)\)</span>, the first being minus the sum of the other two. Rank 2 (minor on rows <span class="math inline">\((1,2)\)</span>, columns <span class="math inline">\((0,1)\)</span> equals <span class="math inline">\(t^6(t^4-1)^2\)</span>, nonzero since <span class="math inline">\(t^4\neq1\)</span>), kernel <span class="math inline">\(\{(a,b,ta,tb)\}\)</span>. The three supported modes are <span class="math inline">\(v_{\{1,2\}}=(-1,0,-t,0)\)</span>, <span class="math inline">\(v_{\{1,3\}}=(0,1,0,t)\)</span>, <span class="math inline">\(v_{\{2,3\}}=(1,-1,t,-t)\)</span>; they sum to zero (this is <span class="math inline">\(w_x+w_y+w_z=0\)</span>, the kagome-layer relation of the note, appearing here as a relation in Fourier space) and any two span the kernel. Spanned.</p>
+<p><strong>Type IV, <span class="math inline">\((x,y,z)=(i,i,i)\)</span>.</strong> Here <span class="math inline">\(x^2=y^2=z^2=-1\)</span>, so <span class="math inline">\(A=B=P=Q=0\)</span> and by (S1) <span class="math inline">\(M\)</span> is the <strong>zero matrix</strong>: the kernel is all of <span class="math inline">\(\mathbb{C}^4\)</span>. Every <span class="math inline">\(\chi(d_j)=-i\)</span>, so all six modes have the form <span class="math inline">\((w,\,i\,w)\)</span> and span only 2 dimensions, while the constants are <span class="math inline">\((1,0,-i,0)\)</span> and <span class="math inline">\((0,1,0,-i)\)</span>, of the form <span class="math inline">\((w,-i\,w)\)</span>, giving the remaining 2. <strong>The two constants are indispensable at all sixteen type-IV points and nowhere else</strong>; the script reports “dim span(chain modes alone) = 2” at each.</p>
+<h3 id="the-special-points-explicitly">4.4 The special points, explicitly</h3>
+<p>The sixteen type-IV points are exactly <span class="math inline">\(K\)</span>, the characters trivial on <span class="math inline">\(\Lambda\)</span>: <span class="math inline">\(x^2=y^2=z^2=\sigma\)</span> with <span class="math inline">\(\sigma=\pm1\)</span>, that is <span class="math inline">\((x,y,z)\in\{\pm1\}^3\)</span> (eight points, <span class="math inline">\(\sigma=1\)</span>) or <span class="math inline">\(\{\pm i\}^3\)</span> (eight points, <span class="math inline">\(\sigma=-1\)</span>). All sixteen sit over the single FCC wavevector <span class="math inline">\(q=0\)</span>; <span class="math inline">\((1,1,1)\)</span> and <span class="math inline">\((-1,-1,-1)\)</span> are two of the sixteen, and the note’s phrase “at <span class="math inline">\(k=(\pi,\pi,\pi)\)</span> two further modes appear” is this point in the <span class="math inline">\((-1,-1,-1)\)</span> lift. Treating only <span class="math inline">\((\pi,\pi,\pi)\)</span> would have left fourteen points unexamined; all sixteen are done here and all sixteen behave identically (rank 0, kernel 4, chain modes 2, constants 2).</p>
+<p>The other places where strata meet are already in the list, because the stratification is by the value of <span class="math inline">\(Z(k)\)</span>, which is defined at every point of the torus: a point where two type-I surfaces cross has <span class="math inline">\(|Z|\geq2\)</span> and so is a type II, III or IV point, never a type-I point. The genericity conditions in the table are exactly the statement that the point is not in a deeper stratum, and every certifying minor was checked to be nonvanishing on the stratum in that precise sense.</p>
+<p><strong>Coverage audit</strong> (<em>computed</em>, <code>f1_strata.log</code>). Over the 13824 points of <span class="math inline">\(\mu_{24}^3\)</span> the script computed <span class="math inline">\(Z(k)\)</span> and checked that (i) only the fourteen classified patterns occur and (ii) every point with <span class="math inline">\(Z\neq\{\}\)</span> satisfies the defining equations of a listed stratum with the matching <span class="math inline">\(Z\)</span>:</p>
+<table>
+<thead>
+<tr>
+<th><span class="math inline">\(Z\)</span></th>
+<th>points</th>
+<th><span class="math inline">\(Z\)</span></th>
+<th>points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(\{\}\)</span></td>
+<td>8160</td>
+<td>each <span class="math inline">\(|Z|=2\)</span> pattern</td>
+<td>176</td>
+</tr>
+<tr>
+<td>each singleton</td>
+<td>800</td>
+<td>each <span class="math inline">\(|Z|=3\)</span> pattern</td>
+<td>80</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>all six</td>
+<td>16</td>
+</tr>
+</tbody>
+</table>
+<p>Uncovered points: <strong>0</strong>. Patterns outside the classification: <strong>0</strong>. The 16 is a direct sighting of <span class="math inline">\(K\)</span>.</p>
+<h3 id="the-proof-in-words">4.5 The proof, in words</h3>
+<p>Let <span class="math inline">\(k\)</span> be any point of the unit torus.</p>
+<ol type="1">
+<li>If <span class="math inline">\(Z(k)=\{\}\)</span> then <span class="math inline">\(\det M\neq0\)</span> by §4.1, so <span class="math inline">\(\ker M=0\)</span>, and no chain family is supported at <span class="math inline">\(k\)</span>: nothing to span.</li>
+<li>Otherwise <span class="math inline">\(Z(k)\)</span> is one of the thirteen nonempty closed patterns of §4.2, and <span class="math inline">\(k\)</span> lies in one of the 68 strata.</li>
+<li>On each stratum, <span class="math inline">\(M v_f=0\)</span> for every supported <span class="math inline">\(f\)</span> (verified symbolically; it is also the chain-mode lemma of the note, proved by hand there), the supported modes have the dimension stated, and <span class="math inline">\(\mathrm{rank}\,M=4-\dim\)</span> by a minor that cannot vanish anywhere on the stratum together with the vanishing of all larger minors. Hence <span class="math inline">\(\ker M(k)\)</span> equals the span of the supported modes, with the two constants added at the sixteen points of <span class="math inline">\(K\)</span> and nowhere else.</li>
+<li>For a cell <span class="math inline">\((a,b,c)\)</span>, <span class="math inline">\(H\otimes\mathbb{C}=\bigoplus_q\ker M(q)\)</span> over the <span class="math inline">\(4abc\)</span> FCC wavevectors of the cell, every one of which is a restriction of a point of the unit torus; the chain modes of family <span class="math inline">\(f\)</span> span, at each <span class="math inline">\(q\)</span> with <span class="math inline">\(\chi(u_f)=1\)</span>, exactly the line <span class="math inline">\(\mathbb{C}v_f(q)\)</span> and nothing elsewhere, and the two constants span the antisymmetric part at <span class="math inline">\(q=0\)</span>. (The first of these is the transverse discrete Fourier transform on the set of parallel chains of the family, which is onto; consistently, the number of chains of family <span class="math inline">\(f\)</span> equals <span class="math inline">\(\#\{q:\chi(u_f)=1\}\)</span>, and summing over <span class="math inline">\(f\)</span> gives the cell’s chain count, checked on four cells in §4.6d.) By step 3 the two sides agree wavevector by wavevector, so they agree in total: the chain modes and the two constants span <span class="math inline">\(H\)</span>. Taking real points gives the real statement. <span class="math inline">\(\square\)</span></li>
+</ol>
+<h3 id="cross-checks">4.6 Cross-checks</h3>
+<p>Status <em>computed</em> throughout, <code>f1_check.log</code>.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>check</th>
+<th>cell(s)</th>
+<th>what was tested</th>
+<th>verdict</th>
+<th>seconds</th>
+<th>script, task</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(0) orbits</td>
+<td>(2,2,2), (2,2,3), (3,3,3)</td>
+<td>hexagons form 4 <span class="math inline">\(\Lambda\)</span>-orbits, one per <span class="math inline">\(\ell\)</span></td>
+<td>true, orbit size <span class="math inline">\(4abc\)</span></td>
+<td>&lt;1</td>
+<td><code>f1_check.py</code> <code>orbit_check</code></td>
+</tr>
+<tr>
+<td>(a) phase convention</td>
+<td>(2,2,3)</td>
+<td>DFT of real chain modes over all 768 lifted <span class="math inline">\(k\)</span>: support and proportionality to <span class="math inline">\(v_f(k)\)</span></td>
+<td>0 failures, worst deviation <span class="math inline">\(1.6\times10^{-15}\)</span></td>
+<td>&lt;1</td>
+<td><code>f1_check.py</code> <code>fourier_check</code></td>
+</tr>
+<tr>
+<td>(b) bookkeeping</td>
+<td>(1,2,2), (2,2,2), (2,2,3)</td>
+<td><span class="math inline">\(\sum_{\text{lifted }k}\dim\ker M=16\dim H\)</span>, and <span class="math inline">\(\dim\ker\)</span> at each <span class="math inline">\(k\)</span> matches the stratum prediction <span class="math inline">\(0,1,2,2,4\)</span> by <span class="math inline">\(|Z|\)</span></td>
+<td>22 = 22, 42 = 42, 38 = 38; 0 mismatches</td>
+<td>&lt;1</td>
+<td><code>f1_check.py</code> <code>bookkeeping</code></td>
+</tr>
+<tr>
+<td>(c) rank table</td>
+<td>14 cells</td>
+<td><span class="math inline">\(\dim H\)</span> against rank of (chain modes + 2 constants), exact mod <span class="math inline">\(p=10000019\)</span></td>
+<td>equal on all 14</td>
+<td>1</td>
+<td><code>f1_check.py</code> <code>table</code></td>
+</tr>
+<tr>
+<td>(d) closed form</td>
+<td>unit torus; 4 cells</td>
+<td>the matrix of §4.1 is the raw matrix row by row times a monomial; relation count per cell against the rank deficit</td>
+<td>true for all 4 rows; 4, 8, 4, 12 relations, all matching</td>
+<td>&lt;1</td>
+<td><code>f1_check.py</code> <code>cleared_form</code></td>
+</tr>
+<tr>
+<td>strata</td>
+<td>unit torus</td>
+<td>68 strata, kernel versus mode span</td>
+<td>68 SPANNED, 0 GAP</td>
+<td>18</td>
+<td><code>f1_strata.py</code></td>
+</tr>
+</tbody>
+</table>
+<p>The recomputed rank table, with the note’s seven cells first:</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>(1,2,2)</th>
+<th>(1,3,3)</th>
+<th>(2,2,2)</th>
+<th>(2,2,3)</th>
+<th>(2,2,4)</th>
+<th>(2,3,3)</th>
+<th>(3,3,3)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(\dim H\)</span></td>
+<td>22</td>
+<td>34</td>
+<td>42</td>
+<td>38</td>
+<td>58</td>
+<td>46</td>
+<td>98</td>
+</tr>
+<tr>
+<td>rank (chains + 2)</td>
+<td>22</td>
+<td>34</td>
+<td>42</td>
+<td>38</td>
+<td>58</td>
+<td>46</td>
+<td>98</td>
+</tr>
+<tr>
+<td>chains</td>
+<td>24</td>
+<td>36</td>
+<td>48</td>
+<td>40</td>
+<td>64</td>
+<td>48</td>
+<td>108</td>
+</tr>
+</tbody>
+</table>
+<p>and seven cells the note did not test:</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>(1,1,1)</th>
+<th>(1,1,2)</th>
+<th>(1,2,3)</th>
+<th>(2,3,4)</th>
+<th>(3,3,4)</th>
+<th>(1,1,5)</th>
+<th>(1,5,5)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(\dim H\)</span></td>
+<td>10</td>
+<td>14</td>
+<td>22</td>
+<td>46</td>
+<td>70</td>
+<td>26</td>
+<td>58</td>
+</tr>
+<tr>
+<td>rank (chains + 2)</td>
+<td>10</td>
+<td>14</td>
+<td>22</td>
+<td>46</td>
+<td>70</td>
+<td>26</td>
+<td>58</td>
+</tr>
+<tr>
+<td>chains</td>
+<td>12</td>
+<td>16</td>
+<td>24</td>
+<td>48</td>
+<td>72</td>
+<td>28</td>
+<td>60</td>
+</tr>
+</tbody>
+</table>
+<p>The mod-<span class="math inline">\(p\)</span> ranks are sound in the direction used: <span class="math inline">\(\mathrm{rank}_{\mathbb{F}_p}\leq
+\mathrm{rank}_{\mathbb{Q}}\)</span>, so <span class="math inline">\(\mathrm{rank}_{\mathbb{F}_p}(A)=r\)</span> gives <span class="math inline">\(\dim\ker_{\mathbb{Q}}A\leq2n-r\)</span> and <span class="math inline">\(\mathrm{rank}_{\mathbb{F}_p}(N)=2n-r\)</span> gives <span class="math inline">\(\dim\mathrm{span}_{\mathbb{Q}}(N)\geq2n-r\)</span>; since <span class="math inline">\(AN=0\)</span> over <span class="math inline">\(\mathbb{Z}\)</span> both are equalities. Each row of the table is therefore an independent proof of completeness on that cell, on top of the general theorem.</p>
+<h2 id="residual">5. Residual</h2>
+<ul>
+<li><p><strong>Nothing of the target is left open.</strong> Completeness holds for every cell; the premise of the parametrisation theorem and of the partner identity is now <em>proved</em>, not <em>computed</em>. The note’s sentence “a hand proof of completeness is the determinant computation above; it was not written out” can be replaced by §4, and its status tag on the completeness table can be raised from computed to proved.</p></li>
+<li><p><strong>One correction to the note’s phrasing.</strong> “At <span class="math inline">\(k=(\pi,\pi,\pi)\)</span> two further modes appear” is right only in a particular lift; the invariant statement is “at the FCC wavevector <span class="math inline">\(q=0\)</span>”, which in the <span class="math inline">\((x,y,z)\)</span> parametrisation is the sixteen-point set <span class="math inline">\(K\)</span>. Similarly “on each locus the kernel is one-dimensional and is the chain mode of that family” is true only on the interior of a single locus; on the three deeper strata the kernel is 2 or 4 dimensional. Neither changes any conclusion drawn from the note, but the deeper strata are where a hand argument would have gone wrong, and they are the substance of this report.</p></li>
+<li><p><strong>Not addressed here, because outside the brief:</strong> integrality. The spanning statement is over <span class="math inline">\(\mathbb{Q}\)</span> and <span class="math inline">\(\mathbb{R}\)</span>; the Smith invariants <span class="math inline">\(2,8,8\)</span> and the <span class="math inline">\((2,2,3)\)</span> states with <span class="math inline">\(\alpha_0=\pm1/6\)</span> (<code>e16_f.py</code>, <code>e20_balance.py</code>, <code>e23_lattice.py</code>) are untouched, and a frozen state’s chain weights still need not be integral.</p></li>
+<li><p><strong>A by-product worth keeping.</strong> The relation structure among the chain modes is now read off the strata rather than guessed: relations appear exactly where a stratum supports more modes than its kernel dimension, which happens in only two places, one relation at each wavevector with <span class="math inline">\(|Z|=3\)</span> (the three modes of a <span class="math inline">\((111)\)</span> plane sum to zero) and four at <span class="math inline">\(q=0\)</span> (six chain modes spanning two dimensions). Counting the cell’s wavevectors by <span class="math inline">\(|Z|\)</span> therefore predicts the rank deficit exactly (<em>computed</em>, <code>f1_check.py</code> check (d)):</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>wavevectors by <span class="math inline">\(|Z|\)</span> (<span class="math inline">\(0,1,2,3,6\)</span>)</th>
+<th>chains</th>
+<th>predicted relations</th>
+<th>rank deficit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,2,2)</td>
+<td>4, 4, 7, 0, 1</td>
+<td>24</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>(2,2,2)</td>
+<td>6, 12, 9, 4, 1</td>
+<td>48</td>
+<td>8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>(2,2,3)</td>
+<td>24, 12, 11, 0, 1</td>
+<td>40</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>(3,3,3)</td>
+<td>36, 48, 15, 8, 1</td>
+<td>108</td>
+<td>12</td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+<p>On <span class="math inline">\((3,3,3)\)</span> that is the note’s count of 12 relations among 108 chains, now with a reason: eight <span class="math inline">\(|Z|=3\)</span> wavevectors contributing one each, and <span class="math inline">\(q=0\)</span> contributing four. The four at <span class="math inline">\(q=0\)</span> match the note’s three family relations plus the one per-axis relation <span class="math inline">\(w_x+w_y+w_z=0\)</span>, and the rest are its kagome-layer relations; but <span class="math inline">\((2,2,3)\)</span> and <span class="math inline">\((1,2,2)\)</span> have <strong>no</strong> <span class="math inline">\(|Z|=3\)</span> wavevector at all, so on those cells there are only the four, and the note’s kagome-layer relations cannot all be independent there. Anyone counting relations on a new cell should count wavevectors by <span class="math inline">\(|Z|\)</span> rather than layers (<em>computed</em>, not <em>proved</em>: the identification of which real-space relation sits at which wavevector was not carried out).</p></li>
+<li><p><strong>A caution for reuse.</strong> The mode formula <span class="math inline">\(v_f(k)=(w_E,w_E/\chi(d_i))\)</span> carries a sign convention in the exponent of <span class="math inline">\(\chi\)</span>. It was verified against real space on <span class="math inline">\((2,2,3)\)</span> (§4.6a) rather than assumed, and any reuse in another script should re-run that check rather than copy the formula.</p></li>
+</ul>
+<h2 id="solver-checks-run">6. Solver checks run</h2>
+<p>No SAT solver, no CNF, no certificate: the whole probe is symbolic linear algebra in sympy plus exact integer ranks. Total wall-clock <strong>22 seconds</strong> on the primary Mac in the project venv: <code>f1_strata.py</code> 18 s (builds <span class="math inline">\(M\)</span> from the <span class="math inline">\((3,3,3)\)</span> lattice, factors the determinant, classifies the strata by Hermite normal form, analyses all 68 strata with certified minors, audits coverage over 13824 points) and <code>f1_check.py</code> 3.2 s (orbit check, Fourier check on <span class="math inline">\((2,2,3)\)</span>, bookkeeping on three cells, exact rank table on fourteen cells, closed form and relation count). Both exit 0; both are assertion-heavy and will fail loudly rather than print a wrong verdict. Logs: <code>experiments/08_frozen_structure/scratch_h/attack_2026-09-17/f1_strata.log</code>, <code>f1_check.log</code>, <code>f1_matrix.log</code>.</p>
+<p>To reproduce, from <code>experiments/08_frozen_structure/scratch_h</code>:</p>
+<pre><code>PYTHONPATH=~/repo/project/ice-mixing:\
+~/repo/project/ice-mixing/experiments/08_frozen_structure \
+  ../../../.venv/bin/python f1_strata.py</code></pre>
+<p>and the same for <code>f1_check.py</code>.</p>
+<p><strong>Update, 2026-10-01.</strong> Read by an independent checker, agent p1check (<code>2026-10-01-opus-p1check.md</code>), with its own model and its own stratification (a Smith-normal-form parametrisation of each closed pattern): CONFIRMED as a proof for every cell, the same 68 components (12 + 24 + 16 + 16) with 0 failures, and exact real-space ranks on 12 cells. Two cosmetic miscounts in this report: “fourteen closed subsets” should read fifteen (fourteen nonempty), and “thirteen nonempty patterns” in section 4.5 should read fourteen.</p>
+</main>
+</body>
+</html>

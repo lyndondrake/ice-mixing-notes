@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Independent check of Theorem S, Theorem S2, Corollary H, Lemma J, Lemma T′, the repair of Theorem R1 and the law of line fractions (attack proposal of</title>
+<meta name="description" content="Independent check of Theorem S, Theorem S2, Corollary H, Lemma J, Lemma T′, the repair of Theorem R1 and the law of line fractions (attack proposal of 28 September)">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Independent check of Theorem S, Theorem S2, Corollary H, Lemma J, Lemma T′, the repair of Theorem R1 and the law of line fractions (attack proposal of 28 September)",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-28-opus-check7.html",
+ "datePublished": "2026-09-28",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus), agent check7, independent checker, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-28-opus-check7.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/thm-14.html">thm-14</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Independent check of Theorem S, Theorem S2, Corollary H, Lemma J, Lemma T′, the repair of Theorem R1 and the law of line fractions (attack proposal of 28 September)</h1>
+
+<p class="author">Claude (Opus), agent check7, independent checker, for Lyndon Drake</p>
+<p class="date">2026-09-28</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#verdicts" id="toc-verdicts">Verdicts</a></li>
+<li><a href="#t1.-reading-step-by-step" id="toc-t1.-reading-step-by-step">T1. Reading, step by step</a></li>
+<li><a href="#t3.-computations" id="toc-t3.-computations">T3. Computations</a></li>
+<li><a href="#corrections-and-gaps" id="toc-corrections-and-gaps">Corrections and gaps</a></li>
+<li><a href="#what-i-could-not-check" id="toc-what-i-could-not-check">What I could not check</a></li>
+<li><a href="#rules" id="toc-rules">Rules</a></li>
+</ul>
+</details></nav>
+<h2 id="verdicts">Verdicts</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>claim</th>
+<th>verdict</th>
+<th>one sentence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Sheet lemma; Lemma T′; the record’s Lemma T is false as stated (counterexample on <span class="math inline">\(\mathbb{Z}_3 \times \mathbb{Z}_3\)</span>)</td>
+<td><strong>CONFIRMED</strong></td>
+<td>Every step checks. The counterexample is exact, and it meets the record’s hypotheses as written (‘real functions on the closed lines’), so the author has not misread them. Smaller counterexamples exist on <span class="math inline">\(\mathbb{Z}_2 \times \mathbb{Z}_2\)</span> (correction 3).</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Lemma J (jumps of <span class="math inline">\(\Phi_S\)</span> are integers when <span class="math inline">\(\gcd(b,c) = 1\)</span>)</td>
+<td><strong>CONFIRMED</strong></td>
+<td>The argument is right, including <span class="math inline">\(g_z = 1\)</span> or <span class="math inline">\(g_y = 1\)</span> and extents 1 and 2. An exact fit of (C) on 920 (solution, sublattice, axis) triples across 7 cells finds the jumps determined and integral every time, and not defined on cells without the hypothesis.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Theorem S</td>
+<td><strong>CONFIRMED</strong></td>
+<td>Both cases hold. I redid the line-meeting congruences and enumerated them on 12 cells. My own encoding gives UNSAT on (4,3,3), (5,3,3), (6,2,3), (6,3,4), (5,4,4), (6,2,9) and (7,3,6), and SAT on (3,3,3), (4,4,6) and (2,2,4). (10,4,5) gave no verdict. On 258 solutions of 7 cells with a coprime pair the finer structure has no exception.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Theorem S2, forms <span class="math inline">\((P_z)\)</span>, <span class="math inline">\((P_y)\)</span>, <span class="math inline">\((Q)\)</span></td>
+<td><strong>CONFIRMED</strong></td>
+<td>The proof is right. On every sampled solution of the five cells where it applies, each sublattice has one of the three forms (0 NONE).</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Corollary H, and its second proof without Theorem <span class="math inline">\(M&#39;\)</span></td>
+<td><strong>CONFIRMED WITH CORRECTIONS</strong></td>
+<td>The logic is right: the rods are in <span class="math inline">\(S\)</span> and of two types, and Theorem <span class="math inline">\(M&#39;\)</span> is used exactly as the note states it. The geometry of <span class="math inline">\(b_x\)</span>, <span class="math inline">\(b_y\)</span>, <span class="math inline">\(b_z\)</span> in the second proof is right. But the Summary’s ‘needs … no certificate’ is wrong: Theorem <span class="math inline">\(M&#39;\)</span> rests on finite lemmas with DRAT certificates (correction 1).</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Theorem R1 survives with Lemma T′ + Lemma J in place of Lemma T</td>
+<td><strong>CONFIRMED</strong></td>
+<td>Both uses in R1 (the grids <span class="math inline">\(Y_q\)</span> and <span class="math inline">\(Z_p\)</span>) have <span class="math inline">\(F_x = \Phi(x)\)</span> with <span class="math inline">\(\gcd(b,c) = 1\)</span>. So Lemma J applies, and Lemma T′ gives the same three alternatives (Z1–Z3, Y1–Y3) that R1 uses.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Law of line fractions</td>
+<td><strong>CONFIRMED</strong></td>
+<td>The derivation from (C) and (S1)-type averaging is right. I checked it exactly with rationals on 495 solutions of 10 non-cubic cells, including (2,2,4), (2,4,6) and (4,4,6), which have no coprime pair, and 28 of (3,3,3), with no violation. In every run the number of states with a fractional line equalled the number of odd states (I compared counts, not state by state).</td>
+</tr>
+</tbody>
+</table>
+<p>No gap was found. The corrections below are about wording and scope. None affects a theorem.</p>
+<h2 id="t1.-reading-step-by-step">T1. Reading, step by step</h2>
+<h3 id="ingredients">Ingredients</h3>
+<ul>
+<li><strong>(C)</strong>: taken as given, as instructed. As a by-product, my least-squares fit of (C) had residual below <span class="math inline">\(5 \times 10^{-14}\)</span> on every sampled solution of every cell, including cells with no coprime pair. So (C) is consistent with 523 solutions of 11 cells.</li>
+<li><strong>(S1)</strong>: CONFIRMED. Take a chain of family {0,1} with A-vertices <span class="math inline">\(p + n(0,2,2)\)</span>. It closes after <span class="math inline">\(2\,\mathrm{lcm}(b,c)\)</span> steps, and a plane of A holds <span class="math inline">\(2bc\)</span> vertices, so a pair of planes holds <span class="math inline">\(\gcd(b,c)\)</span> such chains. I walked all chains of all six families on 12 cells, including the thin cells (1,2,3) and (2,1,1). The count per pair of planes equals the gcd of the transverse extents in every case (h430). I also found that a pair of planes <span class="math inline">\((x_0, x_0+1)\)</span> holds chains of one family only: {0,1} when <span class="math inline">\(x_0\)</span> is a plane of A, {2,3} when it is a plane of B. So <span class="math inline">\(\Phi(x_0) = w_{01}(x_0, x_0+1) + w_{23}(x_0-1, x_0)\)</span>. This does not affect anything.</li>
+<li><strong>Sheet lemma</strong>: CONFIRMED.</li>
+<li><strong>Grids as products</strong> (task point a): CONFIRMED.
+<ul>
+<li>On the cover, the vertices of a plane <span class="math inline">\(z = z_0\)</span> of <span class="math inline">\(S\)</span> are all of <span class="math inline">\(\mathbb{Z}^2\)</span> in <span class="math inline">\((m,n)\)</span>.</li>
+<li>The periods are <span class="math inline">\((a,a)\)</span> and <span class="math inline">\((b,-b)\)</span>, so the chain labels are <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> modulo <span class="math inline">\(\gcd(a,b)\)</span>. Every pair of classes occurs trivially.</li>
+<li>I also checked on the torus, by enumerating the chain labels on every plane of every axis of 6 cells (including (1,2,3) and (2,1,1)), that every pair (label of family 1, label of family 2) occurs. The same holds for every coordinate pair <span class="math inline">\((x,z)\)</span>, <span class="math inline">\((y,z)\)</span> and <span class="math inline">\((x,y)\)</span> of the parity of <span class="math inline">\(S\)</span>: 0 failures.</li>
+</ul></li>
+</ul>
+<h3 id="lemma-t">Lemma T′</h3>
+<p>CONFIRMED.</p>
+<ul>
+<li><span class="math inline">\(q(m) = [\varepsilon(m+1,n) - \varepsilon(m,n)] - c(m+n)\)</span> is an integer when <span class="math inline">\(c\)</span> is.</li>
+<li><span class="math inline">\(\varepsilon(m,n+1) - \varepsilon(m+1,n) = p(n) - q(m)\)</span> is correct: the <span class="math inline">\(\gamma\)</span> terms cancel.</li>
+<li>The integer zero-sum argument forces <span class="math inline">\(q \equiv 0\)</span> once <span class="math inline">\(p \not\equiv 0\)</span>.</li>
+<li>The final use of the sheet lemma is right in both sub-cases. The conclusion ‘γ constant, or α and β constant’ is what Theorem S and R1 need.</li>
+</ul>
+<h3 id="the-failure-of-lemma-t-t2">The failure of Lemma T (T2)</h3>
+<p>CONFIRMED by exact rationals (h430).</p>
+<ul>
+<li>With <span class="math inline">\(\alpha = \beta = (2/3, 1/3, 0)\)</span> and <span class="math inline">\(\gamma = (-1/3, 0, -2/3)\)</span>, <span class="math inline">\(\varepsilon = 1\)</span> exactly at (0,0), (0,1) and (1,0), and 0 at the six other points. It is not a function of <span class="math inline">\(i\)</span>, of <span class="math inline">\(j\)</span> or of <span class="math inline">\(i+j\)</span>. The jumps of <span class="math inline">\(\gamma\)</span> are <span class="math inline">\(1/3\)</span>, <span class="math inline">\(-2/3\)</span>, <span class="math inline">\(1/3\)</span>.</li>
+<li>The record’s hypotheses (route proposal, §3) are ‘<span class="math inline">\(\varepsilon: \mathbb{Z}^2/\Gamma \to \{0,1\}\)</span> … with <span class="math inline">\(\alpha, \beta, \gamma\)</span> real functions on the closed lines’. <span class="math inline">\(\mathbb{Z}_3 \times \mathbb{Z}_3\)</span> with <span class="math inline">\(\Gamma = 3\mathbb{Z} \times 3\mathbb{Z}\)</span> is such a torus. So <strong>Lemma T is false as stated</strong>, and the author’s reading is right.</li>
+<li>The faulty step is the one the author names: ‘<span class="math inline">\(a\)</span> takes a value <span class="math inline">\(\geq 1\)</span> and a value <span class="math inline">\(\leq -1\)</span>’ holds only for integer <span class="math inline">\(a\)</span>.</li>
+<li>By enumeration, the 0/1 functions in the tri-separable span that are not functions of one of <span class="math inline">\(i\)</span>, <span class="math inline">\(j\)</span>, <span class="math inline">\(i+j\)</span> number 8 on <span class="math inline">\(\mathbb{Z}_2^2\)</span>, 36 on <span class="math inline">\(\mathbb{Z}_3^2\)</span> and 96 on <span class="math inline">\(\mathbb{Z}_4^2\)</span> (correction 3).</li>
+</ul>
+<h3 id="lemma-j">Lemma J</h3>
+<p>Task point b. CONFIRMED. Redone:</p>
+<ol type="1">
+<li>Since <span class="math inline">\(c(k_0) - q(m) \in \mathbb{Z}\)</span> for all <span class="math inline">\(m\)</span> (take <span class="math inline">\(n = k_0 - m\)</span>), every <span class="math inline">\(q(m) \equiv \theta\)</span>. Then every <span class="math inline">\(c(k) \equiv \theta\)</span>.</li>
+<li>Each has zero sum over its period (period <span class="math inline">\(2a\)</span> for <span class="math inline">\(c\)</span>, <span class="math inline">\(g_z\)</span> for <span class="math inline">\(q\)</span>) and no integral value. So each has a value <span class="math inline">\(\geq \theta\)</span> and a value <span class="math inline">\(\leq \theta - 1\)</span>.</li>
+<li><span class="math inline">\(\max c \leq 1 + \min q \leq \theta\)</span> and <span class="math inline">\(\min c \geq \max q - 1 \geq \theta - 1\)</span>. So both take only the values <span class="math inline">\(\theta\)</span> and <span class="math inline">\(\theta - 1\)</span>.</li>
+<li>Then <span class="math inline">\(g_z \theta \in \mathbb{Z}\)</span>. On a plane <span class="math inline">\(y = y_0\)</span> the same jumps <span class="math inline">\(c\)</span> occur, because <span class="math inline">\(x\)</span> runs over every value of the parity of <span class="math inline">\(S\)</span> there too, with <span class="math inline">\(-c\)</span> in place of <span class="math inline">\(c\)</span>. That gives <span class="math inline">\(g_y \theta \in \mathbb{Z}\)</span>.</li>
+<li><span class="math inline">\(\gcd(g_y, g_z) = \gcd(a,b,c)\)</span>, which divides <span class="math inline">\(\gcd(b,c) = 1\)</span>.</li>
+</ol>
+<p>Edge cases:</p>
+<ul>
+<li><span class="math inline">\(g_z = 1\)</span>: <span class="math inline">\(Q\)</span> is constant, so <span class="math inline">\(q = 0 \not\equiv \theta\)</span>. The contradiction is immediate, which the argument covers.</li>
+<li>Thin cells: <span class="math inline">\(a = 1\)</span> gives <span class="math inline">\(\gamma\)</span> period 2. <span class="math inline">\(b = 1\)</span> or <span class="math inline">\(c = 1\)</span> gives <span class="math inline">\(g = 1\)</span>. Nothing breaks.</li>
+<li>Observation (not a gap): the last step needs only <span class="math inline">\(\gcd(a,b,c) = 1\)</span>. <span class="math inline">\(\gcd(b,c) = 1\)</span> enters Lemma J only through (S1).</li>
+</ul>
+<p>Numerical check (h432). I solved (C) by least squares on each sampled solution and computed the null space. For each jump <span class="math inline">\(\Phi_S(x+2) - \Phi_S(x)\)</span> I tested that it is orthogonal to the null space, so it is determined by the solution, and that it is integral. Result: <span class="math inline">\(\Phi_S\)</span> well defined, jumps determined and jumps integral in 920 of 920 (solution, sublattice, coprime axis) cases. The cells were (6,2,3), (4,3,3), (6,3,4), (2,1,3), (1,2,3), (6,2,1) and (2,3,2), on every axis with coprime transverse extents. As a control, on (4,4,6) and (3,3,3) <span class="math inline">\(\Phi_S\)</span> is not a function of the plane: 0 of 276 well defined.</p>
+<h3 id="theorem-s">Theorem S</h3>
+<p><strong>Absorption of constants</strong> (task point d): CONFIRMED.</p>
+<ul>
+<li>On <span class="math inline">\(S\)</span>, put <span class="math inline">\(\Phi_S := \Phi + \sigma_S\alpha\)</span> and absorb <span class="math inline">\(\sigma_S(\alpha+\beta)\)</span> into <span class="math inline">\(F_y\)</span>.</li>
+<li>This is legitimate because every later use of <span class="math inline">\(F_y\)</span> and <span class="math inline">\(F_z\)</span> is through their separable form on planes of <span class="math inline">\(S\)</span>, where adding a constant keeps the form.</li>
+<li>The jumps of <span class="math inline">\(\Phi_S\)</span> do not change.</li>
+</ul>
+<p><strong>Case 1</strong>: CONFIRMED.</p>
+<ul>
+<li>Lemma T′ applies on each plane <span class="math inline">\(z = z_0\)</span>, with <span class="math inline">\(\alpha = -P\)</span>, <span class="math inline">\(\beta = -Q\)</span> and <span class="math inline">\(\gamma\)</span> non-constant. <span class="math inline">\(\gamma\)</span> is non-constant because <span class="math inline">\(x\)</span> runs over every value of the parity of <span class="math inline">\(S\)</span> on that plane. So <span class="math inline">\(P\)</span> and <span class="math inline">\(Q\)</span> are constant on the plane.</li>
+<li>The sheet lemma on the full product (x, z) forces <span class="math inline">\(\kappa\)</span> constant. The same holds for <span class="math inline">\(\kappa&#39;\)</span>.</li>
+<li>The two-value argument gives <span class="math inline">\(\kappa&#39; = \kappa + 1\)</span>, so <span class="math inline">\(X = 0\)</span> on <span class="math inline">\(S\)</span>, and each <span class="math inline">\(x\)</span>-plane is all <span class="math inline">\(y\)</span> or all <span class="math inline">\(z\)</span>.</li>
+</ul>
+<p><strong>Case 2</strong> (task point c): CONFIRMED. I redid the congruences.</p>
+<ul>
+<li>The equations are:
+<ul>
+<li><span class="math inline">\(2t - 2s \equiv -d_x \pmod{4a}\)</span></li>
+<li><span class="math inline">\(2\epsilon t \equiv -d_y \pmod{4b}\)</span></li>
+<li><span class="math inline">\(-2\epsilon&#39; s \equiv -d_z \pmod{4c}\)</span></li>
+</ul></li>
+<li>They fix <span class="math inline">\(t\)</span> modulo <span class="math inline">\(2b\)</span> and <span class="math inline">\(s\)</span> modulo <span class="math inline">\(2c\)</span>. Then <span class="math inline">\(t - s\)</span> runs over a coset of <span class="math inline">\(2\gcd(b,c)\mathbb{Z} = 2\mathbb{Z}\)</span>.</li>
+<li>Its parity is that of <span class="math inline">\((d_y + d_z)/2\)</span>, and the target <span class="math inline">\(-d_x/2\)</span> has the same parity because <span class="math inline">\(d_x + d_y + d_z \equiv 0 \pmod 4\)</span>. So a solution modulo <span class="math inline">\(2a\)</span> exists.</li>
+</ul>
+<p>Enumeration (h430): every line <span class="math inline">\(q + t(2, \pm 2, 0)\)</span> of <span class="math inline">\(S\)</span> was tested against every line <span class="math inline">\(r + s(2, 0, \pm 2)\)</span> of <span class="math inline">\(S\)</span>, on both sublattices:</p>
+<table>
+<thead>
+<tr>
+<th>cells</th>
+<th><span class="math inline">\(\gcd(b,c)\)</span></th>
+<th>pairs of lines that do not meet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(6,2,3), (6,3,4), (4,2,3), (2,1,3)</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>(4,3,3), (5,3,3), (3,4,4)</td>
+<td>3, 3, 4</td>
+<td>0</td>
+</tr>
+<tr>
+<td>(3,3,3)</td>
+<td>3</td>
+<td>864</td>
+</tr>
+<tr>
+<td>(4,4,6)</td>
+<td>2</td>
+<td>1536</td>
+</tr>
+<tr>
+<td>(2,2,4)</td>
+<td>2</td>
+<td>256</td>
+</tr>
+<tr>
+<td>(4,2,4)</td>
+<td>2</td>
+<td>512</td>
+</tr>
+<tr>
+<td>(6,3,6)</td>
+<td>3</td>
+<td>3456</td>
+</tr>
+</tbody>
+</table>
+<p>The lines meet exactly when <span class="math inline">\(\gcd(a,b,c) = 1\)</span> (observation, correction 2).</p>
+<h3 id="theorem-s2">Theorem S2</h3>
+<p>CONFIRMED.</p>
+<ul>
+<li><span class="math inline">\(F_y = \Upsilon(y)\)</span> needs <span class="math inline">\(\gcd(a,c) = 1\)</span> and <span class="math inline">\(F_z = \mathrm{Z}(z)\)</span> needs <span class="math inline">\(\gcd(a,b) = 1\)</span>, both from (S1).</li>
+<li>The sheet lemma on the full product (y, z) makes <span class="math inline">\(X\)</span> a function of <span class="math inline">\(z\)</span> alone or of <span class="math inline">\(y\)</span> alone.</li>
+<li>In <span class="math inline">\((P_z)\)</span>, <span class="math inline">\(Z = \mathrm{const} - F_x\)</span> on <span class="math inline">\(S\)</span>. On each <span class="math inline">\(x\)</span>-plane (a full product of the two families’ labels) it is constant along one family.</li>
+<li>The line <span class="math inline">\(z = z_1\)</span> of an <span class="math inline">\(x\)</span>-plane has points 4 apart in <span class="math inline">\(y\)</span> with <span class="math inline">\(y - z\)</span> and <span class="math inline">\(y + z\)</span> running over all classes modulo <span class="math inline">\(4\gcd(b,c)\)</span>, so it meets every chain of both families. Hence <span class="math inline">\(Z = 0\)</span>. <span class="math inline">\((P_y)\)</span> and <span class="math inline">\((Q)\)</span> follow the same way.</li>
+<li>The notation ‘$Z = - F_x + $ const’ is consistent with $(y) = F_y + $ const, with <span class="math inline">\(\upsilon\)</span> constant.</li>
+</ul>
+<h3 id="corollary-h">Corollary H</h3>
+<p>Task point e. CONFIRMED.</p>
+<ul>
+<li>The rods of a hole <span class="math inline">\(O\)</span> are its methylenes <span class="math inline">\(O \pm 2e_k\)</span>, which lie in the sublattice of <span class="math inline">\(O\)</span>. A rod on axis <span class="math inline">\(k\)</span> has type <span class="math inline">\(k\)</span>. A corner has rods on two axes, so on <span class="math inline">\(S\)</span> there are two types <span class="math inline">\(j \neq k\)</span>.</li>
+<li>Theorem S makes <span class="math inline">\(S\)</span> lack a type, necessarily the third type <span class="math inline">\(i\)</span>.</li>
+<li>Theorem <span class="math inline">\(M&#39;\)</span> as stated in the note (line 455: ‘a frozen state in which one sublattice has no vertex of type <span class="math inline">\(k\)</span> and the other has one has even curl’, extended to every cell in the subsection on non-cubic cells and by check6 §1) is exactly the form used.</li>
+<li>‘Odd ⇒ some corner’ is the forward half of Lemma 1. I checked that it holds when an extent is 1, where <span class="math inline">\(O + 2e_x = O - 2e_x\)</span>. <span class="math inline">\(N(O,\sigma) = 2\)</span> still puts two rods of distinct axes in one octant.</li>
+<li>Sampling agrees. Every odd state sampled on a cell with a coprime pair lacks a type. On (6,2,3), (6,3,4), (6,2,1) and (2,3,2) the absent type is the one Theorem S names. On (4,3,3) it is always <span class="math inline">\(x\)</span>, as the corollary of S2 says.</li>
+<li>Scope correction (correction 1): Theorem <span class="math inline">\(M&#39;\)</span> is not certificate-free.</li>
+</ul>
+<h3 id="corollary-of-theorem-s2-without-theorem-m">Corollary of Theorem S2 without Theorem M′</h3>
+<p>Task point f. CONFIRMED.</p>
+<ul>
+<li><span class="math inline">\(O&#39; = O + \sigma\)</span> is a B-hole when <span class="math inline">\(O\)</span> is an A-hole, since <span class="math inline">\(\sigma\)</span> has product <span class="math inline">\(+1\)</span> and is one of the <span class="math inline">\(d_k\)</span>.</li>
+<li><span class="math inline">\(b_k = O&#39; - 2\sigma_k e_k \in S&#39;\)</span>. <span class="math inline">\(N(O&#39;, -\sigma) = 0\)</span> says <span class="math inline">\(\tau(b_k) \neq k\)</span>.</li>
+<li><span class="math inline">\(b_x\)</span> and <span class="math inline">\(b_y\)</span> both have <span class="math inline">\(z = z_{O&#39;}\)</span>, and <span class="math inline">\(b_x\)</span> and <span class="math inline">\(b_z\)</span> both have <span class="math inline">\(y = y_{O&#39;}\)</span>. So <span class="math inline">\((P_z)\)</span> and <span class="math inline">\((P_y)\)</span> on <span class="math inline">\(S&#39;\)</span> each lead to a contradiction.</li>
+<li>The step ‘a corner of <span class="math inline">\(S\)</span> cannot have a rod of type <span class="math inline">\(x\)</span>’ uses that the two rods of a corner share the coordinate of the axis neither of them lies on. That is correct.</li>
+</ul>
+<h3 id="theorem-r1-with-lemma-t-and-lemma-j">Theorem R1 with Lemma T′ and Lemma J</h3>
+<p>CONFIRMED.</p>
+<ul>
+<li>R1 has exactly the hypothesis <span class="math inline">\(\gcd(b,c) = 1\)</span>.</li>
+<li>Its grids <span class="math inline">\(Y_q = \{y = 2\}\)</span> and <span class="math inline">\(Z_p = \{z = 0\}\)</span> are planes of A, with <span class="math inline">\(\gamma(i+j) = X(x)\)</span>, the restriction <span class="math inline">\(\Phi_A\)</span>. So Lemma J gives integral jumps.</li>
+<li>Lemma T′’s three alternatives are functions of <span class="math inline">\(i\)</span>, of <span class="math inline">\(j\)</span> and of <span class="math inline">\(i+j\)</span>, which are the directions <span class="math inline">\((2,0,-2)\)</span>, <span class="math inline">\((2,0,2)\)</span> and <span class="math inline">\((0,0,4)\)</span> on <span class="math inline">\(Y_q\)</span>. Those are R1’s Z1, Z2 and Z3, and likewise Y1, Y2 and Y3.</li>
+<li>Steps 2–4 of R1 do not use Lemma T.</li>
+<li>R1 is stated for frozen states, whose types solve the type model, so Lemma J applies.</li>
+</ul>
+<h3 id="law-of-line-fractions">Law of line fractions</h3>
+<p>CONFIRMED.</p>
+<ul>
+<li>Averaging <span class="math inline">\(F_x\)</span> along a <span class="math inline">\(y\)</span>-line: the label <span class="math inline">\(y - z\)</span> modulo <span class="math inline">\(4g_x\)</span> of the {0,1}-chain runs uniformly over its <span class="math inline">\(g_x\)</span> classes, since <span class="math inline">\(g_x \mid b\)</span>. The {2,3}-chain behaves likewise. The average is therefore the mean chain weight of the two pairs of planes through <span class="math inline">\(x\)</span>: a function <span class="math inline">\(P(x)\)</span>. Along a <span class="math inline">\(z\)</span>-line the average is the same <span class="math inline">\(P(x)\)</span>, since <span class="math inline">\(g_x \mid c\)</span>.</li>
+<li><span class="math inline">\(F_z\)</span> along a <span class="math inline">\(y\)</span>-line gives <span class="math inline">\(R(z)\)</span>, and <span class="math inline">\(F_y\)</span> along a <span class="math inline">\(z\)</span>-line gives <span class="math inline">\(Q(y)\)</span>.</li>
+<li>With the constants absorbed per sublattice (<span class="math inline">\(P_S = P + \sigma\alpha\)</span>, <span class="math inline">\(Q_S = Q + \sigma(\alpha+\beta)\)</span>), the three formulas and their sum 1 follow.</li>
+<li>‘Even curl exactly when every fraction is 0 or 1’: forward by Lemma 1. Backward because a type-<span class="math inline">\(k\)</span> vertex on an all-<span class="math inline">\(k\)</span> line makes both rods of each adjacent hole lie on that line, so there is no corner and, by Lemma 1, no odd hexagon.</li>
+<li>In every one of my samples the number of states with a fractional line equalled the number of odd states.</li>
+</ul>
+<h2 id="t3.-computations">T3. Computations</h2>
+<p>Every command was run from <code>scratch_h</code> with the project <code>.venv</code>, PYTHONPATH and TMPDIR as instructed. Every SAT query went through <code>h32_cap</code> (<code>one</code> or <code>run_batch</code>), one process at a time, with a cap of at most 300 s per query. The scripts are my own:</p>
+<ul>
+<li><code>h430_geom.py</code>: exact geometry, the Lemma T counterexample and search, (S1), line meeting, products.</li>
+<li><code>h431_sl.py</code>: Theorem S by solver.</li>
+<li><code>h432_sample.py</code>: sampling, finer structure, the law, and the (C) fit for Lemma J.</li>
+</ul>
+<p>They import only <code>icemix.lattice</code>, <code>a4_typemodel.TypeModel</code> (one-hot + (T2)) and <code>h32_cap</code>. I did not read or import h420–h423. Every SAT model from h431 was re-checked against (T2) in Python.</p>
+<h3 id="encodings-of-the-negation-of-theorem-s-a-has-a-vertex-of-each-type-by-translation-and-the-half-turns">Encodings of the negation of Theorem S (‘A has a vertex of each type’), by translation and the half-turns</h3>
+<ul>
+<li><strong>plain</strong>: the origin has type <span class="math inline">\(x\)</span>, and A has a <span class="math inline">\(y\)</span> and a <span class="math inline">\(z\)</span>.</li>
+<li><strong>pair</strong>: A is FCC-connected, so two FCC-neighbours of A with different types exist. Translate one to the origin. The half-turns <span class="math inline">\(R_x\)</span>, <span class="math inline">\(R_y\)</span>, <span class="math inline">\(R_z\)</span> (which preserve A, the bonds and the types) together with the reversal reduce <span class="math inline">\(\delta\)</span> to <span class="math inline">\((2,2,0)\)</span>, <span class="math inline">\((2,0,2)\)</span> or <span class="math inline">\((0,2,2)\)</span> and the ordered pair of types to <span class="math inline">\(xy\)</span>, <span class="math inline">\(xz\)</span> or <span class="math inline">\(yz\)</span>. The third type must then occur on A. That gives 9 queries whose disjunction is the negation.</li>
+<li>Law C was added as a redundant cardinality constraint. It is a sum of (T2), so it is sound.</li>
+<li>Controls:
+<ul>
+<li>plain: the same query without one of the ‘A has’ clauses. These must be SAT and were SAT on every cell.</li>
+<li>pair: the same query without the third type. Four of these controls came out UNSAT: (4,3,3) pair 0 and 4, (6,2,9) pair 8, (7,3,6) pair 0 and 4. That is predicted:
+<ul>
+<li>an <span class="math inline">\(x\)</span> next to a <span class="math inline">\(y\)</span> along a <span class="math inline">\(z\)</span>-plane diagonal is impossible under <span class="math inline">\((P_z)\)</span> of S2;</li>
+<li>a <span class="math inline">\(y\)</span> next to a <span class="math inline">\(z\)</span> inside an <span class="math inline">\(x\)</span>-plane is impossible under Theorem S (i).</li>
+</ul>
+They are consequences of the theorems and not encoding faults. The other pair controls were SAT.</li>
+</ul></li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>command</th>
+<th>tested</th>
+<th>verdict</th>
+<th>wall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h430_geom.py</code></td>
+<td>Lemma T counterexample and search on <span class="math inline">\(\mathbb{Z}_n^2\)</span>, <span class="math inline">\(n = 2,3,4\)</span>; (S1) on 12 cells; line meeting on 12 cells; products on 6 cells</td>
+<td>as reported above</td>
+<td>2.8 s</td>
+</tr>
+<tr>
+<td><code>h431_sl.py 4,3,3 plain --cap 120</code></td>
+<td>SL, controls</td>
+<td>UNSAT 4.6 s; controls SAT</td>
+<td>6.4 s</td>
+</tr>
+<tr>
+<td><code>h431_sl.py 4,3,3 plain --lawc --cap 120</code></td>
+<td>the same with Law C</td>
+<td>UNSAT 4.0 s; controls SAT</td>
+<td>5.0 s</td>
+</tr>
+<tr>
+<td><code>h431_sl.py 4,3,3 pair --lawc --cap 120</code></td>
+<td>9 pair queries</td>
+<td>9 UNSAT (1.1–4.1 s); controls 7 SAT, 2 UNSAT (predicted)</td>
+<td>24.7 s</td>
+</tr>
+<tr>
+<td><code>h431_sl.py 5,3,3 plain --lawc --cap 120</code></td>
+<td>SL</td>
+<td>UNSAT 10.5 s; controls SAT</td>
+<td>11.9 s</td>
+</tr>
+<tr>
+<td><code>h431_sl.py 6,2,3 plain --lawc --cap 120</code></td>
+<td>SL</td>
+<td>UNSAT 2.4 s; controls SAT</td>
+<td>3.5 s</td>
+</tr>
+<tr>
+<td><code>h431_sl.py 3,3,3 plain --lawc --cap 120</code></td>
+<td>negative control</td>
+<td>SAT 0.1 s (model: all three types on A and B, (T2) ok)</td>
+<td>1.3 s</td>
+</tr>
+<tr>
+<td><code>h431_sl.py 4,4,6 plain --lawc --cap 120</code></td>
+<td>negative control</td>
+<td>SAT 1.3 s (the same)</td>
+<td>2.4 s</td>
+</tr>
+<tr>
+<td><code>h431_sl.py 2,2,4 plain --lawc --cap 120</code></td>
+<td>negative control</td>
+<td>SAT 0.2 s (the same)</td>
+<td>1.4 s</td>
+</tr>
+<tr>
+<td><code>h431_sl.py 6,3,4 plain --lawc --cap 250</code></td>
+<td>SL</td>
+<td>UNSAT 37.2 s; controls SAT</td>
+<td>38.4 s</td>
+</tr>
+<tr>
+<td><code>h431_sl.py 5,4,4 plain --lawc --cap 300</code></td>
+<td>SL</td>
+<td><strong>UNSAT 198.3 s</strong> (the author had no verdict at 120 s); controls SAT</td>
+<td>199.4 s</td>
+</tr>
+<tr>
+<td><code>h431_sl.py 6,2,9 plain --lawc --cap 300</code></td>
+<td>SL</td>
+<td>no verdict (cap 300 s); controls SAT</td>
+<td>301 s</td>
+</tr>
+<tr>
+<td><code>h431_sl.py 6,2,9 pair --lawc --cap 150 --only 0,1,2</code></td>
+<td>pair 0–2</td>
+<td>UNSAT 38.0, 86.2, 31.7 s; controls SAT</td>
+<td>158 s</td>
+</tr>
+<tr>
+<td><code>… 6,2,9 … --only 3,4,5</code></td>
+<td>pair 3–5</td>
+<td>UNSAT 55.9, 30.3, 40.5 s; controls SAT</td>
+<td>129 s</td>
+</tr>
+<tr>
+<td><code>… 6,2,9 … --only 6,7,8</code></td>
+<td>pair 6–8</td>
+<td>UNSAT 63.5, 75.3, 14.7 s; controls SAT, SAT, UNSAT (predicted)</td>
+<td>170 s</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>(6,2,9) SL: UNSAT</strong> (all 9 cases)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>h431_sl.py 7,3,6 pair --lawc --cap 180 --only 0,1,2</code></td>
+<td>pair 0–2</td>
+<td>pair 0 UNSAT 94.9 s (control UNSAT 64.5 s, predicted); pair 1 and 2 no verdict (cap 180 s)</td>
+<td>521 s</td>
+</tr>
+<tr>
+<td><code>… 7,3,6 … --cap 280 --only 1</code></td>
+<td>pair 1</td>
+<td>UNSAT 212.8 s; control SAT</td>
+<td>214 s</td>
+</tr>
+<tr>
+<td><code>… 7,3,6 … --cap 280 --only 2,3</code></td>
+<td>pair 2–3</td>
+<td>UNSAT 251.8, 126.6 s; controls SAT</td>
+<td>380 s</td>
+</tr>
+<tr>
+<td><code>… 7,3,6 … --cap 280 --only 4,5</code></td>
+<td>pair 4–5</td>
+<td>UNSAT 72.2 s (control UNSAT, predicted), UNSAT 252.0 s</td>
+<td>395 s</td>
+</tr>
+<tr>
+<td><code>… 7,3,6 … --cap 280 --only 6,7</code></td>
+<td>pair 6–7</td>
+<td>UNSAT 165.7, 220.7 s; controls SAT</td>
+<td>388 s</td>
+</tr>
+<tr>
+<td><code>… 7,3,6 … --cap 280 --only 8</code></td>
+<td>pair 8</td>
+<td>UNSAT 118.3 s; control SAT</td>
+<td>120 s</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>(7,3,6) SL: UNSAT</strong> (all 9 cases)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>h431_sl.py 10,4,5 pair --lawc --cap 280 --only 0</code></td>
+<td>pair 0</td>
+<td>UNSAT 147.7 s; control SAT</td>
+<td>150 s</td>
+</tr>
+<tr>
+<td><code>… 10,4,5 … --only 1,2</code></td>
+<td>pair 1–2</td>
+<td>pair 1 no verdict (cap 280 s); pair 2 UNSAT 168.0 s</td>
+<td>449 s</td>
+</tr>
+<tr>
+<td><code>… 10,4,5 … --only 3,4</code></td>
+<td>pair 3–4</td>
+<td>pair 3 no verdict (cap 280 s); pair 4 UNSAT 175.3 s</td>
+<td>457 s</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>(10,4,5) SL: no verdict</strong> (4 cases UNSAT, 2 capped, 3 not run)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>h432_sample.py 6,2,3 30 1 --cap 120</code> (run twice, the second time with the non-vacuity count)</td>
+<td>sampling, S structure, law, Lemma J</td>
+<td>20 solutions; see below</td>
+<td>2.5 s</td>
+</tr>
+<tr>
+<td><code>h432_sample.py 6,2,3 60 2 --odd --cap 120</code></td>
+<td>the same, with odd hexagons</td>
+<td>21 solutions, all odd</td>
+<td>4.7 s</td>
+</tr>
+<tr>
+<td><code>h432_sample.py 4,3,3 60 3 --cap 120</code></td>
+<td>the same, plus S2</td>
+<td>36 solutions</td>
+<td>14.1 s</td>
+</tr>
+<tr>
+<td><code>h432_sample.py 4,3,3 60 4 --odd --cap 120</code></td>
+<td>the same, odd</td>
+<td>11 solutions</td>
+<td>36.8 s</td>
+</tr>
+<tr>
+<td><code>h432_sample.py 6,3,4 60 5 --cap 150</code> (run twice, the same)</td>
+<td>the same</td>
+<td>45 solutions</td>
+<td>57 s</td>
+</tr>
+<tr>
+<td><code>h432_sample.py 6,3,4 40 6 --odd --cap 150</code></td>
+<td>the same, odd</td>
+<td>16 solutions</td>
+<td>83 s</td>
+</tr>
+<tr>
+<td><code>h432_sample.py C 40 7</code> and <code>… 40 8 --odd</code> for C = (2,1,3), (1,2,3), (6,2,1), (2,3,2), run twice (the second time for the Lemma J lines)</td>
+<td>thin cells</td>
+<td>22+0, 24+0, 27+4, 28+4 solutions. With <code>--odd</code>, all 40 queries were UNSAT on the pairwise-coprime (2,1,3) and (1,2,3), consistent with R1</td>
+<td>under 1 s each</td>
+</tr>
+<tr>
+<td><code>h432_sample.py C 40 9</code> and <code>… 40 10 --odd</code> for C = (2,2,4), (2,4,6), (4,4,6)</td>
+<td>law on cells with no coprime pair</td>
+<td>36+35, 38+34, 37+39 solutions</td>
+<td>0.5 s to 61 s</td>
+</tr>
+<tr>
+<td><code>h432_sample.py 4,4,6 30 11 --odd --cap 150 --forceaxes --sanity</code></td>
+<td>sanity: checks where the hypotheses fail; law and (C) on random fields</td>
+<td>18 solutions; 9 sampling queries capped (the batch cap), which is not a result</td>
+<td>155 s</td>
+</tr>
+<tr>
+<td><code>h432_sample.py 3,3,3 30 12 --odd --cap 100 --forceaxes</code></td>
+<td>sanity on a cubic cell</td>
+<td>28 solutions</td>
+<td>1.4 s</td>
+</tr>
+</tbody>
+</table>
+<h3 id="finer-structure-on-sampled-solutions">Finer structure on sampled solutions</h3>
+<p>The cells have a coprime pair. For each axis <span class="math inline">\(k\)</span> whose transverse extents are coprime I applied Theorem S with <span class="math inline">\(k\)</span> in the role of <span class="math inline">\(x\)</span>. The case prediction (<span class="math inline">\(\Phi_S\)</span> non-constant) was read off the line fractions: <span class="math inline">\(h_i/\ell_i\)</span> depends on <span class="math inline">\(x_k\)</span>.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell (axes tested)</th>
+<th>solutions</th>
+<th>(sol, sublattice, axis) triples</th>
+<th>S holds</th>
+<th>case 1: (i) holds</th>
+<th>case 2: lines in a chain direction for both types, and S lacks <span class="math inline">\(i\)</span> or <span class="math inline">\(j\)</span></th>
+<th>S2 forms (axis)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(6,2,3) (<span class="math inline">\(x\)</span>)</td>
+<td>41</td>
+<td>82</td>
+<td>82</td>
+<td>22/22</td>
+<td>60/60</td>
+<td>–</td>
+</tr>
+<tr>
+<td>(4,3,3) (<span class="math inline">\(y\)</span>, <span class="math inline">\(z\)</span>)</td>
+<td>47</td>
+<td>188</td>
+<td>188</td>
+<td>45/45</td>
+<td>143/143</td>
+<td>26 <span class="math inline">\((P_j)\)</span>, 19 <span class="math inline">\((P_i)\)</span>, 49 <span class="math inline">\((Q)\)</span>, 0 NONE (<span class="math inline">\(x\)</span>)</td>
+</tr>
+<tr>
+<td>(6,3,4) (<span class="math inline">\(x\)</span>)</td>
+<td>61</td>
+<td>122</td>
+<td>122</td>
+<td>36/36</td>
+<td>86/86</td>
+<td>–</td>
+</tr>
+<tr>
+<td>(2,1,3) (all)</td>
+<td>22</td>
+<td>132</td>
+<td>132</td>
+<td>43/43</td>
+<td>89/89</td>
+<td>0 NONE (every axis)</td>
+</tr>
+<tr>
+<td>(1,2,3) (all)</td>
+<td>24</td>
+<td>144</td>
+<td>144</td>
+<td>46/46</td>
+<td>98/98</td>
+<td>0 NONE</td>
+</tr>
+<tr>
+<td>(6,2,1) (<span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>)</td>
+<td>31</td>
+<td>124</td>
+<td>124</td>
+<td>34/34</td>
+<td>90/90</td>
+<td>0 NONE (<span class="math inline">\(z\)</span>)</td>
+</tr>
+<tr>
+<td>(2,3,2) (<span class="math inline">\(x\)</span>, <span class="math inline">\(z\)</span>)</td>
+<td>32</td>
+<td>128</td>
+<td>128</td>
+<td>34/34</td>
+<td>94/94</td>
+<td>0 NONE (<span class="math inline">\(y\)</span>)</td>
+</tr>
+</tbody>
+</table>
+<p>The first three rows have at least 20 distinct solutions each, diversified by random type assumptions on 1–3 vertices of each sublattice and, in the <code>--odd</code> runs, an odd selector on a random hexagon.</p>
+<p><strong>Exceptions: none.</strong></p>
+<p>Non-vacuity:</p>
+<ul>
+<li>In case 1 the chain-line test fails (22/22 on (6,2,3), 36/36 on (6,3,4)), as it should, since the <span class="math inline">\(y\)</span>-set there is a union of lines $x = $ const.</li>
+<li>With <code>--forceaxes</code> on (4,4,6) and (3,3,3), where no hypothesis holds, Theorem S fails for 92 of 108 and 160 of 168 triples, and S2 gives NONE on most sublattices.</li>
+</ul>
+<h3 id="law-of-line-fractions-1">Law of line fractions</h3>
+<p>Exact, with <code>fractions.Fraction</code>. The checks were:</p>
+<ul>
+<li><span class="math inline">\(f_y\)</span> separable as <span class="math inline">\(P(x) - R(z)\)</span>;</li>
+<li><span class="math inline">\(f_z + P(x)\)</span> a function of <span class="math inline">\(y\)</span> alone;</li>
+<li><span class="math inline">\(f_x = 1 + R - Q\)</span>;</li>
+<li><span class="math inline">\(f_x + f_y + f_z = 1\)</span> at every vertex.</li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>cells</th>
+<th>solutions satisfying the law</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(6,2,3), (4,3,3), (6,3,4), (2,1,3), (1,2,3), (6,2,1), (2,3,2) (coprime pair)</td>
+<td>258/258</td>
+</tr>
+<tr>
+<td>(2,2,4), (2,4,6), (4,4,6) (no coprime pair)</td>
+<td>237/237, including 18 from the <code>--forceaxes</code> run</td>
+</tr>
+<tr>
+<td>(3,3,3) (cubic)</td>
+<td>28/28</td>
+</tr>
+</tbody>
+</table>
+<p>That is 495 solutions on 10 non-cubic cells with 0 violations. Sanity: 3 random type fields on (4,4,6) violate the law (20 violations each) and fit (C) with residual about 1.</p>
+<h3 id="s1-by-enumeration-of-chains">(S1) by enumeration of chains</h3>
+<p>Done on 12 cells (h430), not just four: (4,3,3), (5,3,3), (6,2,3), (6,3,4), (5,4,4), (4,2,3), (3,3,3), (4,4,6), (2,2,4), (1,2,3), (2,1,1) and (7,3,6). For all six families the number of chains per pair of planes equals the gcd of the transverse extents.</p>
+<h2 id="corrections-and-gaps">Corrections and gaps</h2>
+<p>No gap.</p>
+<ol type="1">
+<li><strong>Summary item 2 (‘This needs no <span class="math inline">\(K_u\)</span>, no Theorem U, no Theorem R1 and no certificate’)</strong> is wrong in its last clause. Corollary H uses Theorem <span class="math inline">\(M&#39;\)</span>. Theorem <span class="math inline">\(M&#39;\)</span> is proved (note, line 460; check6 §1) with finite lemmas on four hexagons that carry DRAT certificates: PLAQ_K, K4 and, for the first proof, PLAQ_C and EDGE_X. The certificates are window lemmas that pull back to every torus, so they do not limit the scope, but the corollary is not certificate-free. The route through Theorem S2 is free of <span class="math inline">\(M&#39;\)</span> and of certificates, but only on cells with <span class="math inline">\(\gcd(a,b) = \gcd(a,c) = 1\)</span>.</li>
+<li><strong>Scope observation (not an error).</strong> In Case 2 of Theorem S the two lines meet whenever <span class="math inline">\(\gcd(a,b,c) = 1\)</span>: enumerated on (4,3,3), (5,3,3) and (3,4,4), where <span class="math inline">\(\gcd(b,c) \geq 3\)</span>. The last step of Lemma J likewise needs only <span class="math inline">\(\gcd(g_y, g_z) = \gcd(a,b,c) = 1\)</span>. The hypothesis <span class="math inline">\(\gcd(b,c) = 1\)</span> is used essentially only through (S1), which is what makes <span class="math inline">\(F_x\)</span> a function of the plane. The proof as written is correct. This locates what fails on cells without a coprime pair: (S1), not the meeting.</li>
+<li><strong>The counterexample to Lemma T can be smaller.</strong> On <span class="math inline">\(\mathbb{Z}_2 \times \mathbb{Z}_2\)</span> every 0/1 function is tri-separable (the span has rank 4). For example, <span class="math inline">\(\varepsilon = \delta_{(0,0)}\)</span> with <span class="math inline">\(\alpha = \beta = (1/2, 0)\)</span> and <span class="math inline">\(\gamma = (0, -1/2)\)</span>. Exhaustively, the failing 0/1 patterns number 8, 36 and 96 on <span class="math inline">\(\mathbb{Z}_2^2\)</span>, <span class="math inline">\(\mathbb{Z}_3^2\)</span> and <span class="math inline">\(\mathbb{Z}_4^2\)</span>. The author’s <span class="math inline">\(\mathbb{Z}_3\)</span> example is correct. The record should say that Lemma T fails on every square torus tried, and that its proof is right only for integer jumps.</li>
+<li><strong>Minor (wording in the S2 proof).</strong> ‘$Z = - F_x + $ const’ is correct but relies on the reader identifying <span class="math inline">\(\upsilon\)</span> with <span class="math inline">\(F_y\)</span> up to a constant. It would read more safely as ‘<span class="math inline">\(Z = F_y - F_x + \sigma\beta\)</span>, and <span class="math inline">\(F_y\)</span> is constant on <span class="math inline">\(S\)</span>’.</li>
+<li><strong>Thin cells (the author’s caveat 4)</strong> are not a problem for any step I read:
+<ul>
+<li>(T2) is taken on the lattice-derived hexagons of <code>lattice.build</code>, which raises on a degenerate hexagon and did not on (1,2,3), (2,1,3), (6,2,1) or (2,3,2).</li>
+<li>Lemma 1’s forward direction survives <span class="math inline">\(O + 2e_x = O - 2e_x\)</span>.</li>
+<li>Every structural claim held on the thin-cell samples.</li>
+</ul></li>
+</ol>
+<h2 id="what-i-could-not-check">What I could not check</h2>
+<ul>
+<li>Theorem S by solver on (10,4,5): no verdict. Of the 9 pair cases, 4 were UNSAT, 2 hit the 280 s cap and 3 were not run once a verdict was impossible.</li>
+<li>Completeness (C) itself, Theorem <span class="math inline">\(M&#39;\)</span>, Lemma A and Theorem P were taken from the record as instructed. My (C) fits are consistent with (C) on 523 solutions but are not a proof.</li>
+<li>‘What this does to the record’, item 4 (the LP of (V) positive on (5,3,3) and (5,4,4)): not re-run.</li>
+<li>The corpus statistics of ‘What is left’ and package B: not re-run.</li>
+</ul>
+<h2 id="rules">Rules</h2>
+<p>I believe none was broken:</p>
+<ul>
+<li>Every solve went through <code>h32_cap</code>, one process at a time, with caps of at most 300 s. The longest command took 521 s.</li>
+<li>There were no heredocs and no writes to /tmp.</li>
+<li>No existing file was modified. I edited only my own new <code>h432_sample.py</code>, between runs.</li>
+<li>There were no git operations.</li>
+<li>Neither Theorem H nor ‘odd and all six directions’ was run. The sampling used ‘some hexagon odd’ as an assumption only, with no condition on directions or types.</li>
+<li>One point is borderline: the six-minute pair runs on (7,3,6) and (10,4,5) were not preceded by a separate timing of a smaller instance of the same cell. The pre-flight was the (6,2,9) pair runs and a capped first batch on (7,3,6).</li>
+</ul>
+</main>
+</body>
+</html>

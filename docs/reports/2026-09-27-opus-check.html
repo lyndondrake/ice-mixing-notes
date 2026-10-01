@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Independent check of H ⇐ K_u + Lemma O + (R⁺) + (S≥1): confirmed with corrections (no gap; one mis-cited input, one unexercised case, two standing rem</title>
+<meta name="description" content="Independent check of H ⇐ K_u + Lemma O + (R⁺) + (S≥1): confirmed with corrections (no gap; one mis-cited input, one unexercised case, two standing remarks)">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Independent check of H ⇐ K_u + Lemma O + (R⁺) + (S≥1): confirmed with corrections (no gap; one mis-cited input, one unexercised case, two standing remarks)",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-27-opus-check.html",
+ "datePublished": "2026-09-27",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus), agent check, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-27-opus-check.md">Markdown source</a><br>Cited as an artefact by: <a href="../claims/theorem-h-orientation/thm-1-first-form.html">thm-1-first-form</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Independent check of H ⇐ K_u + Lemma O + (R⁺) + (S≥1): confirmed with corrections (no gap; one mis-cited input, one unexercised case, two standing remarks)</h1>
+
+<p class="author">Claude (Opus), agent check, for Lyndon Drake</p>
+<p class="date">2026-09-27</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#statement-by-statement-audit" id="toc-statement-by-statement-audit">1. Statement-by-statement audit</a></li>
+<li><a href="#corrections-and-remarks" id="toc-corrections-and-remarks">2. Corrections and remarks</a></li>
+<li><a href="#independent-computations" id="toc-independent-computations">3. Independent computations</a></li>
+</ul>
+</details></nav>
+<p><strong>Verdict: CONFIRMED WITH CORRECTIONS.</strong> Every proof in rphand §1–§4 and in the two borrowed theorems (Theorem D, w1prime §4; Theorem LC, wprime §2) is complete for the hypotheses it states. I found no gap. The corrections are to a citation and to how the inputs’ standing is worded; none changes the reduction.</p>
+<p>Scripts (new, mine): <code>scratch_h/h270_cage.py</code> (cage check from the definitions, no geometry imported), <code>h271_corpus.py</code> (corpus audit; imports only <code>Cell</code>, <code>eps_from_types</code>, <code>load_odd_corpus</code>), <code>h272_sat.py</code> (solver attacks; own encoding of one-hot, (T2), bond rule, oddness, three types and the three laws as switchable constraints; every solve through <code>h32_cap</code>). No existing file was modified. Nothing was committed. Everything ran on this Mac, one solver process at a time.</p>
+<h2 id="statement-by-statement-audit">1. Statement-by-statement audit</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>statement</th>
+<th>hypotheses stated</th>
+<th>hypotheses actually used</th>
+<th>verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lemma T</td>
+<td>frozen, reversing pair (m; u, v)</td>
+<td>P^z at O; τ(m) = x ≠ z</td>
+<td>complete</td>
+</tr>
+<tr>
+<td>Lemma St</td>
+<td>as T</td>
+<td>law C, (T2) on one hexagon (O, σ), Lemma T (all four bridgeheads z)</td>
+<td>complete</td>
+</tr>
+<tr>
+<td>sign pattern</td>
+<td>as T, plus straightness</td>
+<td>bond rule on 6 bonds; checked vector by vector (m→u d₀, m→v d₃, r→u d₂, r→u′ d₃, r′→v d₁, r′→v′ d₀; straight-y via (0,±2,2))</td>
+<td>complete</td>
+</tr>
+<tr>
+<td>Lemma sP</td>
+<td>frozen, oriented hole</td>
+<td>exhaustive cage enumeration; ε determined up to flip on the connected 12-bond cage graph</td>
+<td>complete; <strong>reproduced independently</strong> (§3.1)</td>
+</tr>
+<tr>
+<td>Theorem sLC</td>
+<td>every S′-hole oriented</td>
+<td>sP on every S′-hole of each hole k-line (telescoping, sign s_k = σ_{S′}s_is_j); no wrap-around needed</td>
+<td>complete</td>
+</tr>
+<tr>
+<td>two-product lemma</td>
+<td>P, Q ≥ 0 separable on X × Y, PQ ≡ 0, neither ≡ 0</td>
+<td>min P = 0 because Q ≢ 0; zero sets products of argmins; the rows b ∉ J_P exist because P ≢ 0</td>
+<td>complete</td>
+</tr>
+<tr>
+<td>stripe theorem</td>
+<td>every hole oriented, (S) on the S k-lines</td>
+<td>LC and sLC (so orientation of S′-holes), (S) for PQ = 0; the index set of S k-lines is the full product (S-parity)²</td>
+<td>complete. The stripe direction is unique (both directions would make P, Q constant, contradicting PQ = 0 with neither zero)</td>
+</tr>
+<tr>
+<td>(S) = Lemma O gap 0 + (S≥1)</td>
+<td>—</td>
+<td>at a straight-k hole with rods v, v + 4e_k, “exactly one away” ⟺ ε(v) = ε(v + 4e_k); consecutive pairs on the cyclic line are gap 0 or gap ≥ 1</td>
+<td>correct</td>
+</tr>
+<tr>
+<td>Lemma E</td>
+<td>F k-free, neighbours single-signed and opposite (or one free); holes of F oriented in the two-sided case</td>
+<td>P^k at the holes of F (methylenes in F), sP (two-sided only), the two s_n = +1 bridgeheads have opposite s_k</td>
+<td>complete; orientation needed exactly where stated (solver, §3.3)</td>
+</tr>
+<tr>
+<td>Theorem RP₁</td>
+<td>odd, three types, Lemma O, (S≥1), (R⁺)</td>
+<td>steps 1–3: T, St, sign pattern, stripe theorem on B (Lemma O at all A-holes for sLC, at straight B-holes for (S)), (R⁺); step 4: Lemma E (Lemma O at the holes of F); step 5: Theorem D (odd, three types) on both sides</td>
+<td>complete. Steps 1–3 need no oddness beyond the laws: with the laws imposed as constraints and no oddness, “a type-z vertex in the predicted plane” is UNSAT (and is already type-only UNSAT, rphand’s W_r)</td>
+</tr>
+<tr>
+<td>Theorem W, Case 1</td>
+<td>odd, three types, Lemma O, (R⁺), (S≥1)</td>
+<td>stripe theorem on S (direction n); (i) from (R⁺); (ii) from the stripe theorem on S′ plus (i); cyclic choice c₁ → c₂, c*, c**</td>
+<td>complete (see §2.2 for the check of the cyclic argument)</td>
+</tr>
+<tr>
+<td>Theorem W, Case 2</td>
+<td>as above</td>
+<td>LC zero sets (min h^A = 0 because B ≠ ∅), (R⁺), a full A-plane never adjacent to a full B-plane; F one-sided, so Lemma E needs no orientation</td>
+<td>complete, but <strong>never exercised</strong> (§2.3)</td>
+</tr>
+<tr>
+<td>Theorem D (w1prime §4)</td>
+<td>A-plane c k-free, (E′) at it (upper pair), odd, three types</td>
+<td>(i) Lemma 2(b); (ii) P^k at the B-holes of plane c+1; (iii) S1 on the B j-grid c+1, then M′ via inversion, using odd and three types; (iv) diagonals of one B-plane always meet (checked: 4n ≡ Δi + Δk mod 4L is solvable because Δi + Δk ≡ 0 mod 4)</td>
+<td>complete. Needs (E′) at plane c on the one side only. Odd and three types are used only in (iii)</td>
+</tr>
+<tr>
+<td>Theorem LC (wprime §2)</td>
+<td>frozen (one-hot + (T2))</td>
+<td>P^k derived from (T2) by Σ_σ σ_k; telescoping along S′-hole k-lines</td>
+<td>complete; P^k re-verified on all 1200 cage patterns (3600/3600)</td>
+</tr>
+<tr>
+<td>Corollary (H)</td>
+<td>odd; K_u, Lemma O, (R⁺), (S≥1)</td>
+<td>absent type ⇒ empty axis ⇒ an absent direction (trivially); otherwise every axis is two-way, then Theorem W, then a complete type-k n-chain (one sign by the bond rule: same-type neighbours share a sign), then K_u</td>
+<td>complete; <strong>cites the wrong Lemma A</strong> (§2.1)</td>
+</tr>
+</tbody>
+</table>
+<p>Specific points the brief asked about:</p>
+<ul>
+<li><strong>(S) where only (S≥1) was assumed.</strong> (S) is used in the stripe theorem (PQ = 0) and in RP₁ step 2. In both places Lemma O is also assumed, and (S) = Lemma O at straight holes + (S≥1) is exact. No illegitimate use.</li>
+<li><strong>Lemma O at holes whose orientation was not established.</strong> Every use is inside “odd, Lemma O” (all holes). Lemma E’s one-sided case uses none, which matters because Case 2 relies on it.</li>
+<li><strong>Index sets.</strong> The two-product lemma is applied to (h ± s)/2 on the S k-lines, indexed by (x_i, x_j) ∈ (S-parity)²: a full product. Case 2 applies the zero-set argument to LC counts on the same index set.</li>
+<li><strong>Sublattice and side bookkeeping for Theorem D.</strong> A B-plane F is carried to an A-plane by the inversion v ↦ (1,1,1) − v. The lower side is carried to the upper by a two-coordinate flip, for example (x,−y,−z) with y the normal: I checked that it maps A to A, B to B (since (1,1,1) ↦ (1,−1,−1) = d₁) and the bond set to itself. Both maps preserve types and (T2). The needed (E′) on the lower side is supplied by Lemma E, which gives both sides.</li>
+<li><strong>“three types” and “odd” where D(iii) uses S1 and M′.</strong> Available in RP₁ and Theorem W by hypothesis. In the Corollary the two-type case is split off before Theorem W is invoked. The solver shows both hypotheses are genuinely needed (§3.3: D’s negation is SAT without either).</li>
+</ul>
+<h2 id="corrections-and-remarks">2. Corrections and remarks</h2>
+<h3 id="correction-the-corollary-cites-lemma-a-for-the-absent-type-case">2.1 Correction: the Corollary cites Lemma A for the absent-type case</h3>
+<p>rphand §4 says: <em>“If a type is absent, Lemma A.”</em> The synthesis (§1) lists “Lemma A (two-type states)” among the proved inputs. The Lemma A of record (<code>docs/frozen-structure-2026-09-05.md</code>, “a missing type forces a half-box period”) concludes a translation invariance, not an absent direction. The trails report’s Lemma A is unrelated. <strong>Repair:</strong> none is needed, because a missing type k is an empty axis k and both ±e_k are absent, so the case falls under the next sentence (“if some axis is one-way or empty”). Delete the Lemma A clause from the Corollary, and delete Lemma A from the synthesis’ list of inputs. (Lemma A is still needed for the periodicity conjecture from H, but not for H.)</p>
+<h3 id="theorem-w-case-1-the-cyclic-argument">2.2 Theorem W, Case 1: the cyclic argument</h3>
+<p>I re-derived it and checked it as written on the corpus (<code>h271</code>, “W1” rows):</p>
+<ul>
+<li>the S-stripe direction exists;</li>
+<li><ol type="i">
+<li>holds;</li>
+</ol></li>
+<li>(ii) holds: every plane along n, of either sublattice, has at most one label;</li>
+<li>the construction (a + S-plane c₁, the next non-empty S-plane a − plane c₂, c* the last + plane in [c₁, c₂), c** the first non-empty plane after it) always gives a − plane c** with c** ≥ c* + 2;</li>
+<li>F = c* + 1 is on the wall list.</li>
+</ul>
+<p>Adjacency is excluded in each of the three possible parities of (c*, c**), by (i) or its mirror, so F is k-free. Its neighbours are c* (+) and c* + 2 (0 or −), as claimed. No correction.</p>
+<h3 id="remark-case-2-of-theorem-w-is-vacuous-in-every-tested-setting">2.3 Remark: Case 2 of Theorem W is vacuous in every tested setting</h3>
+<p>No two-way axis in the corpus is in Case 2 (807 / 807 and 1007 / 1007 two-way axes are Case 1). With my encoding, “z two-way, A’s type-z vertices all +, B’s all −” is <strong>UNSAT</strong> under the three laws as constraints (L = 3: 0.15 s; L = 4: 0.89 s), and also under odd + three types alone (0.14 s; 0.30 s). The written argument for Case 2 is correct, so this is not a gap. It does mean the case has no data behind it. It is probably provably empty (from (R⁺) and Theorem Ω, say), which would shorten the proof. I have not proved that.</p>
+<h3 id="standing-of-the-inputs-task-5">2.4 Standing of the inputs (task 5)</h3>
+<ul>
+<li><strong>Lemma O in odd states ⇐ Theorem U + corner case + cage enumeration: confirmed.</strong> My independent cage enumeration (<code>h270</code>, sign form) gives:
+<ul>
+<li>1104 of the 1200 (T2) patterns of a cage are oriented;</li>
+<li>the 96 unoriented ones are all straight;</li>
+<li>for rod axis r they are exactly the patterns whose two bridgeheads on one r-side have one transverse type and the two on the other side have the other type (16 per ordered pair, for each of the three axes);</li>
+<li>no corner cage is unoriented, so the corner case also holds cage-locally.</li>
+</ul>
+This is orient §3’s statement, with the side grouping made explicit. The straight case then needs Theorem U, whose standing is solver-only at L = 3, 4, 5 with hand residue (V). My own sign-form query (“adjacent type-z vertices on one line with opposite signs”) is SAT without oddness and UNSAT with it: L = 3 in 0.07 s, L = 4 in 1.62 s.</li>
+<li><strong>(S) = Lemma O (straight holes) + (S≥1): confirmed</strong> (§1).</li>
+<li><strong>(R⁺) and (S≥1) hold without oddness at L = 3, 4: confirmed</strong> with my own encoding (§3.3).</li>
+<li><strong>Wording to reconcile.</strong> rphand §0 says Lemma R gives “the first two members” of (R⁺). rphand §9 and the synthesis say it gives “k-separation ≤ 3”. One of the two should be corrected; I did not audit Lemma R.</li>
+<li><strong>K_u’s scope.</strong> rphand calls K_u simply “certified”. The attack proposal records it as certified modulo Lemma L and the scope of the window certificates (a ≥ 3 and b, c ≥ 4, with the small cells by torus verdicts). The Corollary’s “H” inherits that scope. I did not audit K_u, as instructed.</li>
+</ul>
+<h2 id="independent-computations">3. Independent computations</h2>
+<h3 id="cage-check-of-lemma-sp-h270_cage.py-0.38-s">3.1 Cage check of Lemma sP (<code>h270_cage.py</code>, 0.38 s)</h3>
+<ul>
+<li><strong>Model:</strong> the ten cage vertices, the four hexagons found by searching all (A-hole, σ) whose six vertices lie in the cage, the twelve bonds, and (T2) as “exactly two of [τ(a_k) = k], [τ(b_k) = k]”. The bond rule is solved by propagation.</li>
+<li><strong>Results, identical for A- and B-cages:</strong>
+<ul>
+<li>1200 (T2) patterns;</li>
+<li>law C 1200/1200;</li>
+<li>P^k 3600/3600;</li>
+<li>bond rule consistent in all 1200;</li>
+<li>1104 oriented patterns, 0 sP violations;</li>
+<li>96 unoriented patterns, exactly 3 violations each (288).</li>
+</ul></li>
+</ul>
+<h3 id="corpus-h271_corpus.py-l-3-637-states-2.8-s-l-4-720-states-6.8-s">3.2 Corpus (<code>h271_corpus.py</code>; L = 3: 637 states, 2.8 s; L = 4: 720 states, 6.8 s)</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>check</th>
+<th>L = 3 checks / failures</th>
+<th>L = 4 checks / failures</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lemma O, every hole</td>
+<td>137 592 / 0</td>
+<td>368 640 / 0</td>
+</tr>
+<tr>
+<td>(S) gap 0</td>
+<td>60 258 / 0</td>
+<td>190 470 / 0</td>
+</tr>
+<tr>
+<td>(S≥1)</td>
+<td>25 758 / 0</td>
+<td>99 524 / 0</td>
+</tr>
+<tr>
+<td>(R⁺), all diagonal pairs</td>
+<td>388 728 / 0</td>
+<td>1 533 656 / 0</td>
+</tr>
+<tr>
+<td>LC, sLC mixed differences</td>
+<td>137 592 / 0 each</td>
+<td>276 480 / 0 each</td>
+</tr>
+<tr>
+<td>stripe theorem (one coordinate; never both)</td>
+<td>1565 / 0</td>
+<td>1972 / 0</td>
+</tr>
+<tr>
+<td>two-way axis has a sign-separated wall</td>
+<td>807 / 0 (543 three-type, 264 two-type)</td>
+<td>1007 / 0 (727 + 280)</td>
+</tr>
+<tr>
+<td>(E′) at every hole of every wall, both sides</td>
+<td>88 884 / 0</td>
+<td>239 552 / 0</td>
+</tr>
+<tr>
+<td>Theorem D’s conclusion beside every wall, three-type (type-k vertex on a uniform 4L-chain of the far slab)</td>
+<td>18 738 / 0</td>
+<td>43 544 / 0</td>
+</tr>
+<tr>
+<td>same, two-type states (D not claimed)</td>
+<td>17 748 / 10 800</td>
+<td>38 576 / 23 296</td>
+</tr>
+<tr>
+<td>Theorem W construction as written (Case 1; Case 2 never occurs)</td>
+<td>807 / 0</td>
+<td>1007 / 0</td>
+</tr>
+<tr>
+<td>reversing pairs: opposite signs; O straight along τ(m) or j; m-plane with normal b k-free</td>
+<td>17 524 / 0 each</td>
+<td>36 524 / 0 each</td>
+</tr>
+<tr>
+<td>RP₁ member on a uniform b-chain, three-type</td>
+<td>10 552 / 0</td>
+<td>20 552 / 0</td>
+</tr>
+<tr>
+<td>same, two-type (D’s alternative)</td>
+<td>24 496 / 14 244</td>
+<td>52 496 / 31 344</td>
+</tr>
+</tbody>
+</table>
+<p>A chain is the component of a vertex in the 2-regular bond graph between two adjacent planes, computed directly rather than from Lemma 1’s formula. Every chain had 4L vertices. The two-type failure counts reproduce rphand §6’s 14 244 and 31 344 exactly.</p>
+<h3 id="solver-h272_sat.py-cadical-via-h32_cap">3.3 Solver (<code>h272_sat.py</code>, CaDiCaL via <code>h32_cap</code>)</h3>
+<p>A three-type state is required only where marked “three”. “Laws” means Lemma O at every hole, faithful (S≥1) (no type-k vertex between, at least one vertex between) and (R⁺), all imposed as clauses, with no oddness.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>query</th>
+<th>L = 3</th>
+<th>L = 4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(R⁺) negation, no oddness</td>
+<td>UNSAT 0.02 s</td>
+<td>UNSAT 0.36 s</td>
+</tr>
+<tr>
+<td>control: origin z+, a diagonal z present</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>(S) gap 0 negation, no oddness</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>(S) gap 0 negation + odd (Lemma O, straight)</td>
+<td>UNSAT 0.07 s</td>
+<td>UNSAT 1.62 s</td>
+</tr>
+<tr>
+<td>(S) gap 1 negation, no oddness</td>
+<td>UNSAT 0.01 s</td>
+<td>UNSAT 0.04 s</td>
+</tr>
+<tr>
+<td>(S) gap 2 negation, no oddness</td>
+<td>— (L = 3 has gap ≤ 1)</td>
+<td>UNSAT 0.01 s</td>
+</tr>
+<tr>
+<td>controls: same gaps, same sign</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td><strong>Theorem W: z two-way, no sign-separated wall, laws</strong></td>
+<td><strong>UNSAT 60.1 s</strong></td>
+<td><strong>TIMEOUT at 540 s</strong></td>
+</tr>
+<tr>
+<td>same + three types</td>
+<td>UNSAT (after learning)</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>control: z two-way, laws</td>
+<td>SAT 0.00 s</td>
+<td>SAT 0.11 s</td>
+</tr>
+<tr>
+<td>control: no wall, z two-way, no laws</td>
+<td>SAT 0.06 s</td>
+<td>—</td>
+</tr>
+<tr>
+<td>control: no wall, (S≥1) + (R⁺) without Lemma O</td>
+<td>SAT 0.04 s</td>
+<td>TIMEOUT (same batch)</td>
+</tr>
+<tr>
+<td>no wall, Lemma O alone</td>
+<td>UNSAT 57.5 s</td>
+<td>—</td>
+</tr>
+<tr>
+<td>no wall, odd + three types, no laws</td>
+<td>UNSAT 168.5 s</td>
+<td>—</td>
+</tr>
+<tr>
+<td>RP₁ (c), straight-x: type z in the A-plane y = 0, laws</td>
+<td>UNSAT 0.01 s</td>
+<td>UNSAT 0.12 s</td>
+</tr>
+<tr>
+<td>RP₁ (c), straight-y: type z in the A-plane x = 0, laws</td>
+<td>UNSAT 0.00 s</td>
+<td>UNSAT 0.08 s</td>
+</tr>
+<tr>
+<td>reversing-pair frame, neither straight-x nor straight-y (Lemma St)</td>
+<td>UNSAT</td>
+<td>UNSAT</td>
+</tr>
+<tr>
+<td>controls: frame + straight-x / straight-y, laws</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>Lemma E negation (F free, y = ±1 sign-separated, pair disagreement at one hole, orientation at F’s holes only)</td>
+<td>UNSAT 0.00 s</td>
+<td>UNSAT 0.00 s</td>
+</tr>
+<tr>
+<td>control: same without orientation</td>
+<td>SAT</td>
+<td>SAT</td>
+</tr>
+<tr>
+<td>one-sided (y = −1 free), disagreement, no orientation</td>
+<td>UNSAT</td>
+<td>UNSAT</td>
+</tr>
+<tr>
+<td>Theorem D negation (F free, (E′) at F, w₀ = (1,1,1) type z, its up-chain not all z, odd, three)</td>
+<td>UNSAT 0.24 s</td>
+<td>UNSAT 2.21 s</td>
+</tr>
+<tr>
+<td>controls: D negation without three types / without odd</td>
+<td>SAT / SAT</td>
+<td>SAT / SAT</td>
+</tr>
+<tr>
+<td>Theorem W Case 2 (A all +, B all −, z two-way), laws</td>
+<td>UNSAT 0.15 s</td>
+<td>UNSAT 0.89 s</td>
+</tr>
+<tr>
+<td>Case 2, odd + three types (no laws)</td>
+<td>UNSAT 0.14 s</td>
+<td>UNSAT 0.30 s</td>
+</tr>
+</tbody>
+</table>
+<p>Reading:</p>
+<ul>
+<li><strong>No intermediate statement could be broken.</strong> Every counterexample query that the reduction predicts to be UNSAT came back UNSAT, each with a satisfiable control, except the L = 4 wall query, which is undecided at the 540 s cap. At L = 3 that query is UNSAT with the laws as constraints and no oddness. The existence of the wall therefore rests on the laws alone, as the proof says, not on oddness.</li>
+<li>Lemma E needs orientation exactly in its two-sided case.</li>
+<li>Theorem D needs both oddness and three types, as §6 of rphand says.</li>
+<li>A side observation: at L = 3, Lemma O alone (as a constraint) already forces the wall. This does not bear on the proof.</li>
+</ul>
+<p>Not run: the L = 5, 6 samples of rphand §7, and the L = 4 wall query beyond 540 s, which would need more than the 10-minute foreground budget.</p>
+</main>
+</body>
+</html>

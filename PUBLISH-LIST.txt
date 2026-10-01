@@ -1,0 +1,79 @@
+# Files mirrored from the private repository into this tree by scripts/publish-notes.sh.
+# Format: <source path relative to the private repository root><TAB><target path relative to publish/>
+# Blank lines and lines starting with # are ignored.
+
+# The contribution notes
+docs/notes/curl-reduction.md	notes/curl-reduction.md
+docs/notes/curl-reduction.pdf	notes/curl-reduction.pdf
+docs/notes/frozen-theorems.md	notes/frozen-theorems.md
+docs/notes/frozen-theorems.pdf	notes/frozen-theorems.pdf
+docs/notes/giant-component.md	notes/giant-component.md
+docs/notes/giant-component.pdf	notes/giant-component.pdf
+docs/notes/helicity-mode.md	notes/helicity-mode.md
+docs/notes/helicity-mode.pdf	notes/helicity-mode.pdf
+docs/notes/measurement-z.md	notes/measurement-z.md
+docs/notes/measurement-z.pdf	notes/measurement-z.pdf
+docs/notes/method.md	notes/method.md
+docs/notes/method.pdf	notes/method.pdf
+docs/notes/periodicity-certified.md	notes/periodicity-certified.md
+docs/notes/periodicity-certified.pdf	notes/periodicity-certified.pdf
+docs/notes/sector-logconcavity.md	notes/sector-logconcavity.md
+docs/notes/sector-logconcavity.pdf	notes/sector-logconcavity.pdf
+docs/notes/sign-gauge-obstruction.md	notes/sign-gauge-obstruction.md
+docs/notes/sign-gauge-obstruction.pdf	notes/sign-gauge-obstruction.pdf
+docs/notes/theorem-h-orientation.md	notes/theorem-h-orientation.md
+docs/notes/theorem-h-orientation.pdf	notes/theorem-h-orientation.pdf
+docs/notes/README.md	notes/README.md
+paper/refs/ice-mixing.json	notes/refs.json
+
+# Checker and agent reports named in the notes and manifests, and every report of 2026-10-01
+docs/reports/2026-08-11-stage1-falsifiers.md	reports/2026-08-11-stage1-falsifiers.md
+docs/reports/2026-09-04-certificates-sat.md	reports/2026-09-04-certificates-sat.md
+docs/reports/2026-09-04-isabelle-sturm.md	reports/2026-09-04-isabelle-sturm.md
+docs/reports/2026-09-04-stage4abc.md	reports/2026-09-04-stage4abc.md
+docs/reports/2026-09-04-stage4d.md	reports/2026-09-04-stage4d.md
+docs/reports/2026-09-04-stage4f.md	reports/2026-09-04-stage4f.md
+docs/reports/2026-09-17-completeness.md	reports/2026-09-17-completeness.md
+docs/reports/2026-09-17-p1-proof.md	reports/2026-09-17-p1-proof.md
+docs/reports/2026-09-22-orient.md	reports/2026-09-22-orient.md
+docs/reports/2026-09-22-ucore.md	reports/2026-09-22-ucore.md
+docs/reports/2026-09-22-uhand.md	reports/2026-09-22-uhand.md
+docs/reports/2026-09-27-aniso.md	reports/2026-09-27-aniso.md
+docs/reports/2026-09-27-opus-cert.md	reports/2026-09-27-opus-cert.md
+docs/reports/2026-09-27-opus-check.md	reports/2026-09-27-opus-check.md
+docs/reports/2026-09-27-opus-check2.md	reports/2026-09-27-opus-check2.md
+docs/reports/2026-09-27-opus-cone.md	reports/2026-09-27-opus-cone.md
+docs/reports/2026-09-27-opus-coprime.md	reports/2026-09-27-opus-coprime.md
+docs/reports/2026-09-27-opus-gtwo.md	reports/2026-09-27-opus-gtwo.md
+docs/reports/2026-09-27-opus-lines.md	reports/2026-09-27-opus-lines.md
+docs/reports/2026-09-27-opus-rphand.md	reports/2026-09-27-opus-rphand.md
+docs/reports/2026-09-27-opus-uwall.md	reports/2026-09-27-opus-uwall.md
+docs/reports/2026-09-27-opus-vsign.md	reports/2026-09-27-opus-vsign.md
+docs/reports/2026-09-27-synthesis.md	reports/2026-09-27-synthesis.md
+docs/reports/2026-09-28-attack-proposal.md	reports/2026-09-28-attack-proposal.md
+docs/reports/2026-09-28-opus-check7.md	reports/2026-09-28-opus-check7.md
+docs/reports/2026-09-28-opus-check8.md	reports/2026-09-28-opus-check8.md
+docs/reports/2026-09-28-opus-check9.md	reports/2026-09-28-opus-check9.md
+docs/reports/2026-09-28-opus-cubethree.md	reports/2026-09-28-opus-cubethree.md
+docs/reports/2026-09-28-opus-dfour.md	reports/2026-09-28-opus-dfour.md
+docs/reports/2026-09-28-opus-scomp.md	reports/2026-09-28-opus-scomp.md
+docs/reports/2026-09-28-opus-sheet.md	reports/2026-09-28-opus-sheet.md
+docs/reports/2026-09-28-opus-twochain.md	reports/2026-09-28-opus-twochain.md
+docs/reports/2026-09-29-opus-moment.md	reports/2026-09-29-opus-moment.md
+docs/reports/2026-09-30-fable-rodline.md	reports/2026-09-30-fable-rodline.md
+docs/reports/2026-09-30-fable-zeroflux.md	reports/2026-09-30-fable-zeroflux.md
+docs/reports/2026-09-30-opus-check10.md	reports/2026-09-30-opus-check10.md
+docs/reports/2026-09-30-opus-kuwall.md	reports/2026-09-30-opus-kuwall.md
+docs/reports/2026-10-01-fable-screw.md	reports/2026-10-01-fable-screw.md
+docs/reports/2026-10-01-kucone-partial.md	reports/2026-10-01-kucone-partial.md
+docs/reports/2026-10-01-opus-falsify.md	reports/2026-10-01-opus-falsify.md
+docs/reports/2026-10-01-opus-kucheck.md	reports/2026-10-01-opus-kucheck.md
+docs/reports/2026-10-01-opus-p1check.md	reports/2026-10-01-opus-p1check.md
+docs/reports/2026-10-01-opus-pacheck.md	reports/2026-10-01-opus-pacheck.md
+docs/reports/2026-10-01-opus-rbox.md	reports/2026-10-01-opus-rbox.md
+
+# Certificate ledgers (verdicts, hashes); the CNF and DRAT files themselves are not published
+experiments/08_frozen_structure/scratch_h/certs/h28x_results.jsonl	certificates/h28x_results.jsonl
+experiments/08_frozen_structure/scratch_h/certs/h28x_sha256_2026-09-27.txt	certificates/h28x_sha256_2026-09-27.txt
+experiments/08_frozen_structure/scratch_h/certs/h74x_results.jsonl	certificates/h74x_results.jsonl
+experiments/08_frozen_structure/scratch_h/certs/h74x_sha256_2026-10-01.txt	certificates/h74x_sha256_2026-10-01.txt

@@ -1,0 +1,1422 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subagent report: stage 4, items 4a / 4b / 4c (2026-09-04)</title>
+<meta name="description" content="Subagent report: stage 4, items 4a / 4b / 4c (2026-09-04)">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Subagent report: stage 4, items 4a / 4b / 4c (2026-09-04)",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-04-stage4abc.html",
+ "datePublished": "2026-09-04",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "inLanguage": "en-GB"
+}</script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-04-stage4abc.md">Markdown source</a></p></div>
+<main class="doc">
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#subagent-report-stage-4-items-4a-4b-4c-2026-09-04" id="toc-subagent-report-stage-4-items-4a-4b-4c-2026-09-04">Subagent report: stage 4, items 4a / 4b / 4c (2026-09-04)</a>
+<ul>
+<li><a href="#bottom-line" id="toc-bottom-line">0. Bottom line</a></li>
+<li><a href="#pre-flight-measured-then-multiplied-out" id="toc-pre-flight-measured-then-multiplied-out">1. Pre-flight (measured, then multiplied out)</a></li>
+<li><a href="#item-4a-sector-log-concavity" id="toc-item-4a-sector-log-concavity">2. Item 4a — sector log-concavity</a></li>
+<li><a href="#item-4b-gauge-signability-of-bond-correlations" id="toc-item-4b-gauge-signability-of-bond-correlations">3. Item 4b — gauge-signability of bond correlations</a></li>
+<li><a href="#item-4c-the-conjecture-nfg" id="toc-item-4c-the-conjecture-nfg">4. Item 4c — the conjecture (NF⇒G)</a></li>
+<li><a href="#run-ledger-every-launch-its-feed-card-its-footprint" id="toc-run-ledger-every-launch-its-feed-card-its-footprint">5. Run ledger — every launch, its feed card, its footprint</a></li>
+<li><a href="#defects-recorded" id="toc-defects-recorded">6. Defects recorded</a></li>
+<li><a href="#what-was-not-run-and-why" id="toc-what-was-not-run-and-why">7. What was NOT run, and why</a></li>
+<li><a href="#unexpected-not-part-of-any-registered-reading" id="toc-unexpected-not-part-of-any-registered-reading">8. Unexpected (not part of any registered reading)</a></li>
+<li><a href="#tests" id="toc-tests">9. Tests</a></li>
+</ul></li>
+</ul>
+</details></nav>
+<h1 id="subagent-report-stage-4-items-4a-4b-4c-2026-09-04">Subagent report: stage 4, items 4a / 4b / 4c (2026-09-04)</h1>
+<p>Provenance: Claude Code <strong>implementation/numerics subagent</strong>, model <strong>Opus 5 (1M context), <code>claude-opus-5[1m]</code></strong>, run 2026-09-04 on the GB10 (<code>spark-709c</code>), dispatched by the <strong>Fable main loop</strong> against the registration in <code>docs/next-stage-plan-2026-09-04.md</code> §5 (items 4a, 4b, 4c only; §2 and §3 read as context). The readings registered there are FROZEN: this report states each one PASS or FAIL as registered and does not reinterpret it. Item <strong>4d</strong> was worked in parallel by a second subagent in <code>experiments/05_thin_even/</code> and is not touched here. Git untouched by this subagent — the main loop commits.</p>
+<p>Artefacts, all under <code>~/repo/project/ice-mixing/</code>:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>path</th>
+<th>contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>icemix/logconcave.py</code></td>
+<td>exact log-concavity, support-lattice and symmetry tests on an integer histogram on <code>Z^d</code> (NEW, additive)</td>
+</tr>
+<tr>
+<td><code>icemix/signgauge.py</code></td>
+<td>exact bond-indicator pair statistics by two routes; the balanced-signed-graph test with three independent decision procedures (NEW, additive)</td>
+</tr>
+<tr>
+<td><code>icemix/component.py</code></td>
+<td>bounded breadth-first closure of one hexagon-flip component, at arbitrary spin count (NEW, additive)</td>
+</tr>
+<tr>
+<td><code>experiments/04_lorentzian_giant/run_stage4abc.py</code></td>
+<td>the run</td>
+</tr>
+<tr>
+<td><code>experiments/04_lorentzian_giant/make_summary.py</code></td>
+<td>merges the part files into <code>results/results.json</code>, renders <code>results/summary.md</code></td>
+</tr>
+<tr>
+<td><code>experiments/04_lorentzian_giant/results/</code></td>
+<td><code>part_4a.json</code>, <code>part_4b.json</code>, <code>part_4c.json</code>, <code>results.json</code>, <code>summary.md</code></td>
+</tr>
+<tr>
+<td><code>tests/test_stage4abc.py</code></td>
+<td>30 new tests</td>
+</tr>
+</tbody>
+</table>
+<p>No existing <code>icemix</code> function was modified; the three new modules are purely additive. Every number below is in <code>experiments/04_lorentzian_giant/results/results.json</code>.</p>
+<hr />
+<h2 id="bottom-line">0. Bottom line</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>item</th>
+<th>reading</th>
+<th>verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4a (i)</td>
+<td><code>N(W)</code> invariant under <code>W -&gt; -W</code> and under the signed axis permutations the cell shape admits</td>
+<td><strong>PASS</strong> at all six cells</td>
+</tr>
+<tr>
+<td>4a (ii)</td>
+<td>axis log-concavity, and no internal zeros along any axis line</td>
+<td><strong>PASS</strong> at all six cells</td>
+</tr>
+<tr>
+<td>4a (iii)</td>
+<td>diagonal log-concavity along <code>e_j +- e_k</code> and <code>e_x +- e_y +- e_z</code></td>
+<td><strong>PASS</strong> at all six cells</td>
+</tr>
+<tr>
+<td>4a (iv)</td>
+<td>the (111) marginal <code>s = Wx+Wy+Wz</code> log-concave with interval support</td>
+<td><strong>PASS</strong> at all six cells</td>
+</tr>
+<tr>
+<td>4b (i)</td>
+<td>at least one strictly positive pair covariance in the plain gauge</td>
+<td><strong>HOLDS</strong> at every cell and every measure (prediction confirmed)</td>
+</tr>
+<tr>
+<td>4b (ii)</td>
+<td>a diagonal <code>+-1</code> gauge makes every pair covariance <code>&lt;= 0</code></td>
+<td><strong>FAIL</strong> at every cell and every measure</td>
+</tr>
+<tr>
+<td>4b (iii)</td>
+<td>strong-Rayleigh necessary condition under conditioning</td>
+<td><strong>NOT RUN</strong> — the registered trigger (a PASS at (ii)) never fired</td>
+</tr>
+<tr>
+<td>4b NN</td>
+<td>two bonds sharing a site are negatively correlated</td>
+<td><strong>PASS</strong> in measures A and B everywhere; <strong>FAILS</strong> in measure C at (1,1,2) — see §3.4</td>
+</tr>
+<tr>
+<td>4c (i)</td>
+<td>zero non-frozen starts that are not certified connected to <code>R</code></td>
+<td><strong>PASS</strong> — 0 uncertified out of 27,000 starts (26,987 non-frozen)</td>
+</tr>
+<tr>
+<td>4c (ii)</td>
+<td>a closed bounded BFS on an uncertified non-frozen start (a counterexample)</td>
+<td>none arose: no start was uncertified</td>
+</tr>
+<tr>
+<td>4c (1,2,2)</td>
+<td>exhaustive census reproduces stage 1 exactly</td>
+<td><strong>PASS</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Headline: 4b (ii) FAILS, and it fails at the 16-spin cell with a three-bond certificate.</strong> Per the registration (<code>docs/next-stage-plan-2026-09-04.md</code> §5, 4b), “a FAIL at (ii) closes the Lorentzian lead”; per §7.4, item 3 (the matching lower bound <code>Δ ≳ L⁻²</code>) opens only if 4a <strong>and</strong> 4b both pass, so it stays closed. 4a passed cleanly and without qualification — see §2.5 for the one methodological trap that had to be disarmed before that PASS meant anything.</p>
+<p>No counterexample to <strong>(NF⇒G)</strong> was found; the conjecture survives 27,000 fresh and adversarial starts at cubic <code>L = 2</code> and <code>L = 3</code>, all of them either frozen (13) or certified into the giant (26,987).</p>
+<hr />
+<h2 id="pre-flight-measured-then-multiplied-out">1. Pre-flight (measured, then multiplied out)</h2>
+<p>Every computation below was timed on one unit before launch. Rates are on the GB10 (<code>spark-709c</code>, 20 cores); no GPU is used anywhere in 4a/4b/4c.</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>computation</th>
+<th>unit timed</th>
+<th>unit cost</th>
+<th>multiplied out</th>
+<th>decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4a frontier DP with <code>track_axes=(0,1,2)</code></td>
+<td>one cell</td>
+<td>0.004 s at (1,1,1) rising to 10.9 s at (1,2,3)</td>
+<td>6 cells ≈ 18 s</td>
+<td>run</td>
+</tr>
+<tr>
+<td>4a materialised cross-check</td>
+<td>one cell</td>
+<td>2,891,562 states in 44.9 s at (1,2,2) = 64.4k states/s; 9,765,378 in 94 s at (1,1,4) = 104k/s</td>
+<td>5 cells ≈ 175 s</td>
+<td>run</td>
+</tr>
+<tr>
+<td>4a (2,2,2) joint-winding DP</td>
+<td>one DP step</td>
+<td>215,576 key-updates/s; the DP reached 8,661,950 keys at step <strong>41 of 128</strong> in 259 s and 4.22 GB</td>
+<td>growth 1.2114 keys/step in the tail ⇒ projected peak <strong>7.14×10⁸ keys ≈ 347 GB</strong>, <strong>≈ 3.7 h</strong></td>
+<td><strong>NOT RUN</strong> (memory ≫ the 121 GB machine; wall &gt; 3 h)</td>
+</tr>
+<tr>
+<td>4b pair statistics + signing, one cell</td>
+<td>(1,2,2) measure A</td>
+<td>enumeration 45 s + pair statistics 8.8 s + signing &lt; 0.1 s</td>
+<td>4 cells × 3 measures ≈ 94 s</td>
+<td>run</td>
+</tr>
+<tr>
+<td>4b (iii) conditional check</td>
+<td>one (pair, conditioning) triple</td>
+<td>98,280 triples in 0.1 s at (1,1,1)</td>
+<td>1.94×10⁶ triples ≈ 20 s at (1,1,2)</td>
+<td>trigger did not fire</td>
+</tr>
+<tr>
+<td>4c (1,2,2) exhaustive census</td>
+<td>whole</td>
+<td>29 s</td>
+<td>29 s</td>
+<td>run</td>
+</tr>
+<tr>
+<td>4c cubic <code>L=2</code> start</td>
+<td>one start</td>
+<td><code>sample_w0_dfs</code> 0.003 s + <code>certify_connected</code> 0.029 s</td>
+<td>17,000 starts = 545 core-s ÷ workers ≈ <strong>91–314 s</strong></td>
+<td>run</td>
+</tr>
+<tr>
+<td>4c cubic <code>L=3</code> start</td>
+<td>one start</td>
+<td><code>sample_w0_dfs</code> 0.87 s + <code>certify_connected</code> 0.031 s</td>
+<td>17,000 starts ≈ 9,350 core-s ÷ 6 ≈ <strong>26 min</strong> — <strong>this projection was wrong by 3.8×</strong>, see §4.3</td>
+<td>run, then resized</td>
+</tr>
+<tr>
+<td>4c (1,2,3) exhaustive census</td>
+<td>DFS leaf rate</td>
+<td>≈1.0×10⁵ states/s</td>
+<td>≈3.1×10⁹-node tree ≈ <strong>8.5 h</strong>, ≥16 GB for the state list, ≈9.4×10⁹ flip-graph edges</td>
+<td><strong>NOT RUN</strong> — and blocked outright, see §4.5</td>
+</tr>
+</tbody>
+</table>
+<p>Total projected <strong>≈ 41 min</strong>, over the 10 min threshold, so the job was run detached in a named tmux session with a canonical <code>exptop.progress.ProgressReporter</code> feed (<code>ice-mixing stage 4abc</code>). Launch was verified each time: PID alive, feed advancing (<code>heartbeat_at</code> moving, phase/step/message updating). The actual course of the run — a code defect, a pre-flight miss, and the main loop’s contention notice — is in §5, with every launch, its PID, its feed card and its final status.</p>
+<p>Grep for a vendored progress reporter, as required: <code>grep -rl "class ProgressReporter" --include='*.py' . | grep -v .venv</code> returns <strong>nothing</strong> — this repo has no fork. It does, however, have a home-grown feed; see defect D1.</p>
+<p>Memory was checked before every launch. <code>free -g</code> reported 88–93 GB available of 121 GB throughout (an RSS-invisible resident, a spin-ice job from another session, and the parallel 4d subagent share the machine). Recorded peak RSS per run is in §5 and in <code>results.json</code> (<code>items.&lt;item&gt;.resource</code>); the largest was 4.216 GB, the (2,2,2) DP probe. On the main loop’s contention notice the 4c worker count was cut from 6 to 4 and <code>OMP_NUM_THREADS</code>/<code>OPENBLAS_NUM_THREADS</code> /<code>MKL_NUM_THREADS</code> were pinned to 4; 4a, 4b and 4c were run strictly one at a time thereafter.</p>
+<hr />
+<h2 id="item-4a-sector-log-concavity">2. Item 4a — sector log-concavity</h2>
+<h3 id="what-was-computed-and-the-two-method-gate">2.1 What was computed, and the two-method gate</h3>
+<p>The exact joint winding histogram <code>N(Wx, Wy, Wz)</code> from <code>icemix.enumerate.frontier_count(lat, track_axes=(0,1,2))</code> — a frontier DP that never materialises a state — at every registered cell up to the largest feasible one. At every cell where the state fits a 64-bit word and the count is inside the enumeration budget, the <strong>whole histogram</strong> (not just the total) was recomputed from the materialised DFS enumeration (<code>enumerate_ice_states</code> + <code>winding</code>) and compared entry by entry.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>spins</th>
+<th>ice states (DP)</th>
+<th>DP peak keys</th>
+<th>DP s</th>
+<th>enum s</th>
+<th>sectors</th>
+<th><code>N(W=0)</code></th>
+<th>two-method histogram</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,1,1)</td>
+<td>16</td>
+<td>90</td>
+<td>72</td>
+<td>0.003</td>
+<td>0.001</td>
+<td>25</td>
+<td>12</td>
+<td><strong>exact agreement</strong></td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>32</td>
+<td>3,618</td>
+<td>368</td>
+<td>0.020</td>
+<td>0.036</td>
+<td>69</td>
+<td>388</td>
+<td><strong>exact agreement</strong></td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td>48</td>
+<td>181,122</td>
+<td>904</td>
+<td>0.065</td>
+<td>2.284</td>
+<td>137</td>
+<td>15,024</td>
+<td><strong>exact agreement</strong></td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>64</td>
+<td>2,891,562</td>
+<td>42,160</td>
+<td>3.356</td>
+<td>65.515</td>
+<td>217</td>
+<td>221,628</td>
+<td><strong>exact agreement</strong></td>
+</tr>
+<tr>
+<td>(1,1,4)</td>
+<td>64</td>
+<td>9,765,378</td>
+<td>1,680</td>
+<td>0.096</td>
+<td>59.343</td>
+<td>229</td>
+<td>637,988</td>
+<td><strong>exact agreement</strong></td>
+</tr>
+<tr>
+<td>(1,2,3)</td>
+<td>96</td>
+<td>3,076,306,362</td>
+<td>123,432</td>
+<td>9.017</td>
+<td>—</td>
+<td>453</td>
+<td>196,465,480</td>
+<td>n/a (see below)</td>
+</tr>
+<tr>
+<td>(2,2,2)</td>
+<td>128</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td><strong>not feasible</strong> (§2.6)</td>
+</tr>
+</tbody>
+</table>
+<p>All totals and all <code>W = 0</code> counts reproduce stage 1’s table exactly. At (1,2,3) the cross-check is unavailable for a hard reason, not a budget one: <code>enumerate_ice_states</code> packs a state into a single 64-bit word and raises for <code>n_bonds = 96</code> (defect D3).</p>
+<h3 id="the-trap-that-had-to-be-disarmed-first-the-divisor-artefact">2.2 The trap that had to be disarmed first: the divisor artefact</h3>
+<p>The support of <code>N</code> is <strong>not</strong> all of <code>Z³</code>. Computed from the histogram (not assumed): the support is a coset of a sublattice <code>L ⊂ Z³</code> of <strong>index 8</strong> at every cell, with basis in row-echelon form</p>
+<table>
+<thead>
+<tr>
+<th>cell</th>
+<th>support-lattice basis</th>
+<th>index</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,1,1)</td>
+<td>(2,2,0), (0,2,2), (0,0,2)</td>
+<td>8</td>
+</tr>
+<tr>
+<td>(1,1,2), (1,1,3), (1,1,4)</td>
+<td>(2,2,0), (0,2,0), (0,0,2)</td>
+<td>8</td>
+</tr>
+<tr>
+<td>(1,2,2), (1,2,3)</td>
+<td>(2,0,0), (0,2,0), (0,0,2)</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p>So <code>W ± e_j</code> is simply <strong>not a lattice point</strong>: the literal reading “<code>N(W)² ≥ N(W−e_j)N(W+e_j)</code>” is satisfied vacuously (<code>N = 0</code> on both sides) and every axis line would appear riddled with “internal zeros”. Reporting a PASS on that basis would be worthless and reporting a FAIL on the internal zeros would be a fabricated result. <code>icemix.logconcave</code> therefore computes the support lattice by integer row reduction and, for each direction <code>v</code>, the least positive <code>t</code> with <code>t·v ∈ L</code> (the <strong>primitive lattice vector</strong> in that direction); every line test below is on those points. The step is 2 for every direction at every cell.</p>
+<p>This is the one place where the registered wording and the lattice disagree, and the resolution is recorded here rather than silently applied: <strong>the substantive reading is on the primitive lattice vector, and that is what “PASS” below means.</strong> The unrescaled reading is separately true and vacuous.</p>
+<p><code>tests/test_stage4abc.py</code> carries two negative controls (<code>test_a_diagonal_violation_would_be_caught</code>, <code>test_an_internal_zero_would_be_caught</code>) so the PASS is not a test that cannot fire.</p>
+<h3 id="the-readings">2.3 The readings</h3>
+<p>Discriminant = <code>min over lines and interior points of N(W)² − N(W−e)N(W+e)</code>, in exact Python integers, <code>e</code> the primitive lattice vector of that direction.</p>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>symmetry (invariant / candidate)</th>
+<th><code>W→−W</code></th>
+<th>axis LC</th>
+<th>axis disc</th>
+<th>face-diag LC</th>
+<th>face disc</th>
+<th>body-diag LC</th>
+<th>body disc</th>
+<th>interval support</th>
+<th>(111) marginal LC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,1,1)</td>
+<td>48 / 48</td>
+<td>yes</td>
+<td>PASS</td>
+<td>52</td>
+<td>PASS</td>
+<td>3</td>
+<td>PASS</td>
+<td>(no interior)</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>16 / 16</td>
+<td>yes</td>
+<td>PASS</td>
+<td>160</td>
+<td>PASS</td>
+<td>10</td>
+<td>PASS</td>
+<td>138</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td>16 / 16</td>
+<td>yes</td>
+<td>PASS</td>
+<td>324</td>
+<td>PASS</td>
+<td>21</td>
+<td>PASS</td>
+<td>56,184</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>(1,1,4)</td>
+<td>16 / 16</td>
+<td>yes</td>
+<td>PASS</td>
+<td>544</td>
+<td>PASS</td>
+<td>36</td>
+<td>PASS</td>
+<td>15,251,160</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>16 / 16</td>
+<td>yes</td>
+<td>PASS</td>
+<td>592</td>
+<td>PASS</td>
+<td>10</td>
+<td>PASS</td>
+<td>523,840</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>(1,2,3)</td>
+<td>8 / 8</td>
+<td>yes</td>
+<td>PASS</td>
+<td>1,272</td>
+<td>PASS</td>
+<td>5,112</td>
+<td>PASS</td>
+<td>2,790</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+</tbody>
+</table>
+<p><strong>(i) SYMMETRY gate — PASS.</strong> The candidate group at each cell is the set of signed axis permutations that preserve the cell’s extents: all 48 at the cubic (1,1,1), 16 at (1,1,2)/(1,1,3)/(1,1,4) (swap of the two equal axes × 8 sign patterns), 16 at (1,2,2), 8 at (1,2,3) (sign changes only). Which of them <code>N</code> actually obeys was <strong>measured, not assumed</strong>, and at every cell the answer is all of them. Inversion <code>W → −W</code> holds separately at every cell.</p>
+<p><strong>(ii) AXIS log-concavity — PASS.</strong> Every line, every cell; minimum discriminant strictly positive everywhere (52 at the smallest cell). No internal zeros: the support along every axis line is an interval.</p>
+<p><strong>(iii) DIAGONAL log-concavity — PASS.</strong> All six face diagonals <code>e_j ± e_k</code> and all four body diagonals <code>e_x ± e_y ± e_z</code>, every cell. The tightest case in the whole item is the face diagonals at (1,1,1) (discriminant 3), (1,1,2) (10) and (1,2,2) (10) — positive, but not by much. At (1,1,1) every body-diagonal line has at most two support points, so there is no interior term to test; that is recorded as “no interior”, not as a PASS with content.</p>
+<p><strong>(iv) The (111) marginal — PASS.</strong> <code>s = Wx + Wy + Wz</code> is log-concave with interval support at every cell, on a support of step 2. This is the direction the spin-ice repo’s Theorem D already covers (the layer stack there <em>is</em> this lattice), so it is the check of Theorem D’s prediction on this lattice, and the prediction holds. The distribution at (1,1,1) is exactly flat over its three interior values (9, 24, 24, 24, 9), so the discriminant there is 0 — log-concave with equality, not a violation.</p>
+<h3 id="marginals-of-each-wj">2.4 Marginals of each <code>Wj</code></h3>
+<p>All are log-concave with interval support and step 2. Exact counts:</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th><code>Wx</code></th>
+<th><code>Wy</code></th>
+<th><code>Wz</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,1,1)</td>
+<td>1, 16, 56, 16, 1</td>
+<td>same</td>
+<td>same</td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>1, 24, 208, 856, 1440, 856, 208, 24, 1</td>
+<td>same</td>
+<td>1, 256, 3104, 256, 1</td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td>1, 36, 522, 3928, 16743, 41220, 56222, 41220, 16743, 3928, 522, 36, 1</td>
+<td>same</td>
+<td>1, 4096, 172928, 4096, 1</td>
+</tr>
+<tr>
+<td>(1,1,4)</td>
+<td>1, 48, 984, 11280, 79648, 361104, 1069400, 2068528, 2583392, … (symmetric)</td>
+<td>same</td>
+<td>1, 65536, 9634304, 65536, 1</td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>1, 32, 448, 3776, 22384, 97728, 302640, 620896, 795752, … (symmetric)</td>
+<td>1, 288, 26440, 567048, 1704008, 567048, 26440, 288, 1</td>
+<td>same as <code>Wy</code></td>
+</tr>
+<tr>
+<td>(1,2,3)</td>
+<td>1, 48, 1044, 13800, 125706, 849912, 4479400, 18924864, 64433079, … (symmetric)</td>
+<td>1, 420, 60762, 3769000, 92647455, 716696340, 1449958406, … (symmetric)</td>
+<td>1, 4224, 4172416, 424729552, 2218493976, 424729552, 4172416, 4224, 1</td>
+</tr>
+</tbody>
+</table>
+<p>The full lists, and the (111) marginals, are in <code>results.json</code> (<code>items.4a.cells.&lt;cell&gt;.analysis.marginals</code>).</p>
+<h3 id="what-a-4a-pass-does-and-does-not-mean">2.5 What a 4a PASS does and does not mean</h3>
+<p>It means the <em>joint</em> winding-sector counts on the fully periodic torus are log-concave along every lattice line tested, in exact integer arithmetic, at every cell reachable by the DP — including (1,2,3), a 96-spin cell with 3.08×10⁹ ice states that no enumeration can touch. That is the falsifier the plan registered, and it did not fire.</p>
+<p>It does <strong>not</strong> mean the generating polynomial is Lorentzian, and 4b now says it is not even pairwise-negatively-correlatable in any diagonal gauge. The two readings are independent: 4a is about the coefficient sequence of the flux grading, 4b about the bond variables themselves.</p>
+<h3 id="not-run-with-the-projection">2.6 (2,2,2): not run, with the projection</h3>
+<p>The cubic <code>L = 2</code> cell is the one that would test cubic geometry, and it is out of reach for the joint-winding DP. The bounded probe (registered budget 8×10⁶ keys) is in <code>results.json</code> under <code>items.4a.dp_probe_222</code>, with the full per-step curve:</p>
+<ul>
+<li>reached step <strong>41 of 128</strong> with 8,661,950 frontier keys, 4.216 GB RSS, in 259 s;</li>
+<li>observed tail growth <strong>1.2114 keys/step</strong>, throughput <strong>215,576 key-updates/s</strong>;</li>
+<li>the frontier peaks near the middle of the bond schedule (step ≈ 64), giving a projected peak of <strong>7.1×10⁸ keys ≈ 347 GB</strong> and <strong>≈ 3.7 h</strong> wall.</li>
+</ul>
+<p>347 GB does not fit a 121 GB machine and 3.7 h exceeds the 3 h rule, so it was not attempted. Stage 1 recorded the same cell as infeasible for the untracked DP at 10.5M keys; this is the quantified version for the tracked DP. A better bond schedule (minimising the frontier width rather than closing sites early) is the only obvious lever and was not explored.</p>
+<hr />
+<h2 id="item-4b-gauge-signability-of-bond-correlations">3. Item 4b — gauge-signability of bond correlations</h2>
+<h3 id="method-and-the-two-method-gate-on-every-count">3.1 Method, and the two-method gate on every count</h3>
+<p>For each cell and each of the three measures, the exact integer statistics <code>N</code>, <code>n_i = #{x_i = 1}</code>, <code>n_ij = #{x_i = x_j = 1}</code> were computed by two independent routes and required to agree bit for bit:</p>
+<ul>
+<li><strong>route 1</strong> — dense 0/1 matrix <code>X</code>, chunked <code>XᵀX</code> in float64 (every entry a non-negative integer below 2⁵³, with an assertion that the accumulation stayed exact and integral);</li>
+<li><strong>route 2</strong> — one packed bitset per bond over the state index, <code>n_ij = popcount(b_i &amp; b_j)</code>.</li>
+</ul>
+<p>They agree everywhere (<code>pair_statistics</code> raises otherwise). The covariance is the exact integer <code>C_ij = N·n_ij − n_i·n_j</code>, which is <code>N²·Cov(x_i, x_j)</code>.</p>
+<p>The three measures: <strong>A</strong> uniform on the full ice manifold, <strong>B</strong> uniform on <code>W = 0</code>, <strong>C</strong> uniform on the giant component of <code>W = 0</code>. Measure C is skipped at (1,1,1), where the <code>W = 0</code> sector is wholly frozen (12 states, 12 singleton components) and there is no giant.</p>
+<p>One exact structural check falls out and is confirmed at every cell and measure: complementing every arrow maps the ice manifold to itself and sends <code>W → −W</code>, so it fixes <code>W = 0</code> and (stage 1) permutes components with the giant closed under it. Hence <code>n_i = N/2</code> for <strong>every</strong> bond — verified in every row below.</p>
+<h3 id="the-counts">3.2 The counts</h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>measure</th>
+<th><code>N</code></th>
+<th><code>n_i = N/2</code></th>
+<th>pairs</th>
+<th><code>C&gt;0</code></th>
+<th><code>C&lt;0</code></th>
+<th><code>C=0</code></th>
+<th>reading (i): a positive pair</th>
+<th>reading (ii): signable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,1,1)</td>
+<td>A</td>
+<td>90</td>
+<td>yes</td>
+<td>120</td>
+<td>72</td>
+<td>48</td>
+<td>0</td>
+<td>yes</td>
+<td><strong>FAIL</strong></td>
+</tr>
+<tr>
+<td>(1,1,1)</td>
+<td>B</td>
+<td>12</td>
+<td>yes</td>
+<td>120</td>
+<td>48</td>
+<td>72</td>
+<td>0</td>
+<td>yes</td>
+<td><strong>FAIL</strong></td>
+</tr>
+<tr>
+<td>(1,1,1)</td>
+<td>C</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>skipped (sector wholly frozen)</td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>A</td>
+<td>3,618</td>
+<td>yes</td>
+<td>496</td>
+<td>272</td>
+<td>224</td>
+<td>0</td>
+<td>yes</td>
+<td><strong>FAIL</strong></td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>B</td>
+<td>388</td>
+<td>yes</td>
+<td>496</td>
+<td>176</td>
+<td>192</td>
+<td>128</td>
+<td>yes</td>
+<td><strong>FAIL</strong></td>
+</tr>
+<tr>
+<td>(1,1,2)</td>
+<td>C</td>
+<td>160</td>
+<td>yes</td>
+<td>496</td>
+<td>224</td>
+<td>256</td>
+<td>16</td>
+<td>yes</td>
+<td><strong>FAIL</strong></td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td>A</td>
+<td>181,122</td>
+<td>yes</td>
+<td>1,128</td>
+<td>600</td>
+<td>528</td>
+<td>0</td>
+<td>yes</td>
+<td><strong>FAIL</strong></td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td>B</td>
+<td>15,024</td>
+<td>yes</td>
+<td>1,128</td>
+<td>360</td>
+<td>384</td>
+<td>384</td>
+<td>yes</td>
+<td><strong>FAIL</strong></td>
+</tr>
+<tr>
+<td>(1,1,3)</td>
+<td>C</td>
+<td>3,360</td>
+<td>yes</td>
+<td>1,128</td>
+<td>528</td>
+<td>600</td>
+<td>0</td>
+<td>yes</td>
+<td><strong>FAIL</strong></td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>A</td>
+<td>2,891,562</td>
+<td>yes</td>
+<td>2,016</td>
+<td>992</td>
+<td>1,024</td>
+<td>0</td>
+<td>yes</td>
+<td><strong>FAIL</strong></td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>B</td>
+<td>221,628</td>
+<td>yes</td>
+<td>2,016</td>
+<td>832</td>
+<td>1,184</td>
+<td>0</td>
+<td>yes</td>
+<td><strong>FAIL</strong></td>
+</tr>
+<tr>
+<td>(1,2,2)</td>
+<td>C</td>
+<td>221,424</td>
+<td>yes</td>
+<td>2,016</td>
+<td>832</td>
+<td>1,184</td>
+<td>0</td>
+<td>yes</td>
+<td><strong>FAIL</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>(i) PLAIN GAUGE — the registered prediction HOLDS.</strong> At least one strictly positive pair covariance in every measure at every cell, including (1,2,2), the only cell here with a genuine 2-D cross-section. In fact roughly half of all pairs are positive (49–60 % depending on cell and measure), so this is not a marginal effect.</p>
+<p><strong>(ii) SIGNABILITY — FAIL, everywhere.</strong> No diagonal signing <code>s ∈ {±1}^bonds</code> makes <code>s_i s_j C_ij ≤ 0</code> for every pair, in any of the eleven cell/measure combinations tested.</p>
+<h3 id="three-independent-decision-procedures-and-a-hand-checkable-certificate">3.3 Three independent decision procedures, and a hand-checkable certificate</h3>
+<p>The FAIL is not left resting on one implementation.</p>
+<ol type="1">
+<li><strong>Union–find with parity</strong> on the constraint graph (edge for every nonzero <code>C_ij</code>, requiring <code>s_i s_j = −sign(C_ij)</code>): unsatisfiable.</li>
+<li><strong>An odd-cycle certificate</strong> from a BFS spanning forest — an independent traversal, not the union–find — extracted at every cell and measure. Every certificate found is a <strong>triangle</strong>.</li>
+<li><strong>Exhaustive scan of all 2¹⁵ signings</strong> at (1,1,1) (both measures): none works. This agrees with (1) and (2); the run asserts the agreement.</li>
+</ol>
+<p>The (1,1,1) measure-A certificate, in full, so a reader can check it by hand from <code>N = 90</code> and <code>n_i = 45</code>:</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>pair</th>
+<th>geometry</th>
+<th><code>n_ij</code></th>
+<th><code>C = 90·n_ij − 45·45</code></th>
+<th>constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(15, 0)</td>
+<td>share the B-site at (1,1,1)</td>
+<td>15</td>
+<td>1350 − 2025 = <strong>−675</strong></td>
+<td><code>s_15 = s_0</code></td>
+</tr>
+<tr>
+<td>(0, 1)</td>
+<td>share the A-site at (0,0,0)</td>
+<td>15</td>
+<td>1350 − 2025 = <strong>−675</strong></td>
+<td><code>s_0 = s_1</code></td>
+</tr>
+<tr>
+<td>(1, 15)</td>
+<td>share no site</td>
+<td>25</td>
+<td>2250 − 2025 = <strong>+225</strong></td>
+<td><code>s_1 ≠ s_15</code></td>
+</tr>
+</tbody>
+</table>
+<p>The three constraints force <code>s_15 = s_0 = s_1</code> and <code>s_1 ≠ s_15</code>. <strong>No sign gauge exists, and the obstruction lives on three bonds of a 16-spin cell.</strong> The two negative constraints are the local 2-of-4 hypergeometric negativity at the two shared sites; the positive one is a next-nearest bond pair. That is the whole content of the FAIL: the dipolar sign structure of the ice correlations produces an unbalanced triangle at the smallest possible scale, so nothing about growing the cell can rescue it.</p>
+<p>Every certificate found, at every cell and measure, is a <strong>triangle</strong> — the obstruction is always three bonds, never a long cycle. In measure A they are <code>[15, 0, 1]</code> at (1,1,1), <code>[31, 0, 1]</code> at (1,1,2), <code>[47, 0, 1]</code> at (1,1,3) and <code>[63, 0, 1]</code> at (1,2,2); measures B and C give the same or a sibling triangle (<code>[31, 0, 3]</code>, <code>[47, 0, 3]</code>). All eleven are in <code>results.json</code> under <code>items.4b.cells.&lt;cell&gt;.measures.&lt;M&gt;.odd_cycle_certificate</code>, each with the covariance sign and the required relation on every edge.</p>
+<h3 id="nearest-neighbour-sanity-and-a-correction-to-its-premise">3.4 Nearest-neighbour sanity — and a correction to its premise</h3>
+<p>Two bonds meeting at a site are, in every state, two of the four incident bits of which exactly two are set. The brief asked for this to be asserted as a negative correlation. Result:</p>
+<ul>
+<li><strong>measures A and B: PASS at every cell</strong> — all 48 / 96 / 144 / 192 site pairs strictly negative.</li>
+<li><strong>measure C at (1,1,2): FAIL.</strong> Of the 96 site pairs on the 160-state giant component, 64 are negative and <strong>32 are positive</strong>, each with <code>C = +320</code>.</li>
+<li>measure C at (1,1,3) and (1,2,2): PASS.</li>
+</ul>
+<p>This is not a bug, and it is worth stating precisely because the premise as written is too strong. What the 2-of-4 constraint proves is a <strong>sum rule</strong>, not a per-pair sign: at each site the six pair-products sum to 1 in every state, so <code>Σ n_ij = N</code> over the six pairs, and with <code>n_i = N/2</code> throughout, <code>Σ C_ij = N² − 6·N²/4 = −N²/2 &lt; 0</code>. The <em>average</em> of the six is forced negative; the individual signs are not. On the (1,1,2) giant that average is realised as four pairs at <code>C = −3360</code> (<code>n_ij = 19</code>) and two at <code>C = +320</code> (<code>n_ij = 42</code>); <code>4·19 + 2·42 = 160 = N</code>, exactly as the sum rule requires. The full ice manifold has enough symmetry to make all six negative; the giant component of a shattered quasi-1D cell does not. Stage 1 already flagged (1,1,c) cells as pathological, and this is another instance.</p>
+<p>Recorded, not hidden: the run records the offending pairs rather than asserting and aborting, precisely so this could be reported.</p>
+<h3 id="reading-iii-not-run-as-registered">3.5 Reading (iii) — not run, as registered</h3>
+<p>The registered trigger is “if (ii) PASSES at (1,1,1) or (1,1,2) in measure (A)”. It failed at both, so the strong-Rayleigh necessary condition under conditioning was not run. The machinery exists and is tested (<code>icemix.signgauge.conditional_violations</code>); a pre-flight at (1,1,1) with the trivial all-<code>+1</code> gauge showed the full sweep of 98,280 (pair, conditioning) triples costs 0.1 s, and the (1,1,2) sweep of 1.94×10⁶ triples ≈ 20 s, so cost was never the obstacle — the trigger simply did not fire. This is recorded in <code>results.json</code> under <code>items.4b.conditional_check</code>.</p>
+<h3 id="what-the-4b-fail-settles">3.6 What the 4b FAIL settles</h3>
+<p>Per the registration, “a FAIL at (ii) closes the Lorentzian lead”. It closes it in the strongest available form: not “we could not find a gauge at the sizes we could reach”, but “no gauge exists, at the smallest cell, and here is the three-bond reason”. The §3 tempering in the plan anticipated exactly this (“the uniform ice measure has dipolar correlations whose sign depends on the pair’s orientation, so bond indicators are not pairwise negatively correlated in the plain gauge”) and asked whether a complement gauge rescues it, as it did in the spin-ice repo. It does not, here.</p>
+<hr />
+<h2 id="item-4c-the-conjecture-nfg">4. Item 4c — the conjecture (NF⇒G)</h2>
+<h3 id="exhaustive-recomputed">4.1 (1,2,2) exhaustive, recomputed</h3>
+<p>Recomputed from scratch (not quoted from stage 1): <code>W = 0</code> enumerated with <code>zero_winding_only</code>, the flip graph built, components taken.</p>
+<table>
+<thead>
+<tr>
+<th>quantity</th>
+<th>this run</th>
+<th>stage 1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>W = 0</code> states</td>
+<td>221,628</td>
+<td>221,628</td>
+</tr>
+<tr>
+<td>components</td>
+<td>205</td>
+<td>205</td>
+</tr>
+<tr>
+<td>giant</td>
+<td>221,424</td>
+<td>221,424</td>
+</tr>
+<tr>
+<td>non-giant components</td>
+<td>204, <strong>all of size 1</strong></td>
+<td>204 singletons</td>
+</tr>
+<tr>
+<td>frozen states</td>
+<td>204, and every singleton is frozen</td>
+<td>204, all frozen</td>
+</tr>
+<tr>
+<td>frozen count = non-giant count</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>the reference state <code>R</code> is in the giant</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>PASS</strong>, exactly reproducing the stage-1 census (30.0 s). (NF⇒G) is therefore exhaustively true at (1,2,2): every non-frozen <code>W = 0</code> state is in the giant, because every state outside the giant is a frozen singleton.</p>
+<h3 id="cubic-l-2-and-l-3">4.2 Cubic <code>L = 2</code> and <code>L = 3</code></h3>
+<p>Two samplers, as registered: <code>sample_w0_dfs</code> (randomised ice-rule DFS then loop-driven to <code>W = 0</code> — fresh states with no memory of any component) and <code>sample_w0_loops</code> with small <code>n_loops</code> (contractible loop reversals from the frozen Klein state — near-frozen adversarial starts). Each non-frozen start went through <code>certify_connected</code> to the reference state <code>R</code>, and any failure was retried at a 16× budget with 6 restarts before being called uncertified.</p>
+<p><strong>Neither sampler is uniform</strong>, and <code>sample_w0_dfs</code> additionally rejects a fraction of its own attempts (defect D2), which biases it further. The frozen fractions below are informative, not measure-theoretic.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>family</th>
+<th>starts</th>
+<th>frozen</th>
+<th>non-frozen</th>
+<th>certified</th>
+<th><strong>uncertified</strong></th>
+<th>frozen fraction</th>
+<th>median <code>n_flip</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(2,2,2)</td>
+<td>fresh DFS</td>
+<td>10,000</td>
+<td>0</td>
+<td>10,000</td>
+<td>10,000</td>
+<td><strong>0</strong></td>
+<td>0</td>
+<td>23</td>
+</tr>
+<tr>
+<td>(2,2,2)</td>
+<td>loops <code>n=1</code></td>
+<td>1,000</td>
+<td>11</td>
+<td>989</td>
+<td>989</td>
+<td><strong>0</strong></td>
+<td>1.100 %</td>
+<td>14</td>
+</tr>
+<tr>
+<td>(2,2,2)</td>
+<td>loops <code>n=2</code></td>
+<td>1,000</td>
+<td>0</td>
+<td>1,000</td>
+<td>1,000</td>
+<td><strong>0</strong></td>
+<td>0</td>
+<td>20</td>
+</tr>
+<tr>
+<td>(2,2,2)</td>
+<td>loops <code>n=3</code></td>
+<td>1,000</td>
+<td>0</td>
+<td>1,000</td>
+<td>1,000</td>
+<td><strong>0</strong></td>
+<td>0</td>
+<td>23</td>
+</tr>
+<tr>
+<td>(2,2,2)</td>
+<td>loops <code>n=4</code></td>
+<td>1,000</td>
+<td>0</td>
+<td>1,000</td>
+<td>1,000</td>
+<td><strong>0</strong></td>
+<td>0</td>
+<td>23</td>
+</tr>
+<tr>
+<td>(2,2,2)</td>
+<td>loops <code>n=6</code></td>
+<td>1,000</td>
+<td>0</td>
+<td>1,000</td>
+<td>1,000</td>
+<td><strong>0</strong></td>
+<td>0</td>
+<td>23</td>
+</tr>
+<tr>
+<td>(2,2,2)</td>
+<td>loops <code>n=8</code></td>
+<td>1,000</td>
+<td>0</td>
+<td>1,000</td>
+<td>1,000</td>
+<td><strong>0</strong></td>
+<td>0</td>
+<td>24</td>
+</tr>
+<tr>
+<td>(2,2,2)</td>
+<td>loops <code>n=16</code></td>
+<td>1,000</td>
+<td>0</td>
+<td>1,000</td>
+<td>1,000</td>
+<td><strong>0</strong></td>
+<td>0</td>
+<td>23</td>
+</tr>
+<tr>
+<td><strong>(2,2,2)</strong></td>
+<td><strong>all</strong></td>
+<td><strong>17,000</strong></td>
+<td><strong>11</strong></td>
+<td><strong>16,989</strong></td>
+<td><strong>16,989</strong></td>
+<td><strong>0</strong></td>
+<td>0.0647 %</td>
+<td>23</td>
+</tr>
+<tr>
+<td>(3,3,3)</td>
+<td>fresh DFS</td>
+<td>3,000</td>
+<td>0</td>
+<td>3,000</td>
+<td>3,000</td>
+<td><strong>0</strong></td>
+<td>0</td>
+<td>74</td>
+</tr>
+<tr>
+<td>(3,3,3)</td>
+<td>loops <code>n=1</code></td>
+<td>1,000</td>
+<td>1</td>
+<td>999</td>
+<td>999</td>
+<td><strong>0</strong></td>
+<td>0.100 %</td>
+<td>16</td>
+</tr>
+<tr>
+<td>(3,3,3)</td>
+<td>loops <code>n=2</code></td>
+<td>1,000</td>
+<td>1</td>
+<td>999</td>
+<td>999</td>
+<td><strong>0</strong></td>
+<td>0.100 %</td>
+<td>34</td>
+</tr>
+<tr>
+<td>(3,3,3)</td>
+<td>loops <code>n=3</code></td>
+<td>1,000</td>
+<td>0</td>
+<td>1,000</td>
+<td>1,000</td>
+<td><strong>0</strong></td>
+<td>0</td>
+<td>47</td>
+</tr>
+<tr>
+<td>(3,3,3)</td>
+<td>loops <code>n=4</code></td>
+<td>1,000</td>
+<td>0</td>
+<td>1,000</td>
+<td>1,000</td>
+<td><strong>0</strong></td>
+<td>0</td>
+<td>56</td>
+</tr>
+<tr>
+<td>(3,3,3)</td>
+<td>loops <code>n=6</code></td>
+<td>1,000</td>
+<td>0</td>
+<td>1,000</td>
+<td>1,000</td>
+<td><strong>0</strong></td>
+<td>0</td>
+<td>66</td>
+</tr>
+<tr>
+<td>(3,3,3)</td>
+<td>loops <code>n=8</code></td>
+<td>1,000</td>
+<td>0</td>
+<td>1,000</td>
+<td>1,000</td>
+<td><strong>0</strong></td>
+<td>0</td>
+<td>72</td>
+</tr>
+<tr>
+<td>(3,3,3)</td>
+<td>loops <code>n=16</code></td>
+<td>1,000</td>
+<td>0</td>
+<td>1,000</td>
+<td>1,000</td>
+<td><strong>0</strong></td>
+<td>0</td>
+<td>77</td>
+</tr>
+<tr>
+<td><strong>(3,3,3)</strong></td>
+<td><strong>all</strong></td>
+<td><strong>10,000</strong></td>
+<td><strong>2</strong></td>
+<td><strong>9,998</strong></td>
+<td><strong>9,998</strong></td>
+<td><strong>0</strong></td>
+<td>0.0200 %</td>
+<td>68</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Reading (i) — PASS.</strong> <code>(frozen, certified, uncertified)</code> = <strong>(11, 16989, 0)</strong> at <code>L = 2</code> over 17,000 starts and <strong>(2, 9998, 0)</strong> at <code>L = 3</code> over 10,000 starts. Not one non-frozen start failed to produce an explicit flip-path to <code>R</code>. This extends stage 2’s 780/780 at <code>L = 2</code> by a factor of 22, and takes the conjecture to <code>L = 3</code> (432 spins) for the first time.</p>
+<p><strong>Reading (ii) — no counterexample arose.</strong> The bounded BFS is armed but was never invoked, because there were no uncertified non-frozen starts. Had one arisen, <code>icemix.component.bfs_component</code> would have closed its component under a 10⁶-state / 1800 s cap and reported “closed, size N, <code>R</code> not found” (a counterexample) or “inconclusive” (never a FAIL). The machinery is tested against the exact component decomposition at (1,1,2), where it reproduces the 160-state giant, and against the 12 frozen singletons at (1,1,1).</p>
+<p><strong>Reading (iii) — frozen fractions.</strong> Under the <em>fresh</em> sampler the frozen fraction is 0 at both sizes: 0/10,000 at <code>L = 2</code> and 0/3,000 at <code>L = 3</code>, so the sampler simply never lands on a frozen state (its minimum flippable count was 11 at <code>L = 2</code> and 55 at <code>L = 3</code> — it does not even come close). That is why the loop sampler is the one that matters: with <code>n_loops = 1</code> it produces frozen states at <strong>1.10 %</strong> (<code>L = 2</code>) and <strong>0.10 %</strong> (<code>L = 3</code>), and by <code>n_loops ≥ 3</code> the frozen fraction is 0 at both sizes and the median flippability has saturated. Alongside stage 1’s exact <strong>0.092 %</strong> at (1,2,2), the picture is consistent with a frozen density that falls with size — but none of these three numbers is a uniform-measure estimate, and the two samplers disagree by more than the size dependence, so no rate should be read off them.</p>
+<p>The <code>n_loops</code> sweep also shows the adversarial construction working as designed: one loop reversal off the frozen Klein state leaves a median of 14 (<code>L = 2</code>) / 16 (<code>L = 3</code>) flippable hexagons against the equilibrium 23 / 74, so these really are near-frozen starts — and all of them certify into the giant.</p>
+<h3 id="measured-cost-against-the-pre-flight">4.3 Measured cost, against the pre-flight</h3>
+<p>The <code>L = 3</code> fresh sampler was the one pre-flight miss of this stage and it is recorded as such: a 5-sample timing gave 0.87 s per <code>sample_w0_dfs</code>, but the production mean over 3,000 starts is <strong>3.32 s</strong> — 3.8× the pre-flight, with a sampler retry rate of <strong>0.419 rejections per accepted start</strong> (defect D2) that the small sample had not seen. At the original 10,000-start target that would have been a ~3 h phase against a 26 min projection. It was caught at ~600 starts by reading the live feed, the run was stopped, and <code>L = 3</code> was resized to 3,000 fresh starts to fit the registered “~1 h per size” — 2,723 s in the event. <code>L = 2</code> cost 314 s for 17,000 starts (mean sample 0.0018 s).</p>
+<p><strong>Lesson recorded:</strong> five samples were not enough to pre-flight a rejection-sampling loop with a heavy tail. A pre-flight of a sampler that can reject should time ≥100 units, not 5, and should report the rejection rate.</p>
+<h3 id="what-4c-does-and-does-not-establish">4.4 What 4c does and does not establish</h3>
+<p>It is 27,000 more consistent observations, at the two smallest cubic cells, and no counterexample. It is <strong>not</strong> a proof, and the samplers’ non-uniformity means it is not even a bound on the density of a hypothetical non-frozen non-giant component: such a component would have to be missed by both samplers, and the loop sampler at <code>n_loops = 1</code> is precisely the probe designed to find one. (NF⇒G) stands as a registered conjecture with exhaustive support at (1,2,2) and 27,000/27,000 at <code>L = 2, 3</code>.</p>
+<h3 id="exhaustive-census-not-attempted-with-three-blockers">4.5 (1,2,3) exhaustive census — not attempted, with three blockers</h3>
+<ol type="1">
+<li><strong>Hard representation blocker (D3).</strong> (1,2,3) has 96 bonds. <code>enumerate_ice_states</code> raises for <code>n_bonds &gt; 64</code>, and <code>build_flip_graph</code> / <code>components</code> / <code>verify_reference_in_giant</code> all assume a <code>uint64</code> state word. The census is not expensive-but-possible; it is impossible without a new state representation.</li>
+<li><strong>Wall clock.</strong> At the measured DFS leaf rate (≈1.0×10⁵ states/s from (1,1,4)’s 9,765,378 states in 98 s) the ≈3.08×10⁹-node tree projects to <strong>≈8.5 h</strong>, well over the 3 h rule.</li>
+<li><strong>Memory.</strong> 196,465,480 <code>W = 0</code> states as a Python list then a sorted <code>uint64</code> array is ≥16 GB before the graph, and the flip graph would carry ≈9.4×10⁹ edges (96 hexagons × 1.96×10⁸ states / 2) — far beyond what <code>scipy.sparse</code> can hold on a 121 GB machine.</li>
+</ol>
+<p>The counts quoted (3,076,306,362 ice states; 196,465,480 at <code>W = 0</code>) are stage 1’s frontier-DP values, re-derived by this run’s own DP at (1,2,3) and agreeing exactly.</p>
+<hr />
+<h2 id="run-ledger-every-launch-its-feed-card-its-footprint">5. Run ledger — every launch, its feed card, its footprint</h2>
+<p>All on <code>spark-709c</code>. Feed cards live at <code>~/.local/state/exptop/feeds/spark-709c/ice-mixing-stage-4abc-&lt;pid&gt;</code>. The final status of every card this stage created is listed; none is left saying “running”.</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>pid</th>
+<th>started</th>
+<th>wall</th>
+<th>items</th>
+<th>card status</th>
+<th>peak RSS</th>
+<th>outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>d1</td>
+<td>1236398</td>
+<td>09:14:46</td>
+<td>37 s</td>
+<td>4c dry run</td>
+<td>failed</td>
+<td>—</td>
+<td><code>sample_w0_dfs</code> raised (node budget) — defect D2 found here; the reporter caught the exception and stamped the card correctly</td>
+</tr>
+<tr>
+<td>d2</td>
+<td>1238690</td>
+<td>09:15:54</td>
+<td>53 s</td>
+<td>4c dry run</td>
+<td>completed</td>
+<td>—</td>
+<td>retry wrapper verified</td>
+</tr>
+<tr>
+<td>d3</td>
+<td>1240917</td>
+<td>09:17:00</td>
+<td>83 s</td>
+<td>4b dry run</td>
+<td>completed</td>
+<td>—</td>
+<td>4b logic verified</td>
+</tr>
+<tr>
+<td>d4</td>
+<td>1244041</td>
+<td>09:18:29</td>
+<td>162 s</td>
+<td>4a dry run</td>
+<td>completed</td>
+<td>—</td>
+<td>4a logic verified, small (2,2,2) probe budget</td>
+</tr>
+<tr>
+<td>r1</td>
+<td>1253551</td>
+<td>09:22:58</td>
+<td>719 s</td>
+<td>4a, 4b, 4c</td>
+<td><strong>failed</strong></td>
+<td>4.2 GB</td>
+<td>4a (452 s) and 4b (94 s) completed and were banked; <strong>4c crashed</strong>: <code>NameError: hex_ops</code> in the multiprocessing initialiser, left over from moving <code>bfs_component</code> into <code>icemix/component.py</code> after the dry run. The pool respawned dead workers indefinitely. Stopped with <code>tmux kill-session</code>.</td>
+</tr>
+<tr>
+<td>d5</td>
+<td>1316292</td>
+<td>09:35:19</td>
+<td>35 s</td>
+<td>4c dry run</td>
+<td>completed</td>
+<td>—</td>
+<td>fix verified</td>
+</tr>
+<tr>
+<td>r2</td>
+<td>1326612</td>
+<td>09:36:01</td>
+<td>656 s</td>
+<td>4c</td>
+<td><strong>failed</strong></td>
+<td>—</td>
+<td>stopped: the <code>L=3</code> sampler measured ~6× the pre-flight rate (3 h projected against 26 min). See §4.3.</td>
+</tr>
+<tr>
+<td>r3</td>
+<td>1367612</td>
+<td>09:47:39</td>
+<td>158 s</td>
+<td>4c (6 workers)</td>
+<td><strong>failed</strong></td>
+<td>—</td>
+<td>stopped on the main loop’s contention notice, to drop 6 workers → 4</td>
+</tr>
+<tr>
+<td>r4</td>
+<td>1374776</td>
+<td>09:50:53</td>
+<td>16 s</td>
+<td>4c (4 workers, 4,000 <code>L=3</code>)</td>
+<td><strong>failed</strong></td>
+<td>—</td>
+<td>stopped 30 s in, to resize <code>L=3</code> 4,000 → 3,000 to fit ~1 h at 4 workers</td>
+</tr>
+<tr>
+<td><strong>r5</strong></td>
+<td><strong>1375679</strong></td>
+<td><strong>09:51:21</strong></td>
+<td><strong>3,067 s</strong></td>
+<td><strong>4c</strong></td>
+<td><strong>completed</strong></td>
+<td><strong>0.286 GB</strong> (workers ≤ 0.208 GB)</td>
+<td>the 4c result reported in §4</td>
+</tr>
+<tr>
+<td><strong>r6</strong></td>
+<td><strong>1546796</strong></td>
+<td><strong>10:43:05</strong></td>
+<td><strong>481 s</strong></td>
+<td><strong>4a, 4b</strong></td>
+<td><strong>completed</strong></td>
+<td><strong>4.216 GB</strong></td>
+<td>the 4a/4b results reported in §2–3, re-run alone to stamp resource usage into the part files</td>
+</tr>
+</tbody>
+</table>
+<p>Per-item wall clock inside r6: <strong>4a 350 s</strong> (of which the (2,2,2) bounded DP probe is 259 s and the (1,1,4)+(1,2,2) enumerations 125 s), <strong>4b 131 s</strong> (of which (1,2,2) alone is 129 s). Inside r5: <strong>(1,2,2) census 30 s</strong>, <strong><code>L=2</code> 314 s</strong> for 17,000 starts on 4 workers, <strong><code>L=3</code> 2,723 s</strong> for 10,000 starts on 4 workers.</p>
+<p>Peak-RSS caveat, stated because the number would otherwise mislead: <code>getrusage</code> reports a cumulative high-water mark per process, so 4a and 4b share the 4.216 GB figure in r6 — that peak is 4a’s (2,2,2) probe, not 4b’s. Measured separately during pre-flight, the (1,2,2) 4b computation (2.89×10⁶ states × 64 bonds as a dense matrix plus the chunked <code>XᵀX</code>) peaked at <strong>1.86 GB</strong>.</p>
+<p><strong>Four cards were left saying “running” with a dead PID</strong> (r1–r4) and are a recorded defect of this stage’s operation. Diagnosis, since the canonical reporter <em>does</em> install SIGTERM/SIGINT handlers that stamp a card terminal: all four were stopped with <strong><code>tmux kill-session</code>, which delivers SIGHUP</strong>, and SIGHUP is not among the signals the reporter handles — the process dies before <code>__exit__</code> runs. It was not SIGKILL and not a hung pool. All four have since been stamped <code>failed</code> with an explanatory note (by the main loop and again here), and their stale <code>experiment.pid</code> files removed. Two changes follow: <code>run_stage4abc.py</code> gained a <strong><code>--no-feed</code></strong> flag so sub-minute dry runs (d1–d5 above, which should never have created cards) do not, and the practice for stopping a run is now <code>kill -TERM &lt;pid&gt;</code> — never <code>tmux kill-session</code> — so the reporter’s own handler does the stamping.</p>
+<hr />
+<h2 id="defects-recorded">6. Defects recorded</h2>
+<p><strong>D1 — this project’s progress feed is invisible to exptop, and <code>exptop</code> is not importable from the interpreter the project uses.</strong> <code>pyrun.sh info</code> fails (“no <code>.venv/</code> found”); the project runs on the pyenv 3.12.13 interpreter with numpy 1.26.4 / scipy 1.17.1 / pytest 9.0.2 installed system-wide, and <code>exptop</code> is not among them. Separately, <code>experiments/01_falsifiers/run_falsifiers.py</code> (and its stage-2/3 successors) define a private <code>Progress</code> class writing <code>results/progress.json</code> — a path <strong>outside</strong> the exptop feed root, so those runs were never discoverable by <code>exptop</code>/<code>monitor.sh</code>. It is <em>not</em> a <code>ProgressReporter</code> fork (the required grep finds no <code>class ProgressReporter</code> anywhere in the repo), but it has the same operational consequence. The stage-4 run script uses the canonical <code>exptop.progress.ProgressReporter</code> and puts <code>~/repo/project/exptop/src</code> on <code>sys.path</code> to reach it. <strong>Suggested fix for the main loop: <code>pip install -e ~/repo/project/exptop</code> into this interpreter (or give the project a venv), then retire the three private <code>Progress</code> classes.</strong></p>
+<p><strong>D2 — <code>icemix.start.sample_w0_dfs</code> raises on a non-negligible fraction of seeds at cubic cells.</strong> The randomised ice-rule DFS exhausts its 4×10⁶-node budget (<code>RuntimeError: random_w0_state: node budget exceeded</code>), and the subsequent loop drive can fail to reach <code>W = 0</code>. Measured rejection rate: <strong>0.000 per accepted start at <code>L = 2</code></strong> and <strong>0.419 at <code>L = 3</code></strong> (recorded per start in <code>results.json</code> as <code>sampler_attempts</code>, aggregated as <code>sampler_retry_rate</code>). Stage 2’s 780-start probe must have met the same behaviour. The stage-4 run wraps the call in a bounded retry (fresh RNG stream, ≤ 40 attempts) and <strong>records the retry count per start</strong>, because the rejection is one more source of non-uniformity in an already non-uniform sampler. Nothing in <code>icemix</code> was changed.</p>
+<p><strong>D3 — the enumeration and component machinery is hard-limited to 64 spins.</strong> <code>enumerate_ice_states</code> raises for <code>n_bonds &gt; 64</code>, and <code>build_flip_graph</code>, <code>components</code> and <code>verify_reference_in_giant</code> all assume a <code>uint64</code> state word and <code>searchsorted</code> over a materialised array. This is why the (1,2,3) exhaustive census (96 bonds) is not merely expensive but <strong>impossible</strong> with the current representation, and why the 4a cross-check stops at (1,1,4). The new <code>icemix/component.py</code> uses Python big integers and has no such limit, but it closes one component at a time and is not a substitute for a full census.</p>
+<p><strong>D4 (methodological, §2.2) — the winding support is a coset of an index-8 sublattice of <code>Z³</code>.</strong> Any log-concavity reading stated on <code>W ± e_j</code> without rescaling is vacuous, and any “internal zeros” reading stated that way is a fabricated FAIL. Recorded here because the registration’s wording does not say it and a later reader could easily re-derive the wrong answer.</p>
+<p><strong>D5 (§3.4) — “bonds sharing a site are negatively correlated” is not a theorem.</strong> The 2-of-4 constraint forces only the sum over the six pairs at a site to be negative. The per-pair statement holds on the full manifold and on <code>W = 0</code> but fails on the giant component of (1,1,2).</p>
+<p><strong>D6 (mine, §5 r1) — a refactor broke the multiprocessing initialiser nine minutes into the run.</strong> Moving <code>bfs_component</code> out of the run script into <code>icemix/component.py</code> dropped <code>hex_ops</code> from the imports, but <code>_c_init</code> still called it; the dry run had passed <em>before</em> the refactor. <code>multiprocessing</code> turns that into an infinite worker-respawn loop rather than a clean crash, so the parent kept “running” and only the log showed the fault. Cost: the 4c phase of r1. <strong>Rule taken from it: re-run the dry run after every refactor, however cosmetic, before a detached launch</strong> — and, separately, a pool whose initialiser fails should abort the run, not respawn forever.</p>
+<p><strong>D7 (mine, §5) — four zombie feed cards.</strong> Stopping a run with <code>tmux kill-session</code> sends SIGHUP, which the canonical reporter does not handle (it handles SIGTERM and SIGINT), so the card was never stamped terminal and read as a hung job in exptop. Raised by the main loop; all four stamped <code>failed</code> with notes and their stale <code>experiment.pid</code> files removed. Two fixes adopted: <code>--no-feed</code> for sub-minute probes, and <code>kill -TERM</code> instead of <code>tmux kill-session</code>. <strong>A note for exptop itself: adding SIGHUP to the reporter’s handled signals would close this class of zombie card</strong>, since tmux/ssh teardown is the ordinary way a detached run dies.</p>
+<p><strong>D8 (mine, §4.3) — a five-sample pre-flight of a rejection sampler.</strong> <code>sample_w0_dfs</code> at <code>L = 3</code> measured 0.87 s over 5 samples and 3.32 s over 3,000, because the small sample missed the retry tail (0.419 rejections per accepted start). The projection was out by 3.8×. Caught from the live feed at ~600 starts, not from a log. <strong>Rule: pre-flight a sampler that can reject with ≥100 units and report its rejection rate.</strong></p>
+<hr />
+<h2 id="what-was-not-run-and-why">7. What was NOT run, and why</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>not run</th>
+<th>reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4a at (2,2,2)</td>
+<td>measured projection 7.1×10⁸ DP keys ≈ 347 GB and ≈ 4.5 h — over the machine’s 121 GB and over the 3 h rule (§2.6). The per-step curve is banked in <code>results.json</code> so the projection is reproducible.</td>
+</tr>
+<tr>
+<td>4a materialised cross-check at (1,2,3)</td>
+<td>hard 64-bit blocker (D3), not a budget</td>
+</tr>
+<tr>
+<td>4b reading (iii)</td>
+<td>the registered trigger (a PASS at (ii) in measure A at (1,1,1) or (1,1,2)) never fired. Cost was measured anyway: 0.1 s and ≈20 s respectively.</td>
+</tr>
+<tr>
+<td>4b measure C at (1,1,1)</td>
+<td>the <code>W = 0</code> sector there is wholly frozen (12 states in 12 singleton components); there is no giant component</td>
+</tr>
+<tr>
+<td>4c (1,2,3) exhaustive component census</td>
+<td>three independent blockers: the 64-bit representation (D3); ≈8.5 h projected DFS; and ≈9.4×10⁹ flip-graph edges plus ≥16 GB for the state list</td>
+</tr>
+<tr>
+<td>4d</td>
+<td>worked in parallel by another subagent in <code>experiments/05_thin_even/</code>; untouched here</td>
+</tr>
+<tr>
+<td>4e</td>
+<td>already closed from banked data in the plan §4</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="unexpected-not-part-of-any-registered-reading">8. Unexpected (not part of any registered reading)</h2>
+<ol type="1">
+<li><strong>The winding support is a sublattice coset of index 8 at every cell</strong> (§2.2). The registered log-concavity readings, taken literally on <code>W ± e_j</code>, are <em>vacuously</em> true, and the internal-zero reading taken literally would fail everywhere for a reason with no content. Anyone re-deriving 4a must rescale to the primitive lattice vector first. This is the single most likely way for a later reader to reach a wrong conclusion from the same data.</li>
+<li><strong>The signability obstruction is local — three bonds — and it is local at every cell and every measure.</strong> Every one of the eleven odd-cycle certificates is a triangle, and the (1,1,1) one is two site-sharing pairs (negative, from the 2-of-4 constraint) closed by one next-nearest pair (positive). Growing the cell cannot repair that: whatever else changes, a 16-spin motif with an unbalanced triangle is present. This makes the 4b FAIL much stronger than “no gauge was found at the sizes we could reach”.</li>
+<li><strong>The tightest 4a margins are on the face diagonals of the two smallest 3-D-ish cells</strong> — discriminant 3 at (1,1,1) and 10 at (1,2,2), against 10³–10⁷ elsewhere. If log-concavity fails anywhere on this lattice family, the face diagonals of small cells are where to look.</li>
+<li><strong>Structural zero covariances appear only in the restricted measures.</strong> The full ice manifold has no zero pair covariance at any cell; <code>W = 0</code> has 128 at (1,1,2) and 384 at (1,1,3), and the (1,1,2) giant has 16. Fixing the flux (and then the component) creates exact independences that the unconstrained measure does not have.</li>
+<li><strong>Nearest-neighbour negativity is not a theorem</strong> and fails on the (1,1,2) giant: 32 of 96 site pairs are strictly positive (§3.4). The 2-of-4 constraint gives a sum rule, not a per-pair sign.</li>
+<li><strong>The fresh <code>W = 0</code> sampler is useless as a frozen-state probe.</strong> Its minimum flippable count over 13,000 cubic draws was 11 (<code>L = 2</code>) and 55 (<code>L = 3</code>) — it never goes near the frozen set. Everything informative about frozen states at cubic sizes comes from the loop sampler at <code>n_loops = 1</code>. Any future frozen-density estimate must not be built on the DFS sampler.</li>
+<li><strong>The (1,1,1) (111) marginal is exactly flat across its interior</strong> (9, 24, 24, 24, 9), so its log-concavity discriminant is 0 — the boundary case, satisfied with equality rather than slack.</li>
+<li><strong>(1,2,3) carries 453 winding sectors</strong>, not the 217 of (1,2,2) — the sector count is not a function of volume, and stage 1’s table did not record it.</li>
+</ol>
+<hr />
+<h2 id="tests">9. Tests</h2>
+<p><code>tests/test_stage4abc.py</code> adds <strong>30 tests, all passing</strong> (1.19 s standalone), covering the three new modules:</p>
+<ul>
+<li>the integer lattice machinery — that a generating set reduces to a basis of the right index, that a non-diagonal (checkerboard) sublattice is handled, that the primitive step along each direction of the (1,1,1) winding support is 2 and the index is 8;</li>
+<li>the one-dimensional tests, including <strong>two negative controls</strong> (<code>test_a_diagonal_violation_would_be_caught</code>, <code>test_an_internal_zero_would_be_caught</code>) so that the 4a PASS cannot be a test that is incapable of firing;</li>
+<li>the joint histogram against the materialised enumeration at (1,1,1) and (1,1,2) — the same two-method gate the run applies;</li>
+<li>the pair-count routes against each other and against a third naive count on a random matrix; the <code>n_i = N/2</code> consequence of global arrow reversal;</li>
+<li>the balanced-signing decision three ways — union–find with parity, the odd-cycle certificate, and brute force — cross-checked against each other on 25 random covariance matrices, plus the (1,1,1) headline FAIL by all three;</li>
+<li>the bounded BFS against the exact component decomposition (it reproduces the 160-state giant at (1,1,2)), against the 12 frozen singletons at (1,1,1), and the cap path (which must report inconclusive and must not report a size it cannot prove).</li>
+</ul>
+<p>Whole suite, run after every change including the <code>icemix/__init__.py</code> export: <strong><code>248 passed, 7 skipped in 1120.20s (0:18:40)</code></strong>, exit code 0, from 255 collected. The 255 is 182 from stages 1–3, plus this stage’s 30, plus 43 from the parallel 4d work (<code>tests/test_stage4d.py</code> 26, <code>tests/test_stage4f.py</code> 17); the 7 skips are in that parallel work, not in stage 4abc’s, whose 30 all pass.</p>
+<p>Per-file collection at the end of this stage:</p>
+<table>
+<thead>
+<tr>
+<th>file</th>
+<th>tests</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>test_campaign.py</td>
+<td>5</td>
+</tr>
+<tr>
+<td>test_chain.py</td>
+<td>19</td>
+</tr>
+<tr>
+<td>test_crystal.py</td>
+<td>9</td>
+</tr>
+<tr>
+<td>test_enumerate.py</td>
+<td>14</td>
+</tr>
+<tr>
+<td>test_invariants.py</td>
+<td>13</td>
+</tr>
+<tr>
+<td>test_lattice.py</td>
+<td>33</td>
+</tr>
+<tr>
+<td>test_msc.py</td>
+<td>12</td>
+</tr>
+<tr>
+<td>test_observables.py</td>
+<td>13</td>
+</tr>
+<tr>
+<td>test_panel.py</td>
+<td>24</td>
+</tr>
+<tr>
+<td>test_spectrum.py</td>
+<td>5</td>
+</tr>
+<tr>
+<td><strong>test_stage4abc.py</strong></td>
+<td><strong>30</strong></td>
+</tr>
+<tr>
+<td>test_stage4d.py</td>
+<td>26</td>
+</tr>
+<tr>
+<td>test_stage4f.py</td>
+<td>17</td>
+</tr>
+<tr>
+<td>test_start.py</td>
+<td>28</td>
+</tr>
+<tr>
+<td>test_tiling.py</td>
+<td>7</td>
+</tr>
+<tr>
+<td><strong>total</strong></td>
+<td><strong>255</strong></td>
+</tr>
+</tbody>
+</table>
+<p><code>icemix/__init__.py</code> now imports and exports the three new modules alongside the 4d subagent’s <code>parity</code>; <code>import icemix</code> and the three submodule imports were verified after the change.</p>
+<p>One environment note for whoever runs this next: <strong><code>pytest -q</code> suppresses the summary line under pytest 9.0.2 here</strong> — it prints the progress dots and nothing else, which makes a <code>-q</code> run look truncated. Run plain <code>python3 -m pytest</code> to get “N passed” back.</p>
+</main>
+</body>
+</html>

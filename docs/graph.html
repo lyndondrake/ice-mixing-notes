@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dependency graph of the claims</title>
+<meta name="description" content="The dependency graph of every claim in the published manifests, coloured by status.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="index.html">Ice-mixing notes</a><a href="index.html#claims">Claims</a><a href="graph.html">Graph</a><a href="notes/index.html">Notes</a><a href="reports/index.html">Reports</a><a href="certificates/index.html">Certificates</a><a href="llms.txt">For machines</a></div></nav>
+<main class="wide">
+
+<h1>Dependency graph</h1>
+<p class="small">Each node is a claim; an arrow runs from a claim to the claims whose proofs use it, so the foundations
+are at the top and the main results lower down. Dashed arrows run from a superseded claim to the one that replaces it.
+Colour is the status. Drag to pan, scroll or pinch to zoom, hover for the full label, click a node to open its page.
+Grey nodes are cited claims of notes whose manifests are not yet published.</p>
+<div class="legend"><span class="badge st-proved" title="a written argument read by an independent checker with its own programs.">proved</span><span class="badge st-certified" title="a machine-checked proof object (DRAT, LRAT, a CPOG-certified count, Lean, Isabelle) on the cells named in scope.">certified</span><span class="badge st-solver" title="a SAT or LP verdict on named cells without a checked proof object.">solver</span><span class="badge st-open" title="a target with no verdict.">open</span><span class="badge st-closed-route" title="a method shown not to reach the target.">closed-route</span><span class="badge st-corrected" title="a statement of an earlier version repaired here.">corrected</span><span class="badge st-refuted" title="shown false, with a witness.">refuted</span><span class="badge st-external">not yet in a manifest</span></div>
+<svg id="graph" role="img" aria-label="Dependency graph of the claims"></svg>
+<noscript><p>The graph needs JavaScript. The same information is on each claim's page and in the
+<a href="index.html#claims">table of claims</a>.</p></noscript>
+<details class="panel small"><summary>The graph as a list</summary><ul>
+<li><a href="claims/theorem-h-orientation/model.html">theorem-h-orientation/model</a> uses: nothing</li><li><a href="claims/theorem-h-orientation/thm-h.html">theorem-h-orientation/thm-h</a> uses: theorem-h-orientation/thm-1, theorem-h-orientation/thm-14, theorem-h-orientation/thm-23, theorem-h-orientation/thm-2, theorem-h-orientation/thm-24</li><li><a href="claims/theorem-h-orientation/thm-u.html">theorem-h-orientation/thm-u</a> uses: nothing</li><li><a href="claims/theorem-h-orientation/thm-1.html">theorem-h-orientation/thm-1</a> uses: theorem-h-orientation/thm-m-prime, theorem-h-orientation/cage-laws, theorem-h-orientation/thm-3-diagonal-law, theorem-h-orientation/thm-6-separability, theorem-h-orientation/thm-15, theorem-h-orientation/parametrisation-c, theorem-h-orientation/lemma-21</li><li><a href="claims/theorem-h-orientation/thm-1-first-form.html">theorem-h-orientation/thm-1-first-form</a> uses: theorem-h-orientation/ku, theorem-h-orientation/thm-m-prime, theorem-h-orientation/cage-laws, theorem-h-orientation/thm-3-diagonal-law</li><li><a href="claims/theorem-h-orientation/thm-2.html">theorem-h-orientation/thm-2</a> uses: theorem-h-orientation/thm-1, theorem-h-orientation/u-prime-certificates-2026-09-27, theorem-h-orientation/u-prime-certificates-2026-10-01, theorem-h-orientation/lemma-21</li><li><a href="claims/theorem-h-orientation/thm-24.html">theorem-h-orientation/thm-24</a> uses: theorem-h-orientation/lemma-21, theorem-h-orientation/thm-2</li><li><a href="claims/theorem-h-orientation/lemma-21.html">theorem-h-orientation/lemma-21</a> uses: theorem-h-orientation/model</li><li><a href="claims/theorem-h-orientation/thm-14.html">theorem-h-orientation/thm-14</a> uses: theorem-h-orientation/parametrisation-c, theorem-h-orientation/thm-m-prime</li><li><a href="claims/theorem-h-orientation/thm-22.html">theorem-h-orientation/thm-22</a> uses: theorem-h-orientation/parametrisation-c, theorem-h-orientation/thm-m-prime</li><li><a href="claims/theorem-h-orientation/thm-23.html">theorem-h-orientation/thm-23</a> uses: theorem-h-orientation/thm-22, theorem-h-orientation/cage-laws, theorem-h-orientation/thm-m-prime</li><li><a href="claims/theorem-h-orientation/thm-10.html">theorem-h-orientation/thm-10</a> uses: theorem-h-orientation/parametrisation-c, theorem-h-orientation/thm-m-prime</li><li><a href="claims/theorem-h-orientation/thm-11.html">theorem-h-orientation/thm-11</a> uses: theorem-h-orientation/parametrisation-c, theorem-h-orientation/thm-m-prime</li><li><a href="claims/theorem-h-orientation/u-prime-certificates-2026-09-27.html">theorem-h-orientation/u-prime-certificates-2026-09-27</a> uses: theorem-h-orientation/model</li><li><a href="claims/theorem-h-orientation/u-prime-certificates-2026-10-01.html">theorem-h-orientation/u-prime-certificates-2026-10-01</a> uses: theorem-h-orientation/model</li><li><a href="claims/theorem-h-orientation/thm-9-diagonal-law.html">theorem-h-orientation/thm-9-diagonal-law</a> uses: theorem-h-orientation/cage-laws</li><li><a href="claims/theorem-h-orientation/thm-3-diagonal-law.html">theorem-h-orientation/thm-3-diagonal-law</a> uses: theorem-h-orientation/thm-9-diagonal-law</li><li><a href="claims/theorem-h-orientation/thm-6-separability.html">theorem-h-orientation/thm-6-separability</a> uses: theorem-h-orientation/cage-laws, theorem-h-orientation/thm-3-diagonal-law</li><li><a href="claims/theorem-h-orientation/thm-15.html">theorem-h-orientation/thm-15</a> uses: theorem-h-orientation/parametrisation-c</li><li><a href="claims/theorem-h-orientation/cage-laws.html">theorem-h-orientation/cage-laws</a> uses: theorem-h-orientation/model</li><li><a href="claims/theorem-h-orientation/parametrisation-c.html">theorem-h-orientation/parametrisation-c</a> uses: theorem-h-orientation/model</li><li><a href="claims/theorem-h-orientation/thm-m-prime.html">theorem-h-orientation/thm-m-prime</a> uses: theorem-h-orientation/model</li><li><a href="claims/theorem-h-orientation/ku.html">theorem-h-orientation/ku</a> uses: theorem-h-orientation/model</li><li><a href="claims/theorem-h-orientation/ku-first-step-hand.html">theorem-h-orientation/ku-first-step-hand</a> uses: theorem-h-orientation/thm-9-diagonal-law, theorem-h-orientation/thm-3-diagonal-law</li><li><a href="claims/theorem-h-orientation/v-reach-law.html">theorem-h-orientation/v-reach-law</a> uses: theorem-h-orientation/model</li><li><a href="claims/theorem-h-orientation/closed-linear-relaxation.html">theorem-h-orientation/closed-linear-relaxation</a> uses: theorem-h-orientation/cage-laws</li><li><a href="claims/theorem-h-orientation/closed-tilted-sheet.html">theorem-h-orientation/closed-tilted-sheet</a> uses: theorem-h-orientation/v-reach-law</li><li><a href="claims/theorem-h-orientation/statement-r-box-lemma.html">theorem-h-orientation/statement-r-box-lemma</a> uses: theorem-h-orientation/model</li><li><a href="claims/theorem-h-orientation/closed-r-then-monodromy.html">theorem-h-orientation/closed-r-then-monodromy</a> uses: theorem-h-orientation/statement-r-box-lemma, theorem-h-orientation/parametrisation-c</li><li><a href="claims/theorem-h-orientation/weights-integrality-correction.html">theorem-h-orientation/weights-integrality-correction</a> uses: theorem-h-orientation/parametrisation-c</li><li><a href="claims/theorem-h-orientation/periodicity.html">theorem-h-orientation/periodicity</a> uses: theorem-h-orientation/thm-h, curl-reduction/thm-p, curl-reduction/lemma-a, curl-reduction/lemma-l</li><li><a href="claims/theorem-h-orientation/thin-cells-aperiodic.html">theorem-h-orientation/thin-cells-aperiodic</a> uses: theorem-h-orientation/model</li>
+</ul></details>
+<script type="application/json" id="graph-data">{
+ "nodes": [
+  {
+   "id": "theorem-h-orientation/model",
+   "label": "The model",
+   "title": "The model (first section; Holes, cages and rods): proved",
+   "status": "proved",
+   "note": "theorem-h-orientation",
+   "level": 0,
+   "href": "claims/theorem-h-orientation/model.html"
+  },
+  {
+   "id": "theorem-h-orientation/thm-h",
+   "label": "Theorem H",
+   "title": "Theorem H: open",
+   "status": "open",
+   "note": "theorem-h-orientation",
+   "level": 8,
+   "href": "claims/theorem-h-orientation/thm-h.html"
+  },
+  {
+   "id": "theorem-h-orientation/thm-u",
+   "label": "Theorem U",
+   "title": "Theorem U: open",
+   "status": "open",
+   "note": "theorem-h-orientation",
+   "level": 0,
+   "href": "claims/theorem-h-orientation/thm-u.html"
+  },
+  {
+   "id": "theorem-h-orientation/thm-1",
+   "label": "Theorem 1",
+   "title": "Theorem 1 (the reduction), form of 30 September 2026, with Lemmas 22 to 25: proved",
+   "status": "proved",
+   "note": "theorem-h-orientation",
+   "level": 5,
+   "href": "claims/theorem-h-orientation/thm-1.html"
+  },
+  {
+   "id": "theorem-h-orientation/thm-1-first-form",
+   "label": "Theorem 1",
+   "title": "Theorem 1, first form (27 September 2026), through K_u: proved",
+   "status": "proved",
+   "note": "theorem-h-orientation",
+   "level": 4,
+   "href": "claims/theorem-h-orientation/thm-1-first-form.html"
+  },
+  {
+   "id": "theorem-h-orientation/thm-2",
+   "label": "Theorem 2",
+   "title": "Theorem 2: certified",
+   "status": "certified",
+   "note": "theorem-h-orientation",
+   "level": 6,
+   "href": "claims/theorem-h-orientation/thm-2.html"
+  },
+  {
+   "id": "theorem-h-orientation/thm-24",
+   "label": "Theorem 24",
+   "title": "Theorem 24: certified",
+   "status": "certified",
+   "note": "theorem-h-orientation",
+   "level": 7,
+   "href": "claims/theorem-h-orientation/thm-24.html"
+  },
+  {
+   "id": "theorem-h-orientation/lemma-21",
+   "label": "Lemma 21",
+   "title": "Lemma 21 (a state repeated periodically): proved",
+   "status": "proved",
+   "note": "theorem-h-orientation",
+   "level": 1,
+   "href": "claims/theorem-h-orientation/lemma-21.html"
+  },
+  {
+   "id": "theorem-h-orientation/thm-14",
+   "label": "Theorem 14",
+   "title": "Theorem 14 (cells with a coprime pair of extents), with Lemmas 8 to 10 and Theorems 12, 13, 15: proved",
+   "status": "proved",
+   "note": "theorem-h-orientation",
+   "level": 2,
+   "href": "claims/theorem-h-orientation/thm-14.html"
+  },
+  {
+   "id": "theorem-h-orientation/thm-22",
+   "label": "Theorem 22",
+   "title": "Theorem 22, with Theorems 20 and 21 (cells with two chains in every pair of planes): proved",
+   "status": "proved",
+   "note": "theorem-h-orientation",
+   "level": 2,
+   "href": "claims/theorem-h-orientation/thm-22.html"
+  },
+  {
+   "id": "theorem-h-orientation/thm-23",
+   "label": "Theorem 23",
+   "title": "Theorem 23, with Lemmas 13 to 20 and Theorems 16 to 19 (the signed moments): proved",
+   "status": "proved",
+   "note": "theorem-h-orientation",
+   "level": 3,
+   "href": "claims/theorem-h-orientation/thm-23.html"
+  },
+  {
+   "id": "theorem-h-orientation/thm-10",
+   "label": "Theorem 10",
+   "title": "Theorem 10 (the coprime case of (V)): proved",
+   "status": "proved",
+   "note": "theorem-h-orientation",
+   "level": 2,
+   "href": "claims/theorem-h-orientation/thm-10.html"
+  },
+  {
+   "id": "theorem-h-orientation/thm-11",
+   "label": "Theorem 11",
+   "title": "Theorem 11 (greatest common divisor two, odd length): proved",
+   "status": "proved",
+   "note": "theorem-h-orientation",
+   "level": 2,
+   "href": "claims/theorem-h-orientation/thm-11.html"
+  },
+  {
+   "id": "theorem-h-orientation/u-prime-certificates-2026-09-27",
+   "label": "Theorem U′ certified at the cubic ",
+   "title": "Theorem U′ certified at the cubic sides four, five and six: certified",
+   "status": "certified",
+   "note": "theorem-h-orientation",
+   "level": 1,
+   "href": "claims/theorem-h-orientation/u-prime-certificates-2026-09-27.html"
+  },
+  {
+   "id": "theorem-h-orientation/u-prime-certificates-2026-10-01",
+   "label": "Theorem U′ certified at sides seve",
+   "title": "Theorem U′ certified at sides seven and eight and on four cells that are not cubic; the counterexample search: certified",
+   "status": "certified",
+   "note": "theorem-h-orientation",
+   "level": 1,
+   "href": "claims/theorem-h-orientation/u-prime-certificates-2026-10-01.html"
+  },
+  {
+   "id": "theorem-h-orientation/thm-9-diagonal-law",
+   "label": "Theorem 9",
+   "title": "Theorem 9 (the certificate of the diagonal law, closed form): proved",
+   "status": "proved",
+   "note": "theorem-h-orientation",
+   "level": 2,
+   "href": "claims/theorem-h-orientation/thm-9-diagonal-law.html"
+  },
+  {
+   "id": "theorem-h-orientation/thm-3-diagonal-law",
+   "label": "Theorem 3",
+   "title": "Theorem 3 (the diagonal law): proved",
+   "status": "proved",
+   "note": "theorem-h-orientation",
+   "level": 3,
+   "href": "claims/theorem-h-orientation/thm-3-diagonal-law.html"
+  },
+  {
+   "id": "theorem-h-orientation/thm-6-separability",
+   "label": "Theorems 4 to 8",
+   "title": "Theorems 4 to 8 (line counts, two separable functions with product zero, walls, uniform chains beside a wall): proved",
+   "status": "proved",
+   "note": "theorem-h-orientation",
+   "level": 4,
+   "href": "claims/theorem-h-orientation/thm-6-separability.html"
+  },
+  {
+   "id": "theorem-h-orientation/thm-15",
+   "label": "Theorem 15",
+   "title": "Theorem 15: proved",
+   "status": "proved",
+   "note": "theorem-h-orientation",
+   "level": 2,
+   "href": "claims/theorem-h-orientation/thm-15.html"
+  },
+  {
+   "id": "theorem-h-orientation/cage-laws",
+   "label": "Law C",
+   "title": "Law C, law P^k, Lemmas 1 to 3 (the cage laws): proved",
+   "status": "proved",
+   "note": "theorem-h-orientation",
+   "level": 1,
+   "href": "claims/theorem-h-orientation/cage-laws.html"
+  },
+  {
+   "id": "theorem-h-orientation/parametrisation-c",
+   "label": "The parametrisation",
+   "title": "The parametrisation (C) (completeness of the chain modes): proved",
+   "status": "proved",
+   "note": "theorem-h-orientation",
+   "level": 1,
+   "href": "claims/theorem-h-orientation/parametrisation-c.html"
+  },
+  {
+   "id": "theorem-h-orientation/thm-m-prime",
+   "label": "Theorem M′",
+   "title": "Theorem M′ (from the project's earlier record): proved",
+   "status": "proved",
+   "note": "theorem-h-orientation",
+   "level": 1,
+   "href": "claims/theorem-h-orientation/thm-m-prime.html"
+  },
+  {
+   "id": "theorem-h-orientation/ku",
+   "label": "K_u",
+   "title": "K_u (a uniform chain forces a direction to be absent): certified",
+   "status": "certified",
+   "note": "theorem-h-orientation",
+   "level": 1,
+   "href": "claims/theorem-h-orientation/ku.html"
+  },
+  {
+   "id": "theorem-h-orientation/ku-first-step-hand",
+   "label": "The first step of K_u given orient",
+   "title": "The first step of K_u given orientation, by two applications of the diagonal law: proved",
+   "status": "proved",
+   "note": "theorem-h-orientation",
+   "level": 4,
+   "href": "claims/theorem-h-orientation/ku-first-step-hand.html"
+  },
+  {
+   "id": "theorem-h-orientation/v-reach-law",
+   "label": "The reach of",
+   "title": "The reach of (V) (Theorem U section, item 1): solver",
+   "status": "solver",
+   "note": "theorem-h-orientation",
+   "level": 1,
+   "href": "claims/theorem-h-orientation/v-reach-law.html"
+  },
+  {
+   "id": "theorem-h-orientation/closed-linear-relaxation",
+   "label": "No weighted sum of laws proves",
+   "title": "No weighted sum of laws proves (V) at g geq 2 (Theorem U section, items 3 to 5): closed-route",
+   "status": "closed-route",
+   "note": "theorem-h-orientation",
+   "level": 2,
+   "href": "claims/theorem-h-orientation/closed-linear-relaxation.html"
+  },
+  {
+   "id": "theorem-h-orientation/closed-tilted-sheet",
+   "label": "The closure of the tilted sheet ca",
+   "title": "The closure of the tilted sheet carries no invariant (Theorem U section, item 7): closed-route",
+   "status": "closed-route",
+   "note": "theorem-h-orientation",
+   "level": 2,
+   "href": "claims/theorem-h-orientation/closed-tilted-sheet.html"
+  },
+  {
+   "id": "theorem-h-orientation/statement-r-box-lemma",
+   "label": "Statement R and its box lemma",
+   "title": "Statement R and its box lemma (Conjecture R_b; Theorem U section, item 8): certified",
+   "status": "certified",
+   "note": "theorem-h-orientation",
+   "level": 1,
+   "href": "claims/theorem-h-orientation/statement-r-box-lemma.html"
+  },
+  {
+   "id": "theorem-h-orientation/closed-r-then-monodromy",
+   "label": "Statement R",
+   "title": "Statement R, a monodromy in the weights, and the heights are not a route to (V) (Theorem U section, item 9): closed-route",
+   "status": "closed-route",
+   "note": "theorem-h-orientation",
+   "level": 2,
+   "href": "claims/theorem-h-orientation/closed-r-then-monodromy.html"
+  },
+  {
+   "id": "theorem-h-orientation/weights-integrality-correction",
+   "label": "The weights of",
+   "title": "The weights of (C) are rarely integral (correction of 30 September 2026): corrected",
+   "status": "corrected",
+   "note": "theorem-h-orientation",
+   "level": 2,
+   "href": "claims/theorem-h-orientation/weights-integrality-correction.html"
+  },
+  {
+   "id": "theorem-h-orientation/periodicity",
+   "label": "Periodicity of frozen zero-flux st",
+   "title": "Periodicity of frozen zero-flux states (first section, with Theorem P and Lemma A of the earlier note): proved",
+   "status": "proved",
+   "note": "theorem-h-orientation",
+   "level": 9,
+   "href": "claims/theorem-h-orientation/periodicity.html"
+  },
+  {
+   "id": "theorem-h-orientation/thin-cells-aperiodic",
+   "label": "Frozen zero-flux states with no tr",
+   "title": "Frozen zero-flux states with no translation symmetry on thin cells: refuted",
+   "status": "refuted",
+   "note": "theorem-h-orientation",
+   "level": 1,
+   "href": "claims/theorem-h-orientation/thin-cells-aperiodic.html"
+  },
+  {
+   "id": "curl-reduction/lemma-a",
+   "label": "lemma-a",
+   "title": "curl-reduction/lemma-a: not yet in a published manifest",
+   "status": "external",
+   "note": "curl-reduction",
+   "level": 0,
+   "href": ""
+  },
+  {
+   "id": "curl-reduction/lemma-l",
+   "label": "lemma-l",
+   "title": "curl-reduction/lemma-l: not yet in a published manifest",
+   "status": "external",
+   "note": "curl-reduction",
+   "level": 0,
+   "href": ""
+  },
+  {
+   "id": "curl-reduction/thm-p",
+   "label": "thm-p",
+   "title": "curl-reduction/thm-p: not yet in a published manifest",
+   "status": "external",
+   "note": "curl-reduction",
+   "level": 0,
+   "href": ""
+  }
+ ],
+ "edges": [
+  {
+   "source": "theorem-h-orientation/thm-1",
+   "target": "theorem-h-orientation/thm-h",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-14",
+   "target": "theorem-h-orientation/thm-h",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-23",
+   "target": "theorem-h-orientation/thm-h",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-2",
+   "target": "theorem-h-orientation/thm-h",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-24",
+   "target": "theorem-h-orientation/thm-h",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-m-prime",
+   "target": "theorem-h-orientation/thm-1",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/cage-laws",
+   "target": "theorem-h-orientation/thm-1",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-3-diagonal-law",
+   "target": "theorem-h-orientation/thm-1",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-6-separability",
+   "target": "theorem-h-orientation/thm-1",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-15",
+   "target": "theorem-h-orientation/thm-1",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/parametrisation-c",
+   "target": "theorem-h-orientation/thm-1",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/lemma-21",
+   "target": "theorem-h-orientation/thm-1",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-1-first-form",
+   "target": "theorem-h-orientation/thm-1",
+   "type": "supersedes"
+  },
+  {
+   "source": "theorem-h-orientation/ku",
+   "target": "theorem-h-orientation/thm-1-first-form",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-m-prime",
+   "target": "theorem-h-orientation/thm-1-first-form",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/cage-laws",
+   "target": "theorem-h-orientation/thm-1-first-form",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-3-diagonal-law",
+   "target": "theorem-h-orientation/thm-1-first-form",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-1",
+   "target": "theorem-h-orientation/thm-2",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/u-prime-certificates-2026-09-27",
+   "target": "theorem-h-orientation/thm-2",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/u-prime-certificates-2026-10-01",
+   "target": "theorem-h-orientation/thm-2",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/lemma-21",
+   "target": "theorem-h-orientation/thm-2",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/lemma-21",
+   "target": "theorem-h-orientation/thm-24",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-2",
+   "target": "theorem-h-orientation/thm-24",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/model",
+   "target": "theorem-h-orientation/lemma-21",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/parametrisation-c",
+   "target": "theorem-h-orientation/thm-14",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-m-prime",
+   "target": "theorem-h-orientation/thm-14",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/parametrisation-c",
+   "target": "theorem-h-orientation/thm-22",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-m-prime",
+   "target": "theorem-h-orientation/thm-22",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-22",
+   "target": "theorem-h-orientation/thm-23",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/cage-laws",
+   "target": "theorem-h-orientation/thm-23",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-m-prime",
+   "target": "theorem-h-orientation/thm-23",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/parametrisation-c",
+   "target": "theorem-h-orientation/thm-10",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-m-prime",
+   "target": "theorem-h-orientation/thm-10",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/parametrisation-c",
+   "target": "theorem-h-orientation/thm-11",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-m-prime",
+   "target": "theorem-h-orientation/thm-11",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/model",
+   "target": "theorem-h-orientation/u-prime-certificates-2026-09-27",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/model",
+   "target": "theorem-h-orientation/u-prime-certificates-2026-10-01",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/cage-laws",
+   "target": "theorem-h-orientation/thm-9-diagonal-law",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-9-diagonal-law",
+   "target": "theorem-h-orientation/thm-3-diagonal-law",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/cage-laws",
+   "target": "theorem-h-orientation/thm-6-separability",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-3-diagonal-law",
+   "target": "theorem-h-orientation/thm-6-separability",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/parametrisation-c",
+   "target": "theorem-h-orientation/thm-15",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/model",
+   "target": "theorem-h-orientation/cage-laws",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/model",
+   "target": "theorem-h-orientation/parametrisation-c",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/model",
+   "target": "theorem-h-orientation/thm-m-prime",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/model",
+   "target": "theorem-h-orientation/ku",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-9-diagonal-law",
+   "target": "theorem-h-orientation/ku-first-step-hand",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-3-diagonal-law",
+   "target": "theorem-h-orientation/ku-first-step-hand",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/model",
+   "target": "theorem-h-orientation/v-reach-law",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/cage-laws",
+   "target": "theorem-h-orientation/closed-linear-relaxation",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/v-reach-law",
+   "target": "theorem-h-orientation/closed-tilted-sheet",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/model",
+   "target": "theorem-h-orientation/statement-r-box-lemma",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/statement-r-box-lemma",
+   "target": "theorem-h-orientation/closed-r-then-monodromy",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/parametrisation-c",
+   "target": "theorem-h-orientation/closed-r-then-monodromy",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/parametrisation-c",
+   "target": "theorem-h-orientation/weights-integrality-correction",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/thm-h",
+   "target": "theorem-h-orientation/periodicity",
+   "type": "depends"
+  },
+  {
+   "source": "curl-reduction/thm-p",
+   "target": "theorem-h-orientation/periodicity",
+   "type": "depends"
+  },
+  {
+   "source": "curl-reduction/lemma-a",
+   "target": "theorem-h-orientation/periodicity",
+   "type": "depends"
+  },
+  {
+   "source": "curl-reduction/lemma-l",
+   "target": "theorem-h-orientation/periodicity",
+   "type": "depends"
+  },
+  {
+   "source": "theorem-h-orientation/model",
+   "target": "theorem-h-orientation/thin-cells-aperiodic",
+   "type": "depends"
+  }
+ ]
+}</script>
+
+</main>
+<footer class="site-foot">Notes and reports CC BY 4.0; scripts MIT; certificates, ledgers and manifests CC0 1.0. Source: <a href="https://github.com/lyndondrake/ice-mixing-notes">github.com/lyndondrake/ice-mixing-notes</a>. Built 2026-10-01 from the manifests; see <a href="llms.txt">llms.txt</a> for the machine-readable files.</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+(function () {
+  if (typeof d3 === 'undefined') return;
+  var data = JSON.parse(document.getElementById('graph-data').textContent);
+  var svg = d3.select('#graph'), el = document.getElementById('graph');
+  var W = el.clientWidth, H = el.clientHeight;
+  var css = getComputedStyle(document.documentElement);
+  function colour(s) { return css.getPropertyValue('--st-' + s).trim() || '#888'; }
+  var maxLevel = d3.max(data.nodes, function (d) { return d.level; }) || 1;
+  var gap = Math.max(80, (H - 80) / (maxLevel + 1));
+  svg.append('defs').append('marker').attr('id', 'arrow').attr('viewBox', '0 -4 8 8')
+     .attr('refX', 15).attr('refY', 0).attr('markerWidth', 7).attr('markerHeight', 7).attr('orient', 'auto')
+     .append('path').attr('d', 'M0,-4L8,0L0,4').attr('fill', css.getPropertyValue('--muted').trim());
+  var g = svg.append('g');
+  svg.call(d3.zoom().scaleExtent([0.2, 4]).on('zoom', function (e) { g.attr('transform', e.transform); }));
+  var link = g.append('g').selectAll('path').data(data.edges).join('path')
+     .attr('class', function (d) { return 'edge ' + d.type; }).attr('marker-end', 'url(#arrow)');
+  var node = g.append('g').selectAll('g').data(data.nodes).join('g').attr('class', 'node')
+     .on('click', function (e, d) { if (d.href) location.href = d.href; });
+  node.append('circle').attr('r', 8).attr('fill', function (d) { return colour(d.status); })
+     .attr('stroke', css.getPropertyValue('--bg').trim()).attr('stroke-width', 1.5);
+  node.append('text').attr('x', 11).attr('y', 4).text(function (d) { return d.label; });
+  node.append('title').text(function (d) { return d.title + '\n' + d.id; });
+  var sim = d3.forceSimulation(data.nodes)
+     .force('link', d3.forceLink(data.edges).id(function (d) { return d.id; }).distance(70).strength(0.25))
+     .force('charge', d3.forceManyBody().strength(-260))
+     .force('y', d3.forceY(function (d) { return 40 + d.level * gap; }).strength(0.9))
+     .force('x', d3.forceX(W / 2).strength(0.04))
+     .force('collide', d3.forceCollide(30));
+  node.call(d3.drag()
+     .on('start', function (e, d) { if (!e.active) sim.alphaTarget(0.2).restart(); d.fx = d.x; d.fy = d.y; })
+     .on('drag', function (e, d) { d.fx = e.x; d.fy = e.y; })
+     .on('end', function (e, d) { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; }));
+  sim.on('tick', function () {
+    link.attr('d', function (d) { return 'M' + d.source.x + ',' + d.source.y + 'L' + d.target.x + ',' + d.target.y; });
+    node.attr('transform', function (d) { return 'translate(' + d.x + ',' + d.y + ')'; });
+  });
+})();
+</script>
+</body>
+</html>

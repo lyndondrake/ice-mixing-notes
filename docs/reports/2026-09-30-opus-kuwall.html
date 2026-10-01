@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The first step of K_u beside a wall: is it a window lemma?</title>
+<meta name="description" content="The first step of K_u beside a wall: is it a window lemma?">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "The first step of K_u beside a wall: is it a window lemma?",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-30-opus-kuwall.html",
+ "datePublished": "2026-09-30",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus), agent kuwall, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-30-opus-kuwall.md">Markdown source</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">The first step of K_u beside a wall: is it a window lemma?</h1>
+
+<p class="author">Claude (Opus), agent kuwall, for Lyndon Drake</p>
+<p class="date">2026-09-30</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#verdict" id="toc-verdict">Verdict</a></li>
+<li><a href="#statement-tested" id="toc-statement-tested">Statement tested</a></li>
+<li><a href="#t1-and-t4-whole-torus-solver" id="toc-t1-and-t4-whole-torus-solver">T1 and T4: whole torus (solver)</a></li>
+<li><a href="#t2-windows-centred-on-the-target-solver" id="toc-t2-windows-centred-on-the-target-solver">T2: windows centred on the target (solver)</a></li>
+<li><a href="#which-hypotheses-matter-t3-solver" id="toc-which-hypotheses-matter-t3-solver">Which hypotheses matter (T3; solver)</a></li>
+<li><a href="#hand-argument" id="toc-hand-argument">Hand argument</a></li>
+<li><a href="#scripts-and-timings" id="toc-scripts-and-timings">Scripts and timings</a></li>
+<li><a href="#rules-kept-or-broken" id="toc-rules-kept-or-broken">Rules kept or broken</a></li>
+</ul>
+</details></nav>
+<h1 id="verdict">Verdict</h1>
+<p>No. With the hypotheses of the wall added, the first step of <span class="math inline">\(K_u\)</span> is still not a window lemma of bounded radius (<strong>solver</strong>). A window centred on the target that does not contain the row <span class="math inline">\(D\)</span> is satisfiable at every radius, every depth in <span class="math inline">\(x\)</span> and every <span class="math inline">\(d \geq 1\)</span>, with any combination of W1 to W6, and with the induction hypothesis on the columns between <span class="math inline">\(D\)</span> and the target added as well. So the row <span class="math inline">\(D\)</span> (W0) cannot be replaced by the plane-wide hypotheses. Once <span class="math inline">\(D\)</span> is in the window, orientation (W4) turns the statement into a local one, but local in a cone rather than a ball. The target at <span class="math inline">\(w\)</span>-distance <span class="math inline">\(d\)</span> is excluded exactly at transverse radius <span class="math inline">\(r = d\)</span>, the smallest radius at which <span class="math inline">\(D\)</span> enters the window, provided the window extends about <span class="math inline">\(d\)</span> grids in <span class="math inline">\(x\)</span> on each side of the slab. With W0 alone the reach is 2 in every extent tried, which reproduces check6. With W0 and W4 it grows by about one per grid of <span class="math inline">\(x\)</span>-extent on each side, up to <span class="math inline">\(d = 7\)</span>, the largest distance that embeds on <span class="math inline">\((6,8,8)\)</span>. The wall hypotheses W1 and W2 matter only when the window stops at <span class="math inline">\(x = -2\)</span>, just below the wall; with a deeper window they change no verdict. W3, W5 and W6 change no verdict anywhere. So the radius grows with <span class="math inline">\(d\)</span>, and through <span class="math inline">\(d\)</span> with <span class="math inline">\(L\)</span>. T5 does not apply, and I stopped as instructed.</p>
+<h1 id="statement-tested">Statement tested</h1>
+<p>The coordinates are those of h334. The chain axis <span class="math inline">\(x\)</span> is the wall normal, and <span class="math inline">\((u, w) = ((y+z)/2, (y-z)/2)\)</span>. <span class="math inline">\(D\)</span> is the row (family {0,1}) through the origin: A vertices on <span class="math inline">\(x = 0\)</span>, B vertices on <span class="math inline">\(x = 1\)</span>, <span class="math inline">\(w = 0\)</span>. The target is the column vertex at <span class="math inline">\((u, w) = (1, d)\)</span> in slab <strong>up</strong> (grids 1, 2; on plane 1 if <span class="math inline">\(d\)</span> is even, plane 2 if odd), or at <span class="math inline">\((0, d)\)</span> in slab <strong>down</strong> (grids <span class="math inline">\(-1\)</span>, 0; on plane 0 if <span class="math inline">\(d\)</span> is even, plane <span class="math inline">\(-1\)</span> if odd). The window is grids <span class="math inline">\(x_0..x_1\)</span> and transverse sup-radius <span class="math inline">\(r\)</span> about the target, as in <code>window.py</code> (the nearest image in <span class="math inline">\((u, w)\)</span>), with <span class="math inline">\(r \leq L - 1\)</span> so that it embeds. Always on are the ice rule at the window’s vertices (k40’s filter) and the two-arc rule (T2) on the window’s hexagons, in the bond model with signs. Each group below is guarded by its own selector:</p>
+<ul>
+<li><strong>W0</strong>: every vertex of <span class="math inline">\(D\)</span> in the window has moment <span class="math inline">\(+y\)</span>.</li>
+<li><strong>W1</strong>: no vertex of plane <span class="math inline">\(x = -1\)</span> in the window has type <span class="math inline">\(y\)</span>.</li>
+<li><strong>W2</strong>: no vertex of planes <span class="math inline">\(x = 0, 1\)</span> in the window has moment <span class="math inline">\(-y\)</span>.</li>
+<li><strong>W3</strong>: no vertex of plane <span class="math inline">\(x = -2\)</span> in the window has moment <span class="math inline">\(+y\)</span>.</li>
+<li><strong>W4</strong>: for every axis <span class="math inline">\(k\)</span> and every pair <span class="math inline">\(v\)</span>, <span class="math inline">\(v + 4e_k\)</span> both in the window, not (both of type <span class="math inline">\(k\)</span> with opposite signs).</li>
+<li><strong>W5</strong>: some hole with at least two methylenes in the window has two of them as rods on different axes.</li>
+<li><strong>W6</strong>: along every row segment of row slab 0 (planes 0, 1) in the window, the indicator of type <span class="math inline">\(y\)</span> is constant.</li>
+<li><strong>IND</strong> (added by me): no column vertex of the target’s slab in the window with <span class="math inline">\(0 \leq w &lt; d\)</span> (or <span class="math inline">\(d &lt; w \leq 0\)</span>) is a <span class="math inline">\(-\)</span> pass-through. This is the induction hypothesis of a proof by steps outward from <span class="math inline">\(D\)</span>.</li>
+<li><strong>NEG</strong>: both column bonds at the target have sense <span class="math inline">\(-\)</span>.</li>
+</ul>
+<p>Torus mode (T1, T4) uses the same groups on every vertex. SLABNEG says that some vertex of some column of the slab is a <span class="math inline">\(-\)</span> pass-through (h334’s query).</p>
+<h1 id="t1-and-t4-whole-torus-solver">T1 and T4: whole torus (solver)</h1>
+<p><code>h581_torus.py</code>, one child process per query, cap 120 s.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>query</th>
+<th>verdict</th>
+<th>wall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(3,4,4)</td>
+<td>W0..W6, no negation</td>
+<td>SAT</td>
+<td>0.2 s</td>
+</tr>
+<tr>
+<td>(3,4,4)</td>
+<td>W1..W6, no negation</td>
+<td>SAT</td>
+<td>0.2 s</td>
+</tr>
+<tr>
+<td>(3,4,4)</td>
+<td>W0 W1 W2 W4 (control)</td>
+<td>SAT</td>
+<td>0.2 s</td>
+</tr>
+<tr>
+<td>(3,4,4)</td>
+<td>W0 W1 W2 W4 + SLABNEG, up / down</td>
+<td>UNSAT / UNSAT</td>
+<td>0.3 / 0.2 s</td>
+</tr>
+<tr>
+<td>(3,4,4)</td>
+<td>W0 + SLABNEG (= h334), up / down</td>
+<td>UNSAT / UNSAT</td>
+<td>0.6 / 0.6 s</td>
+</tr>
+<tr>
+<td>(3,4,4)</td>
+<td>W1 W2 W4 + SLABNEG, up / down</td>
+<td>SAT / SAT</td>
+<td>0.3 / 0.1 s</td>
+</tr>
+<tr>
+<td>(4,4,4)</td>
+<td>the same nine</td>
+<td>SAT, SAT, SAT, UNSAT, UNSAT, UNSAT, UNSAT, SAT, SAT</td>
+<td>0.2 to 0.4 s each</td>
+</tr>
+</tbody>
+</table>
+<p>The hypotheses are consistent. <code>h582_verify.py</code> decoded the two controls on each cell and checked them without the encoding: every vertex had a moment, <span class="math inline">\(D\)</span> was uniform <span class="math inline">\(+y\)</span> in <code>ctrl_all</code>, W1 to W4 held, Law C held at every hole, and there were 96 to 316 corners. The encoding agrees with h334. On the torus, W1, W2 and W4 without W0 do not give the conclusion either: some <span class="math inline">\(-\)</span> pass-through then exists.</p>
+<h1 id="t2-windows-centred-on-the-target-solver">T2: windows centred on the target (solver)</h1>
+<p><code>h584_sweep.py</code> drives <code>h583_window.py</code> over <span class="math inline">\(d = -L..L\)</span> and <span class="math inline">\(r = 1..\min(5, L-1)\)</span> on (3,4,4), (3,5,5), (3,6,6), (3,8,8) and (6,6,6), both slabs, for two <span class="math inline">\(x\)</span>-extents: 572 windows each. Every UNSAT has a SAT control (the same clause set without NEG). There were no timeouts, and the longest batch took 0.4 s. The smallest UNSAT radius was the same on all five cells wherever the radius embeds, so one table serves them all. An entry <span class="math inline">\(r\)</span> means UNSAT first at radius <span class="math inline">\(r\)</span> and at every larger radius tried; ‘-’ means SAT at every radius tried.</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>variant</th>
+<th>extent</th>
+<th>slab</th>
+<th><span class="math inline">\(\lvert d\rvert=0,1\)</span></th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th><span class="math inline">\(\geq 5\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A = W1 W2 W4</td>
+<td><span class="math inline">\(-3..3\)</span>, <span class="math inline">\(-3..5\)</span></td>
+<td>both</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>B = W0 W1 W2 W4</td>
+<td><span class="math inline">\(-3..3\)</span></td>
+<td>up</td>
+<td>1</td>
+<td>2</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>B</td>
+<td><span class="math inline">\(-3..3\)</span></td>
+<td>down</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>B</td>
+<td><span class="math inline">\(-3..5\)</span></td>
+<td>up</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>-</td>
+</tr>
+<tr>
+<td>B</td>
+<td><span class="math inline">\(-3..5\)</span></td>
+<td>down</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Bf = W0..W6</td>
+<td>both extents</td>
+<td>both</td>
+<td>as B</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Cn = W1 W2 W4 IND</td>
+<td>both extents</td>
+<td>both</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>C = B + IND, F = Bf + IND</td>
+<td><span class="math inline">\(-3..3\)</span></td>
+<td>up</td>
+<td>1</td>
+<td>2</td>
+<td>-</td>
+<td>4 (<span class="math inline">\(L \geq 5\)</span>)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>C, F</td>
+<td><span class="math inline">\(-3..5\)</span></td>
+<td>both</td>
+<td>as B</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>On (3,4,4) the entry for <span class="math inline">\(\lvert d\rvert = 4\)</span> is ‘-’ because <span class="math inline">\(r \leq 3\)</span> there. The isolated UNSAT of C at <span class="math inline">\(\lvert d\rvert = 4\)</span> in slab up is not a step of an induction, since the step at 3 fails in the same window. <strong>The UNSAT radius is always exactly <span class="math inline">\(\max(\lvert d\rvert, 1)\)</span></strong>: a window that does not contain <span class="math inline">\(D\)</span> never excludes the target. Where UNSAT fails, it fails because of the <span class="math inline">\(x\)</span>-extent and not because of <span class="math inline">\(r\)</span>. The variants differ in how far the extent lets them reach.</p>
+<p><strong>Reach against <span class="math inline">\(x\)</span>-extent</strong> (<code>h586_reach.py</code>, <code>h587_cone.py</code>; cell (6,8,8), <span class="math inline">\(r = 7\)</span>, <span class="math inline">\(d = 0..7\)</span>). The entry is the largest <span class="math inline">\(d_0\)</span> such that every <span class="math inline">\(d \leq d_0\)</span> is UNSAT. All controls were SAT.</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th><span class="math inline">\(x_0..x_1\)</span></th>
+<th>up: W0 W4</th>
+<th>up: W0 W1 W2 W4</th>
+<th>down: W0 W4</th>
+<th>down: W0 W1 W2 W4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(-1..3\)</span></td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td><span class="math inline">\(-1..5\)</span>, <span class="math inline">\(-1..7\)</span>, <span class="math inline">\(-1..9\)</span></td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td><span class="math inline">\(-2..5\)</span>, <span class="math inline">\(-2..7\)</span>, <span class="math inline">\(-2..9\)</span></td>
+<td>3</td>
+<td>4, 5, 5</td>
+<td>2</td>
+<td>4</td>
+</tr>
+<tr>
+<td><span class="math inline">\(-3..3\)</span></td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td><span class="math inline">\(-3..5\)</span></td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td><span class="math inline">\(-3..7\)</span></td>
+<td>5</td>
+<td>5</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td><span class="math inline">\(-4..5\)</span></td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td><span class="math inline">\(-4..7\)</span>, <span class="math inline">\(-4..9\)</span>, <span class="math inline">\(-4..11\)</span></td>
+<td>5</td>
+<td>5</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td><span class="math inline">\(-5..5\)</span></td>
+<td>4</td>
+<td>4</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td><span class="math inline">\(-5..7\)</span></td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td><span class="math inline">\(-5..9\)</span>, <span class="math inline">\(-5..11\)</span></td>
+<td>7</td>
+<td>7</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td><span class="math inline">\(-6..9\)</span>, <span class="math inline">\(-6..11\)</span></td>
+<td>7</td>
+<td>7</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td><span class="math inline">\(-7..11\)</span>, <span class="math inline">\(-7..13\)</span></td>
+<td>7</td>
+<td>7</td>
+<td>7</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+<p>Here 7 is the ceiling set by <span class="math inline">\(r \leq L - 1 = 7\)</span>. With W0 W4 the reach grows by 2 for every two grids (one slab) of depth below the wall: in slab up it is 3, 5 and 7 for <span class="math inline">\(x_0 = -1\)</span> or <span class="math inline">\(-2\)</span>, <span class="math inline">\(-3\)</span> or <span class="math inline">\(-4\)</span>, and <span class="math inline">\(-5\)</span> or <span class="math inline">\(-6\)</span>, and in slab down it is 2, 4 and 6. It grows by 1 for every grid of height above: in slab up it is 2, 4 and 6 for <span class="math inline">\(x_1 = 3, 5, 7\)</span>. The reach is the smaller of the two limits, which gives a cone of slope about 1 in <span class="math inline">\((x, w)\)</span>. With <span class="math inline">\(x\)</span>-extent <span class="math inline">\(-7..13\)</span>, the smallest UNSAT radius is exactly <span class="math inline">\(r = d\)</span> for <span class="math inline">\(d = 0..7\)</span>, in both slabs and in both variants (<code>h586_rprof_*</code>). Without W0, variants A and Cn and W1..W6 (with or without IND) are SAT at <span class="math inline">\(d = 1, 3, 5, 7\)</span> even at <span class="math inline">\(-7..13\)</span>, <span class="math inline">\(r = 7\)</span>.</p>
+<p><strong>The SAT models at the largest radius</strong> (<code>h588_model.py</code>, <code>h589_kinks.py</code>; (3,8,8) <span class="math inline">\(d = 5\)</span>, <span class="math inline">\(r = 5\)</span>, <span class="math inline">\(-3..5\)</span> with W0..W6; (6,8,8) <span class="math inline">\(d = 6\)</span>, <span class="math inline">\(r = 7\)</span>, <span class="math inline">\(-3..7\)</span> with W0 W1 W2 W4; (6,8,8) down, <span class="math inline">\(d = 5\)</span>). Moving along the target’s column, the bond senses read <span class="math inline">\(+\)</span> to within a few bonds of the target, then a run of 3 to 7 bonds of <span class="math inline">\(-\)</span> containing the target. The kinks (type <span class="math inline">\(x\)</span>) of every plane from <span class="math inline">\(x_0\)</span> to <span class="math inline">\(x_1\)</span> concentrate on a band of nearly constant <span class="math inline">\(y = u + w\)</span>, about <span class="math inline">\(y = 5..9\)</span> when <span class="math inline">\(d\)</span> is 5 or 6. The band therefore runs through all the planes at the same <span class="math inline">\(y\)</span>. It separates the target from <span class="math inline">\(D\)</span> inside the window, and it would meet <span class="math inline">\(D\)</span> at <span class="math inline">\(u \approx y\)</span>, at or just past the window’s edge in <span class="math inline">\(u\)</span>. The target sits in the band, on plane 1 or 2, above the wall. With W6 the type-<span class="math inline">\(y\)</span> set on planes 0 and 1 in the window is a union of full rows: <span class="math inline">\(D\)</span> alone, or <span class="math inline">\(D\)</span> and the row <span class="math inline">\(w = -2\)</span>. Without W6 there is one isolated type-<span class="math inline">\(y\)</span> vertex in one model. In the (3,8,8) model the planes above the column slab carry a second full row of <span class="math inline">\(+y\)</span> at <span class="math inline">\(x = 4, 5\)</span>. This description is <strong>computed</strong> from three models and is not a law.</p>
+<h1 id="which-hypotheses-matter-t3-solver">Which hypotheses matter (T3; solver)</h1>
+<p>Measured on (6,8,8), <span class="math inline">\(r = 7\)</span>, <span class="math inline">\(d = 0..8\)</span>, extents <span class="math inline">\(-3..7\)</span> and <span class="math inline">\(-5..9\)</span>, both slabs (<code>h586_reach.py t3_688*</code>), with 13 variants.</p>
+<ul>
+<li><strong>W0 is necessary.</strong> Every variant without it is SAT at every <span class="math inline">\(d \geq 1\)</span>, whatever else is added: A, Cn, W1 W2 W4 W6, and W1..W6.</li>
+<li><strong>W4 (orientation) does the work.</strong> W0 alone reaches <span class="math inline">\(d = 2\)</span> in both extents, and W0 W2 also reaches 2. W0 W1 reaches 3 in slab up and 2 in slab down. W0 W1 W2 reaches 3 (up) and 2 (down) at <span class="math inline">\(-3..7\)</span>, and 7 (up) and 6 (down) at <span class="math inline">\(-5..9\)</span>. W0 W4 reaches 5 (up) and 4 (down) at <span class="math inline">\(-3..7\)</span>, and 7 (up) and 6 (down) at <span class="math inline">\(-5..9\)</span>, which is the same as W0 W1 W2 W4 in every row.</li>
+<li><strong>W1 and W2 are not needed</strong> once W4 holds and the window reaches down to <span class="math inline">\(x = -3\)</span> or lower. At <span class="math inline">\(x_0 = -2\)</span> they add about two to the reach (table above), acting as a substitute for depth below the wall.</li>
+<li><strong>W3, W5 and W6</strong> do not change a single verdict in any row.</li>
+<li><strong>IND</strong> (the induction hypothesis on the slab) does not make a bounded step: without W0 it is SAT everywhere, and with W0 it gives nothing that W0 does not.</li>
+</ul>
+<h1 id="hand-argument">Hand argument</h1>
+<p>None. There is no bounded window to certify, so T5 was not attempted. The one structural fact the data support is the cone. Excluding the target at distance <span class="math inline">\(d\)</span> needs <span class="math inline">\(D\)</span> at distance <span class="math inline">\(d\)</span> and roughly <span class="math inline">\(d\)</span> grids of state on each side in <span class="math inline">\(x\)</span>, and it needs orientation. That suggests information carried from <span class="math inline">\(D\)</span> outward at unit speed in <span class="math inline">\((x, w)\)</span> by the orientation law, not by the wall. I have not tried to prove it (<strong>conjecture</strong>, and outside this task).</p>
+<h1 id="scripts-and-timings">Scripts and timings</h1>
+<p>Everything is in <code>experiments/08_frozen_structure/scratch_h/</code>. The records are in <code>.tmp/</code>.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>script</th>
+<th>purpose</th>
+<th>runs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h580_lib.py</code></td>
+<td>encoding: region, W0..W6, IND, NEG, SLABNEG, each behind a selector</td>
+<td>library</td>
+</tr>
+<tr>
+<td><code>h581_torus.py</code></td>
+<td>T1 and T4 on the torus</td>
+<td>(3,4,4), (4,4,4); 0.1 to 0.6 s per query</td>
+</tr>
+<tr>
+<td><code>h582_verify.py</code></td>
+<td>decodes the torus controls and checks the hypotheses independently</td>
+<td>0.1 to 0.3 s</td>
+</tr>
+<tr>
+<td><code>h583_window.py</code></td>
+<td>T2/T3: one window, all variants with controls, one capped child process per batch (cap 240 s)</td>
+<td>longest batch 0.6 s</td>
+</tr>
+<tr>
+<td><code>h584_sweep.py</code></td>
+<td>T2 driver; <code>.tmp/h584_x33.jsonl</code>, <code>h584_x35.jsonl</code> (572 windows each)</td>
+<td>2 min 12 s per extent</td>
+</tr>
+<tr>
+<td><code>h585_table.py</code></td>
+<td>smallest UNSAT <span class="math inline">\(r\)</span> per (cell, slab, <span class="math inline">\(d\)</span>); flags non-monotone <span class="math inline">\(r\)</span>, bad controls, timeouts</td>
+<td>none flagged</td>
+</tr>
+<tr>
+<td><code>h586_reach.py</code></td>
+<td>reach against <span class="math inline">\(x\)</span>-extent and ablations on (6,8,8); <code>.tmp/h586_*.jsonl</code></td>
+<td>36 s for 8 extents</td>
+</tr>
+<tr>
+<td><code>h587_cone.py</code></td>
+<td>reach tables</td>
+<td>exact</td>
+</tr>
+<tr>
+<td><code>h588_model.py</code>, <code>h589_kinks.py</code></td>
+<td>drawing and kink statistics of SAT models</td>
+<td>0.2 s</td>
+</tr>
+</tbody>
+</table>
+<p>Pre-flight (T1): one window query on (3,4,4) took 0.1 to 0.3 s and one torus query 0.2 to 0.6 s, so the sweep was estimated at a few minutes and ran in under five. Every verdict above is from CaDiCaL 1.9.5 through pysat in a child process. No solve reached its cap.</p>
+<h1 id="rules-kept-or-broken">Rules kept or broken</h1>
+<ul>
+<li>Kept: scripts only <code>h580</code> to <code>h589</code>, no existing script modified. I edited <code>h583</code> and <code>h584</code>, both my own, after creating them. No git, no commit.</li>
+<li>Kept: every solve in a child process with a hard <code>subprocess.run</code> timeout (h32_cap), one solver process at a time, no job over 10 minutes, nothing on the Sparks or through expq, <code>TMPDIR</code> in the repo’s <code>.tmp</code>.</li>
+<li>Kept: every UNSAT reported with its SAT control on the same clause set without the negated conclusion.</li>
+<li>Beyond the brief: I used the cell (6,8,8) in addition to the five named cells, for <span class="math inline">\(x\)</span>-extents larger than <span class="math inline">\(a = 3\)</span> allows, and added the IND variant. No DRAT proof was written, since no bounded lemma was found.</li>
+</ul>
+</main>
+</body>
+</html>

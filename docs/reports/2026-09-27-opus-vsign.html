@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>(V) through the signed cage defect (agent vsign): the defect of the signed cage law is the hole's charge c = #away − #toward, the same for all three a</title>
+<meta name="description" content="(V) through the signed cage defect (agent vsign): the defect of the signed cage law is the hole's charge c = #away − #toward, the same for all three axes (proved); the signed line counts obey a Poisson equation whose source is a divergence of cross counts on the other sublattice ">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "(V) through the signed cage defect (agent vsign): the defect of the signed cage law is the hole's charge c = #away − #toward, the same for all three axes (proved); the signed line counts obey a Poisson equation whose source is a divergence of cross counts on the other sublattice (proved), so the charges are neutral on every plane (the flux identity) and in every rectangle with empty corner lines; but no hole's orientation is forced by an unoriented hole, the sign field shortens no window, the signed LP stays positive, and (V) is not proved. What is new and quantitative: the gap-1 line-sign law on x-lines (or (R⁺) at x-separation 5) cuts the x-reach of Theorem U from 2L − 2 to 2⌈L/3⌉ + 1 (solver, L = 4 … 10), while the transverse torus stays fully needed; integrality of the hole charges alone closes the signed LP at L = 3",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-27-opus-vsign.html",
+ "datePublished": "2026-09-27",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Opus), agent vsign, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-27-opus-vsign.md">Markdown source</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">(V) through the signed cage defect (agent vsign): the defect of the signed cage law is the hole’s charge c = #away − #toward, the same for all three axes (proved); the signed line counts obey a Poisson equation whose source is a divergence of cross counts on the other sublattice (proved), so the charges are neutral on every plane (the flux identity) and in every rectangle with empty corner lines; but no hole’s orientation is forced by an unoriented hole, the sign field shortens no window, the signed LP stays positive, and (V) is not proved. What is new and quantitative: the gap-1 line-sign law on x-lines (or (R⁺) at x-separation 5) cuts the x-reach of Theorem U from 2L − 2 to 2⌈L/3⌉ + 1 (solver, L = 4 … 10), while the transverse torus stays fully needed; integrality of the hole charges alone closes the signed LP at L = 3</h1>
+
+<p class="author">Claude (Opus), agent vsign, for Lyndon Drake</p>
+<p class="date">2026-09-27</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#status-table" id="toc-status-table">0. Status table</a></li>
+<li><a href="#lemma-d-the-defect-is-the-charge-proved" id="toc-lemma-d-the-defect-is-the-charge-proved">1. Lemma D: the defect is the charge (proved)</a></li>
+<li><a href="#rod-cancellation-and-the-poisson-equation-proved" id="toc-rod-cancellation-and-the-poisson-equation-proved">2. Rod cancellation and the Poisson equation (proved)</a></li>
+<li><a href="#what-the-charges-look-like-where-they-exist-computed" id="toc-what-the-charges-look-like-where-they-exist-computed">3. What the charges look like where they exist (computed)</a></li>
+<li><a href="#negative-results-on-propagation-and-on-signs-solver-computed" id="toc-negative-results-on-propagation-and-on-signs-solver-computed">4. Negative results on propagation and on signs (solver, computed)</a></li>
+<li><a href="#where-integrality-has-to-enter-computed-l-4-left-open" id="toc-where-integrality-has-to-enter-computed-l-4-left-open">5. Where integrality has to enter (computed; L = 4 left open)</a></li>
+<li><a href="#the-staircase-analogue-proved-mod-w_r" id="toc-the-staircase-analogue-proved-mod-w_r">6. The staircase analogue (proved, mod W_r)</a></li>
+<li><a href="#the-line-laws-localise-the-x-direction-partly-solver" id="toc-the-line-laws-localise-the-x-direction-partly-solver">7. The line laws localise the x-direction partly (solver)</a></li>
+<li><a href="#what-failed-and-why" id="toc-what-failed-and-why">8. What failed, and why</a></li>
+<li><a href="#the-exact-residual" id="toc-the-exact-residual">9. The exact residual</a></li>
+<li><a href="#files-and-computations" id="toc-files-and-computations">10. Files and computations</a></li>
+</ul>
+</details></nav>
+<p>Status tags: <strong>proved</strong> (argument written here, or an exhaustive cage check, the project’s standard for Lemma R and Lemma sP), <strong>computed</strong> (exact, no SAT solver: enumeration, data checks, LP with HiGHS), <strong>solver</strong> (CaDiCaL through <code>h32_cap</code>, type-only model with the sign field where stated, on the (L,L,L) torus), <strong>conjecture</strong>. All computation on this Mac, one solver process at a time; nothing over ten minutes in the foreground (one MILP was stopped at its 540 s limit without a verdict, §7). Scripts <code>scratch_h/h300_lib.py</code> … <code>h309_lawreach.py</code> (new). No tracked file was edited and nothing was committed.</p>
+<p>Frame throughout (as uhand): the A-hole O = (2,0,0), rods v = (0,0,0), v′ = (4,0,0) of type x, lower bridgeheads β = (1,1,1), β′ = (1,−1,−1), upper bridgeheads γ = (3,1,−1), γ′ = (3,−1,1). The unoriented pattern yy/zz is β, β′ of type y and γ, γ′ of type z. (V): no B-site of the grid x = 1 (g+1) is of type x.</p>
+<h2 id="status-table">0. Status table</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>statement</th>
+<th>status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Lemma D.</strong> At every hole O and for every axis k, the defect of the signed cage law is D_k(O) = c(O) := #rods pointing away − #rods pointing toward O ∈ {−2, 0, 2}; the same for all three k</td>
+<td><strong>proved</strong> (cage check, <code>h301</code>; hand computation for yy/zz)</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Rod cancellation.</strong> The total charge on an S′-hole k-line is a divergence of the signed cross counts U_i, U_j (type i resp. j on the S′ k-lines)</td>
+<td><strong>proved</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Signed LC with sources.</strong> σ_{S′} □s^S_k + ∇·U^{S′} = 0 on every unit square, in every frozen state (sLC is the case of no charges)</td>
+<td><strong>proved</strong> from 1, 2; computed 0 violations</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Neutrality.</strong> The charges of each sublattice sum to 0 on every coordinate plane of holes (this is the flux identity M_n(p+2) = M_n(p−2)); in any rectangle of hole lines the charge is at most the sum of h over its four corner lines, hence 0 when the corner lines are k-free</td>
+<td><strong>proved</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td>An unoriented hole has an opposite charge in each of its three planes; the smallest neutral configuration is two antiparallel dipoles (4 holes); under (S≥1) the rod line of an unoriented hole carries an even number ≥ 2 of flips, all at adjacent pairs</td>
+<td><strong>proved</strong> (the last: mod (S≥1))</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Staircase analogue: by W_r the unoriented cage is uwall’s turn (case (i,i)) beside the y-free A-plane {z = 0}; (V) ⟸ the turn repeats along the y-line of holes through O ⟸ one pair of B y-lines (1, z₀) full and (3, z₀) empty; transfer step ⟺ K(2, 4n+4, 2) = K(0, 4n+2, 2)</td>
+<td><strong>proved</strong> (mod W_r, which is solver)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Geometry of U in curl-free states: every unoriented hole sits on a complete rod line; complete lines carry 0, 2 or 4 flips; charged hole lines of every axis occur</td>
+<td><strong>computed</strong> (30 witnesses L = 3, 4, 5 and 40 samples)</td>
+</tr>
+<tr>
+<td>8</td>
+<td>No propagation: under yy/zz every other hole of both sublattices can be oriented and can be unoriented</td>
+<td><strong>solver</strong> L = 3, 4 (full torus, with signs)</td>
+</tr>
+<tr>
+<td>9</td>
+<td>The sign field shortens no window (slab threshold 2L − 2 with and without it)</td>
+<td><strong>solver</strong> L = 4</td>
+</tr>
+<tr>
+<td>10</td>
+<td>The (R⁺)-consequences at the cage (four x-free B x-lines, two y-free and two z-free A lines), with or without the rods, force nothing</td>
+<td><strong>solver</strong> L = 4</td>
+</tr>
+<tr>
+<td>11</td>
+<td>No signed counting proof: the signed LP (types, moments, bond rule, Lemma D) is positive: 8.50, 19.18, 32.93 at L = 3, 4, 5 (unsigned 26/3, 178/9, 299/9)</td>
+<td><strong>computed</strong></td>
+</tr>
+<tr>
+<td>12</td>
+<td>Integrality of the hole charges alone (all, or the A-charges, or the B-charges) closes the signed LP at L = 3; charges of O’s plane or lines do not</td>
+<td><strong>computed</strong> L = 3; L = 4 no verdict in 540 s</td>
+</tr>
+<tr>
+<td>13</td>
+<td><strong>x-localisation by the line laws.</strong> With the gap-1 line-sign law on the x-lines inside the window (or (R⁺) at x-separation 5), Theorem U and (V) hold on the slab |dx| ≤ R*(L) = 5, 5, 5, 7, 7, 7, 9 for L = 4 … 10, i.e. 2⌈L/3⌉ + 1; without them 2L − 2</td>
+<td><strong>solver</strong></td>
+</tr>
+<tr>
+<td>14</td>
+<td>The transverse torus stays fully needed with every law on every axis (tubes and boxes SAT); only the x-lines’ laws matter, only on A, only the triples through O’s grid (L ≤ 6)</td>
+<td><strong>solver</strong> L = 5 (and 4, 6)</td>
+</tr>
+<tr>
+<td>15</td>
+<td>The law instances themselves: gap-1 (S) is x-global (slab 2L − 2) but transversally shorter (tube 6, 6, 8 at L = 4, 5, 6); (R⁺) at separation 5 needs the whole torus</td>
+<td><strong>solver</strong> L = 4, 5, 6</td>
+</tr>
+<tr>
+<td>16</td>
+<td>(V), Theorem U</td>
+<td><strong>not proved</strong>; exact residual §9</td>
+</tr>
+</tbody>
+</table>
+<h2 id="lemma-d-the-defect-is-the-charge-proved">1. Lemma D: the defect is the charge (proved)</h2>
+<p>For a hole O of sublattice S′ with rods r = O + 2σe_a (law C: two of them), the rod points away from O iff ε(r) = σ (orient report §2). Put</p>
+<p>c(O) = Σ_{rods r = O + 2σ e_a} σ ε(r) = #away − #toward ∈ {−2, 0, 2}, η(O) = c(O)/2.</p>
+<p>c = 0 iff O is oriented; η = +1 is a <em>source</em> (both rods away), η = −1 a <em>sink</em>. Write the signed cage defect, with Πs = σ_{S′} over the bridgeheads (σ_A = −1, σ_B = +1),</p>
+<p>D_k(O) = n_k(O + 2e_k) − n_k(O − 2e_k) − Σ_s s_k n_k(O + s), n_k = ε[τ = k].</p>
+<p><strong>Lemma D.</strong> <em>In every frozen state, D_x(O) = D_y(O) = D_z(O) = c(O) at every hole O.</em></p>
+<p><em>Proof (cage check, <code>h301_defect.py</code>, 0.2 s).</em> As for Lemma sP: of the 3¹⁰ type patterns of a cage, the 1200 satisfying (T2) on its four hexagons, each with the bond rule solved on its twelve bonds (consistent in all 1200, unique up to the global flip, which changes the signs of c and of every D_k together). Result, identical for A- and B-cages: the 1104 oriented patterns have D = (0,0,0); the 96 unoriented ones (rod axis a with bridgeheads the two other types, one pair per side) have D = (c, c, c) with c = ±2, in all 96. Since the restriction of a frozen state to a cage is one of these patterns with its sign solution, this is a proof. ∎</p>
+<p><em>Hand computation for yy/zz (the case Theorem U needs).</em> Bond rule d_{τ(a)}ε(a) = d_{τ(b)}ε(b): v → β along d₀ gives ε(β) = ε(v); v → β′ along d₁ = (1,−1,−1) gives ε(β′) = −ε(v); v′ → γ along d₂ = (−1,1,−1) gives −ε(v′) = −ε(γ); v′ → γ′ along d₃ = (−1,−1,1) gives −ε(v′) = ε(γ′). No bridgehead is of type x and no transverse methylene is a rod, so</p>
+<p>D_x = ε(v′) − ε(v), D_y = −(ε(β) − ε(β′)) = −2ε(v), D_z = −(−ε(γ) + ε(γ′)) = 2ε(v′)</p>
+<p>(β, β′ have s_y = +1, −1; γ, γ′ have s_z = −1, +1). Always c(O) = ε(v′) − ε(v) (v is on the − side). The cage is unoriented, ε(v′) = −ε(v), so all three defects equal 2ε(v′) = c(O). (At an oriented pattern D = 0 = c, by the cage check.) ∎</p>
+<p>So Lemma sP is the case c = 0 of Lemma D, and “fails by ±2 for all three axes” (rphand) is: <em>the defect is the charge, and it does not depend on the axis.</em></p>
+<h2 id="rod-cancellation-and-the-poisson-equation-proved">2. Rod cancellation and the Poisson equation (proved)</h2>
+<p>Coordinates: for an axis k let i &lt; j be the others; an S k-line is indexed by its transverse position (α, β) = (x_i, x_j). h^S_k(α,β) = # type-k vertices on it, s^S_k(α,β) = Σ n_k over it. For the other two types put U^{S′}<em>{i|k}(α,β) = Σ</em>{w on the S′ k-line (α,β)} n_i(w), and likewise U_{j|k}.</p>
+<p><strong>Proposition (rod cancellation).</strong> <em>For the S′-hole k-line ℓ at (α,β),</em></p>
+<p>Σ_{O∈ℓ} c(O) = U_{i|k}(α+2,β) − U_{i|k}(α−2,β) + U_{j|k}(α,β+2) − U_{j|k}(α,β−2).</p>
+<p><em>Proof.</em> Every S′-vertex w of type a is a rod of exactly the two holes w ∓ 2e_a, contributing +ε(w) to c(w − 2e_a) (w is on the + side there) and −ε(w) to c(w + 2e_a). A rod of axis k has both holes on one hole k-line: its contributions cancel on ℓ. A rod of axis i has its holes on the hole k-lines (α_w ± 2, β_w); it meets ℓ iff w lies on the S′ vertex k-line (α ± 2, β), and then contributes ±ε(w) = ±n_i(w), the sign + for the line α + 2. Each type-i vertex of that line meets ℓ exactly once. The same for j. ∎</p>
+<p><strong>Theorem (signed LC with sources).</strong> <em>In every frozen state, for every S, k and every S′-hole k-line (α,β),</em></p>
+<p>σ_{S′} [s(α+1,β+1) + s(α−1,β−1) − s(α+1,β−1) − s(α−1,β+1)] = −Σ_{O∈ℓ} c(O) = −(∇·U^{S′}_{⊥k})(α,β),</p>
+<p><em>with s = s^S_k.</em></p>
+<p><em>Proof.</em> Sum Lemma D over the holes of ℓ: the methylene terms telescope round the k-circle (sLC’s proof), leaving −σ_{S′} □s = Σ D_k = Σ c. Then the Proposition. ∎</p>
+<p>Theorem sLC (rphand) is the case in which every hole is oriented. The identity itself holds everywhere, without oddness: it couples the signed k-counts of S (a mixed second difference) to the signed transverse counts of S′ on the same k-lines (a divergence). <strong>Computed</strong> (<code>h302_witness.py analyse</code>): Lemma D at 35 712 holes, the Poisson form at 26 592 hole lines and the divergence form at the same lines, 0 violations, on 30 curl-free witnesses with an unoriented cage (L = 3, 4, 5) and 40 unconstrained samples at L = 4 (35 odd, 5 curl-free).</p>
+<p><strong>Corollaries (proved).</strong></p>
+<ol type="1">
+<li><em>Plane neutrality.</em> Summing the Poisson identity over a full row of hole lines telescopes to 0: the charges of each sublattice sum to zero on every coordinate plane of holes, for all three normals. By rod cancellation the charge of the S′-hole plane {x_n = p} is M^{S′}_n(p+2) − M^{S′}_n(p−2) (rods of axis ≠ n cancel inside the plane), so plane neutrality <em>is</em> the flux identity; for the planes containing the rod axis x it uses the x-circle, for the plane normal to x it uses the transverse circles.</li>
+<li><em>Rectangle bound.</em> For a rectangle R of S′-hole k-lines with corner S k-lines a′ &lt; a″, b′ &lt; b″ (one step outside R), |Σ_{O over R} c(O)| ≤ h(a′,b′) + h(a″,b″) + h(a′,b″) + h(a″,b′). In particular a rectangle whose four corner lines are k-free carries zero net charge.</li>
+<li><em>Partners.</em> An unoriented hole O has a hole of opposite charge in each of its three planes. The smallest configuration neutral on every plane has four holes, and it is two antiparallel dipoles on parallel lines: +(0,0,0), −(0,0,a), −(b,c,0), +(b,c,a) (charges ±1 with zero plane sums force an even number; two holes would coincide; the four-hole case is forced into this shape by the plane counts).</li>
+<li><em>Dipoles on the rod line (mod (S≥1)).</em> If (S≥1) holds on the S′ a-line through the rods of O, then going round the type-a vertices of that line the sign changes an even number of times and never across a gap, so the hole line carries an even number ≥ 2 of unoriented a-holes with alternating charges, each between two adjacent type-a vertices.</li>
+</ol>
+<h2 id="what-the-charges-look-like-where-they-exist-computed">3. What the charges look like where they exist (computed)</h2>
+<p>Unoriented holes exist only in curl-free states (Lemma O, solver), so the geometry of U can only be read there. <code>h302_witness.py</code> on states of the type-only model with the sign field (genuine ice states), with yy/zz at O (12 states at L = 3, 10 at L = 4, 8 at L = 5) and without hypothesis (40 at L = 4, of which 35 odd with U = ∅ and 5 curl-free):</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>quantity</th>
+<th>L = 3 (yy/zz)</th>
+<th>L = 4 (yy/zz)</th>
+<th>L = 5 (yy/zz)</th>
+<th>L = 4 (free)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>|U| per state</td>
+<td>36–96</td>
+<td>64–192</td>
+<td>160–420</td>
+<td>80–192 (curl-free), 0 (odd)</td>
+</tr>
+<tr>
+<td>unoriented holes on an incomplete rod line</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>complete lines with 0 / 2 / 4 flips (x on A)</td>
+<td>0 / 216 / 0</td>
+<td>64 / 192 / 48</td>
+<td>0 / 370 / 70</td>
+<td>—</td>
+</tr>
+<tr>
+<td>charged A-hole x-lines</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>72</td>
+</tr>
+<tr>
+<td>charged A-hole y- / z-lines</td>
+<td>208 / 176</td>
+<td>140 / 196</td>
+<td>228 / 256</td>
+<td>12 / 24</td>
+</tr>
+</tbody>
+</table>
+<p>Reading. With yy/zz the unoriented A-holes all have rod axis x and sit in dipoles on complete A x-lines; the A-hole x-lines are all neutral (B is x-free, so s^B_x ≡ 0), and the charges show up on the <em>transverse</em> hole lines, where the Poisson identity turns them into z- or y-derivatives of the sign profile of an adjacent complete B-plane (for k = y and the hole plane x = 2: s^B_y(1, z−1) − s^B_y(1, z+1) = 2N_y(2, z), since the plane x = 3 is y-free and x = 1 is full). They fill neither lines nor planes: a sheet at L = 3 is 12 of the 18 A-holes of four of the six hole planes normal to x.</p>
+<h2 id="negative-results-on-propagation-and-on-signs-solver-computed">4. Negative results on propagation and on signs (solver, computed)</h2>
+<p><strong>No hole is forced by an unoriented hole (<code>h303_propagate.py</code>).</strong> Full torus, type-only model with the sign field, yy/zz at O; for every hole H of both sublattices, “H oriented” and “H unoriented” (encoded on its six methylenes) asked separately.</p>
+<table>
+<thead>
+<tr>
+<th>L</th>
+<th>holes tested</th>
+<th>forced unoriented</th>
+<th>forced oriented</th>
+<th>free</th>
+<th>wall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>216</td>
+<td>O only</td>
+<td>0</td>
+<td>215</td>
+<td>1.2 s</td>
+</tr>
+<tr>
+<td>4</td>
+<td>512</td>
+<td>O only</td>
+<td>0</td>
+<td>511</td>
+<td>5.4 s</td>
+</tr>
+</tbody>
+</table>
+<p>So neutrality forces partners but no particular partner: the defect does not propagate to any single hole, in any direction, on either sublattice. (ucore’s “the next cage’s pattern is free” is the case H = O + 4e_x.) Task 3 of the brief is answered negatively at the level of single holes.</p>
+<p><strong>Signs shorten no window (<code>h304_slabsign.py</code>, L = 4).</strong> x-slab |dx| ≤ R, full transverse torus, (T2) and optionally the bond rule on the window: (V) and “some hexagon odd” flip from SAT to UNSAT at R = 6 = 2L − 2 in both models.</p>
+<p><strong>(R⁺)’s consequences at the cage force nothing (<code>h305_hyp.py</code>, L = 4).</strong> (R⁺) at the antiparallel rods makes the four B x-lines (±1, ±1) x-free; at β, β′ (type y, opposite signs) the A y-lines (x,z) = (0,0), (2,0) y-free; at γ, γ′ the A z-lines (x,y) = (2,0), (4,0) z-free. Each of these, together or with the rods, leaves “B has type x”, (V)’s negation and “some hexagon odd” all SAT; the four literals of U′ make all three UNSAT (0.5 s, 0.01 s, 0.9 s).</p>
+<p><strong>No signed counting proof (<code>h306_signedlp.py</code>, computed).</strong> Variables t(v,k) ≥ 0 and p, m ≥ 0 with p + m = t (n = p − m); one-hot, (T2); the bond rule, which is <em>linear in n</em> (Σ_k d_k n_k(a) = Σ_k d_k n_k(b)); Lemma D as E_x = E_y = E_z at every hole; yy/zz with n_x(v) = −1, n_x(v′) = +1. Maximise the type-x mass of B-grid g+1:</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>L</th>
+<th>types only (uhand)</th>
+<th>+ bond rule</th>
+<th>+ Lemma D</th>
+<th>+ charges e = η + 1 ∈ [0, 2]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>26/3 ≈ 8.67</td>
+<td>8.50</td>
+<td>8.50</td>
+<td>8.50</td>
+</tr>
+<tr>
+<td>4</td>
+<td>178/9 ≈ 19.78</td>
+<td>19.18</td>
+<td>19.18</td>
+<td>—</td>
+</tr>
+<tr>
+<td>5</td>
+<td>299/9 ≈ 33.22</td>
+<td>—</td>
+<td>—</td>
+<td>32.93</td>
+</tr>
+</tbody>
+</table>
+<p>The signed laws remove almost nothing; so the Poisson identity, plane neutrality and the rectangle bound, all rational consequences of these rows and of t ≥ 0, cannot prove (V) by any weighting. (Imposing sP at every hole except those of O’s x-hole line makes the LP infeasible, as neutrality predicts; that is not a proof, since other holes may be unoriented.)</p>
+<h2 id="where-integrality-has-to-enter-computed-l-4-left-open">5. Where integrality has to enter (computed; L = 4 left open)</h2>
+<p>With the charges as variables and <strong>integral</strong> (η ∈ {−1, 0, 1}), everything else continuous (<code>h306 … TSDE[e]</code>):</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>integral set (L = 3)</th>
+<th>optimum</th>
+<th>time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>all hole charges (216)</td>
+<td>0</td>
+<td>61 s</td>
+</tr>
+<tr>
+<td>A-hole charges (108)</td>
+<td>0</td>
+<td>114 s</td>
+</tr>
+<tr>
+<td>B-hole charges (108)</td>
+<td>0</td>
+<td>82 s</td>
+</tr>
+<tr>
+<td>A-hole charges of O’s x-plane (18)</td>
+<td>7.67</td>
+<td>9 s</td>
+</tr>
+<tr>
+<td>A-hole charges on O’s three hole lines (7)</td>
+<td>8.25</td>
+<td>3 s</td>
+</tr>
+<tr>
+<td>t_x on B-grids g±1 / on the A-grids of v, v′ (signed LP)</td>
+<td>0 / 0</td>
+<td>32 s / 33 s</td>
+</tr>
+</tbody>
+</table>
+<p>So at L = 3, “(V) = signed linear laws + non-negativity + integrality of one sublattice’s charges”: a residual of uhand’s shape with the integral family being the <em>hole charges</em> rather than a type family. <strong>Caveat:</strong> uhand found L = 3-only closures (the B-grids g±1 family closes at L = 3 and not at L = 4), and the L = 4 run with all charges integral stopped at its 540 s limit without an incumbent; the thin type family at L = 4 likewise hit its 300 s limit. Neither is a verdict. The L = 4 charge MILP is the one computation of this report that was reduced and left out (it would need more than ten minutes).</p>
+<h2 id="the-staircase-analogue-proved-mod-w_r">6. The staircase analogue (proved, mod W_r)</h2>
+<p>rphand’s W_r (solver, type-only, no oddness): an x-rod of an A-hole with its two cage bridgeheads on that side of type z makes the A-plane through the hole with normal y z-free. At the unoriented cage its mirror applies to v with β, β′: <strong>the A-plane P = {z = 0} is y-free</strong>, and O lies in it. In uwall’s frame (i, j, k) = (x, z, y), P is a k-free plane with normal j, and the bridgehead pattern of O, (K b₁, K b₂, K b₃, K b₄) = (K γ′, K β, K γ, K β′) = (0, 1, 0, 1), is the turn of the mirror orientation, with both i-methylenes rods: uwall’s case (i,i). So (V) is, verbatim, “a turn of case (i,i) at a free plane forces curl-free”, and uwall’s apparatus applies:</p>
+<ul>
+<li><strong>Staircase lemma (uwall T4, with LC for (B, y)).</strong> h^B_y(x, z) = F(x) + G(z). If for one z₀ the B y-line (1, z₀) is full of type y and the B y-line (3, z₀) has none, then F(1) − F(3) = L, so the B-plane {x = 1} is entirely of type y — which is (V) — and {x = 3} is y-free. The natural candidates are z₀ = 1 (the lines of β and γ′) and z₀ = −1 (β′, γ).</li>
+<li><strong>Transfer along the y-line of holes H_n = O + 4n e_y.</strong> Pʸ at the B-hole between β(n) and β(n+1) = β(n) + 4e_y reads K β(n+1) − K β(n) = K(2, 4n+4, 2) − K(2, 4n+2, 0) + K(0, 4n+4, 0) − K(0, 4n+2, 2), K = [type y]. The second and third terms lie on the A y-lines (2, 0) and (0, 0) of P, which are y-free, so <strong>the turn propagates from H_n to H_{n+1} iff K(2, 4n+4, 2) = K(0, 4n+2, 2)</strong>: type y constant along the (1,1,0)-diagonal of the A-plane z = 2 — exactly uwall’s transfer condition. With signs nothing is gained: (R⁺) puts every type-y vertex of the A y-lines (0, 2), (2, 2) and of the B y-line (1, 1) on one sign, and then the signed transfer (Lemma D at the same B-holes) says only that those B-holes are oriented.</li>
+</ul>
+<p>So task 4 has a precise answer: the repetition to look for is the turn along the y-line of holes through O (or the z-line, with the roles of β and γ exchanged), and its transfer step is uwall’s; it is as global as (V) (the solver makes every B-site of the grid g+1 flip together).</p>
+<h2 id="the-line-laws-localise-the-x-direction-partly-solver">7. The line laws localise the x-direction partly (solver)</h2>
+<p><code>h308_lawslab.py</code>: full-torus variables; (T2) and the bond rule only on the window; a line law imposed as an axiom (it holds in every frozen state, so a window lemma under it is a valid reduction U ⇐ law + window). Queries: (V)’s negation and “some hexagon of the window odd”, with a SAT control.</p>
+<p><strong>Threshold of the symmetric x-slab |dx| ≤ R (full transverse torus).</strong></p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>L</th>
+<th>no law</th>
+<th>(S≥1) gap 1, x-lines, triples inside the slab</th>
+<th>(R⁺) x-lines</th>
+<th>all laws, all axes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td>6</td>
+<td><strong>5</strong></td>
+<td>5 (sep ≤ 5 suffices)</td>
+<td>5</td>
+</tr>
+<tr>
+<td>5</td>
+<td>8</td>
+<td><strong>5</strong></td>
+<td>5 (sep ≤ 5; sep ≤ 3 does not)</td>
+<td>5</td>
+</tr>
+<tr>
+<td>6</td>
+<td>10 (2L − 2)</td>
+<td><strong>5</strong></td>
+<td>5 (sep ≤ 5)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>7</td>
+<td>12</td>
+<td><strong>7</strong></td>
+<td>7 (both laws on x-lines)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>8</td>
+<td>(14)</td>
+<td><strong>7</strong></td>
+<td>—</td>
+<td>&gt; 6</td>
+</tr>
+<tr>
+<td>9</td>
+<td>(16)</td>
+<td><strong>7</strong></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>10</td>
+<td>(18)</td>
+<td><strong>9</strong></td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>(Values in brackets are 2L − 2, checked here at L = 4, 5, 7 and by h101/ucore at L = 4, 5.) The first UNSAT R fits **R*(L) = 2⌈L/3⌉ + 1** at every L = 4 … 10; the “odd” and (V) queries flip together in every row. Details:</p>
+<ul>
+<li><em>Which law.</em> Either law on the x-lines alone gives the whole gain; on the y- or z-lines alone the threshold at L = 5 is 7 (from 8). (S≥1) at gap 1 suffices (gap 2 adds nothing), on <strong>A</strong> x-lines only (B x-lines alone: SAT), and at L = 4, 5, 6 only the triples whose middle vertex lies on O’s own A-grid dx = 0 (at L = 7 that restriction is no longer enough). (R⁺) at x-separation ≤ 5 suffices; ≤ 3, which is Lemma R and already implied by the cages in the slab, does not.</li>
+<li><em>Asymmetric windows (L = 5).</em> [−5, 4] and [−4, 5] (10 grids) suffice with the gap-1 law; [−4, 4], [−3, 6], [−6, 3], [−7, 2], [−2, 7], [−2, 8] do not.</li>
+<li><em>The transverse torus stays global.</em> With the x-law on every x-line: at L = 5, restricting the law to x-lines within transverse distance 8 of O (of 10) leaves (V)’s negation SAT, distance 9 makes it UNSAT; every box |dx| ≤ 5 or 7, |dy|, |dz| ≤ 6, 8, 9 is SAT; with all laws on all three axes every tube |dy|, |dz| ≤ 4 … 9 (full x-circle) is SAT.</li>
+</ul>
+<p>So the line laws buy a factor of about three in the x-reach and nothing transversally. <strong>Consequence (solver-level reduction):</strong> Theorem U ⇐ (S≥1) at gap 1 on the x-lines + [the slab lemma: (V) on |dx| ≤ 2⌈L/3⌉ + 1]; and since H needs (S≥1) anyway, H ⇐ K_u + (R⁺) + (S≥1) + slab lemma. The slab lemma is still linear in L and transversally global, so this is a sharpening of the residual, not a localisation.</p>
+<p><strong>How global are the law instances themselves (<code>h309_lawreach.py</code>).</strong> Negation of gap-1 (S) on an A x-line (a, c = a + 8e_x of type x, b = a + 4e_x not, ε(a) ≠ ε(c)), and of (R⁺) at separation 5 (a ∈ A, w = a + (5,1,1) ∈ B, both type x, opposite signs):</p>
+<table>
+<thead>
+<tr>
+<th>L</th>
+<th>gap-1 (S): slab / tube threshold</th>
+<th>(R⁺) sep 5: slab / tube</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td>6 / 6 (of 8)</td>
+<td>8 / 8 (whole torus)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>8 / 6 (of 10)</td>
+<td>10 / 10</td>
+</tr>
+<tr>
+<td>6</td>
+<td>10 / 8 (of 12)</td>
+<td>12 / 12</td>
+</tr>
+</tbody>
+</table>
+<p>Gap-1 (S) is x-global (slab 2L − 2) but needs less than the whole transverse torus; (R⁺) at separation 5 needs everything. Oddness shortens neither. So the decomposition of Theorem U by (S) at gap 1 trades an x-global, partly transversally local statement (the law) against a transversally global statement with a third of the x-reach (the slab lemma).</p>
+<h2 id="what-failed-and-why">8. What failed, and why</h2>
+<ul>
+<li><strong>Propagation of unorientedness</strong> (brief item 3). No single hole’s orientation is forced (§4). The only propagation is neutrality — every plane through O carries a partner — which is a counting statement and so (§4, LP) cannot carry the proof.</li>
+<li><strong>A signed counting proof.</strong> The Poisson identity, plane neutrality, the rectangle bound and Lemma D are all rows of the signed LP, which stays positive at L = 3, 4, 5. Signs make the bond rule linear, but the relation between n and t (|n| ≤ t, n ≡ t mod 2) is the nonlinear part, and that is where the proof would have to live.</li>
+<li><strong>A signed window.</strong> The sign field changes no window threshold (§4) — the same finding as uwall’s for the corner case.</li>
+<li><strong>A sign-forced plane.</strong> A first reading of the full-torus backbone with signs suggested the A-plane {z = 0} is forced to be of type x; it is not — the forced literals are exactly W_r’s two planes (P = {z = 0} y-free, {y = 0} z-free), B x-free, the grids g±1 monochromatic and the x-line of v (<code>h308 EXTRAQ</code>: “some A-vertex of {z = 0} is type z” is SAT on the full torus at L = 4). Recorded so that it is not rediscovered.</li>
+<li><strong>Using (S), (R⁺) to close U.</strong> They cut the x-reach by a factor of three (§7) but leave a slab lemma whose reach still grows with L and which needs the whole transverse torus; imposing every law on every axis does not make any box or tube suffice.</li>
+</ul>
+<h2 id="the-exact-residual">9. The exact residual</h2>
+<p>The proved identities make the obstruction precise. In every frozen state:</p>
+<ul>
+<li>the charges c(O) of the unoriented holes are the sources of the signed line counts (§2), neutral on every plane (the flux identity) and in every rectangle with k-free corner lines;</li>
+<li>none of this, weighted in any way, excludes an unoriented hole (§4 LP), and no single further hole is forced (§4).</li>
+</ul>
+<p>Two residual forms, each smaller than (V) in one respect:</p>
+<blockquote>
+<p><strong>(Vq) — integrality of charges (computed at L = 3 only).</strong> One-hot, (T2), the bond rule in the moment variables, Lemma D, t ≥ 0, and η ∈ {−1, 0, 1} on the holes of one sublattice ⇒ the B-grid g+1 carries no type x. The L = 3 closure may be a small-cell effect; L = 4 needs a run of more than ten minutes.</p>
+</blockquote>
+<blockquote>
+<p><strong>(V_slab) — the slab lemma (solver, L = 4 … 10).</strong> yy/zz at O; (T2) and the bond rule on the slab |dx| ≤ 2⌈L/3⌉ + 1 with the full transverse torus; gap-1 line-sign law on the A x-lines inside the slab ⇒ no type x on B-grid g+1, and no odd hexagon in the slab.</p>
+</blockquote>
+<p>A hand proof of (V_slab) would, with (S≥1) (needed by H anyway), give Theorem U. Its x-reach is linear in L, so it still needs an invariant carried along x — now over a third of the circle — and it needs the whole transverse torus, as sheetcore’s sheet theorem does: the natural next object is a separable (F(y) + G(z)) function on the transverse lattice of the slab, of the kind LC and sLC supply, whose integrality forces the plane x = 1 to be of type y. The staircase analogue (§6) names the line pair (the B y-lines through β and γ′) whose difference would have to reach L.</p>
+<h2 id="files-and-computations">10. Files and computations</h2>
+<p>Scripts in <code>experiments/08_frozen_structure/scratch_h/</code> (run with the brief’s environment line):</p>
+<ul>
+<li><code>h300_lib.py</code> — hole records (rods, charge, defect D), line counts h, s, samplers.</li>
+<li><code>h301_defect.py</code> — the cage check of Lemma D.</li>
+<li><code>h302_witness.py sample L n seed cap [yyzz|zzyy|none|odd]</code> (env NRAND = number of random diversifying literals, default 3); <code>analyse FILE [k]</code> — Lemma D, Poisson, divergence form, plane neutrality, U geometry. Samples in <code>&lt;repo&gt;/.tmp/vsign_w_*.json</code>.</li>
+<li><code>h303_propagate.py L RH W cap [pattern]</code> — orientation backbone of every hole.</li>
+<li><code>h304_slabsign.py L cap slab|tube R,…</code> — windows with and without the sign field.</li>
+<li><code>h305_hyp.py L cap [S] hyp…</code> — (R⁺)-derived hypotheses.</li>
+<li><code>h306_signedlp.py L variant tl [integrality sets]</code> — the signed LP/MILP (variants T, TS, TSD, TSDE, TSDEe, TSDo; sets Bg13, Ag04, xline, eA, eB, eAxplane, eAlines; env FEAS for the feasibility form).</li>
+<li><code>h307_nearmiss.py L R cap</code> — near-miss slab state with signs, charges listed.</li>
+<li><code>h308_lawslab.py L cap slab|tube|box|aslab R,… none|R|S|RS</code> — windows under the line laws (env LAWAX, LAWNEAR, LAWGAP, LAWSEP, LAWINSIDE, LAWSUB, LAWMID, BOXRX; BACKBONE, EXTRAQ, DUMP for backbones, plane queries, near-miss dumps).</li>
+<li><code>h309_lawreach.py L cap S1|R5 slab|tube R,…</code> — reach of the two law instances.</li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>command</th>
+<th>what</th>
+<th>verdict</th>
+<th>wall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h301_defect.py</code></td>
+<td>cage check</td>
+<td>1104 oriented D = 0; 96 unoriented D = (c,c,c)</td>
+<td>0.2 s</td>
+</tr>
+<tr>
+<td><code>h302 sample 3 40 1 120 yyzz</code>; <code>4 40 2 200 yyzz</code>; <code>5 30 4 300 yyzz</code>; <code>4 40 3 200 none</code></td>
+<td>witnesses</td>
+<td>12, 10, 8, 40 states</td>
+<td>0.5–1.3 s each</td>
+</tr>
+<tr>
+<td><code>h302 analyse</code> (four files)</td>
+<td>identities, geometry</td>
+<td>0 violations; §3 table</td>
+<td>&lt; 1 min each</td>
+</tr>
+<tr>
+<td><code>h303 3 6 0 300</code>, <code>h303 4 8 0 300</code></td>
+<td>orientation backbone</td>
+<td>only O forced</td>
+<td>1.2 s, 5.4 s</td>
+</tr>
+<tr>
+<td><code>h304 4 120 slab 3,…,7</code></td>
+<td>signs and windows</td>
+<td>6 with and without signs</td>
+<td>7 s</td>
+</tr>
+<tr>
+<td><code>h305 4 300 …</code></td>
+<td>(R⁺)-hypotheses</td>
+<td>all SAT except rods + yz</td>
+<td>2 s</td>
+</tr>
+<tr>
+<td><code>h306 3 T/TS/TSD/TSDo</code>; <code>4 TS/TSD</code>; <code>5 TSDE</code></td>
+<td>signed LP</td>
+<td>§4 table</td>
+<td>0.5 s; 9 s; 176 s</td>
+</tr>
+<tr>
+<td><code>h306 3 TSDE[e] …</code> (7 runs)</td>
+<td>charge integrality</td>
+<td>§5 table</td>
+<td>3–114 s</td>
+</tr>
+<tr>
+<td><code>h306 3 TSD 120 Bg13/Ag04/xline</code></td>
+<td>thin type integrality</td>
+<td>0 / 0 / 7.36</td>
+<td>4–33 s</td>
+</tr>
+<tr>
+<td><code>h306 4 TSD 300 Bg13</code></td>
+<td>idem, L = 4</td>
+<td>time limit, no verdict</td>
+<td>300 s</td>
+</tr>
+<tr>
+<td><code>h306 4 TSDEe 540</code></td>
+<td>charges integral, L = 4</td>
+<td>time limit, no incumbent</td>
+<td>540 s</td>
+</tr>
+<tr>
+<td><code>FEAS=0.5 h306 3 TSDEe 200</code></td>
+<td>feasibility form</td>
+<td>time limit</td>
+<td>200 s</td>
+</tr>
+<tr>
+<td><code>h307 4 5 120</code></td>
+<td>near-miss</td>
+<td>O’s y-plane charge unbalanced inside the slab</td>
+<td>0.2 s</td>
+</tr>
+<tr>
+<td><code>h308</code> slab scans, L = 4 … 10</td>
+<td>§7 tables</td>
+<td>R* = 5, 5, 5, 7, 7, 7, 9</td>
+<td>0.1 s (L = 4) … 290 s (L = 10, R = 8, 9)</td>
+</tr>
+<tr>
+<td><code>h308</code> restrictions (axes, near, gap, sep, inside, sub, mid, box, tube, aslab)</td>
+<td>§7 details</td>
+<td>as stated</td>
+<td>&lt; 6 s each</td>
+</tr>
+<tr>
+<td><code>h308</code> backbone / EXTRAQ</td>
+<td>forced literals with signs</td>
+<td>W_r planes, B x-free, g±1 mono</td>
+<td>&lt; 1 s</td>
+</tr>
+<tr>
+<td><code>h309</code> S1, R5 at L = 4, 5, 6</td>
+<td>law reach</td>
+<td>§7 last table</td>
+<td>&lt; 4 s each</td>
+</tr>
+</tbody>
+</table>
+<p>Longest single foreground runs: <code>h308 10 500 slab 8,9 S</code> (4 min 54 s), <code>h306 4 TSDEe 540</code> (9 min, stopped at its limit), <code>h306 5 TSDE</code> (3 min). Nothing ran in the background.</p>
+</main>
+</body>
+</html>

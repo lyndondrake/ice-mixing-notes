@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flux sectors of pyrochlore ice: log-concave counts, an octahedral winding support, and a certified failure of real-rootedness</title>
+<meta name="description" content="flux-sector counts are log-concave, the support is the even lattice in an octahedron, the marginals are not real-rooted at high degree">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "ScholarlyArticle",
+ "@id": "https://lyndondrake.github.io/ice-mixing-notes/notes/sector-logconcavity.html",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/notes/sector-logconcavity.html",
+ "headline": "Flux sectors of pyrochlore ice: log-concave counts, an octahedral winding support, and a certified failure of ",
+ "name": "Flux sectors of pyrochlore ice: log-concave counts, an octahedral winding support, and a certified failure of real-rootedness",
+ "datePublished": "2026-09-06",
+ "version": "2026-09-06",
+ "author": [
+  {
+   "@type": "Person",
+   "name": "Lyndon Drake"
+  }
+ ],
+ "creditText": "Lyndon Drake, with Claude Code (Anthropic Claude 5 models)",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "inLanguage": "en-GB",
+ "encoding": [
+  {
+   "@type": "MediaObject",
+   "contentUrl": "https://lyndondrake.github.io/ice-mixing-notes/notes/sector-logconcavity.pdf",
+   "encodingFormat": "application/pdf"
+  }
+ ]
+}</script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div class="doc-links" style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0"><p class="small"><a href="sector-logconcavity.pdf">PDF</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/notes/sector-logconcavity.md">Markdown source</a></p><p class="small"><strong>Certification, as the notes index states it:</strong> exact counts by two enumerators; Isabelle/HOL (Sturm&#x27;s theorem) for the real-root verdicts</p><section class="panel small"><p>This note has no published claims manifest yet; its standing is as the note itself and the <a href="index.html">notes index</a> state it.</p></section></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Flux sectors of pyrochlore ice: log-concave counts, an octahedral winding support, and a certified failure of real-rootedness</h1>
+
+<p class="author">Lyndon Drake, with Claude Code (Anthropic Claude 5 models)</p>
+<p class="date">2026-09-06</p>
+</header>
+<section class="abstract"><h2>Abstract</h2>
+<p>The ice states of a periodic pyrochlore cell are graded by the flux vector <span class="math inline">\(\mathbf{W}\)</span> through the three coordinate cut planes, which every hexagon flip preserves, and <span class="math inline">\(N(\mathbf{W})\)</span> counts the states in one sector. Three facts are reported on six cells, from <span class="math inline">\((1,1,1)\)</span> with 16 spins to <span class="math inline">\((1,2,3)\)</span> with 96 spins and <span class="math inline">\(3.08 \times 10^{9}\)</span> ice states. The counts are log-concave with interval support along every lattice line in thirteen directions, and so are the 24 one-dimensional marginals, in exact integer arithmetic on the primitive vector of the support lattice. The support of <span class="math inline">\(N\)</span> is exactly <span class="math inline">\(2\mathbb{Z}^{3}\)</span> intersected with the octahedron <span class="math inline">\(a|W_x| + b|W_y| + c|W_z| \le 4abc\)</span>, the containment proved from the ice rule and the parity of the cut-plane crossing number, the realisation of every such point checked at all six cells. And the log-concavity is not inherited from real-rootedness, since only seven of the 24 marginals have all roots real and none beyond degree eight. The counts come from two independent exact enumerators whose whole histograms agree entry by entry wherever both run, and the counts of distinct real roots of all 24 marginals are certified in Isabelle/HOL by the Archive of Formal Proofs implementation of Sturm’s theorem, independently of the Python computation they agree with. For thirteen of the marginals, the seven that are real-rooted and six of the failures, the verdict itself is certified; for the other eleven the step from the count to the verdict rests on a squarefreeness check that Isabelle did not finish and Python supplies.</p>
+</section>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#the-model-and-the-flux-grading" id="toc-the-model-and-the-flux-grading">The model and the flux grading</a></li>
+<li><a href="#counting-a-sector-exactly" id="toc-counting-a-sector-exactly">Counting a sector exactly</a></li>
+<li><a href="#the-winding-support" id="toc-the-winding-support">The winding support</a></li>
+<li><a href="#log-concavity" id="toc-log-concavity">Log-concavity</a></li>
+<li><a href="#real-rootedness-and-why-it-would-have-mattered" id="toc-real-rootedness-and-why-it-would-have-mattered">Real-rootedness, and why it would have mattered</a></li>
+<li><a href="#the-isabellehol-certification" id="toc-the-isabellehol-certification">The Isabelle/HOL certification</a></li>
+<li><a href="#what-stands" id="toc-what-stands">What stands</a></li>
+<li><a href="#related-work" id="toc-related-work">Related work</a></li>
+<li><a href="#appendix-artefacts" id="toc-appendix-artefacts">Appendix: Artefacts</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+</ul>
+</details></nav>
+<h1 id="the-model-and-the-flux-grading">The model and the flux grading</h1>
+<p>Pyrochlore spin ice puts a spin on each bond of the diamond lattice, whose sites are the centres of the corner-sharing tetrahedra, and admits the configurations in which exactly two of the four arrows at every site point inwards <span class="citation" data-cites="bramwell-gingras-2001-spin-ice-state castelnovo-et-al-2008-magnetic-monopoles-spin-ice">(<a href="#ref-bramwell-gingras-2001-spin-ice-state" role="doc-biblioref">Bramwell and Gingras 2001</a>; <a href="#ref-castelnovo-et-al-2008-magnetic-monopoles-spin-ice" role="doc-biblioref">Castelnovo, Moessner, and Sondhi 2008</a>)</span>. An <span class="math inline">\((a,b,c)\)</span> block of conventional cubic cells with periodic boundaries holds <span class="math inline">\(8abc\)</span> sites and <span class="math inline">\(16abc\)</span> spins. Positions are integers in units of <span class="math inline">\(a/4\)</span>, so the box is <span class="math inline">\((4a,4b,4c)\)</span> and each of the four A-to-B nearest-neighbour displacements has all components <span class="math inline">\(\pm 1\)</span>.</p>
+<p>The smallest ice-preserving move reverses the six arrows around a hexagonal plaquette, and is available only when they already run head to tail, which makes the resulting chain the Rokhsar–Kivelson Hamiltonian of quantum spin ice at its RK point <span class="citation" data-cites="rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid">(<a href="#ref-rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas" role="doc-biblioref">Rokhsar and Kivelson 1988</a>; <a href="#ref-henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points" role="doc-biblioref">Henley 2004</a>; <a href="#ref-hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid" role="doc-biblioref">Hermele, Fisher, and Balents 2004</a>)</span>. What matters here is its conservation law. A hexagon bounding a face of the infinite lattice is contractible, so reversing it moves no net flux across any cut plane, and the flux vector</p>
+<p><span class="math display">\[\mathbf{W} = (W_x, W_y, W_z), \qquad
+  W_j \;=\; \frac{1}{4c_j} \sum_{b} \sigma_b \operatorname{sgn}(d_{bj}),\]</span></p>
+<p>is constant along every trajectory. Here <span class="math inline">\(\sigma_b = \pm 1\)</span> is the arrow variable of bond <span class="math inline">\(b\)</span>, <span class="math inline">\(d_{bj}\)</span> the <span class="math inline">\(j\)</span>th component of its A-to-B displacement, and <span class="math inline">\((c_x,c_y,c_z) = (a,b,c)\)</span>; the divisor turns a polarisation sum into a flux, since a bond spans a quarter of a cubic edge along each axis. A second routine, counting the signed arrows across the single plane <span class="math inline">\(x = 1/2\)</span>, agrees with that formula on sampled states at <span class="math inline">\((1,1,1)\)</span> and <span class="math inline">\((1,1,2)\)</span> (<code>tests/test_enumerate.py</code>, <code>test_winding_by_polarisation_matches_cut_plane</code>). The ice manifold is therefore graded, and the object of this note is the integer histogram <span class="math inline">\(N(\mathbf{W})\)</span>, which in the Coulomb phase is the distribution of the emergent gauge field’s flux <span class="citation" data-cites="henley-2010-coulomb-phase-frustrated-systems">(<a href="#ref-henley-2010-coulomb-phase-frustrated-systems" role="doc-biblioref">Henley 2010</a>)</span>.</p>
+<h1 id="counting-a-sector-exactly">Counting a sector exactly</h1>
+<p>Two enumerators produce <span class="math inline">\(N\)</span>, sharing no code path. The first is a frontier dynamic program over a bond schedule, whose key records the ice-rule occupancy of the sites still open at the current cut together with the running polarisation sums, with Python integers as values. Nothing is materialised, so cost follows the peak number of live keys rather than the number of states. The second packs a state into one 64-bit word, walks the search tree depth-first, and reads the flux off by two population counts per axis against precomputed masks. Where both run, the whole histogram is compared entry by entry rather than just the totals, and they agree everywhere; the exception is <span class="math inline">\((1,2,3)\)</span>, where 96 spins do not fit the packed word and the enumerator refuses rather than truncating.</p>
+<table>
+<caption>Cells, exact counts, and the two-method gate; all figures from <code>experiments/04_lorentzian_giant/results/results.json</code>.</caption>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th style="text-align: right;">spins</th>
+<th style="text-align: right;">ice states</th>
+<th style="text-align: right;"><span class="math inline">\(N(\mathbf{0})\)</span></th>
+<th style="text-align: right;">sectors</th>
+<th style="text-align: right;">DP peak keys</th>
+<th>agree</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\((1,1,1)\)</span></td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">72</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,1,2)\)</span></td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">3,618</td>
+<td style="text-align: right;">388</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">368</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,1,3)\)</span></td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">181,122</td>
+<td style="text-align: right;">15,024</td>
+<td style="text-align: right;">137</td>
+<td style="text-align: right;">904</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,1,4)\)</span></td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">9,765,378</td>
+<td style="text-align: right;">637,988</td>
+<td style="text-align: right;">229</td>
+<td style="text-align: right;">1,680</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,2,2)\)</span></td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">2,891,562</td>
+<td style="text-align: right;">221,628</td>
+<td style="text-align: right;">217</td>
+<td style="text-align: right;">42,160</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,2,3)\)</span></td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">3,076,306,362</td>
+<td style="text-align: right;">196,465,480</td>
+<td style="text-align: right;">453</td>
+<td style="text-align: right;">123,432</td>
+<td>n/a</td>
+</tr>
+</tbody>
+</table>
+<p>The cubic <span class="math inline">\((2,2,2)\)</span> cell, the smallest with genuinely cubic geometry, is out of reach, since a bounded probe reached 8,661,950 live keys at 4.216 GB by step 41 of 128, projecting a peak of <span class="math inline">\(7.1\times10^{8}\)</span> keys and 347 GB.</p>
+<h1 id="the-winding-support">The winding support</h1>
+<p><strong>Statement.</strong> For the <span class="math inline">\((a,b,c)\)</span> cell, <span class="math display">\[\operatorname{supp} N \;=\; 2\mathbb{Z}^{3} \;\cap\;
+  \{\, \mathbf{W} : a|W_x| + b|W_y| + c|W_z| \le 4abc \,\}.\]</span></p>
+<p>The containment <span class="math inline">\(\subseteq\)</span> is proved. For parity, the bonds crossing the plane <span class="math inline">\(x = 1/2\)</span> number <span class="math inline">\(4bc\)</span>, since <span class="math inline">\(16abc\)</span> bonds are shared equally among the <span class="math inline">\(4a\)</span> half-integer planes perpendicular to <span class="math inline">\(x\)</span>, the count recorded in <code>icemix.frozen.winding_support</code>. If <span class="math inline">\(P\)</span> of them carry their arrow in the positive sense and <span class="math inline">\(Q\)</span> in the negative then <span class="math inline">\(W_x = P - Q = 4bc - 2Q\)</span>, which is even, and likewise on the other axes.</p>
+<p>The octahedron comes from the ice rule one tetrahedron at a time. The four A-to-B displacements <span class="math inline">\((1,1,1)\)</span>, <span class="math inline">\((1,-1,-1)\)</span>, <span class="math inline">\((-1,1,-1)\)</span>, <span class="math inline">\((-1,-1,1)\)</span> sum to zero, so at an A site with two arrows out and two in the polarisation moment <span class="math inline">\(\sum_b \sigma_b \mathbf{d}_b\)</span> is twice the sum of the two outward displacements. Each of the six such pairs sums to <span class="math inline">\(\pm 2\)</span> along one coordinate axis, so every A site contributes exactly <span class="math inline">\(\pm 4\mathbf{e}_k\)</span> for a single <span class="math inline">\(k\)</span>. Every bond has exactly one A end, so summing over the <span class="math inline">\(4abc\)</span> A sites writes the polarisation vector <span class="math inline">\((4aW_x, 4bW_y, 4cW_z)\)</span> as a sum of <span class="math inline">\(4abc\)</span> vectors of <span class="math inline">\(\ell^1\)</span> norm 4, whence <span class="math inline">\(4a|W_x| + 4b|W_y| + 4c|W_z| \le
+16abc\)</span>. Setting two components to zero gives <span class="math inline">\(|W_x| \le 4bc\)</span>, <span class="math inline">\(|W_y| \le
+4ac\)</span> and <span class="math inline">\(|W_z| \le 4ab\)</span>; each of those is attained at all six cells, and the bound itself is pinned by <code>tests/test_enumerate.py</code>, <code>test_winding_range_is_bounded_by_the_cut_size</code>.</p>
+<p>The reverse containment is a check rather than a proof. At each of the six cells the support of the computed histogram equals the set above, which is what fixes the sector counts of Table 1 at 25, 69, 137, 229, 217 and 453 (<code>tests/test_frozen.py</code>, <code>test_winding_support_is_2z3_in_the_octahedron</code>). That every admissible lattice point is realised on every cell is a conjecture with six supporting cases. One consequence is needed below: the lattice of differences of the support is exactly <span class="math inline">\(2\mathbb{Z}^{3}\)</span>, of index 8 in <span class="math inline">\(\mathbb{Z}^{3}\)</span>, since parity puts it inside and each <span class="math inline">\(\pm 2\mathbf{e}_j\)</span> lies in the octahedron.</p>
+<h1 id="log-concavity">Log-concavity</h1>
+<p>A finite integer sequence <span class="math inline">\(n_0,\dots,n_m\)</span> read along consecutive points of a line is <em>interval-supported</em> when its nonzero entries are contiguous and <em>log-concave</em> when <span class="math inline">\(n_k^2 \ge n_{k-1}n_{k+1}\)</span> at every interior <span class="math inline">\(k\)</span>; the <em>discriminant</em> of the line is the exact integer <span class="math inline">\(\min_k (n_k^2 -
+n_{k-1}n_{k+1})\)</span> over interior <span class="math inline">\(k\)</span>.</p>
+<p>Because the support lies in <span class="math inline">\(2\mathbb{Z}^{3}\)</span>, the point <span class="math inline">\(\mathbf{W} \pm
+\mathbf{e}_j\)</span> is not a lattice point, so the literal inequality holds as <span class="math inline">\(0 \ge 0\)</span> everywhere and every axis line appears riddled with holes, which makes a pass and a fail read off it equally worthless. The test therefore has to be stated on the lattice itself, which is computed first by integer row reduction, each direction <span class="math inline">\(\mathbf{v}\)</span> going in on its primitive lattice vector, the least positive multiple <span class="math inline">\(t\mathbf{v}\)</span> that the lattice contains, and that is <span class="math inline">\(2\mathbf{v}\)</span> throughout. The thirteen directions are the three axes, the six face diagonals <span class="math inline">\(\mathbf{e}_j \pm \mathbf{e}_k\)</span> and the four body diagonals <span class="math inline">\(\mathbf{e}_x \pm \mathbf{e}_y \pm \mathbf{e}_z\)</span>, and every maximal line of the support is tested, not only those through the origin.</p>
+<p><strong>Result.</strong> At all six cells, in all thirteen directions, on every line, the sequence is interval-supported and log-concave, with the minimum discriminants of Table 2. The single qualification is that at <span class="math inline">\((1,1,1)\)</span> every body-diagonal line meets the support in at most two points, leaving no interior term, which is recorded as vacuous rather than as a pass.</p>
+<table>
+<caption>Minimum discriminants of the joint histogram over all lines in each class, and the symmetry reading. ‘Symmetry’ counts the signed axis permutations preserving the cell extents that <span class="math inline">\(N\)</span> obeys, over those the shape admits.</caption>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+</colgroup>
+<thead>
+<tr>
+<th>cell</th>
+<th>symmetry</th>
+<th><span class="math inline">\(\mathbf{W} \to -\mathbf{W}\)</span></th>
+<th style="text-align: right;">axis</th>
+<th style="text-align: right;">face diagonal</th>
+<th style="text-align: right;">body diagonal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\((1,1,1)\)</span></td>
+<td>48/48</td>
+<td>yes</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">no interior</td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,1,2)\)</span></td>
+<td>16/16</td>
+<td>yes</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">138</td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,1,3)\)</span></td>
+<td>16/16</td>
+<td>yes</td>
+<td style="text-align: right;">324</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">56,184</td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,1,4)\)</span></td>
+<td>16/16</td>
+<td>yes</td>
+<td style="text-align: right;">544</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">15,251,160</td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,2,2)\)</span></td>
+<td>16/16</td>
+<td>yes</td>
+<td style="text-align: right;">592</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">523,840</td>
+</tr>
+<tr>
+<td><span class="math inline">\((1,2,3)\)</span></td>
+<td>8/8</td>
+<td>yes</td>
+<td style="text-align: right;">1,272</td>
+<td style="text-align: right;">5,112</td>
+<td style="text-align: right;">2,790</td>
+</tr>
+</tbody>
+</table>
+<p>The symmetry column is measured rather than assumed and comes out complete; inversion holds because complementing every arrow maps the ice manifold to itself and negates the flux. Four marginals are taken at each cell, the three <span class="math inline">\(W_j\)</span> and the diagonal flux <span class="math inline">\(s = W_x+W_y+W_z\)</span>, and all 24 are log-concave with interval support on a support of step 2. The smallest cell shows how tight that can be: each <span class="math inline">\(W_j\)</span> marginal at <span class="math inline">\((1,1,1)\)</span> is <span class="math inline">\(1, 16, 56,
+16, 1\)</span> with discriminant 200, while the <span class="math inline">\(s\)</span> marginal is <span class="math inline">\(9, 24, 24, 24, 9\)</span>, flat across its interior and log-concave with equality. Two negative controls guard the reading, a planted diagonal violation and a planted internal zero, each shown to be caught. The scope is finite: six cells, up to 96 spins, and no theorem for general <span class="math inline">\((a,b,c)\)</span>. What it rules out is an artefact of the smallest cell, the property surviving a cell with over three billion states and 453 sectors.</p>
+<h1 id="real-rootedness-and-why-it-would-have-mattered">Real-rootedness, and why it would have mattered</h1>
+<p>The oldest reason for a log-concave combinatorial sequence is a real-rooted generating polynomial. If <span class="math inline">\(p(u) = \sum_k a_k u^k\)</span> has non-negative coefficients and only real roots, Newton’s inequalities give <span class="math inline">\(a_k^2 /
+\binom{n}{k}^2 \ge (a_{k-1}/\binom{n}{k-1})(a_{k+1}/\binom{n}{k+1})\)</span>, which is strictly stronger than log-concavity and also forbids internal zeros <span class="citation" data-cites="branden-2014-unimodality-log-concavity-real-rootedness">(<a href="#ref-branden-2014-unimodality-log-concavity-real-rootedness" role="doc-biblioref">Brändén 2014</a>)</span>. Had the marginals been real-rooted, the previous section would have been a corollary.</p>
+<p>Each step-2 marginal is read as the coefficients of a polynomial in <span class="math inline">\(u = t^2\)</span>, a change of variable that leaves log-concavity alone. The number of distinct real roots follows from Sturm’s theorem over the rationals, using the canonical sequence <span class="math inline">\(p\)</span>, <span class="math inline">\(p&#39;\)</span>, <span class="math inline">\(-\operatorname{rem}(p,p&#39;)\)</span> and so on evaluated at <span class="math inline">\(\pm\infty\)</span>; the number of distinct complex roots is <span class="math inline">\(\deg p - \deg \gcd(p,p&#39;)\)</span>; the polynomial is real-rooted exactly when the two agree. All arithmetic is in exact fractions.</p>
+<p><strong>Result.</strong> Of the 24 marginals, 7 are real-rooted and 17 are not. By degree, 6 of the 7 marginals of degree 4, 1 of the 6 of degree 8, and none of the 4 at degree 12, the 5 at degree 16 or the 2 at degree 24. The real-rooted seven are <span class="math inline">\(W_x\)</span>, <span class="math inline">\(W_y\)</span>, <span class="math inline">\(W_z\)</span> at <span class="math inline">\((1,1,1)\)</span>, and <span class="math inline">\(W_z\)</span> at <span class="math inline">\((1,1,2)\)</span>, <span class="math inline">\((1,1,3)\)</span>, <span class="math inline">\((1,1,4)\)</span> and <span class="math inline">\((1,2,3)\)</span>.</p>
+<p>The convenient summary ‘real-rooted only up to degree four’ has an exception in each direction, since the <span class="math inline">\(s\)</span> marginal at <span class="math inline">\((1,1,1)\)</span> has degree 4 and only 2 real roots while <span class="math inline">\(W_z\)</span> at <span class="math inline">\((1,2,3)\)</span> has degree 8 and 8 real roots. What holds without qualification is that no marginal of degree 12 or more is real-rooted. Newton’s inequalities are therefore not the route to Table 2, and whatever accounts for the log-concavity of these counts has to survive genuinely complex roots.</p>
+<h1 id="the-isabellehol-certification">The Isabelle/HOL certification</h1>
+<p>That verdict rests on a few dozen lines of hand-written exact arithmetic in the <code>real_root_counts</code> routine of <code>icemix/logconcave.py</code>, so all 24 cases were recomputed in Isabelle/HOL 2025-2 against the Archive of Formal Proofs entry <code>Sturm_Sequences</code> <span class="citation" data-cites="eberl-2014-sturms-theorem eberl-2015-univariate-real-polynomials-decision-procedure">(<a href="#ref-eberl-2014-sturms-theorem" role="doc-biblioref">Eberl 2014</a>, <a href="#ref-eberl-2015-univariate-real-polynomials-decision-procedure" role="doc-biblioref">2015</a>)</span>, an independent implementation of the same classical theorem. Sturm’s theorem gives the number of <em>distinct</em> real roots in an interval as the drop in sign changes of the canonical chain between the endpoints, and the AFP entry formalises it and exposes the proof method <code>sturm</code>. Each polynomial receives <code>degree_*</code> (<span class="math inline">\(\deg p = n\)</span>, by <code>eval</code>, all 24), <code>sturm_*</code> (<span class="math inline">\(\operatorname{card}\{x \in \mathbb{R} : p(x) =
+0\} = k\)</span>, by <code>sturm</code>, all 24 including the two of degree 24), <code>sqfree_*</code> (<span class="math inline">\(\gcd(p,p&#39;) = 1\)</span> over <span class="math inline">\(\mathbb{C}[x]\)</span>, by <code>eval</code>, 13 of 24) and a <code>verdict_*</code>.</p>
+<p>The verdicts take three forms, and the distinction is the substance of the formalisation. The 7 real-rooted cases assert <span class="math inline">\(\operatorname{card}\{x : p(x) = 0\} = \deg p\)</span>. Six of the 17 failures get something stronger than a count, namely some <span class="math inline">\(z \in \mathbb{C}\)</span> with <span class="math inline">\(p(z) = 0\)</span> and <span class="math inline">\(\operatorname{Im} z \ne 0\)</span>, from a general lemma proved once (<code>Squarefree_Nonreal.nonreal_root_exists</code>): a squarefree complex polynomial has exactly <span class="math inline">\(\deg p\)</span> distinct roots by the fundamental theorem of algebra, and the real roots inject into those with <span class="math inline">\(\operatorname{Im} z = 0\)</span>, so a deficit forces a root off the real axis. Without squarefreeness the deficit could be a repeated real root instead. The remaining 11, all of degree 12 or more, carry only <span class="math inline">\(\operatorname{card}\{x : p(x) = 0\} &lt; \deg p\)</span>, since deciding <span class="math inline">\(\gcd(p,p&#39;) = 1\)</span> by <code>eval</code> runs an executable subresultant-style gcd that proved squarefreeness for every degree-8 case in 5 to 11 seconds, including one with a coefficient of <span class="math inline">\(2{,}218{,}493{,}976\)</span>, and timed out beyond 240 seconds on every case of degree 12 or more, including one whose largest coefficient is 56,222. That wall is degree rather than coefficient size, and <code>sturm</code> itself met no such wall at any degree tested.</p>
+<p>All 24 Isabelle root counts agree with the Python ones, and the agreement means something because Isabelle proves each count itself while the Python value only states the goal, so a mismatch would appear as a failed build. Three things remain trusted: the coefficients, checked only by the two enumerators against each other; the <code>eval</code> steps, which reflect into the code generator and so rest on a wider base than a kernel proof; and the generator that transcribes coefficient lists into the theory text, a step visible in the theories and diffable against the results file. Rebuilding needs the AFP session heap once, then the session:</p>
+<pre><code>isabelle build -b -o threads=6 Sturm_Sequences
+isabelle build -d formal/isabelle -o threads=6 IceMixingSturm</code></pre>
+<p>The theories themselves are never edited by hand; <code>python3 formal/isabelle/gen_theory.py</code> regenerates them from the results file.</p>
+<p>The recorded run of the second command took 10 minutes 8 seconds elapsed and 21 minutes 3 seconds of CPU on 6 threads, exiting 0 with no error lines.</p>
+<h1 id="what-stands">What stands</h1>
+<p>Three things are not established here: any theorem for general <span class="math inline">\((a,b,c)\)</span>, or for a cubic cell beyond <span class="math inline">\((1,1,1)\)</span>; any proof that every admissible lattice point carries a state; and any explanation of the log-concavity beyond the elimination of its obvious candidate. A related question is settled elsewhere, in the negative. Log-concavity along lines is the sort of shadow a Lorentzian or negatively dependent structure would cast <span class="citation" data-cites="branden-huh-2020-lorentzian-polynomials anari-et-al-2024-log-concave-polynomials-high-dimensional-walks">(<a href="#ref-branden-huh-2020-lorentzian-polynomials" role="doc-biblioref">Brändén and Huh 2020</a>; <a href="#ref-anari-et-al-2024-log-concave-polynomials-high-dimensional-walks" role="doc-biblioref">Anari et al. 2024</a>)</span>, which makes it natural to ask whether the bond indicators of the uniform ice measure are negatively correlated in some diagonal sign gauge. They are not, and the obstruction is an unbalanced triangle on three bonds of the 16-spin cell, so no larger cell can repair it (<a href="../reports/2026-09-04-stage4abc.html"><code>docs/reports/2026-09-04-stage4abc.md</code></a>, §3).</p>
+<h1 id="related-work">Related work</h1>
+<p>Log-concavity and unimodality of combinatorial sequences have a long catalogue, surveyed by <span class="citation" data-cites="stanley-1989-log-concave-unimodal-sequences">Stanley (<a href="#ref-stanley-1989-log-concave-unimodal-sequences" role="doc-biblioref">1989</a>)</span>, updated by <span class="citation" data-cites="brenti-1994-log-concave-unimodal-sequences-update">Brenti (<a href="#ref-brenti-1994-log-concave-unimodal-sequences-update" role="doc-biblioref">1994</a>)</span>, and treated from unimodality through log-concavity to real-rootedness by <span class="citation" data-cites="branden-2014-unimodality-log-concavity-real-rootedness">Brändén (<a href="#ref-branden-2014-unimodality-log-concavity-real-rootedness" role="doc-biblioref">2014</a>)</span>, where Newton’s inequalities are the classical bridge from real roots to ultra-log-concavity. The strongest recent framework is that of Lorentzian polynomials <span class="citation" data-cites="branden-huh-2020-lorentzian-polynomials">(<a href="#ref-branden-huh-2020-lorentzian-polynomials" role="doc-biblioref">Brändén and Huh 2020</a>)</span>, whose coefficient arrays are log-concave along lines in a normalised sense and whose sampling consequences drive the matroid results of <span class="citation" data-cites="anari-et-al-2024-log-concave-polynomials-high-dimensional-walks">Anari et al. (<a href="#ref-anari-et-al-2024-log-concave-polynomials-high-dimensional-walks" role="doc-biblioref">2024</a>)</span>. The present histogram is a candidate object for that theory, and the facts here bear on it in opposite directions, the coefficients behaving as predicted while the pairwise negative dependence that usually accompanies such behaviour fails.</p>
+<p>Flux sectors are standard equipment in the statistical mechanics of constrained models. In the Coulomb phase the flux is the coarse-grained emergent field with a Gaussian distribution at large size <span class="citation" data-cites="henley-2010-coulomb-phase-frustrated-systems">(<a href="#ref-henley-2010-coulomb-phase-frustrated-systems" role="doc-biblioref">Henley 2010</a>)</span>, a picture made quantitative for spin ice by <span class="citation" data-cites="jaubert-et-al-2013-spin-ice-curie-law-crossover">Jaubert et al. (<a href="#ref-jaubert-et-al-2013-spin-ice-curie-law-crossover" role="doc-biblioref">2013</a>)</span>. The dimer analogue is the height function and its tilt, where counting becomes the surface tension of the variational principle of <span class="citation" data-cites="cohn-et-al-2001-variational-principle-domino-tilings">Cohn, Kenyon, and Propp (<a href="#ref-cohn-et-al-2001-variational-principle-domino-tilings" role="doc-biblioref">2001</a>)</span>, strictly convex on the interior of the Newton polygon by <span class="citation" data-cites="kenyon-et-al-2006-dimers-and-amoebae">Kenyon, Okounkov, and Sheffield (<a href="#ref-kenyon-et-al-2006-dimers-and-amoebae" role="doc-biblioref">2006</a>)</span>, with <span class="citation" data-cites="kenyon-2009-lectures-on-dimers">Kenyon (<a href="#ref-kenyon-2009-lectures-on-dimers" role="doc-biblioref">2009</a>)</span> the accessible account. What is reported here is the finite-cell, exact-integer shadow of the concavity in tilt those results establish asymptotically in two dimensions, with the octahedron playing the part of the Newton polygon.</p>
+<h1 id="appendix-artefacts">Appendix: Artefacts</h1>
+<p>Paths are relative to the repository root.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>path</th>
+<th>contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>icemix/lattice.py</code>, <code>icemix/enumerate.py</code></td>
+<td>the cell and the winding signs; <code>frontier_count</code>, <code>enumerate_ice_states</code>, <code>winding</code>, <code>winding_by_cut_plane</code></td>
+</tr>
+<tr>
+<td><code>icemix/logconcave.py</code></td>
+<td>support lattice, primitive vector, line and marginal reports, <code>real_root_counts</code></td>
+</tr>
+<tr>
+<td><code>icemix/frozen.py</code></td>
+<td><code>winding_support</code> and the octahedron argument</td>
+</tr>
+<tr>
+<td><code>experiments/04_lorentzian_giant/results/results.json</code></td>
+<td>every number in Tables 1 and 2, under <code>items.4a</code></td>
+</tr>
+<tr>
+<td><code>formal/isabelle/</code></td>
+<td><code>ROOT</code>, <code>Squarefree_Nonreal.thy</code>, six generated <code>Marginals_*.thy</code>, <code>gen_theory.py</code>, <code>summary.json</code>, <code>final-build.log</code></td>
+</tr>
+<tr>
+<td><code>tests/test_frozen.py</code>, <code>tests/test_stage4abc.py</code></td>
+<td>the winding-support test, the real-root pins, the log-concavity tests and their negative controls</td>
+</tr>
+<tr>
+<td><a href="../reports/2026-09-04-stage4abc.html"><code>docs/reports/2026-09-04-stage4abc.md</code></a>, <a href="../reports/2026-09-04-isabelle-sturm.html"><code>docs/reports/2026-09-04-isabelle-sturm.md</code></a></td>
+<td>the stage-4a report with negative dependence in §3; the 24-row certification table and the squarefreeness scope cut</td>
+</tr>
+</tbody>
+</table>
+<h1 class="unnumbered" id="references">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-anari-et-al-2024-log-concave-polynomials-high-dimensional-walks" class="csl-entry" role="listitem">
+Anari, Nima, et al. (2024), <span>‘Log-Concave Polynomials II: High-Dimensional Walks and an FPRAS for Counting Bases of a Matroid’</span>, <em>Annals of Mathematics</em>, 199/1: 259–99, <a href="https://doi.org/10.4007/annals.2024.199.1.4">https://doi.org/10.4007/annals.2024.199.1.4</a>.
+</div>
+<div id="ref-bramwell-gingras-2001-spin-ice-state" class="csl-entry" role="listitem">
+Bramwell, Steven T., and Michel J. P. Gingras (2001), <span>‘Spin Ice State in Frustrated Magnetic Pyrochlore Materials’</span>, <em>Science</em>, 294: 1495–501.
+</div>
+<div id="ref-branden-2014-unimodality-log-concavity-real-rootedness" class="csl-entry" role="listitem">
+Brändén, Petter (2014), <em>Unimodality, Log-Concavity, Real-Rootedness and Beyond</em>.
+</div>
+<div id="ref-branden-huh-2020-lorentzian-polynomials" class="csl-entry" role="listitem">
+Brändén, Petter, and June Huh (2020), <span>‘Lorentzian Polynomials’</span>, <em>Annals of Mathematics</em>, 192/3: 821–91, <a href="https://doi.org/10.4007/annals.2020.192.3.4">https://doi.org/10.4007/annals.2020.192.3.4</a>.
+</div>
+<div id="ref-brenti-1994-log-concave-unimodal-sequences-update" class="csl-entry" role="listitem">
+Brenti, Francesco (1994), <span>‘Log-Concave and Unimodal Sequences in Algebra, Combinatorics, and Geometry: An Update’</span>, in <em>Jerusalem Combinatorics ’93</em>, Contemporary Mathematics (Providence, RI), 178.71–89, <a href="https://doi.org/10.1090/conm/178/01893">https://doi.org/10.1090/conm/178/01893</a>.
+</div>
+<div id="ref-castelnovo-et-al-2008-magnetic-monopoles-spin-ice" class="csl-entry" role="listitem">
+Castelnovo, Claudio, Roderich Moessner, and Shivaji L. Sondhi (2008), <span>‘Magnetic Monopoles in Spin Ice’</span>, <em>Nature</em>, 451: 42–5.
+</div>
+<div id="ref-cohn-et-al-2001-variational-principle-domino-tilings" class="csl-entry" role="listitem">
+Cohn, Henry, Richard Kenyon, and James Propp (2001), <span>‘A Variational Principle for Domino Tilings’</span>, <em>Journal of the American Mathematical Society</em>, 14/2: 297–346, <a href="https://doi.org/10.1090/S0894-0347-00-00355-6">https://doi.org/10.1090/S0894-0347-00-00355-6</a>.
+</div>
+<div id="ref-eberl-2014-sturms-theorem" class="csl-entry" role="listitem">
+Eberl, Manuel (2014), <span>‘Sturm’s Theorem’</span>, <em>Archive of Formal Proofs</em> ( January).
+</div>
+<div id="ref-eberl-2015-univariate-real-polynomials-decision-procedure" class="csl-entry" role="listitem">
+Eberl, Manuel (2015), <span>‘A Decision Procedure for Univariate Real Polynomials in Isabelle/HOL’</span>, <em>Proceedings of the 2015 Conference on Certified Programs and Proofs</em> 75–83, <a href="https://doi.org/10.1145/2676724.2693166">https://doi.org/10.1145/2676724.2693166</a>.
+</div>
+<div id="ref-henley-2004-classical-to-quantum-dynamics-at-rohsar-kivelson-points" class="csl-entry" role="listitem">
+Henley, Christopher L. (2004), <span>‘From Classical to Quantum Dynamics at Rokhsar–Kivelson Points’</span>, <em>Journal of Physics: Condensed Matter</em>, 16: S891–8.
+</div>
+<div id="ref-henley-2010-coulomb-phase-frustrated-systems" class="csl-entry" role="listitem">
+Henley, Christopher L. (2010), <span>‘The <span>“Coulomb Phase”</span> in Frustrated Systems’</span>, <em>Annual Review of Condensed Matter Physics</em>, 1: 179–210, <a href="https://doi.org/10.1146/annurev-conmatphys-070909-104138">https://doi.org/10.1146/annurev-conmatphys-070909-104138</a>.
+</div>
+<div id="ref-hermele-et-al-2004-pyrochlore-photons-u1-spin-liquid" class="csl-entry" role="listitem">
+Hermele, Michael, Matthew P. A. Fisher, and Leon Balents (2004), <span>‘Pyrochlore Photons: The U(1) Spin Liquid in a $S=1/2$ Three-Dimensional Frustrated Magnet’</span>, <em>Physical Review B</em>, 69: 064404.
+</div>
+<div id="ref-jaubert-et-al-2013-spin-ice-curie-law-crossover" class="csl-entry" role="listitem">
+Jaubert, L. D. C., et al. (2013), <span>‘Topological-Sector Fluctuations and Curie-Law Crossover in Spin Ice’</span>, <em>Physical Review X</em>, 3/1: 011014, <a href="https://doi.org/10.1103/PhysRevX.3.011014">https://doi.org/10.1103/PhysRevX.3.011014</a>.
+</div>
+<div id="ref-kenyon-2009-lectures-on-dimers" class="csl-entry" role="listitem">
+Kenyon, Richard (2009), <em>Lectures on Dimers</em>.
+</div>
+<div id="ref-kenyon-et-al-2006-dimers-and-amoebae" class="csl-entry" role="listitem">
+Kenyon, Richard, Andrei Okounkov, and Scott Sheffield (2006), <span>‘Dimers and Amoebae’</span>, <em>Annals of Mathematics</em>, 163/3: 1019–56, <a href="https://doi.org/10.4007/annals.2006.163.1019">https://doi.org/10.4007/annals.2006.163.1019</a>.
+</div>
+<div id="ref-rokhsar-kivelson-1988-superconductivity-quantum-hard-core-dimer-gas" class="csl-entry" role="listitem">
+Rokhsar, Daniel S., and Steven A. Kivelson (1988), <span>‘Superconductivity and the Quantum Hard-Core Dimer Gas’</span>, <em>Physical Review Letters</em>, 61: 2376–9.
+</div>
+<div id="ref-stanley-1989-log-concave-unimodal-sequences" class="csl-entry" role="listitem">
+Stanley, Richard P. (1989), <span>‘Log-Concave and Unimodal Sequences in Algebra, Combinatorics, and Geometry’</span>, <em>Annals of the New York Academy of Sciences</em>, 576/1: 500–35, <a href="https://doi.org/10.1111/j.1749-6632.1989.tb16434.x">https://doi.org/10.1111/j.1749-6632.1989.tb16434.x</a>.
+</div>
+</div>
+</main>
+</body>
+</html>

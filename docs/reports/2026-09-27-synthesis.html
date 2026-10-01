@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthesis of the first Opus round: Theorem H is reduced to three sign laws, H ⇐ K_u + Lemma O + (R⁺) + (S≥1), of which only Lemma O (Theorem U, hand r</title>
+<meta name="description" content="Synthesis of the first Opus round: Theorem H is reduced to three sign laws, H ⇐ K_u + Lemma O + (R⁺) + (S≥1), of which only Lemma O (Theorem U, hand residue (V)) needs oddness; audited by the main loop">
+
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Report",
+ "name": "Synthesis of the first Opus round: Theorem H is reduced to three sign laws, H ⇐ K_u + Lemma O + (R⁺) + (S≥1), of which only Lemma O (Theorem U, hand residue (V)) needs oddness; audited by the main loop",
+ "url": "https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-27-synthesis.html",
+ "datePublished": "2026-09-27",
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "creditText": "Claude (Fable 5.1), main loop, for Lyndon Drake",
+ "inLanguage": "en-GB"
+}</script>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="inner"><a class="brand" href="../index.html">Ice-mixing notes</a><a href="../index.html#claims">Claims</a><a href="../graph.html">Graph</a><a href="../notes/index.html">Notes</a><a href="../reports/index.html">Reports</a><a href="../certificates/index.html">Certificates</a><a href="../llms.txt">For machines</a></div></nav><div style="max-width:54rem;margin:0 auto;padding:0.8rem 16px 0" class="small"><p>A report archived by the project, published as it was written. <a href="index.html">All reports</a> · <a href="https://github.com/lyndondrake/ice-mixing-notes/blob/main/reports/2026-09-27-synthesis.md">Markdown source</a></p></div>
+<main class="doc">
+<header class="doc-head">
+<h1 class="title">Synthesis of the first Opus round: Theorem H is reduced to three sign laws, H ⇐ K_u + Lemma O + (R⁺) + (S≥1), of which only Lemma O (Theorem U, hand residue (V)) needs oddness; audited by the main loop</h1>
+
+<p class="author">Claude (Fable 5.1), main loop, for Lyndon Drake</p>
+<p class="date">2026-09-27</p>
+</header>
+<nav id="TOC" class="toc" aria-label="Contents"><details><summary>Contents</summary>
+<ul>
+<li><a href="#the-reduction-agent-rphand-audited" id="toc-the-reduction-agent-rphand-audited">1. The reduction (agent rphand; audited)</a></li>
+<li><a href="#later-the-same-day-s1-is-redundant-and-r-lives-on-a-light-cone-agent-lines-verified" id="toc-later-the-same-day-s1-is-redundant-and-r-lives-on-a-light-cone-agent-lines-verified">6. Later the same day: (S≥1) is redundant, and (R⁺) lives on a light cone (agent lines; verified)</a></li>
+<li><a href="#close-of-the-day-r-proved-at-every-separation-h-k_u-theorem-u" id="toc-close-of-the-day-r-proved-at-every-separation-h-k_u-theorem-u">7. Close of the day: (R⁺) proved at every separation; H ⇐ K_u + Theorem U</a></li>
+<li><a href="#independent-check-added-the-same-day" id="toc-independent-check-added-the-same-day">5. Independent check (added the same day)</a></li>
+<li><a href="#what-the-other-three-agents-add" id="toc-what-the-other-three-agents-add">2. What the other three agents add</a></li>
+<li><a href="#the-map-after-this-round" id="toc-the-map-after-this-round">3. The map after this round</a></li>
+<li><a href="#consequences-and-next-steps" id="toc-consequences-and-next-steps">4. Consequences and next steps</a></li>
+</ul>
+</details></nav>
+<p>Status tags as in the note. This report records the main loop’s audit of four agent reports of the same day (<code>2026-09-27-opus-{a3,uwall,rpdata,rphand}.md</code>) and the map that results. It proves nothing new itself.</p>
+<h2 id="the-reduction-agent-rphand-audited">1. The reduction (agent rphand; audited)</h2>
+<blockquote>
+<p><strong>H ⇐ K_u + Lemma O + (R⁺) + (S≥1).</strong></p>
+</blockquote>
+<ul>
+<li><strong>K_u</strong>: a uniform chain forces a direction absent. Certified (note, Status of 2026-09-11), modulo Lemma L and within the scope of its window certificates: cells with a ≥ 3 and b, c ≥ 4, the small honest cells by torus verdicts. The reduction inherits that scope.</li>
+<li><strong>Lemma O</strong>: in an odd state every hole has one rod pointing in and one out. Corner holes: proved. Straight holes: equivalent to Theorem U (an unoriented cage forces curl-free), solver L = 3, 4, 5, hand residue (V).</li>
+<li><strong>(R⁺)</strong>: two type-k vertices on k-lines at transverse offset (±1, ±1) share a sign, at any k-separation. Every frozen state; solver L = 3, 4, 5; Lemma R (cage enumeration) proves its first two members, the pairs inside one cage.</li>
+<li><strong>(S≥1)</strong>: two type-k vertices of one k-line with no type-k vertex and at least one other vertex between them share a sign. Every frozen state; solver, all gaps at L = 4 and L = 5.</li>
+</ul>
+<p>The proof uses, besides these, only results already proved by hand: law Pᵏ, Theorem LC, Lemma S1, Theorem M′, Theorem D. A state with a type absent needs no argument: an absent type is an empty axis, and both its directions are absent. (An earlier version of this report, and the agent’s Corollary, cited ‘Lemma A’ for that case; the Lemma A of record is a different statement and is not needed for H. Corrected after the independent check, §5.)</p>
+<p><strong>The chain of the argument.</strong></p>
+<ol type="1">
+<li><em>Lemma sP (cage check).</em> At an oriented hole the moment field n_k = ε[τ = k] satisfies the cage law Pᵏ. It fails exactly at the 96 unoriented cage patterns.</li>
+<li><em>Theorem sLC.</em> If every hole is oriented, the signed k-line counts are separable, as the unsigned ones are (Theorem LC).</li>
+<li><em>Two-product lemma.</em> Two non-negative separable functions with product zero, neither zero, depend on one and the same coordinate. This is the non-linear step.</li>
+<li><em>Stripe theorem.</em> With (S), the numbers of + and of − type-k vertices per line are such a pair. So a two-signed sublattice is striped: every plane of one normal n is k-free or full of one sign.</li>
+<li><em>Theorem W.</em> With (R⁺), a two-way axis has a k-free plane whose two neighbours are each k-free or of one sign, not both free and not of the same sign.</li>
+<li><em>Lemma E.</em> At such a plane (E′) holds at every hole: Pᵏ and Lemma sP give two linear equations for the two sides, which force both to vanish.</li>
+<li><em>Theorem D</em> then puts every type-k vertex beside the plane on a uniform chain, and K_u finishes.</li>
+</ol>
+<p><strong>Audit by the main loop.</strong> Every step was read against its hypotheses. Points checked in particular: the zero-set argument of the two-product lemma; that the stripe direction in the reversing-pair case is forced by (S) on one line; both cases of Theorem W, including the choice of the plane in the cyclic sequence and the use of (R⁺) in each direction; that Lemma E needs orientation only in its two-sided case; that Theorem D is applied with (E′) at the one plane it needs. Re-run: the cage check (1 200 patterns per cage, 288 violations, all at the 96 unoriented patterns), the stripe and wall checks at L = 4 (1 972 stripes, 727 + 280 walls, (E′) at 3 743 walls), the step-by-step check of the reversing-pair theorem at L = 3 (10 552 instances), and the solver test of (S≥1) at L = 4. All agree with the report. Not re-run: the L = 5, 6 solver samples.</p>
+<p>No gap was found. The reduction is recorded as <strong>proved, modulo K_u’s certificates and the three laws</strong>.</p>
+<h2 id="later-the-same-day-s1-is-redundant-and-r-lives-on-a-light-cone-agent-lines-verified">6. Later the same day: (S≥1) is redundant, and (R⁺) lives on a light cone (agent lines; verified)</h2>
+<p><code>2026-09-27-opus-lines.md</code>, scripts <code>h290</code>–<code>h299</code>.</p>
+<ul>
+<li><strong>Theorem S (proved).</strong> Summing the signed cage law over the holes of a k-line between two of its type-k vertices v, w gives n_k(w) − n_k(v) as a signed sum of n_k over the vertices of the four diagonal lines inside the window. If one of those is of type k, (R⁺) twice gives ε(v) = ε(w); if none is, the sum vanishes. So (S) ⇐ Lemma O + (R⁺), and <strong>H ⇐ K_u + Lemma O + (R⁺)</strong>.</li>
+<li><strong>Both line laws may be proved with Lemma O as a hypothesis</strong>: they are used only in odd states, and a gap on a k-line already makes a corner.</li>
+<li><strong>No automaton.</strong> Without Lemma O both laws need almost the whole torus in every direction (solver, L = 4 to 8). With Lemma O on the holes, (R⁺) at separation s is forced exactly on tubes of radius (s − 1)/2, independent of L (L = 6, 8, 10, s ≤ 19): a light cone. Its support is the causal diamond of holes between the two rods.</li>
+<li><strong>With Lemma O, (R⁺) is a counting statement</strong> (certified): for each separation |s| ≤ 13, and s = 15, 17, 19, an exact rational Farkas certificate over one-hot, (T2), the bond rule written for the moments, and Lemma O on the diamond, with multipliers in {1, ½, ¼, −½} and support inside the window. Each is a finite identity of the infinite lattice, so it holds on every torus. For L ≤ 7 every separation that occurs is covered.</li>
+<li><strong>By hand</strong>: (R⁺) for |s| ≤ 5 from a conservation lemma across a hexagon (τ·in and τ·out agree at the two holes of a hexagon; cage check on the 14 vertices of two adjacent cages).</li>
+<li>**Residual (R⁺_O)**: the certificate written once for every s, a summation over the diamond.</li>
+</ul>
+<p>Main-loop checks: the proof of Theorem S read; the certificate at s = 7 regenerated (70 rows, exact check passed); the two-cage enumeration re-run (6 192 patterns, 198 state pairs for each of the four directions).</p>
+<p>**The map is therefore: H ⇐ K_u + Theorem U + (R⁺_O)**, with Theorem U the only statement that needs the whole torus.</p>
+<h2 id="close-of-the-day-r-proved-at-every-separation-h-k_u-theorem-u">7. Close of the day: (R⁺) proved at every separation; H ⇐ K_u + Theorem U</h2>
+<p>Agent cone (<code>2026-09-27-opus-cone.md</code>, scripts <code>h310</code>–<code>h319</code>), confirmed by the independent checker check2 (<code>2026-09-27-opus-check2.md</code>, scripts <code>h320</code>–<code>h326</code>, own implementation): <strong>with Lemma O on the causal diamond, (R⁺) holds at every separation and (S) at every gap.</strong></p>
+<ul>
+<li>The certificates are one closed-form family: Lemma O rows +1 on the diamond D; (T2) rows −½ on the hexagons with a hole in D; one-hot ½·min(2, μ_b), μ_b the number of holes of D of which the vertex is a bridgehead; bond rows d·n(a) − d·n(a + d), a the A end, ¼·min(4, n_E), n_E the number of the bond’s six hexagons with both holes in D; the two hypotheses 1.</li>
+<li>What it proves is a <strong>corner law</strong>: of the six corner holes of the diamond exactly one takes its in-rod from outside along its own axis.</li>
+<li>The proof for every s is local. The ten holes around a vertex form a tetrahedron; D cuts it in one of 50 sets; every column of the combination is of the right sign except when the vertex has exactly two bridge holes in D; and that never happens when the transverse offset of the pair is at most 1 (Lemma B). The offset bound is sharp.</li>
+<li>Verified in exact arithmetic by both agents independently for 5 ≤ s ≤ 101, every admissible offset, both sublattice orders, and for the same-line case; separations 1 and 3 are the bond rule and the conservation lemma.</li>
+<li>The identity on the infinite lattice passes to every torus, including when the diamond wraps.</li>
+<li>Orientation is needed at every hole of D, straight holes included, so this proof of (R⁺) depends on Theorem U.</li>
+</ul>
+<p><strong>Final map of the day.</strong></p>
+<blockquote>
+<p><strong>H ⇐ K_u + Theorem U</strong>, with K_u certified within its scope and Theorem U (an unoriented cage forces even curl; hand residue (V)) solver-true and DRAT-certified at L = 4, 5, 6.</p>
+</blockquote>
+<p>Everything else in the chain is proved by hand, with finite cage-sized checks, and has been through an independent checker: Lemma sP, Theorems LC and sLC, the two-product lemma, the stripe theorem, Theorem W, Lemma E, Theorem D, Theorem S, the cone certificate.</p>
+<p><strong>What is known about Theorem U</strong> (orient, ucore, uhand, uwall, vsign): no window, tube or slab short of 2L − 2 layers; no counting proof, signed or unsigned; no propagation of the pattern or of the charge to any single hole; the sign field shortens nothing; integrality of one indicator family suffices (one sublattice’s hole charges at L = 3; one line of 2L indicators for the corner case of the turn at L = 4, 5); depth-1 probing on the cage laws refutes it at L = 4, not uniformly.</p>
+<h2 id="independent-check-added-the-same-day">5. Independent check (added the same day)</h2>
+<p>Agent check (Opus; <code>2026-09-27-opus-check.md</code>, scripts <code>h270</code>–<code>h272</code>, none of the author’s scripts used): <strong>confirmed with corrections, no gap.</strong> Every proof of rphand §1–§4, Theorem D and Theorem LC is complete for the hypotheses it states. Corrections, all applied above or noted in the agent report: the citation of Lemma A (not needed); the wording of what Lemma R proves; K_u’s scope. Remarks: Case 2 of Theorem W (each sublattice of one sign, the two opposite) is correct as argued but never occurs, neither on the corpus (0 of 1 814 two-way axes) nor in the solver at L = 3, 4, so it is probably provably empty; the solver query ‘a two-way axis with no sign-separated wall’ is UNSAT at L = 3 and was undecided at L = 4 at a 540 s cap.</p>
+<h2 id="what-the-other-three-agents-add">2. What the other three agents add</h2>
+<ul>
+<li><strong>rpdata (solver).</strong> The sharp (W) — a reversing pair forces a k-free plane through its middle line — holds in the type-only model with no oddness and no three types, L = 3, 4, 5. (RP) holds at every distance at L = 3, 4. The cores of (RP) are as global as (V)’s. These agree with the reduction and are no longer needed for H.</li>
+<li><strong>uwall (proved).</strong> The staircase lemma and the three cases of a turn. With Lemma E, (E′) at a sign-separated plane is now a consequence of Lemma O, so the transfer step is not needed for H either.</li>
+<li><strong>a3 (proved).</strong> An odd equal-bounded run carries a pair of consecutive same-sublattice kinks. The reduction H ⇐ K_u + (RP) + (UC′) is superseded: Theorem W covers every two-way axis, split or not, so (UC′) and (A₃) drop out.</li>
+</ul>
+<h2 id="the-map-after-this-round">3. The map after this round</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>statement</th>
+<th>role</th>
+<th>status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>K_u</td>
+<td>sign half for a uniform chain</td>
+<td>certified</td>
+</tr>
+<tr>
+<td>Lemma O, corner holes</td>
+<td>orientation</td>
+<td>proved</td>
+</tr>
+<tr>
+<td>Lemma O, straight holes = Theorem U</td>
+<td>orientation; the only use of oddness</td>
+<td>solver L = 3, 4, 5; <strong>(V) open</strong></td>
+</tr>
+<tr>
+<td>(R⁺)</td>
+<td>coherence between adjacent lines</td>
+<td>solver L = 3, 4, 5; open by hand beyond separation 3</td>
+</tr>
+<tr>
+<td>(S≥1)</td>
+<td>coherence along a line</td>
+<td>solver L = 4, 5; open by hand</td>
+</tr>
+<tr>
+<td>everything else</td>
+<td></td>
+<td>proved</td>
+</tr>
+</tbody>
+</table>
+<p>Dropped from the list of things H needs: (W), (W′), (W1′), (E′) as a separate statement, (RP), (A₃), (UC′), (J1), (J2), ORDER, the block induction on even runs, Conjecture G.</p>
+<h2 id="consequences-and-next-steps">4. Consequences and next steps</h2>
+<ol type="1">
+<li><strong>H at a fixed L is now a small computation.</strong> Each of the three laws is decided by the solver in seconds at L ≤ 5. With DRAT certificates for them at a given L, and K_u’s certificates (which cover L ≥ 4), Theorem H and hence the periodicity theorem follow at that L. The direct certificate at L = 4 was abandoned on 2026-09-10 after 36 hours.</li>
+<li><strong>(R⁺) and (S≥1) are laws of every frozen state along a line, with unbounded separation.</strong> That is the shape of Lemma S, which was proved for every period by a strip automaton. The test is whether each is forced inside a bounded transverse tube around its lines.</li>
+<li><strong>(V) is the one statement that is global in all three directions.</strong> New tool for it: Lemma sP fails at an unoriented hole by exactly ±2, so the signed line counts have mixed second differences supported on the unoriented holes.</li>
+</ol>
+</main>
+</body>
+</html>
