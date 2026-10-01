@@ -2486,6 +2486,45 @@ in the reports, and each closes a route to a proof.
    found. Fifth, the search of this date for a counterexample to U on
    the cheapest open cells, recorded in the section on the cubic
    cells, found none, with no near miss.
+10. The counts of kinks per chain class (added on 1 October 2026; one
+    agent, the lemmas proved by it with no second reader and checked
+    exactly on the data named, the main session re-running three of
+    the checks). On a grid normal to the rod axis the vertices fall
+    into $g$ classes for each family of chains of that axis, the
+    traces of the $g$ chains, and a vertex is a kink of its chains
+    exactly when its type is the rods' type. Let $k[n][v]$ be the
+    number of such vertices in the class of value $v$ on the grid $n$.
+    Three laws hold on every cell. **The wave equation:** $k[n+2][v] +
+    k[n-2][v] = k[n][v+2] + k[n][v-2]$, which is law C summed over the
+    holes of one class; its solutions are two sheets travelling one
+    class per cube in opposite senses, the structure behind the two
+    rigid models of item 7, of which every solution is a sum. **The
+    law $P^k$ summed over a class,** which with the wave equation
+    makes two consecutive grids of one sublattice determine every
+    further grid. **One defect per axis:** the difference between the
+    kink counts of a chain on its two grids obeys a smoothing
+    recurrence from grid to grid, so going once round the circle of
+    the rod axis kills every mode but the constant, and in every real
+    solution of (T2) on the torus every chain of an axis has the same
+    defect (checked on 5,119 frozen states of five cells on all three
+    axes; the values seen are even, from $-12$ to $12$). By solver on
+    four cells with controls, the four literals of the pattern make
+    the defect one constant on every chain of a window of three grids
+    already, non-negative on $[-3, 2g - 2]$, and, with the negation of
+    (V), zero on $[-3, 2g - 1]$ and not before; so, given the pattern
+    on the torus, (V) is equivalent to the defect being positive, and
+    the equivalence keeps the reach $2g + 1$. The counts cannot close
+    (V): two parallel unit sheets of one sense, one through each rod,
+    with defect zero, satisfy the wave equation, the summed law
+    $P^k$, Lemma 6, the bounds, the pins of the pattern and the
+    negation round the whole torus of each of the four cells, and
+    every enumerated solution one, two and three grids short of the
+    threshold extends by the wave equation round the circle of the
+    rod axis within the bounds. The obstruction at $2g + 1$ lies in
+    which positions inside a class are kinked, not in how many; the
+    kink counts per class are closed as a route, and the next
+    refinement, the counts per pair of classes of the two families,
+    was not tried.
 
 Theorem U belongs to a family of statements of the project in which a
 pattern on a few vertices forces a complete plane. One member of the
@@ -3005,7 +3044,11 @@ section, and the closed-form certificate of the first step of $K_u$
 was confirmed. A search for a counterexample to Theorem U on the
 cheapest open cells found none and left Theorem $U'$ certified at
 sides seven and eight and on four cells that are not cubic, so that
-Theorem 2 now reaches side eight. The abstract, the first section, the
+Theorem 2 now reaches side eight. Later the same day a tenth item was
+added to the section on Theorem U, the kink counts per chain class,
+with a wave equation and a one-defect-per-axis lemma that hold on
+every cell and a witness showing that the counts cannot close (V). The
+abstract, the first section, the
 section on the cubic cells, the section on Theorem U and the
 certification were revised, and the PDF rebuilt.
 
@@ -3061,6 +3104,8 @@ certification were revised, and the PDF rebuilt.
 - `docs/reports/2026-10-01-fable-screw.md` and
   `2026-10-01-opus-rbox.md`: the ninth item of the section on Theorem
   U. Scripts `h700`–`h703` and `h680`–`h688`.
+- `docs/reports/2026-10-01-fable-labels.md`: the tenth item, the
+  kink counts per chain class. Scripts `h760`–`h767`.
 - `docs/reports/2026-10-01-kucone-partial.md` and
   `2026-10-01-opus-kucheck.md`: the closed-form certificate of the
   first step of $K_u$ and its check. Scripts `h650`–`h656` and

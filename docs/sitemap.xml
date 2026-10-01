@@ -2,9 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://lyndondrake.github.io/ice-mixing-notes/certificates/index.html</loc></url>
   <url><loc>https://lyndondrake.github.io/ice-mixing-notes/claims/theorem-h-orientation/cage-laws.html</loc></url>
+  <url><loc>https://lyndondrake.github.io/ice-mixing-notes/claims/theorem-h-orientation/closed-kink-counts.html</loc></url>
   <url><loc>https://lyndondrake.github.io/ice-mixing-notes/claims/theorem-h-orientation/closed-linear-relaxation.html</loc></url>
   <url><loc>https://lyndondrake.github.io/ice-mixing-notes/claims/theorem-h-orientation/closed-r-then-monodromy.html</loc></url>
   <url><loc>https://lyndondrake.github.io/ice-mixing-notes/claims/theorem-h-orientation/closed-tilted-sheet.html</loc></url>
+  <url><loc>https://lyndondrake.github.io/ice-mixing-notes/claims/theorem-h-orientation/kink-counts-per-class.html</loc></url>
   <url><loc>https://lyndondrake.github.io/ice-mixing-notes/claims/theorem-h-orientation/ku-first-step-hand.html</loc></url>
   <url><loc>https://lyndondrake.github.io/ice-mixing-notes/claims/theorem-h-orientation/ku.html</loc></url>
   <url><loc>https://lyndondrake.github.io/ice-mixing-notes/claims/theorem-h-orientation/lemma-21.html</loc></url>
@@ -83,12 +85,14 @@
   <url><loc>https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-30-fable-zeroflux.html</loc></url>
   <url><loc>https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-30-opus-check10.html</loc></url>
   <url><loc>https://lyndondrake.github.io/ice-mixing-notes/reports/2026-09-30-opus-kuwall.html</loc></url>
+  <url><loc>https://lyndondrake.github.io/ice-mixing-notes/reports/2026-10-01-fable-labels.html</loc></url>
   <url><loc>https://lyndondrake.github.io/ice-mixing-notes/reports/2026-10-01-fable-screw.html</loc></url>
   <url><loc>https://lyndondrake.github.io/ice-mixing-notes/reports/2026-10-01-kucone-partial.html</loc></url>
   <url><loc>https://lyndondrake.github.io/ice-mixing-notes/reports/2026-10-01-opus-falsify.html</loc></url>
   <url><loc>https://lyndondrake.github.io/ice-mixing-notes/reports/2026-10-01-opus-kucheck.html</loc></url>
   <url><loc>https://lyndondrake.github.io/ice-mixing-notes/reports/2026-10-01-opus-p1check.html</loc></url>
   <url><loc>https://lyndondrake.github.io/ice-mixing-notes/reports/2026-10-01-opus-pacheck.html</loc></url>
+  <url><loc>https://lyndondrake.github.io/ice-mixing-notes/reports/2026-10-01-opus-pubsite.html</loc></url>
   <url><loc>https://lyndondrake.github.io/ice-mixing-notes/reports/2026-10-01-opus-rbox.html</loc></url>
   <url><loc>https://lyndondrake.github.io/ice-mixing-notes/reports/index.html</loc></url>
 </urlset>

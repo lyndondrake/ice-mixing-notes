@@ -77,3 +77,5 @@ experiments/08_frozen_structure/scratch_h/certs/h28x_results.jsonl	certificates/
 experiments/08_frozen_structure/scratch_h/certs/h28x_sha256_2026-09-27.txt	certificates/h28x_sha256_2026-09-27.txt
 experiments/08_frozen_structure/scratch_h/certs/h74x_results.jsonl	certificates/h74x_results.jsonl
 experiments/08_frozen_structure/scratch_h/certs/h74x_sha256_2026-10-01.txt	certificates/h74x_sha256_2026-10-01.txt
+docs/reports/2026-10-01-fable-labels.md	reports/2026-10-01-fable-labels.md
+docs/reports/2026-10-01-opus-pubsite.md	reports/2026-10-01-opus-pubsite.md

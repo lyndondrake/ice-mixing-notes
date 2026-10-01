@@ -957,6 +957,77 @@
       "notes": "Do not re-run: (V) given R on windows, cuts or tubes; any step in the transverse-chain weights along the rod axis; least-L1 branch certificates on a fixed vertex family."
     },
     {
+      "id": "theorem-h-orientation/kink-counts-per-class",
+      "kind": "lemma",
+      "label": "The kink counts per chain class: the wave equation and one defect per axis (Theorem U section, item 10)",
+      "statement": "On a grid normal to the rod axis, with $k[n][v]$ the number of vertices of the rods' type in the class of value $v$ (the trace of one chain of that axis), every real solution of (T2) satisfies the wave equation $k[n+2][v] + k[n-2][v] = k[n][v+2] + k[n][v-2]$ (law C summed over the holes of a class), whose solutions are two sheets travelling one class per cube in opposite senses; and on the torus every chain of an axis has the same defect, the difference of its kink counts on its two grids, because the defect obeys a smoothing recurrence along the rod axis whose non-constant modes die round the circle.",
+      "status": "proved-unchecked",
+      "status_detail": "Hand proofs by one agent with no second reader; the wave equation and the summed law verified to lie in the row space of the window's equations and exact on 488 enumerated models on four cells; the single defect checked on 5,119 frozen states of five cells on all three axes; the main loop re-ran the corpus check and two solver rows.",
+      "scope": {
+        "cells": "every cell",
+        "hypotheses": "a real solution of one-hot and (T2); the single defect uses the closing of the rod axis"
+      },
+      "depends_on": [
+        "theorem-h-orientation/cage-laws",
+        "theorem-h-orientation/model"
+      ],
+      "provenance": {
+        "written_by": [
+          "Claude Fable 5.1 (agent labels)"
+        ],
+        "checked_by": [],
+        "cross_checks": [
+          "Claude Fable 5.1 (main loop): corpus check and two solver rows re-run; the two lemmas read"
+        ],
+        "human_read": false,
+        "date": "2026-10-01"
+      },
+      "artefacts": [
+        {
+          "kind": "report",
+          "path": "reports/2026-10-01-fable-labels.md"
+        },
+        {
+          "kind": "script",
+          "path": "private:experiments/08_frozen_structure/scratch_h/h764_corpus.py",
+          "regenerate": "cd experiments/08_frozen_structure/scratch_h && h764_corpus.py"
+        }
+      ]
+    },
+    {
+      "id": "theorem-h-orientation/closed-kink-counts",
+      "kind": "negative-result",
+      "label": "The kink counts per class cannot close (V) (Theorem U section, item 10)",
+      "statement": "By solver on four cells with controls, the pattern of (V) makes the defect one constant on every chain of a three-grid window, non-negative on $[-3, 2g - 2]$, and with the negation zero on $[-3, 2g - 1]$ and not before, so given the pattern on the torus (V) is equivalent to a positive defect, with the same reach $2g + 1$. Two parallel unit sheets of one sense through the two rods with defect zero satisfy the wave equation, the summed law $P^k$, Lemma 6, the bounds, the pins of the pattern and the negation round the whole torus of each cell, and every enumerated solution short of the threshold extends by the wave equation round the rod axis within the bounds. The obstruction lies in which positions inside a class are kinked, not in how many.",
+      "status": "closed-route",
+      "status_detail": "Solver with controls (23 batches, four cells) and an exact witness (h767) on four cells; the main loop re-ran the witness on two cells and the defect queries on one window.",
+      "scope": {
+        "cells": "(12,4,4), (10,5,5), (12,6,6), (12,4,8)"
+      },
+      "depends_on": [
+        "theorem-h-orientation/kink-counts-per-class",
+        "theorem-h-orientation/v-reach-law"
+      ],
+      "provenance": {
+        "written_by": [
+          "Claude Fable 5.1 (agent labels)"
+        ],
+        "checked_by": [],
+        "cross_checks": [
+          "Claude Fable 5.1 (main loop): witness and one solver window re-run"
+        ],
+        "human_read": false,
+        "date": "2026-10-01"
+      },
+      "artefacts": [
+        {
+          "kind": "report",
+          "path": "reports/2026-10-01-fable-labels.md"
+        }
+      ],
+      "notes": "Do not re-run: enumerations of models for the kink vectors; window sweeps for the defect. Not tried: the counts per pair of classes of the two chain families, on which the rigid sheet is a graph."
+    },
+    {
       "id": "theorem-h-orientation/weights-integrality-correction",
       "kind": "fact",
       "label": "The weights of (C) are rarely integral (correction of 30 September 2026)",

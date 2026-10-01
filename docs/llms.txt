@@ -8,7 +8,7 @@ Read a claim's status_detail and scope before using it: many results hold on nam
 
 ## Claims manifests
 
-- [theorem-h-orientation](https://lyndondrake.github.io/ice-mixing-notes/manifests/theorem-h-orientation.json): 32 claims, version 2026-10-01; Theorem H for frozen pyrochlore ice: proofs on the cells with a coprime pair of extents and on the cells with two chains in every pair of planes, a reduction to Theorem U alone on every cell, and the cubic cells of side one to eight
+- [theorem-h-orientation](https://lyndondrake.github.io/ice-mixing-notes/manifests/theorem-h-orientation.json): 34 claims, version 2026-10-01; Theorem H for frozen pyrochlore ice: proofs on the cells with a coprime pair of extents and on the cells with two chains in every pair of planes, a reduction to Theorem U alone on every cell, and the cubic cells of side one to eight
 
 ## Full text for machines
 
