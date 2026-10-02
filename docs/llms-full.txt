@@ -1,5 +1,5 @@
 # Ice-mixing notes: every published claims manifest as JSON
-# Built 2026-10-01. Schema: https://lyndondrake.github.io/ice-mixing-notes/schema/manifest.schema.json
+# Built 2026-10-02. Schema: https://lyndondrake.github.io/ice-mixing-notes/schema/manifest.schema.json
 
 
 ==============================================================================
