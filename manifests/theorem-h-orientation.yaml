@@ -33,6 +33,7 @@ claims:
   - id: theorem-h-orientation/model
     kind: definition
     label: "The model (first section; Holes, cages and rods)"
+    gist: "Definitions: cells, ice states, vertex types, hexagons and their curl, frozen and odd states, holes and their rods."
     statement: >
       A cell $(a, b, c)$ of pyrochlore ice is the torus of quarter-cube coordinates
       modulo $(4a, 4b, 4c)$; its vertices are the sublattice A (even coordinates with
@@ -61,6 +62,7 @@ claims:
   - id: theorem-h-orientation/thm-h
     kind: theorem
     label: "Theorem H"
+    gist: "A frozen state with an odd hexagon has an axis that is either unused or used with one sign only."
     statement: >
       In a frozen state with a hexagon of odd curl, some axis is empty (no vertex has
       that type) or one-way (every vertex of that type has the same sign of moment).
@@ -85,6 +87,7 @@ claims:
   - id: theorem-h-orientation/thm-u
     kind: conjecture
     label: "Theorem U"
+    gist: "In an odd frozen state every octahedral hole is oriented, one rod pointing in and one out; the one open step to Theorem H."
     statement: >
       In an odd frozen state every octahedral hole is oriented: one of its rods points
       towards it and the other away. Equivalent forms: an odd state has no charged
@@ -117,6 +120,7 @@ claims:
   - id: theorem-h-orientation/thm-1
     kind: theorem
     label: "Theorem 1 (the reduction), form of 30 September 2026, with Lemmas 22 to 25"
+    gist: "The reduction: on every cell, Theorem U implies Theorem H."
     statement: "On every cell, Theorem U implies Theorem H."
     status: proved
     status_detail: "Written argument: with every hole oriented, Theorem 6 makes the line count of a two-way type a function of one transverse coordinate on each sublattice, Theorem 3 makes the two sublattices share that coordinate, Theorem 15 kills one profile per two-way axis so that with three two-way axes some axis has a constant line count on both sublattices, and the diagonal law along the connected graph of lines makes that axis one-way. Re-derived by the main loop, then read by an independent checker with its own programs (agent check10), which confirmed it with five corrections of wording and no gap; its one prediction about odd states tested on the corpus with no exception."
@@ -156,6 +160,7 @@ claims:
   - id: theorem-h-orientation/thm-1-first-form
     kind: theorem
     label: "Theorem 1, first form (27 September 2026), through K_u"
+    gist: "An earlier, superseded form of the reduction that also needed $K_u$."
     statement: "On every cell on which K_u holds for uniform chains of all three axes, Theorem U implies Theorem H."
     status: proved
     status_detail: "The earlier proof, kept under its own heading in the note's section 'Proof of Theorem 1'. Read by independent checkers (agents check, check2) on 27 September. Replaced as the route to Theorem H by the form of 30 September, which needs no K_u."
@@ -181,6 +186,7 @@ claims:
   - id: theorem-h-orientation/thm-2
     kind: theorem
     label: "Theorem 2"
+    gist: "Theorem H by machine-checked certificate on the cubic cells of side 4 to 8, four cells that are not cubic, and their divisors."
     statement: "Theorem H holds on the cubic cells of side four to eight, and on the cells (3,3,9), (4,4,8), (3,3,12) and (6,6,9), and by Lemma 21 on every cell whose extents divide one of these up to a permutation of the axes."
     status: certified
     status_detail: "Theorem 1 applied to the DRAT certificates of Theorem U′ (claims u-prime-certificates-2026-09-27 and u-prime-certificates-2026-10-01)."
@@ -201,6 +207,7 @@ claims:
   - id: theorem-h-orientation/thm-24
     kind: theorem
     label: "Theorem 24"
+    gist: "Theorem H on the small cubic cells of side 1 to 3, deduced from side 6."
     statement: "Theorem H holds on the cubic cells of side one, two and three."
     status: certified
     status_detail: "By Lemma 21 and Theorem 2 at side six."
@@ -218,6 +225,7 @@ claims:
   - id: theorem-h-orientation/lemma-21
     kind: lemma
     label: "Lemma 21 (a state repeated periodically)"
+    gist: "Repeating a state onto a larger cell keeps it frozen and odd, so Theorem H passes from a cell to its divisors."
     statement: "A frozen state of the cell $(a, b, c)$, repeated periodically, is a frozen state of the cell $(k_1 a, k_2 b, k_3 c)$ for any positive integers $k_1, k_2, k_3$; it has an odd hexagon exactly when the original has, and the same set of moments. So Theorem H on the larger cell implies Theorem H on the smaller."
     status: proved
     status_detail: "Written by the main session and tested exactly on 765 repeated states; on 2026-10-01 read by an independent checker (agent pacheck) with its own code on eight pairs of cells with unequal multipliers, 0 violations; the direction Theorem 24 uses confirmed sound."
@@ -249,6 +257,7 @@ claims:
   - id: theorem-h-orientation/thm-14
     kind: theorem
     label: "Theorem 14 (cells with a coprime pair of extents), with Lemmas 8 to 10 and Theorems 12, 13, 15"
+    gist: "Theorem H proved by hand on every cell with a pair of coprime extents."
     statement: "On a cell in which some pair of extents is coprime, every odd frozen state lacks one of the three types, so Theorem H holds."
     status: proved
     status_detail: "Rests on Theorem 12 (a statement about the types of one sublattice) and Theorem M′; on cells with two coprime pairs sharing an extent, on Theorem 13 alone. Read by an independent checker (agent check7) with its own programs; no gap."
@@ -273,6 +282,7 @@ claims:
   - id: theorem-h-orientation/thm-22
     kind: theorem
     label: "Theorem 22, with Theorems 20 and 21 (cells with two chains in every pair of planes)"
+    gist: "Theorem U proved by hand on the cells $(2a', 2b', 2c')$ with $a', b', c'$ pairwise coprime."
     statement: "On a cell $(2a', 2b', 2c')$ with $a'$, $b'$, $c'$ pairwise coprime, Theorem U holds."
     status: proved
     status_detail: "From Theorem 21, the two-chain proof of (V), and Theorem M′. Found by agent twochain, read by an independent checker (agent check8)."
@@ -296,6 +306,7 @@ claims:
   - id: theorem-h-orientation/thm-23
     kind: theorem
     label: "Theorem 23, with Lemmas 13 to 20 and Theorems 16 to 19 (the signed moments)"
+    gist: "Theorem H proved by hand on the same cells, through the signed moments."
     statement: "On a cell $(2a', 2b', 2c')$ with $a'$, $b'$, $c'$ pairwise coprime, Theorem H holds."
     status: proved
     status_detail: "From Theorems 17, 19, 20 and 22, Lemma 4 and Theorem M′: the signed moments are currents along the chains when every hole is oriented, and a count on profiles closes the cases. Found by agents scomp and dfour, read by an independent checker (agent check9)."
@@ -322,6 +333,7 @@ claims:
   - id: theorem-h-orientation/thm-10
     kind: theorem
     label: "Theorem 10 (the coprime case of (V))"
+    gist: "Holes along one axis are oriented when the other two extents are coprime."
     statement: "On a cell $(a, b, c)$ with $\\gcd(b, c) = 1$, a frozen state with an unoriented hole whose rods lie along $x$ has even curl; so in an odd state every hole with rods along $x$ is oriented."
     status: proved
     status_detail: "A linear argument through the parametrisation (C), once round the circle of the rod axis. Its identity verified in exact arithmetic on thirty-five cells by the author and by an independent checker, which also read the proof."
@@ -343,6 +355,7 @@ claims:
   - id: theorem-h-orientation/thm-11
     kind: theorem
     label: "Theorem 11 (greatest common divisor two, odd length)"
+    gist: "Holes along one axis are oriented when the other two extents have greatest common divisor 2 and the axis has odd length."
     statement: "On a cell $(a, b, c)$ with $\\gcd(b, c) = 2$ and $a$ odd, a frozen state with an unoriented hole whose rods lie along $x$ has even curl."
     status: proved
     status_detail: "Needs integrality through a parity count on the halves of a plane; the parity of $a$ enters. Its identity verified in exact arithmetic on thirty-three cells by two implementations; read by an independent checker."
@@ -365,6 +378,7 @@ claims:
   - id: theorem-h-orientation/u-prime-certificates-2026-09-27
     kind: certificate-campaign
     label: "Theorem U′ certified at the cubic sides four, five and six"
+    gist: "DRAT proofs that an unoriented hole forces even curl, on the cubic cells of side 4, 5 and 6."
     statement: "Theorem U′: a state of the type model with a hole whose rods are both of type $k$, one bridgehead of type $a$ on its lower side and one of type $b$ on its upper side, has even curl on every hexagon. Certified on the cubic cells of side 4, 5 and 6 by DRAT proofs checked by drat-trim: 16, 16 and 4 formulas (at side six the sixteen hypotheses form one orbit of the formula's symmetries), each with a satisfiable control whose witness was decoded and checked."
     status: certified
     status_detail: "114 formulas in all with the diagonal and line laws; longest solve 22 s; proofs 36 to 385 MB; hashes and verdicts kept, files regenerable."
@@ -390,6 +404,7 @@ claims:
   - id: theorem-h-orientation/u-prime-certificates-2026-10-01
     kind: certificate-campaign
     label: "Theorem U′ certified at sides seven and eight and on four cells that are not cubic; the counterexample search"
+    gist: "The same proofs at cubic sides 7 and 8 and on four cells that are not cubic; run as a search for a counterexample, which found none."
     statement: "Theorem U′ holds on the cubic cells of side 7 and 8 and on (3,3,9), (4,4,8), (3,3,12) and (6,6,9): 224 whole-torus queries (16 per rod axis: two sublattices, two orders of the transverse types, two positions of each bridgehead; all three axes on the cells that are not cubic, where the forty-eight hypotheses fall into three orbits of the formula's symmetries), every one unsatisfiable with a satisfiable control; 155 DRAT proofs checked by drat-trim (every query on the three small cells, one per orbit on (6,6,9), one per sublattice and order at sides seven and eight, the cyclic permutation of the axes being a checked automorphism)."
     status: certified
     status_detail: "Run as a search for a counterexample to Theorem U; none found and no near miss (controls satisfiable in under 0.5 s, refutations in at most 124 s, solve time growing smoothly with the side). The encoding is clause-for-clause identical to the 27 September encoding on the cubic cells of side four and five, and was tested on odd corpus states repeated onto the new cells. Proofs over 50 MB (to 2.9 GB) deleted after checking and recorded by hash and size. The main loop re-ran sixteen queries and one certificate."
@@ -416,6 +431,7 @@ claims:
   - id: theorem-h-orientation/thm-9-diagonal-law
     kind: theorem
     label: "Theorem 9 (the certificate of the diagonal law, closed form)"
+    gist: "An explicit linear certificate proving the diagonal law at every odd separation."
     statement: "For every odd separation $s \\geq 5$, the diagonal law on the causal diamond (Theorem 3) holds by an explicit linear certificate whose multipliers follow four rules in the position of each equation relative to the diamond."
     status: proved
     status_detail: "A written proof whose finite parts are the fifty intersections of the tetrahedron; the identity also verified exactly for separations up to 101. Read by an independent checker (agent check2) with corrections to a citation, the orientation of one equation and one bound."
@@ -437,6 +453,7 @@ claims:
   - id: theorem-h-orientation/thm-3-diagonal-law
     kind: theorem
     label: "Theorem 3 (the diagonal law)"
+    gist: "Two vertices of the same type on diagonally neighbouring lines have equal signs when the holes between them are oriented."
     statement: "Two vertices of type $k$ on diagonally neighbouring $k$-lines at odd separation $s \\geq 5$ with every hole of the causal diamond between them oriented have equal signs."
     status: proved
     status_detail: "By Theorem 9's certificate for every separation; earlier certified directly at sides 4, 5, 6 in the model with signs."
@@ -454,6 +471,7 @@ claims:
   - id: theorem-h-orientation/thm-6-separability
     kind: theorem
     label: "Theorems 4 to 8 (line counts, two separable functions with product zero, walls, uniform chains beside a wall)"
+    gist: "How the count of a type along a line depends on position: separable counts, walls, and uniform chains beside a wall."
     statement: "In a frozen state the count of a type along a line is separable in the two transverse coordinates (Theorem 5); if every hole is oriented the count of a two-way type on a line depends on one transverse coordinate on each sublattice (Theorem 6); a $k$-free plane is a wall with one sign on the planes beside it (Theorem 7); the chains beside a wall are uniform (Theorem 8)."
     status: proved
     status_detail: "Written arguments read by independent checkers on 27 September 2026."
@@ -472,6 +490,7 @@ claims:
   - id: theorem-h-orientation/thm-15
     kind: theorem
     label: "Theorem 15"
+    gist: "On each sublattice at most two of the three type profiles can vary."
     statement: "In a solution of the type model there are, on each sublattice, at most two non-constant profiles among the three, in the sense the note makes precise; one profile per two-way axis is killed."
     status: proved
     status_detail: "Proved through the parametrisation (C); read by the checker of the section on cells with a coprime pair (agent check7)."
@@ -488,6 +507,7 @@ claims:
   - id: theorem-h-orientation/cage-laws
     kind: lemma
     label: "Law C, law $P^k$, Lemmas 1 to 3 (the cage laws)"
+    gist: "The local linear laws the frozen condition imposes on the types round each hole, with the 1,200 possible patterns of one cage."
     statement: "The linear identities between the type indicators of the vertices of a cage that (T2) implies, including the law $P^k$ relating the rods and bridgeheads of a hole, and Lemma 3, the enumeration of the 1,200 patterns of one cage."
     status: proved
     status_detail: "Written arguments and a finite enumeration run by at least two independent programs."
@@ -504,6 +524,7 @@ claims:
   - id: theorem-h-orientation/parametrisation-c
     kind: theorem
     label: "The parametrisation (C) (completeness of the chain modes)"
+    gist: "Every real solution of the type equations is a weighted sum of chain modes plus two constants."
     statement: "Every real solution of the one-hot equations and (T2) on a cell is $e_x$ plus a sum of chain modes (a weight on every chain of every axis) plus two antisymmetric constants: $Y = F_x - F_z + \\sigma\\alpha$, $Z = F_y - F_x + \\sigma\\beta$."
     status: proved
     status_detail: "Proved for every cell by a stratified symbolic kernel computation on the unit torus (68 strata) and confirmed by exact ranks on cells (17 September); on 2026-10-01 an independent checker (agent p1check) reproduced the proof with its own model and its own stratification and exact ranks on twelve cells, closing one expository gap in the companion kernel result."
@@ -525,6 +546,7 @@ claims:
   - id: theorem-h-orientation/thm-m-prime
     kind: theorem
     label: "Theorem M′ (from the project's earlier record)"
+    gist: "If one sublattice lacks a type that the other has, the state has even curl."
     statement: "If one sublattice of a frozen state has no vertex of type $k$ and the other has one, the state has even curl."
     status: proved
     status_detail: "Two proofs, with lemmas on four hexagons that carry DRAT certificates, and one second reader; confirmed on every cell by an audit of 27 September by both proofs."
@@ -542,6 +564,7 @@ claims:
   - id: theorem-h-orientation/ku
     kind: fact
     label: "$K_u$ (a uniform chain forces a direction to be absent)"
+    gist: "A chain with a single moment forces some direction to be absent; no longer used by any proof."
     statement: "A chain of one moment forces a direction to be absent. Certified within its recorded scope (chains of an axis whose two transverse extents have greatest common divisor at most two); its first step on the whole slab certified on the cubic cells of side four to eight; its later steps hold on every cell."
     status: certified
     status_detail: "No longer a step of any proof in the note since 30 September 2026. A checker found a gap in its original form on cubic cells (27 September), closed by the whole-slab certificates. Given orientation, its first step has a hand proof uniform in the side (claim ku-first-step-hand)."
@@ -563,6 +586,7 @@ claims:
   - id: theorem-h-orientation/ku-first-step-hand
     kind: fact
     label: "The first step of $K_u$ given orientation, by two applications of the diagonal law"
+    gist: "Given orientation, the first step of $K_u$ follows by hand from the diagonal law on every cell."
     statement: "Given orientation at the holes of two causal diamonds, the first step of $K_u$ at a vertex of a neighbouring column at transverse distance $d \\geq 2$ from a uniform chain is the sum of two identities of Theorem 9: the vertex cannot carry the moment opposite to the chain's (Theorem 3) and cannot carry the moment of the third axis (the corner corollary, the diamond's extreme corner being the single hole beside the vertex). So, given Theorem U, the first step of $K_u$ holds by hand on every cell."
     status: proved
     status_detail: "Found by agent kucone (checked exactly on the infinite lattice for $d = 2$ to 30, both slabs); confirmed on 2026-10-01 by an independent checker (agent kucheck) with its own code, which proved the geometric facts for every $d$, found the multipliers identical row for row, settled minimality, and wrote the hand lemma. Off the path to Theorem H."
@@ -586,6 +610,7 @@ claims:
   - id: theorem-h-orientation/v-reach-law
     kind: fact
     label: "The reach of (V) (Theorem U section, item 1)"
+    gist: "How far round a hole the frozen condition must be used to force (V): the reach grows with $g$, and the whole transverse torus is needed."
     statement: "On a cell $(a, b, c)$ with the rod axis of length $a$ and $g = \\gcd(b, c)$, the smallest windows of grids $[-p, q]$ about the hole on which (T2) forces (V) are $(3, 2g + 1)$, $(2g - 2, 2g - 2)$ and $(2g + 1, 3)$ for $g \\geq 4$, whatever $a$; the whole transverse torus is needed, and removing the hexagons through a single transverse grid leaves the negation satisfiable."
     status: solver
     status_detail: "Solver on twenty transverse tori with $g$ from 1 to 8, confirmed by an independent checker with its own implementation, with and without the sign field."
@@ -605,6 +630,7 @@ claims:
   - id: theorem-h-orientation/closed-linear-relaxation
     kind: negative-result
     label: "No weighted sum of laws proves (V) at $g \\geq 2$ (Theorem U section, items 3 to 5)"
+    gist: "Closed route: no linear combination of the local laws proves (V) once $g \\geq 2$; integrality is essential."
     statement: "With the types relaxed to non-negative reals, the largest amount of the rods' type on the plane of the bridgeheads is positive on every cell with $g \\geq 2$ (26/3, 178/9, 299/9 at cubic sides three, four, five), so the cage laws, which span the linear consequences of (T2), give no proof there; adding the signs, the bond rule and Lemma 3 lowers the optimum by less than one; on cells with coprime transverse extents the optimum is zero. Integrality of one family of indicators suffices, and case splits leave infeasible programmes, but no structure uniform in the side was found."
     status: closed-route
     status_detail: "Computed in floating point by two implementations and verified in exact arithmetic by an independent checker on three cells."
@@ -622,6 +648,7 @@ claims:
   - id: theorem-h-orientation/closed-tilted-sheet
     kind: negative-result
     label: "The closure of the tilted sheet carries no invariant (Theorem U section, item 7)"
+    gist: "Closed route: just short of the reach of (V), the solutions that violate it carry no usable invariant."
     statement: "One grid short of the window $(3, 2g + 1)$ the negation of (V) has exactly two solutions for the set of vertices of the rods' type, a sheet advancing one chain label per cube, for every $g$ from 3 to 7; on every shorter window the solutions are many and dense, and no Fourier coefficient, count or winding of the types is defined on all of them or constrained on those where it is defined; opening the transverse torus does not remove $g$."
     status: closed-route
     status_detail: "Solver and exact computation by two agents (sheet, moment), a sample run again by the main session; no independent checker."
@@ -644,6 +671,7 @@ claims:
   - id: theorem-h-orientation/statement-r-box-lemma
     kind: conjecture
     label: "Statement R and its box lemma (Conjecture $R_b$; Theorem U section, item 8)"
+    gist: "A weaker relative of (V): two aligned rods extend to a whole line of their type; its first step certified for $b$ from 3 to 6."
     statement: "Two rods of type $k$ four apart, a lower bridgehead of type $a$ and the upper bridgehead on the other side not of type $a$ make the whole line of the rods of type $k$. Its first step is forced inside a box over one closed transverse circle, $x \\in [-3, 2b + 1]$, $|z| \\leq 2b - 1$, with the $y$-circle of the cell whole, whatever $a$, $c$ and $\\gcd(b, c)$."
     status: certified
     status_detail: "The box lemma certified by DRAT proofs for $b = 3, 4, 5, 6$ (hashes in the report); conjectured for every $b$. R follows from (V) in two lines and is strictly weaker than (V). On 2026-10-01 shown not to be a first step towards (V): it adds exactly one literal to (V) and supplies neither transverse circle (claim closed-r-then-monodromy)."
@@ -664,6 +692,7 @@ claims:
   - id: theorem-h-orientation/closed-r-then-monodromy
     kind: negative-result
     label: "Statement R, a monodromy in the weights, and the heights are not a route to (V) (Theorem U section, item 9)"
+    gist: "Closed route: Statement R, periodicities of the chain weights and height functions do not lead to (V); any proof must be integral from the start."
     statement: "Statement R assumed on the whole rod line shortens the reach of (V) from $2g + 1$ to $2g - 1$, and the single literal that the third rod position has the rods' type gives the same; (V) given R is false on both cut cylinders; on the grid of the bridgeheads of every cubic cell the parametrisation (C) is onto, so the real relaxation says nothing about the type set of a grid and the separability lemma has no product to act on; the weights of (C) seen along the rod axis return after $\\mathrm{lcm}(\\gcd(a, c), \\gcd(a, b))$ cubes, which is 4 on $(12, 8, 8)$ where (V) needs 15 grids; the $g$ of the reach law is the modulus of the labels $y - z$, $y + z$ of the chains of the rod axis on the grids normal to it. Any proof of Theorem U must be integral from the first line. The branch certificates of the box lemma split into local ones, identical across $b$, and global ones that span the closed circle and grow, with no rule found."
     status: closed-route
     status_detail: "Solver with controls on five cells, exact computation on seven, and hand lemmas with no second reader (agent screw); exact certificates for $b = 3$ to 5 (agent rbox); a sample of each re-run by the main loop."
@@ -688,6 +717,7 @@ claims:
   - id: theorem-h-orientation/kink-counts-per-class
     kind: lemma
     label: "The kink counts per chain class: the wave equation and one defect per axis (Theorem U section, item 10)"
+    gist: "The counts of the rods' type per chain class obey a discrete wave equation, and every chain of an axis has the same defect."
     statement: "On a grid normal to the rod axis, with $k[n][v]$ the number of vertices of the rods' type in the class of value $v$ (the trace of one chain of that axis), every real solution of (T2) satisfies the wave equation $k[n+2][v] + k[n-2][v] = k[n][v+2] + k[n][v-2]$ (law C summed over the holes of a class), whose solutions are two sheets travelling one class per cube in opposite senses; and on the torus every chain of an axis has the same defect, the difference of its kink counts on its two grids, because the defect obeys a smoothing recurrence along the rod axis whose non-constant modes die round the circle."
     status: proved-unchecked
     status_detail: "Hand proofs by one agent with no second reader; the wave equation and the summed law verified to lie in the row space of the window's equations and exact on 488 enumerated models on four cells; the single defect checked on 5,119 frozen states of five cells on all three axes; the main loop re-ran the corpus check and two solver rows."
@@ -713,6 +743,7 @@ claims:
   - id: theorem-h-orientation/closed-kink-counts
     kind: negative-result
     label: "The kink counts per class cannot close (V) (Theorem U section, item 10)"
+    gist: "Closed route: counts per class cannot prove (V); what matters is which positions are kinked, not how many."
     statement: "By solver on four cells with controls, the pattern of (V) makes the defect one constant on every chain of a three-grid window, non-negative on $[-3, 2g - 2]$, and with the negation zero on $[-3, 2g - 1]$ and not before, so given the pattern on the torus (V) is equivalent to a positive defect, with the same reach $2g + 1$. Two parallel unit sheets of one sense through the two rods with defect zero satisfy the wave equation, the summed law $P^k$, Lemma 6, the bounds, the pins of the pattern and the negation round the whole torus of each cell, and every enumerated solution short of the threshold extends by the wave equation round the rod axis within the bounds. The obstruction lies in which positions inside a class are kinked, not in how many."
     status: closed-route
     status_detail: "Solver with controls (23 batches, four cells) and an exact witness (h767) on four cells; the main loop re-ran the witness on two cells and the defect queries on one window."
@@ -735,6 +766,7 @@ claims:
   - id: theorem-h-orientation/weights-integrality-correction
     kind: fact
     label: "The weights of (C) are rarely integral (correction of 30 September 2026)"
+    gist: "Correction: the chain weights of (C) are integral on only a few states, so earlier results on heights cover only those."
     statement: "The gauge orbit of the chain weights contains an integer vector on 19 of the 637 odd frozen states of the cubic cell of side three, 20 of the 720 of side four, and none of 60 sampled solutions of the type model, with least denominators from 27 to 96 otherwise. The report of 10 September that says the weights can be taken integral on every state examined had examined those 19, and its height results are proved for integral weights only."
     status: corrected
     status_detail: "Exact computation on 1,417 states (agent rodline); not independently re-run."
@@ -754,6 +786,7 @@ claims:
   - id: theorem-h-orientation/periodicity
     kind: corollary
     label: "Periodicity of frozen zero-flux states (first section, with Theorem P and Lemma A of the earlier note)"
+    gist: "Where Theorem H holds and every extent is at least 2, every frozen zero-flux state has a translation symmetry."
     statement: "On every cell whose extents are all at least two, Theorem H implies that every frozen zero-flux state is invariant under a nonzero translation: if an axis is empty Lemma A gives the translation; otherwise zero flux makes every axis two-way, so the state has even curl by Theorem H, and Theorem P gives a one-cube period. So periodicity holds on the cubic cells of side one to eight (side one by direct computation), on the cells with a coprime pair of extents all at least two, on the cells with two chains in every pair of planes, and on the cells certified on 2026-10-01 with their divisors."
     status: proved
     status_detail: "The chain Lemma L, Lemma A, Theorem P (through its first step P1) and Lemma 21 was read on 2026-10-01 by two independent checkers with their own programs (agents pacheck, p1check); only Lemma C (even curl implies frozen) of the earlier record has had no checker. The hypothesis on the extents was missing from the note's first draft and is needed: see claim thin-cells-aperiodic."
@@ -786,6 +819,7 @@ claims:
   - id: theorem-h-orientation/thin-cells-aperiodic
     kind: fact
     label: "Frozen zero-flux states with no translation symmetry on thin cells"
+    gist: "Counterexamples: on six thin cells (an extent of 1) some frozen zero-flux states have no translation symmetry."
     statement: "On the cells $(1,1,2)$, $(1,2,2)$, $(1,2,3)$, $(1,3,3)$, $(1,3,4)$ and $(1,4,5)$ there are frozen zero-flux states of even curl, with all six directions, fixed by no nonzero translation. On $(1,1,1)$ there is none."
     status: refuted
     status_detail: "Solver witnesses, each re-checked by an independent program (ice, frozen, flux zero, trivial stabiliser); the $(1,2,2)$ witness run again by the main loop. This refutes the periodicity conclusion on thin cells and shows that Theorem P's hypothesis that every extent is at least two cannot be dropped."

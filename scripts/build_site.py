@@ -403,7 +403,8 @@ def main() -> int:
     frag_keys: list[tuple[str, str]] = []
     frag_src: list[str] = []
     for cid, c in claims.items():
-        for field, text in (("label", c.get("label", "")), ("statement", c.get("statement", "")),
+        for field, text in (("label", c.get("label", "")), ("gist", c.get("gist", "")),
+                            ("statement", c.get("statement", "")),
                             ("status_detail", c.get("status_detail", "")), ("notes", c.get("notes", "")),
                             ("cells", (c.get("scope") or {}).get("cells", "")),
                             ("hypotheses", (c.get("scope") or {}).get("hypotheses", ""))):
@@ -557,6 +558,7 @@ def main() -> int:
         body = (
             f'<p class="kind"><a href="{root}notes/{esc(note)}.html">{esc(note)}</a> / {esc(slug)}</p>'
             f'<h1>{R(cid, "label", True)}</h1>'
+            + (f'<p class="gist">{R(cid, "gist", True)}</p>' if c.get("gist") else "") +
             f'<div class="statement" style="--c: var(--st-{esc(st)})">{R(cid, "statement")}</div>'
             f'<dl class="fields">{"".join(rows)}</dl>'
         )
@@ -594,12 +596,18 @@ def main() -> int:
     status_counts = Counter(c["status"] for c in claims.values())
     human = sum(1 for c in claims.values() if c["provenance"].get("human_read"))
     trs = []
+
+    def gist_cell(cid: str, c: dict) -> str:
+        if not c.get("gist"):
+            return R(cid, "label", True)
+        return f'{R(cid, "gist", True)}<div class="small muted">{R(cid, "label", True)}</div>'
+
     for cid, c in claims.items():
         note = claim_note[cid]["note"]
         trs.append(
-            f'<tr data-status="{esc(c["status"])}" data-note="{esc(note)}" data-text="{esc((cid + " " + plain(c["label"]) + " " + plain(c["statement"])).lower())}">'
+            f'<tr data-status="{esc(c["status"])}" data-note="{esc(note)}" data-text="{esc((cid + " " + plain(c["label"]) + " " + plain(c.get("gist", "")) + " " + plain(c["statement"])).lower())}">'
             f'<td class="id"><a href="{claim_href(cid)}">{esc(claim_slug(cid)[1])}</a></td>'
-            f'<td>{R(cid, "label", True)}</td>'
+            f'<td>{gist_cell(cid, c)}</td>'
             f'<td class="opt kind">{esc(c["kind"])}</td>'
             f'<td>{badge(c["status"], status_gloss.get(c["status"], ""))}</td>'
             f'<td class="opt small">{R(cid, "cells", True)}</td>'
@@ -635,7 +643,7 @@ Claims read line by line by a person: {human} of {len(claims)}.</p>
 <span id="claim-count"></span>
 </div>
 <div class="table-wrap"><table class="claims">
-<thead><tr><th>claim</th><th>label</th><th class="opt">kind</th><th>status</th><th class="opt">scope</th><th class="opt">note</th></tr></thead>
+<thead><tr><th>claim</th><th>what it says</th><th class="opt">kind</th><th>status</th><th class="opt">scope</th><th class="opt">note</th></tr></thead>
 <tbody id="claim-rows">
 {''.join(trs)}
 </tbody></table></div>

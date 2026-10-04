@@ -181,6 +181,8 @@ ul.plain li { margin: 0.3em 0; }
   border: 1px solid var(--line); border-radius: 4px; padding: 0.3rem 0.4rem; min-width: 10rem;
 }
 #claim-count { color: var(--muted); }
+table.claims td .muted { margin-top: 0.15em; }
+.gist { font-size: 1.05rem; color: var(--muted); margin-top: -0.4rem; }
 table.claims td.id { font-family: ui-monospace, Menlo, monospace; font-size: 0.8em; overflow-wrap: anywhere; }
 @media (max-width: 700px) {
   table.claims .opt { display: none; }

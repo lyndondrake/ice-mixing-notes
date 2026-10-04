@@ -66,6 +66,7 @@
           "description": "negative-result: a route shown not to work, recorded so it is not retried. certificate-campaign: a family of machine-checked proofs on named cells."
         },
         "label": { "type": "string", "description": "How the note names it in this version, e.g. 'Theorem 1 (the reduction)'." },
+        "gist": { "type": "string", "description": "One short sentence saying what the claim asserts, for a reader who does not know the note's names; shown beside the label in the index. Plain language, LaTeX only where unavoidable." },
         "statement": { "type": "string", "description": "The statement in plain language with LaTeX where needed. Self-contained enough to be read without the note; terms defined in the note are named, not explained." },
         "status": {
           "type": "string",
